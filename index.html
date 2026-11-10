@@ -63,7 +63,7 @@ document.getElementById('cakeDate').min=new Date(Date.now()-new Date().getTimezo
 cakeForm.addEventListener('submit',event=>{
 event.preventDefault();
 const name=document.getElementById('cakeName').value.trim(),date=document.getElementById('cakeDate').value,guests=document.getElementById('cakeGuests').value,occasion=document.getElementById('cakeOccasion').value,notes=document.getElementById('cakeNotes').value.trim();
-cakeMessage.textContent=['Bonjour Meery Cake, je souhaite me renseigner sur un gâteau personnalisé.','Prénom : '+name,'Date souhaitée : '+date,'Nombre de personnes : '+guests,'Occasion : '+occasion,'Saveurs : '+(document.getElementById('cakeFlavor').value.trim()||'À discuter'),'Idées, décoration ou allergies : '+(notes||'À discuter'),'Pourriez-vous me confirmer la faisabilité, la disponibilité et un tarif ? Merci !'].join('\\n');
+cakeMessage.textContent=['Bonjour Meery Cake, je souhaite me renseigner sur un gâteau personnalisé.','Prénom : '+name,'Date souhaitée : '+date,'Nombre de personnes : '+guests,'Occasion : '+occasion,'Saveurs : '+(document.getElementById('cakeFlavor').value.trim()||'À discuter'),'Idées, décoration ou allergies : '+(notes||'À discuter'),'Pourriez-vous me confirmer la faisabilité, la disponibilité et un tarif ? Merci !'].join('\n');
 const wa=document.getElementById('sendWhatsapp');wa.href='https://wa.me/33669971694?text='+encodeURIComponent(cakeMessage.textContent);cakeResult.classList.add('show');cakeResult.scrollIntoView({behavior:'smooth',block:'center'});
 });
 document.getElementById('copyCake').addEventListener('click',async()=>{
