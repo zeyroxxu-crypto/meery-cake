@@ -48,52 +48,155 @@ const year=document.getElementById('currentYear');if(year)year.textContent=new D
 }
 })();
 
-/* Progressive, same-origin page transitions across every Meery Cake V3 page.
-   Never intercept downloads, external sites, modified clicks, hashes on this page,
-   or native navigation when the visitor asks for reduced motion. */
-(function initPageMotion(){
- const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
- if(reduced)return;
- const curtain=document.createElement('div');
- curtain.className='meery-page-curtain';
- curtain.id='meeryPageCurtain';
- curtain.setAttribute('aria-hidden','true');
- curtain.innerHTML='<div class="meery-page-curtain-inner"><span class="meery-page-curtain-symbol">✦</span><span class="meery-page-curtain-title">Meery Cake</span><span class="meery-page-curtain-subtitle">Une douceur à découvrir</span></div><div class="meery-page-curtain-progress"></div>';
- document.body.appendChild(curtain);
- let navigating=false;
- document.addEventListener('click',function(event){
-   if(event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey||navigating)return;
+/* Meery Cake — V4 Motion / tested fallback-friendly page and section choreography.
+   This is shared by all pages via v3-shell.js and does NOT require a SPA. */
+(function initMeeryMotion(){
+ const prefKey='meerycake-motion-preference';
+ const handoffKey='meerycake-page-transition';
+ const prefersReduced=!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+ function readPreference(){try{return window.localStorage.getItem(prefKey)}catch{return null}}
+ function writePreference(v){try{window.localStorage.setItem(prefKey,v)}catch{}}
+ function enabled(){const v=readPreference();return v==='on'||(v!=='off'&&!prefersReduced)}
+ let active=enabled();
+ function applyPreference(){
+   active=enabled();
+   document.documentElement.classList.toggle('mc-motion-enabled',active);
+   document.documentElement.classList.toggle('mc-motion-disabled',!active);
+   const btn=document.getElementById('mcMotionToggle');
+   if(btn){
+     btn.textContent=active?'✦':'○';
+     btn.setAttribute('aria-pressed',String(active));
+     btn.setAttribute('aria-label',active?'Désactiver les animations':'Activer les animations');
+     btn.title=active?'Animations activées — cliquer pour désactiver':'Animations désactivées — cliquer pour activer';
+   }
+ }
+ const navActions=document.querySelector('.nav-actions');
+ if(navActions&&!document.getElementById('mcMotionToggle')){
+   const button=document.createElement('button');
+   button.id='mcMotionToggle';
+   button.type='button';
+   button.className='mc-motion-toggle';
+   button.setAttribute('aria-pressed','true');
+   const lang=navActions.querySelector('#langSelect');
+   if(lang)navActions.insertBefore(button,lang);else navActions.appendChild(button);
+   button.addEventListener('click',()=>{
+     writePreference(active?'off':'on');
+     applyPreference();
+     if(active&&typeof button.animate==='function'){
+       button.animate([{transform:'scale(.85) rotate(-15deg)'},{transform:'scale(1.2) rotate(15deg)'},{transform:'scale(1) rotate(0)'}],{duration:540,easing:'ease-out'});
+     }
+   });
+ }
+ applyPreference();
+ const overlay=document.createElement('div');
+ overlay.className='mc-v4-curtain';
+ overlay.setAttribute('aria-hidden','true');
+ overlay.innerHTML='<div class="mc-v4-curtain-glow"></div><div class="mc-v4-brand"><span class="mc-v4-symbol">✧</span><span class="mc-v4-name">Meery Cake</span><span class="mc-v4-sub">UN INSTANT DE DOUCEUR</span><span class="mc-v4-dots"><i></i><i></i><i></i></span></div>';
+ document.body.appendChild(overlay);
+ const pill=document.createElement('div');
+ pill.className='mc-v4-anchor-pill';
+ pill.setAttribute('aria-hidden','true');
+ const pillIcon=document.createElement('span');pillIcon.className='mc-v4-pill-icon';pillIcon.textContent='✧';
+ const pillText=document.createElement('span');pillText.className='mc-v4-pill-text';
+ pill.append(pillIcon,pillText);
+ document.body.appendChild(pill);
+ let isLeaving=false,exitTimer=null,pillTimer=null;
+ function clearLeave(){
+   isLeaving=false;
+   overlay.classList.remove('mc-v4-leave','mc-v4-arrival','mc-v4-enter');
+   document.documentElement.classList.remove('mc-v4-navigating');
+   if(exitTimer){clearTimeout(exitTimer);exitTimer=null}
+ }
+ function setHandoff(url){
+   try{window.sessionStorage.setItem(handoffKey,JSON.stringify({path:url.pathname,created:Date.now()}))}catch{}
+ }
+ function consumeHandoff(){
+   try{
+     const raw=window.sessionStorage.getItem(handoffKey);
+     window.sessionStorage.removeItem(handoffKey);
+     if(!raw)return false;
+     const j=JSON.parse(raw);
+     return Date.now()-j.created<15000&&j.path===window.location.pathname;
+   }catch{return false}
+ }
+ if(active&&consumeHandoff()){
+   overlay.classList.add('mc-v4-arrival');
+   document.documentElement.classList.add('mc-v4-just-arrived');
+   window.setTimeout(()=>{
+     overlay.classList.add('mc-v4-enter');
+     window.setTimeout(()=>{
+       overlay.classList.remove('mc-v4-arrival','mc-v4-enter');
+       document.documentElement.classList.remove('mc-v4-just-arrived');
+     },870);
+   },160);
+ }
+ function spotlight(label,target,href){
+   if(!active)return;
+   pillText.textContent=(label||'Découvrir').trim().slice(0,42);
+   pill.classList.remove('mc-v4-pill-visible');
+   void pill.offsetWidth;
+   pill.classList.add('mc-v4-pill-visible');
+   if(pillTimer)clearTimeout(pillTimer);
+   pillTimer=window.setTimeout(()=>pill.classList.remove('mc-v4-pill-visible'),1060);
+   if(target){
+     window.setTimeout(()=>{
+       if(href)window.history.pushState(null,'',href);
+       target.scrollIntoView({behavior:'smooth',block:'start'});
+       target.classList.remove('mc-v4-section-arrived');
+       void target.offsetWidth;
+       target.classList.add('mc-v4-section-arrived');
+       window.setTimeout(()=>target.classList.remove('mc-v4-section-arrived'),1180);
+     },180);
+   }else if(href){
+     window.history.pushState(null,'',href);
+     window.scrollTo({top:0,behavior:'smooth'});
+   }
+ }
+ function canonicalPath(url){return url.pathname.endsWith('/')?url.pathname+'index.html':url.pathname}
+ document.addEventListener('click',event=>{
+   if(!active||isLeaving||event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.altKey||event.shiftKey)return;
    const link=event.target.closest&&event.target.closest('a[href]');
-   if(!link||link.hasAttribute('download')||link.hasAttribute('data-no-transition')||link.getAttribute('target')&&link.getAttribute('target')!=='_self')return;
-   if(link.closest('[contenteditable="true"]'))return;
-   const raw=link.getAttribute('href');
-   if(!raw||raw.startsWith('#')||raw.startsWith('javascript:'))return;
-   let next;
-   try{next=new URL(raw,window.location.href)}catch{return}
+   if(!link||link.hasAttribute('download')||link.hasAttribute('data-no-transition')||(link.target&&link.target!=='_self')||link.closest('[contenteditable="true"]'))return;
+   const href=link.getAttribute('href');if(!href||href.startsWith('javascript:'))return;
+   let next;try{next=new URL(href,window.location.href)}catch{return}
    const current=new URL(window.location.href);
    if(next.origin!==current.origin||!['http:','https:'].includes(next.protocol))return;
-   // Render serves both "/" and "/index.html" as the same homepage.
-   const pagePath=u=>u.pathname.endsWith('/')?u.pathname+'index.html':u.pathname;
-   const samePage=pagePath(next)===pagePath(current)&&next.search===current.search;
-   if(samePage){
-     if(next.hash&&next.hash!==current.hash){
+   const same=canonicalPath(next)===canonicalPath(current)&&next.search===current.search;
+   if(same){
+     if(next.hash){
        let id;try{id=decodeURIComponent(next.hash.slice(1))}catch{id=next.hash.slice(1)}
        const section=document.getElementById(id);
-       if(section){event.preventDefault();window.history.pushState(null,'',next.href);section.scrollIntoView({behavior:'smooth',block:'start'})}
-     }else if(!next.hash&&next.href!==current.href){
-       event.preventDefault();window.history.pushState(null,'',next.href);window.scrollTo({top:0,behavior:'smooth'});
+       if(section){
+         event.preventDefault();
+         spotlight((link.textContent||link.getAttribute('aria-label')||section.getAttribute('aria-label')||'Découvrir').trim(),section,next.href);
+       }
+       return;
      }
-     return; /* Keep navigation inside the current document smooth and instant. */
+     if(next.href!==current.href){
+       event.preventDefault();
+       spotlight(link.textContent||'Accueil',null,next.href);
+     }
+     return;
    }
-   if(!next.pathname.endsWith('.html')&&!next.pathname.endsWith('/'))return; /* Files and assets navigate normally */
+   if(!next.pathname.endsWith('.html')&&!next.pathname.endsWith('/'))return;
    event.preventDefault();
-   navigating=true;
-   curtain.classList.add('is-visible');
-   document.documentElement.classList.add('is-navigating');
-   // Keep the effect brief. The destination loads as a normal real page, preserving browser history.
-   window.setTimeout(()=>window.location.assign(next.href),410);
-   // In case navigation is blocked by a browser extension, do not trap clicks forever.
-   window.setTimeout(()=>{if(document.visibilityState==='visible'){curtain.classList.remove('is-visible');document.documentElement.classList.remove('is-navigating');navigating=false}},1800);
- },false);
- window.addEventListener('pageshow',()=>{curtain.classList.remove('is-visible');document.documentElement.classList.remove('is-navigating');navigating=false});
+   isLeaving=true;
+   overlay.classList.remove('mc-v4-arrival','mc-v4-enter');
+   overlay.classList.add('mc-v4-leave');
+   document.documentElement.classList.add('mc-v4-navigating');
+   setHandoff(next);
+   // A real full-screen interstitial, held briefly so users can see it on mobile.
+   exitTimer=window.setTimeout(()=>window.location.assign(next.href),790);
+   window.setTimeout(()=>{
+     if(document.visibilityState==='visible')clearLeave();
+   },2200);
+ });
+ window.addEventListener('pageshow',e=>{
+   if(e.persisted){
+     clearLeave();
+     document.documentElement.classList.add('mc-v4-back');
+     window.setTimeout(()=>document.documentElement.classList.remove('mc-v4-back'),850);
+   }
+ });
+ window.addEventListener('popstate',()=>{clearLeave();applyPreference()});
 })();
