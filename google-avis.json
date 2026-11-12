@@ -1,0 +1,9 @@
+{
+  "source": "google_business_profile",
+  "connected": false,
+  "averageRating": null,
+  "totalReviewCount": null,
+  "updatedAt": null,
+  "reviews": [],
+  "message": "Le flux Google Business Profile doit être autorisé par le gestionnaire de la fiche Meery Cake avant synchronisation."
+}
