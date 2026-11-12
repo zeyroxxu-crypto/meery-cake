@@ -44,3 +44,14 @@
 .back-top{position:fixed;right:24px;bottom:23px;width:45px;height:45px;border:1px solid #e2c9d2;border-radius:50%;background:#753d52;color:#fff;font-size:22px;box-shadow:0 12px 28px #46223444;z-index:89;cursor:pointer}
 .back-top:hover{background:#55293c}
 @media(max-width:600px){.back-top{bottom:86px;right:13px;width:39px;height:39px;font-size:20px}}
+
+/* Editorial motion — subtle, reduced-motion friendly */
+@media(prefers-reduced-motion:no-preference){
+@keyframes meery-enter{from{opacity:0;transform:translateY(17px)}to{opacity:1;transform:translateY(0)}}
+@keyframes meery-photo{from{opacity:.75;transform:scale(1.045)}to{opacity:1;transform:scale(1)}}
+.hero-content>.eyebrow{animation:meery-enter .65s .05s both}
+.hero-content h1{animation:meery-enter .75s .13s both}
+.hero-content>p{animation:meery-enter .75s .20s both}
+.hero-content .hero-actions{animation:meery-enter .8s .3s both}
+.hero-visual>img{animation:meery-photo 1.15s ease-out both}
+}
