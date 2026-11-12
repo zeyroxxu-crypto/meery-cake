@@ -72,8 +72,19 @@ const year=document.getElementById('currentYear');if(year)year.textContent=new D
    try{next=new URL(raw,window.location.href)}catch{return}
    const current=new URL(window.location.href);
    if(next.origin!==current.origin||!['http:','https:'].includes(next.protocol))return;
-   const samePage=next.pathname===current.pathname&&next.search===current.search;
-   if(samePage)return; /* Native in-page anchor or reload behaviour */
+   // Render serves both "/" and "/index.html" as the same homepage.
+   const pagePath=u=>u.pathname.endsWith('/')?u.pathname+'index.html':u.pathname;
+   const samePage=pagePath(next)===pagePath(current)&&next.search===current.search;
+   if(samePage){
+     if(next.hash&&next.hash!==current.hash){
+       let id;try{id=decodeURIComponent(next.hash.slice(1))}catch{id=next.hash.slice(1)}
+       const section=document.getElementById(id);
+       if(section){event.preventDefault();window.history.pushState(null,'',next.href);section.scrollIntoView({behavior:'smooth',block:'start'})}
+     }else if(!next.hash&&next.href!==current.href){
+       event.preventDefault();window.history.pushState(null,'',next.href);window.scrollTo({top:0,behavior:'smooth'});
+     }
+     return; /* Keep navigation inside the current document smooth and instant. */
+   }
    if(!next.pathname.endsWith('.html')&&!next.pathname.endsWith('/'))return; /* Files and assets navigate normally */
    event.preventDefault();
    navigating=true;
