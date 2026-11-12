@@ -118,7 +118,7 @@ initCatalog(){
 },
 initGallery(){
  const grid=this.byId('galleryGrid');if(!grid)return;let filter='all';
- const render=()=>{grid.replaceChildren();const ps=(this.data.photos||[]).filter(p=>filter==='all'||p.category===filter);
+ const render=()=>{grid.replaceChildren();const ps=(this.data.photos||[]).filter(p=>p.displayInGallery!==false&&(filter==='all'||p.category===filter));
  for(const p of ps){const b=this.el('button',{cls:'gallery-tile',type:'button'}),img=this.el('img');img.src=p.src;img.alt=p.title+' (photo d’archive / source publique)';img.loading='lazy';img.decoding='async';const caption=this.el('span',{text:p.title});b.append(img,caption);b.addEventListener('click',()=>open(p));grid.append(b)}
  };
  const dialog=this.byId('lightbox'),image=this.byId('lightboxImage'),caption=this.byId('lightboxCaption');
