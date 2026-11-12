@@ -203,9 +203,19 @@ initAdminDemo(){
  this.byId('adminExport').addEventListener('click',()=>{const blob=new Blob([JSON.stringify({demoOnly:true,settings,generated:new Date().toISOString()},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob),a=this.el('a',{href:url});a.download='meerycake-contenu-propose.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),2000)});
  this.byId('adminReset').addEventListener('click',()=>{try{localStorage.removeItem(key)}catch{};location.reload()});
 },
-initScroll(){if(!('IntersectionObserver'in window)||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
- const observer=new IntersectionObserver(es=>{for(const entry of es){if(entry.isIntersecting){entry.target.classList.add('revealed');observer.unobserve(entry.target)}}},{threshold:0.06});
- document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+initScroll(){
+ // Add the hidden state only after a working observer is installed.
+ // Browsers without IntersectionObserver and reduced-motion users see all content immediately.
+ if(!('IntersectionObserver' in window)||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ const targets=document.querySelectorAll('.section-head,.editorial-card,.featured-gallery a,.feature-copy,.promo-box,.contact-card,.review-summary,.review-status,.contact-map,.gallery-tile,.event-card,.catalog-card,.panel,.award-copy,.admin-stat,.menu-panel,.page-layout>aside,.faq details,.review-panel,.review-side-card,.google-panel,.gallery-photo');
+ if(!targets.length)return;
+ const observer=new IntersectionObserver(entries=>{
+   for(const entry of entries){
+     if(entry.isIntersecting){entry.target.classList.add('revealed');observer.unobserve(entry.target)}
+   }
+ },{threshold:0.04,rootMargin:'0px 0px -24px 0px'});
+ targets.forEach((el,i)=>{el.classList.add('reveal');el.style.setProperty('--reveal-delay',((i%3)*65)+'ms');observer.observe(el)});
+ document.documentElement.classList.add('mc-motion-ready');
 },
 initMediaFallback(){document.querySelectorAll('img').forEach(img=>img.addEventListener('error',()=>{img.classList.add('image-failed');img.alt=img.alt+' (image indisponible)';img.style.background='#f1dfdf'}))},
 };
