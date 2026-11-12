@@ -109,6 +109,11 @@ initCatalog(){
  for(const g of all){const b=this.el('button',{cls:'filter'+(g.id==='all'?' active':''),text:g.name,type:'button'});b.setAttribute('aria-pressed',String(g.id==='all'));b.addEventListener('click',()=>{cat=g.id;filters.querySelectorAll('button').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-pressed',String(x===b))});this.renderCatalog()});filters.append(b)}
  this.byId('catalogSearch')?.addEventListener('input',()=>this.renderCatalog());
  this.byId('onlyFavs')?.addEventListener('change',e=>{favoritesOnly=e.target.checked;this.renderCatalog()});
+ this.byId('copyFavorites')?.addEventListener('click',()=>{
+ const names=this.favorites.map(id=>this.productById(id)).filter(Boolean).map(p=>'- '+p.name+(p.price?' ('+p.price+')':' (prix à confirmer)'));
+ if(!names.length){this.toast('Ajoutez d’abord des produits aux favoris.');return}
+ this.copy(['Ma sélection Meery Cake :',...names,'','Liste personnelle : ceci n’est pas une commande. Disponibilité et tarifs à confirmer auprès du salon.'].join('\n'))
+ });
  this.renderCatalog()
 },
 initGallery(){
