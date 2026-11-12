@@ -54,14 +54,15 @@ function links(){
 function createSearch(){
  const nav=document.querySelector('.nav-actions');
  if(!nav||$('mcSearchButton'))return;
- const btn=el('button','mc-search-trigger','⌕');btn.id='mcSearchButton';btn.type='button';
+ const icon='<svg aria-hidden="true" viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>';
+ const btn=el('button','mc-search-trigger');btn.innerHTML=icon;btn.id='mcSearchButton';btn.type='button';
  btn.title='Rechercher une page ou un produit (Ctrl/⌘ + K)';
  btn.setAttribute('aria-label','Rechercher sur Meery Cake');
  const contrast=$('mcMotionToggle'),lang=$('langSelect');
  if(contrast)nav.insertBefore(btn,contrast);else if(lang)nav.insertBefore(btn,lang);else nav.append(btn);
  const backdrop=el('div','mc-search-backdrop');backdrop.id='mcSearchBackdrop';backdrop.setAttribute('aria-hidden','true');
  const dialog=el('section','mc-search-dialog');dialog.setAttribute('role','dialog');dialog.setAttribute('aria-modal','true');dialog.setAttribute('aria-label','Recherche rapide');
- const header=el('div','mc-search-dialog-top'),glass=el('span','glass','⌕'),input=el('input','mc-search-input');
+ const header=el('div','mc-search-dialog-top'),glass=el('span','glass'),input=el('input','mc-search-input');glass.innerHTML=icon;
  input.type='search';input.id='mcSearchInput';input.placeholder='Rechercher un dessert, une page…';input.autocomplete='off';input.maxLength=90;
  const close=el('button','mc-search-close','Esc ×');close.type='button';close.setAttribute('aria-label','Fermer la recherche');
  const results=el('div','mc-search-results');results.id='mcSearchResults';results.setAttribute('aria-live','polite');
