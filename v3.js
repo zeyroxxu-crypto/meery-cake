@@ -204,9 +204,10 @@ initAdminDemo(){
  this.byId('adminReset').addEventListener('click',()=>{try{localStorage.removeItem(key)}catch{};location.reload()});
 },
 initScroll(){
- // Add the hidden state only after a working observer is installed.
- // Browsers without IntersectionObserver and reduced-motion users see all content immediately.
- if(!('IntersectionObserver' in window)||window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+ // Reveal effects are optional: never hide content unless IntersectionObserver
+ // is supported AND the visitor has enabled the on-site motion control.
+ if(!('IntersectionObserver' in window)||!document.documentElement.classList.contains('mc-motion-enabled'))return;
+ if(document.documentElement.classList.contains('mc-motion-ready'))return;
  const targets=document.querySelectorAll('.section-head,.editorial-card,.featured-gallery a,.feature-copy,.promo-box,.contact-card,.review-summary,.review-status,.contact-map,.gallery-tile,.event-card,.catalog-card,.panel,.award-copy,.admin-stat,.menu-panel,.page-layout>aside,.faq details,.review-panel,.review-side-card,.google-panel,.gallery-photo');
  if(!targets.length)return;
  const observer=new IntersectionObserver(entries=>{
@@ -214,7 +215,13 @@ initScroll(){
      if(entry.isIntersecting){entry.target.classList.add('revealed');observer.unobserve(entry.target)}
    }
  },{threshold:0.04,rootMargin:'0px 0px -24px 0px'});
- targets.forEach((el,i)=>{el.classList.add('reveal');el.style.setProperty('--reveal-delay',((i%3)*65)+'ms');observer.observe(el)});
+ targets.forEach((el,i)=>{
+   el.classList.add('reveal');
+   el.style.setProperty('--reveal-delay',((i%3)*65)+'ms');
+   const bounds=el.getBoundingClientRect();
+   if(bounds.bottom<window.innerHeight*.95&&bounds.top>=0)el.classList.add('revealed');
+   else observer.observe(el);
+ });
  document.documentElement.classList.add('mc-motion-ready');
 },
 initMediaFallback(){document.querySelectorAll('img').forEach(img=>img.addEventListener('error',()=>{img.classList.add('image-failed');img.alt=img.alt+' (image indisponible)';img.style.background='#f1dfdf'}))},
@@ -222,4 +229,5 @@ initMediaFallback(){document.querySelectorAll('img').forEach(img=>img.addEventLi
 document.addEventListener('DOMContentLoaded',async()=>{
  MC.initNav();MC.initMediaFallback();await MC.loadData();
  MC.initHome();MC.initCatalog();MC.initGallery();MC.initCakeDesigner();MC.initBrunch();MC.initWorkshops();MC.initGifts();MC.initAdminDemo();MC.initScroll();
+ window.addEventListener('mc:motion-preference-change',()=>{if(!document.documentElement.classList.contains('mc-motion-enabled')){document.documentElement.classList.remove('mc-motion-ready');document.querySelectorAll('.reveal').forEach(el=>el.classList.add('revealed'))}else{MC.initScroll()}});
 });
