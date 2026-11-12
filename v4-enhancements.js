@@ -276,8 +276,13 @@ async function notebook(){
    if(p.description)left.append(el('p','mc-notebook-detail',p.description.slice(0,180)));
    const qty=el('div','mc-qty'),minus=el('button','','−'),output=el('output','',String(quantities[id]||1)),plus=el('button','','+');
    minus.type=plus.type='button';minus.setAttribute('aria-label','Réduire la quantité de '+p.name);plus.setAttribute('aria-label','Augmenter la quantité de '+p.name);
-   minus.addEventListener('click',()=>{quantities[id]=Math.max(1,(Number(quantities[id])||1)-1);persist();render()});
-   plus.addEventListener('click',()=>{quantities[id]=Math.min(50,(Number(quantities[id])||1)+1);persist();render()});
+   const setQuantity=delta=>{
+    quantities[id]=Math.max(1,Math.min(50,(Number(quantities[id])||1)+delta));
+    output.textContent=String(quantities[id]);
+    persist();summary(); // Keep the focused control in place for keyboard users.
+   };
+   minus.addEventListener('click',()=>setQuantity(-1));
+   plus.addEventListener('click',()=>setQuantity(1));
    qty.append(minus,output,plus);right.append(qty);
    const remove=el('button','mc-remove','Retirer');remove.type='button';remove.setAttribute('aria-label','Retirer '+p.name+' du carnet');
    remove.addEventListener('click',()=>{
