@@ -35,7 +35,7 @@ initNav(){
  const select=this.byId('langSelect');
  if(select){select.value=this.lang;select.addEventListener('change',()=>{this.lang=select.value;this.translate();this.renderMenu?.();this.renderCatalog?.();this.renderFavorites?.()})}
  this.translate();this.markLinks();
- const top=this.byId('backTop');if(top)top.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));
+ const top=this.byId('backTop');if(top){top.addEventListener('click',()=>scrollTo({top:0,behavior:'smooth'}));const update=()=>{top.hidden=window.scrollY<560};update();addEventListener('scroll',update,{passive:true})}
 },
 translate(){
  document.documentElement.lang=this.lang;
