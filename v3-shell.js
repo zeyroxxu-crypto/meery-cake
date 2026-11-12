@@ -47,3 +47,42 @@ footer.innerHTML=`
 const year=document.getElementById('currentYear');if(year)year.textContent=new Date().getFullYear();
 }
 })();
+
+/* Progressive, same-origin page transitions across every Meery Cake V3 page.
+   Never intercept downloads, external sites, modified clicks, hashes on this page,
+   or native navigation when the visitor asks for reduced motion. */
+(function initPageMotion(){
+ const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+ if(reduced)return;
+ const curtain=document.createElement('div');
+ curtain.className='meery-page-curtain';
+ curtain.id='meeryPageCurtain';
+ curtain.setAttribute('aria-hidden','true');
+ curtain.innerHTML='<div class="meery-page-curtain-inner"><span class="meery-page-curtain-symbol">✦</span><span class="meery-page-curtain-title">Meery Cake</span><span class="meery-page-curtain-subtitle">Une douceur à découvrir</span></div><div class="meery-page-curtain-progress"></div>';
+ document.body.appendChild(curtain);
+ let navigating=false;
+ document.addEventListener('click',function(event){
+   if(event.defaultPrevented||event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey||navigating)return;
+   const link=event.target.closest&&event.target.closest('a[href]');
+   if(!link||link.hasAttribute('download')||link.hasAttribute('data-no-transition')||link.getAttribute('target')&&link.getAttribute('target')!=='_self')return;
+   if(link.closest('[contenteditable="true"]'))return;
+   const raw=link.getAttribute('href');
+   if(!raw||raw.startsWith('#')||raw.startsWith('javascript:'))return;
+   let next;
+   try{next=new URL(raw,window.location.href)}catch{return}
+   const current=new URL(window.location.href);
+   if(next.origin!==current.origin||!['http:','https:'].includes(next.protocol))return;
+   const samePage=next.pathname===current.pathname&&next.search===current.search;
+   if(samePage)return; /* Native in-page anchor or reload behaviour */
+   if(!next.pathname.endsWith('.html')&&!next.pathname.endsWith('/'))return; /* Files and assets navigate normally */
+   event.preventDefault();
+   navigating=true;
+   curtain.classList.add('is-visible');
+   document.documentElement.classList.add('is-navigating');
+   // Keep the effect brief. The destination loads as a normal real page, preserving browser history.
+   window.setTimeout(()=>window.location.assign(next.href),410);
+   // In case navigation is blocked by a browser extension, do not trap clicks forever.
+   window.setTimeout(()=>{if(document.visibilityState==='visible'){curtain.classList.remove('is-visible');document.documentElement.classList.remove('is-navigating');navigating=false}},1800);
+ },false);
+ window.addEventListener('pageshow',()=>{curtain.classList.remove('is-visible');document.documentElement.classList.remove('is-navigating');navigating=false});
+})();
