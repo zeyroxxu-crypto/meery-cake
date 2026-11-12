@@ -1,0 +1,642 @@
+{
+  "project": "Meery Cake",
+  "demo": true,
+  "menu": [
+    {
+      "id": "brunch",
+      "name": "Petit-déjeuner & brunch",
+      "items": [
+        {
+          "id": "0-0",
+          "name": "Formule P'tit Déj",
+          "price": "",
+          "description": "Tartine d'œufs brouillés, boisson chaude, jus d'orange pressé et viennoiserie.",
+          "featured": true,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "0-1",
+          "name": "Brunch du dimanche",
+          "price": "",
+          "description": "Boisson fraîche et chaude au choix. Plat principal : suggestion du jour, tartine du jour ou quiche du jour. Accompagnements indiqués : salade verte, egg muffin, œufs brouillés, bacon, fromage de chèvre. Côté sucré : mini-pâtisseries maison, mini-viennoiserie, fruits de saison, granola et miel.",
+          "featured": true,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "0-2",
+          "name": "Brunch gourmand",
+          "price": "",
+          "description": "Boisson chaude et fraîche au choix. Quatre pancakes moelleux, fruits frais, chantilly maison, sirop d'érable ou Nutella. Salade composée accompagnée d'une tartine gratinée ou d'une quiche du jour.",
+          "featured": true,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "0-3",
+          "name": "Le Classique Anglais",
+          "price": "",
+          "description": "Bun anglais garni d'œufs brouillés, bacon croustillant et cheddar fondant.",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "0-4",
+          "name": "Menu enfant",
+          "price": "",
+          "description": "Un plat, une boisson fraîche ou chaude et un dessert.",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        }
+      ]
+    },
+    {
+      "id": "boissons-chaudes",
+      "name": "Boissons chaudes",
+      "items": [
+        {
+          "id": "1-0",
+          "name": "Expresso",
+          "price": "2,00 €",
+          "description": "",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "1-1",
+          "name": "Double expresso",
+          "price": "3,50 €",
+          "description": "",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "1-2",
+          "name": "Americano",
+          "price": "3,60 €",
+          "description": "",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "1-3",
+          "name": "Cappuccino",
+          "price": "5,00 €",
+          "description": "Chantilly mentionnée sur la carte.",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "1-4",
+          "name": "Latte",
+          "price": "4,50 €",
+          "description": "Vanille ou caramel.",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "1-5",
+          "name": "Chai latte",
+          "price": "5,00 €",
+          "description": "",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "1-6",
+          "name": "Chocolat chaud",
+          "price": "4,00 €",
+          "description": "",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "1-7",
+          "name": "Chocolat viennois",
+          "price": "4,50 €",
+          "description": "",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "1-8",
+          "name": "Chocolat chaud caramel",
+          "price": "6,50 €",
+          "description": "",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "1-9",
+          "name": "Chocolat chaud Nutella",
+          "price": "6,50 €",
+          "description": "",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "1-10",
+          "name": "Chocolat chaud tiramisu",
+          "price": "6,50 €",
+          "description": "",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "1-11",
+          "name": "Matcha latte",
+          "price": "6,50 €",
+          "description": "",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "1-12",
+          "name": "Ice latte",
+          "price": "5,50 €",
+          "description": "Lait de vache ou végétal.",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "1-13",
+          "name": "Thé",
+          "price": "",
+          "description": "",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "1-14",
+          "name": "Café crème",
+          "price": "",
+          "description": "",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        }
+      ]
+    },
+    {
+      "id": "boissons-froides",
+      "name": "Boissons fraîches",
+      "items": [
+        {
+          "id": "2-0",
+          "name": "Jus d'orange pressé",
+          "price": "5,00 €",
+          "description": "",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "2-1",
+          "name": "Jus de pamplemousse pressé",
+          "price": "5,00 €",
+          "description": "",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "2-2",
+          "name": "Citronnade maison",
+          "price": "5,00 €",
+          "description": "",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "2-3",
+          "name": "Ice Tea",
+          "price": "3,00 €",
+          "description": "25 cl",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "2-4",
+          "name": "San Pellegrino",
+          "price": "4,00 €",
+          "description": "50 cl",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "2-5",
+          "name": "Jus de pomme ou ananas",
+          "price": "3,00 €",
+          "description": "25 cl",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "2-6",
+          "name": "Vittel",
+          "price": "4,00 €",
+          "description": "50 cl",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "2-7",
+          "name": "Thé glacé maison",
+          "price": "",
+          "description": "",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        }
+      ]
+    },
+    {
+      "id": "sale",
+      "name": "Carte salée",
+      "items": [
+        {
+          "id": "3-0",
+          "name": "Tartine de campagne",
+          "price": "12,00 €",
+          "description": "Chèvre-miel ou poulet mariné. Accompagnée de salade.",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "3-1",
+          "name": "Croque-monsieur de campagne",
+          "price": "16,00 €",
+          "description": "Pain de campagne, béchamel, poulet mariné, emmental. Accompagné de salade et frites.",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "3-2",
+          "name": "Tartines d'été",
+          "price": "14,00 €",
+          "description": "Burrata, pesto, cream cheese, tomates cerises et pickles d'oignons ; ou burrata, jambon de pays, cream cheese, tomates cerises et pickles d'oignons. Accompagnées de salade.",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "3-3",
+          "name": "Avocado toast saumon ou féta",
+          "price": "16,00 €",
+          "description": "Pain de campagne, cream cheese, avocat, citron, tomates cerises, pickles d'oignons et salade.",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "3-4",
+          "name": "Chicken burger",
+          "price": "15,00 €",
+          "description": "Pain brioché, poulet pané, salade, tomates, ketchup et mayonnaise. Accompagné de salade ou frites.",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "3-5",
+          "name": "Croque brioche",
+          "price": "14,00 €",
+          "description": "Pain brioché, béchamel, chèvre, emmental, cheddar, miel et salade.",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "3-6",
+          "name": "Buddha bowl au choix",
+          "price": "16,00 €",
+          "description": "Riz thaï, salade, tomates cerises, maïs, betterave, cœur d'artichaut, pickles d'oignons, avocat. Saumon, poulet mariné ou chèvre.",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "3-7",
+          "name": "Salade de chèvre chaud au miel",
+          "price": "12,00 €",
+          "description": "",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "3-8",
+          "name": "Salade tomates, mozzarella burrata et pesto",
+          "price": "12,00 €",
+          "description": "",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "3-9",
+          "name": "Suggestion du jour",
+          "price": "12,00 €",
+          "description": "",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "3-10",
+          "name": "Buddha bowl",
+          "price": "",
+          "description": "Riz thaï, salade, sauce soja, crème balsamique, tomates cerises, concombre, radis, cœur de palmier, pickles d'oignons ; poulet tex-mex, saumon fumé ou chèvre.",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "3-11",
+          "name": "Bagel poulet cheddar",
+          "price": "",
+          "description": "Salade, tomate, ketchup, moutarde. Accompagné de salade.",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "3-12",
+          "name": "Bagel bacon grillé cheddar",
+          "price": "",
+          "description": "Ketchup, moutarde, œuf au plat. Accompagné de salade.",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "3-13",
+          "name": "Tartines variées",
+          "price": "",
+          "description": "Chèvre-miel, poulet tex-mex ou chèvre bleu-emmental. Accompagnées de salade.",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "3-14",
+          "name": "Tartine du jour",
+          "price": "",
+          "description": "",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "3-15",
+          "name": "Quiche du jour",
+          "price": "",
+          "description": "",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        }
+      ]
+    },
+    {
+      "id": "desserts",
+      "name": "Pâtisseries & desserts",
+      "items": [
+        {
+          "id": "4-0",
+          "name": "Banoffee pie",
+          "price": "",
+          "description": "",
+          "featured": true,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "4-1",
+          "name": "Tarte canadienne",
+          "price": "",
+          "description": "",
+          "featured": true,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "4-2",
+          "name": "Cupcake praliné",
+          "price": "",
+          "description": "",
+          "featured": true,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "4-3",
+          "name": "Pancakes moelleux",
+          "price": "",
+          "description": "Quatre pancakes, fruits frais, chantilly maison, sirop d'érable ou Nutella (dans le brunch gourmand).",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "4-4",
+          "name": "Mini-pâtisseries maison",
+          "price": "",
+          "description": "Dans les formules brunch.",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "4-5",
+          "name": "Mini-viennoiseries",
+          "price": "",
+          "description": "Dans les formules brunch.",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        },
+        {
+          "id": "4-6",
+          "name": "Gâteaux personnalisés",
+          "price": "",
+          "description": "Sur demande pour anniversaires et occasions spéciales.",
+          "featured": false,
+          "allergensVerified": false,
+          "availableVerified": false
+        }
+      ]
+    }
+  ],
+  "photos": [
+    {
+      "id": 1,
+      "src": "https://cdt11.media.tourinsoft.eu/upload/MEERY-CAKE-1.jpg",
+      "title": "Vitrine des pâtisseries",
+      "category": "patisserie",
+      "source": "Office de tourisme / archives",
+      "verifiedRights": false,
+      "oldLocationPossible": true
+    },
+    {
+      "id": 2,
+      "src": "https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770",
+      "title": "Cupcakes colorés",
+      "category": "cupcakes",
+      "source": "Office de tourisme / archives",
+      "verifiedRights": false,
+      "oldLocationPossible": true
+    },
+    {
+      "id": 3,
+      "src": "https://cdt11.media.tourinsoft.eu/upload/MEERY-CAKE-2.jpg",
+      "title": "Brunch et gourmandises",
+      "category": "brunch",
+      "source": "Office de tourisme / archives",
+      "verifiedRights": false,
+      "oldLocationPossible": true
+    },
+    {
+      "id": 4,
+      "src": "https://www.grand-carcassonne-tourisme.fr/app/uploads/2024/01/meery-cake-5.webp",
+      "title": "Salon de thé",
+      "category": "salon",
+      "source": "Office de tourisme / archives",
+      "verifiedRights": false,
+      "oldLocationPossible": true
+    },
+    {
+      "id": 5,
+      "src": "https://img02.restaurantguru.com/cf51-Cafe-Meery-Cake-interior-1.jpg",
+      "title": "Intérieur du salon",
+      "category": "salon",
+      "source": "Galeries publiques / photos de visiteurs",
+      "verifiedRights": false,
+      "oldLocationPossible": true
+    },
+    {
+      "id": 6,
+      "src": "https://cdn.dev.iris-etourism.io/uploads/grand_carcassonne_v3/c6d/meery-cake-3.webp",
+      "title": "Créations gourmandes",
+      "category": "patisserie",
+      "source": "Office de tourisme / archives",
+      "verifiedRights": false,
+      "oldLocationPossible": true
+    },
+    {
+      "id": 7,
+      "src": "https://img.lacarte.menu/storage/media/company_gallery/4323353/conversions/contribution_gallery.jpg",
+      "title": "Ambiance du salon",
+      "category": "salon",
+      "source": "Galeries publiques / photos de visiteurs",
+      "verifiedRights": false,
+      "oldLocationPossible": true
+    },
+    {
+      "id": 8,
+      "src": "https://media-cdn.tripadvisor.com/media/photo-s/1a/7c/5a/43/photo0jpg.jpg",
+      "title": "Gâteaux du salon",
+      "category": "patisserie",
+      "source": "Galeries publiques / photos de visiteurs",
+      "verifiedRights": false,
+      "oldLocationPossible": true
+    },
+    {
+      "id": 9,
+      "src": "https://cdt34.media.tourinsoft.eu/upload/MEERY-CAKE.jpg?width=770",
+      "title": "Cupcakes et décorations",
+      "category": "cupcakes",
+      "source": "Office de tourisme / archives",
+      "verifiedRights": false,
+      "oldLocationPossible": true
+    },
+    {
+      "id": 10,
+      "src": "https://img05.restaurantguru.com/r7a0-Meery-Cake-food-2023-05-1.jpg",
+      "title": "Desserts maison",
+      "category": "patisserie",
+      "source": "Galeries publiques / photos de visiteurs",
+      "verifiedRights": false,
+      "oldLocationPossible": true
+    },
+    {
+      "id": 11,
+      "src": "https://img05.restaurantguru.com/r503-Meery-Cake-meals-2023-11.jpg",
+      "title": "Desserts et boissons",
+      "category": "brunch",
+      "source": "Galeries publiques / photos de visiteurs",
+      "verifiedRights": false,
+      "oldLocationPossible": true
+    },
+    {
+      "id": 12,
+      "src": "https://img02.restaurantguru.com/c111-Cafe-Meery-Cake-meals.jpg",
+      "title": "Pause gourmande",
+      "category": "brunch",
+      "source": "Galeries publiques / photos de visiteurs",
+      "verifiedRights": false,
+      "oldLocationPossible": true
+    },
+    {
+      "id": 13,
+      "src": "https://img05.restaurantguru.com/r759-Meery-Cake-dishes-2022-10.jpg",
+      "title": "Une part de gâteau",
+      "category": "patisserie",
+      "source": "Galeries publiques / photos de visiteurs",
+      "verifiedRights": false,
+      "oldLocationPossible": true
+    },
+    {
+      "id": 14,
+      "src": "https://img3.restaurantguru.com/w550/h367/r17c-interior-Meery-Cake-2025-09.jpg",
+      "title": "Décoration du salon",
+      "category": "salon",
+      "source": "Galeries publiques / photos de visiteurs",
+      "verifiedRights": false,
+      "oldLocationPossible": true
+    }
+  ],
+  "contact": {
+    "address": "6 rue Victor Hugo, 11000 Carcassonne, France",
+    "telephone": "09 83 60 56 02",
+    "phoneHref": "tel:+33983605602",
+    "hours": "Horaires à confirmer directement auprès du salon",
+    "email": null,
+    "instagram": "https://www.instagram.com/meery_cake/",
+    "facebook": "https://www.facebook.com/Meery-Cake-135627053291530/"
+  },
+  "config": {
+    "reservationsConnected": false,
+    "paymentsConnected": false,
+    "workshopScheduleVerified": false,
+    "realTimeInventoryConnected": false,
+    "googleReviewsConnected": false,
+    "preordersConnected": false,
+    "adminBackendConnected": false
+  },
+  "legalNotice": "Maquette de démonstration indépendante. Contenus, photographies, prix et coordonnées à valider par Meery Cake avant publication officielle."
+}
