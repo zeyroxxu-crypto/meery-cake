@@ -92,7 +92,12 @@ async showGoogleRating(){
 },
 initCatalog(){
  if(!this.byId('catalogItems'))return;
+ const params=new URLSearchParams(window.location.search);
+ const queryFromLink=(params.get('q')||'').slice(0,90);
  let cat='all',favoritesOnly=false;
+ if(queryFromLink)this.byId('catalogSearch').value=queryFromLink;
+ const categoryFromLink=(params.get('category')||'').slice(0,35);
+ if((this.data.menu||[]).some(g=>g.id===categoryFromLink))cat=categoryFromLink;
  this.renderCatalog=()=>{
  const result=this.byId('catalogItems'),q=this.byId('catalogSearch')?.value.toLocaleLowerCase('fr').trim()||'';result.replaceChildren();
  const matches=(this.data.menu||[]).flatMap(g=>g.items.map(p=>({...p,category:g.name,groupId:g.id}))).filter(p=>(cat==='all'||p.groupId===cat)&&(!favoritesOnly||this.favorites.includes(p.id))&&(p.name+' '+p.description).toLocaleLowerCase('fr').includes(q));
@@ -106,7 +111,7 @@ initCatalog(){
  };
  const filters=this.byId('catalogFilters');
  const all=[{id:'all',name:'Tout'},...(this.data.menu||[])];
- for(const g of all){const b=this.el('button',{cls:'filter'+(g.id==='all'?' active':''),text:g.name,type:'button'});b.setAttribute('aria-pressed',String(g.id==='all'));b.addEventListener('click',()=>{cat=g.id;filters.querySelectorAll('button').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-pressed',String(x===b))});this.renderCatalog()});filters.append(b)}
+ for(const g of all){const b=this.el('button',{cls:'filter'+(g.id===cat?' active':''),text:g.name,type:'button'});b.setAttribute('aria-pressed',String(g.id===cat));b.addEventListener('click',()=>{cat=g.id;filters.querySelectorAll('button').forEach(x=>{x.classList.toggle('active',x===b);x.setAttribute('aria-pressed',String(x===b))});this.renderCatalog()});filters.append(b)}
  this.byId('catalogSearch')?.addEventListener('input',()=>this.renderCatalog());
  this.byId('onlyFavs')?.addEventListener('change',e=>{favoritesOnly=e.target.checked;this.renderCatalog()});
  this.byId('copyFavorites')?.addEventListener('click',()=>{
