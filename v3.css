@@ -55,3 +55,88 @@
 .hero-content .hero-actions{animation:meery-enter .8s .3s both}
 .hero-visual>img{animation:meery-photo 1.15s ease-out both}
 }
+
+
+/* ─── Meery Cake V3 — Signature motion system ─── */
+@keyframes mc-content-enter{from{opacity:0;filter:blur(3px)}to{opacity:1;filter:blur(0)}}
+@keyframes mc-curtain-glow{0%,100%{opacity:.58;transform:scale(.93) rotate(-8deg)}50%{opacity:1;transform:scale(1.08) rotate(9deg)}}
+@keyframes mc-bar-sweep{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes mc-step-reveal{from{opacity:0;transform:translateY(11px)}to{opacity:1;transform:translateY(0)}}
+@keyframes mc-star-bounce{0%{transform:scale(.85) rotate(-7deg)}60%{transform:scale(1.16) rotate(7deg)}100%{transform:scale(1) rotate(0)}}
+
+/* Page navigation: animated curtain is dynamically injected by v3-shell.js. */
+.meery-page-curtain{
+ position:fixed;inset:0;z-index:5000;display:grid;place-items:center;
+ background:radial-gradient(ellipse at 24% 20%,#98637b 0%,transparent 52%),linear-gradient(130deg,#5c2d42,#783f55 56%,#4e2539);
+ transform:translate3d(0,102%,0);transition:transform 410ms cubic-bezier(.76,0,.22,1);
+ pointer-events:none;overflow:hidden;isolation:isolate;will-change:transform
+}
+.meery-page-curtain::before,.meery-page-curtain::after{
+ content:"";position:absolute;border:1px solid #edd0d62f;border-radius:50%;z-index:0;pointer-events:none
+}
+.meery-page-curtain::before{width:66vmax;height:66vmax;top:-28vmax;right:-15vmax;transform:rotate(20deg)}
+.meery-page-curtain::after{width:45vmax;height:45vmax;bottom:-24vmax;left:-15vmax}
+.meery-page-curtain.is-visible{transform:translate3d(0,0,0);pointer-events:auto}
+.meery-page-curtain-inner{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;flex-direction:column;text-align:center;color:#fff9f7;gap:8px}
+.meery-page-curtain-symbol{font-size:40px;color:#ebc19a;line-height:1}
+.meery-page-curtain-title{font:500 clamp(43px,7vw,82px)/1.08 var(--serif);letter-spacing:-.06em}
+.meery-page-curtain-subtitle{font-size:10px;text-transform:uppercase;letter-spacing:.27em;color:#f4d9df;font-weight:800}
+.meery-page-curtain-progress{position:absolute;bottom:0;left:0;right:0;height:5px;background:#e5b789;transform:scaleX(0);transform-origin:left;z-index:3}
+.meery-page-curtain.is-visible .meery-page-curtain-progress{animation:mc-bar-sweep .46s linear both}
+.meery-page-curtain.is-visible .meery-page-curtain-symbol{animation:mc-curtain-glow 1.25s ease-in-out infinite}
+@media(prefers-reduced-motion:no-preference){
+ main{animation:mc-content-enter .63s cubic-bezier(.22,1,.36,1) both}
+ .step.active{animation:mc-step-reveal .42s cubic-bezier(.22,1,.36,1) both}
+ .star-btn.active{animation:mc-star-bounce .26s ease-out}
+}
+
+/* The observer opts in with mc-motion-ready, so unsupported browsers never hide content. */
+.reveal{opacity:1;transform:none}
+html.mc-motion-ready .reveal{
+ transition:opacity .72s cubic-bezier(.22,1,.36,1),transform .72s cubic-bezier(.22,1,.36,1),filter .72s ease;
+ transition-delay:var(--reveal-delay,0ms)
+}
+html.mc-motion-ready .reveal:not(.revealed){
+ opacity:0;transform:translate3d(0,24px,0);filter:blur(4px)
+}
+html.mc-motion-ready .reveal.revealed{
+ opacity:1;transform:translate3d(0,0,0);filter:blur(0)
+}
+
+/* Deliberate, small interactions rather than constant distracting motion. */
+.button{position:relative;overflow:hidden;isolation:isolate;transition:transform .25s cubic-bezier(.22,1,.36,1),background .2s ease,box-shadow .3s ease}
+.button::after{
+ content:"";position:absolute;inset:0;pointer-events:none;
+ background:linear-gradient(112deg,transparent 15%,#ffffff3c 48%,transparent 80%);
+ transform:translateX(-130%);transition:transform .65s cubic-bezier(.22,1,.36,1)
+}
+.button:hover::after{transform:translateX(130%)}
+.button:hover{box-shadow:0 12px 26px #64374c20}
+.button:active{transform:translateY(0) scale(.985)}
+.editorial-card,.catalog-card,.event-card,.promo-box,.gallery-tile,.contact-card,.review-summary,.panel{
+ transition:box-shadow .36s ease,transform .36s cubic-bezier(.22,1,.36,1),border-color .3s ease
+}
+@media(hover:hover) and (pointer:fine){
+ .editorial-card:hover,.catalog-card:hover,.event-card:hover{
+  transform:translateY(-6px);box-shadow:0 24px 48px #5c2e471b;border-color:#dfbfca
+ }
+ .promo-box:hover,.contact-card:hover{transform:translateY(-3px)}
+ .gallery-tile:hover{box-shadow:0 18px 36px #68395425}
+}
+.gallery-tile img,.featured-gallery img,.hero-visual img{transition:transform .7s cubic-bezier(.22,1,.36,1)}
+@media(hover:hover) and (pointer:fine){
+ .gallery-tile:hover img,.featured-gallery a:hover img{transform:scale(1.075)}
+}
+.nav-sub{transform-origin:top center;animation:mc-step-reveal .22s ease-out both}
+.faq details,.review-guide details{transition:background .2s,border-color .2s,box-shadow .2s}
+.faq details[open],.review-guide details[open]{border-color:#dbb7c5;box-shadow:0 8px 22px #5f344711;background:#fffdfc}
+.menu-cat,.filter,.choice,.catalog-actions button{transition:background .25s ease,color .25s ease,border-color .25s ease,transform .2s ease}
+@media(hover:hover){.menu-cat:hover,.filter:hover,.choice:hover{transform:translateY(-1px)}}
+@media(max-width:600px){.meery-page-curtain-title{font-size:56px}.meery-page-curtain-symbol{font-size:31px}}
+@media(prefers-reduced-motion:reduce){
+ .meery-page-curtain{display:none!important}
+ main,.step.active,.star-btn.active{animation:none!important}
+ .reveal,html.mc-motion-ready .reveal{opacity:1!important;filter:none!important;transform:none!important;transition:none!important}
+ .button,.editorial-card,.catalog-card,.event-card,.promo-box,.gallery-tile,.contact-card,.review-summary,.panel{transition:none!important}
+ .nav-sub{animation:none!important}
+}
