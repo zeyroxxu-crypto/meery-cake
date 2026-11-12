@@ -346,3 +346,18 @@ html.mc-motion-disabled .step.active{animation:none!important}
  .nav-actions select{max-width:95px;font-size:10px}
  .nav-wrap{gap:5px}
 }
+
+
+/* If a visitor explicitly turns motion on while iOS Reduced Motion is active,
+   honour that explicit choice for the page's small, unobtrusive scroll reveals. */
+@media(prefers-reduced-motion:reduce){
+ html.mc-motion-enabled.mc-motion-ready .reveal{
+  transition:opacity .72s ease,transform .72s ease,filter .72s ease!important;
+ }
+ html.mc-motion-enabled.mc-motion-ready .reveal:not(.revealed){
+  opacity:0!important;transform:translateY(24px)!important;filter:blur(4px)!important
+ }
+ html.mc-motion-enabled.mc-motion-ready .reveal.revealed{
+  opacity:1!important;transform:translateY(0)!important;filter:blur(0)!important
+ }
+}
