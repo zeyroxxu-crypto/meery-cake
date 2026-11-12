@@ -1,0 +1,39 @@
+name: Google Reviews - Meery Cake
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "15 */6 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current website
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Synchronize authorized Google Business Profile reviews
+        env:
+          GBP_CLIENT_ID: ${{ secrets.GBP_CLIENT_ID }}
+          GBP_CLIENT_SECRET: ${{ secrets.GBP_CLIENT_SECRET }}
+          GBP_REFRESH_TOKEN: ${{ secrets.GBP_REFRESH_TOKEN }}
+          GBP_ACCOUNT_ID: ${{ secrets.GBP_ACCOUNT_ID }}
+          GBP_LOCATION_ID: ${{ secrets.GBP_LOCATION_ID }}
+        run: node tools/synchroniser-avis-google.mjs
+      - name: Publish updated review data if changed
+        run: |
+          if git diff --quiet -- google-avis.json; then
+            echo "No changes to publish."
+            exit 0
+          fi
+          git config user.name "meery-cake-reviews-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add google-avis.json
+          git commit -m "Synchronize official Meery Cake Google reviews"
+          git push
