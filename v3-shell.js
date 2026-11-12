@@ -82,6 +82,7 @@ const year=document.getElementById('currentYear');if(year)year.textContent=new D
    button.addEventListener('click',()=>{
      writePreference(active?'off':'on');
      applyPreference();
+     try{window.dispatchEvent(new Event('mc:motion-preference-change'))}catch{}
      if(active&&typeof button.animate==='function'){
        button.animate([{transform:'scale(.85) rotate(-15deg)'},{transform:'scale(1.2) rotate(15deg)'},{transform:'scale(1) rotate(0)'}],{duration:540,easing:'ease-out'});
      }
