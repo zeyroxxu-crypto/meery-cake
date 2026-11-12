@@ -60,7 +60,7 @@ function createSearch(){
  const contrast=$('mcMotionToggle'),lang=$('langSelect');
  if(contrast)nav.insertBefore(btn,contrast);else if(lang)nav.insertBefore(btn,lang);else nav.append(btn);
  const backdrop=el('div','mc-search-backdrop');backdrop.id='mcSearchBackdrop';backdrop.setAttribute('aria-hidden','true');
- const dialog=el('section','mc-search-dialog');dialog.role='dialog';dialog.setAttribute('aria-modal','true');dialog.setAttribute('aria-label','Recherche rapide');
+ const dialog=el('section','mc-search-dialog');dialog.setAttribute('role','dialog');dialog.setAttribute('aria-modal','true');dialog.setAttribute('aria-label','Recherche rapide');
  const header=el('div','mc-search-dialog-top'),glass=el('span','glass','⌕'),input=el('input','mc-search-input');
  input.type='search';input.id='mcSearchInput';input.placeholder='Rechercher un dessert, une page…';input.autocomplete='off';input.maxLength=90;
  const close=el('button','mc-search-close','Esc ×');close.type='button';close.setAttribute('aria-label','Fermer la recherche');
@@ -118,6 +118,7 @@ function createSearch(){
  btn.addEventListener('click',open);close.addEventListener('click',shut);
  backdrop.addEventListener('click',e=>{if(e.target===backdrop)shut()});
  input.addEventListener('input',()=>render(input.value));
+ results.addEventListener('click',e=>{if(e.target.closest('a[href]'))shut()});
  input.addEventListener('keydown',e=>{
   if(e.key==='ArrowDown'){e.preventDefault();selectedNext(1)}
   if(e.key==='ArrowUp'){e.preventDefault();selectedNext(-1)}
@@ -181,12 +182,14 @@ function installImageFallback(){
  const attach=(img)=>{
   if(img.dataset.mcFallback==='bound')return;
   img.dataset.mcFallback='bound';
-  img.addEventListener('error',()=>{
+  const useFallback=()=>{
    if(img.src.startsWith('data:image/svg+xml'))return;
    img.src=fallback;
    img.loading='lazy';
    img.classList.add('mc-error-image');
-  });
+  };
+  img.addEventListener('error',useFallback);
+  if(img.complete&&img.naturalWidth===0&&img.getAttribute('src'))useFallback();
  };
  document.querySelectorAll('img').forEach(attach);
  const mo=new MutationObserver(ms=>{for(const m of ms)for(const n of m.addedNodes){if(n.nodeType!==1)continue;if(n.matches?.('img'))attach(n);n.querySelectorAll?.('img').forEach(attach)}});
@@ -312,8 +315,21 @@ async function notebook(){
  addEventListener('storage',e=>{if(['meerycake-v3-favorites',STORAGE_NOTEBOOK].includes(e.key)){quantities=readJSON(STORAGE_NOTEBOOK,{});render()}});
  render();
 }
+function enhanceFormShares(){
+ for(const {result,preview,label} of [
+  {result:'brunchResult',preview:'brunchSummary',label:'Partager ma demande de brunch'},
+  {result:'workshopResult',preview:'workshopSummary',label:'Partager ma demande d’atelier'},
+  {result:'giftResult',preview:'giftSummary',label:'Partager ma demande de cadeau'},
+ ]){
+  const container=$(result),text=$(preview);if(!container||!text)continue;
+  const actions=container.querySelector('.form-buttons');if(!actions)continue;
+  const share=el('button','button secondary',label);share.type='button';
+  share.addEventListener('click',()=>shareText('Meery Cake — demande à confirmer',text.textContent));
+  actions.append(share);
+ }
+}
 function additions(){
- extendNavigation();createSearch();installImageFallback();cakePreview();notebook();
+ extendNavigation();createSearch();installImageFallback();cakePreview();enhanceFormShares();notebook();
 }
 document.addEventListener('DOMContentLoaded',additions);
 })();
