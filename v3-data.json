@@ -500,7 +500,8 @@
       "category": "patisserie",
       "source": "Office de tourisme / archives",
       "verifiedRights": false,
-      "oldLocationPossible": true
+      "oldLocationPossible": true,
+      "displayInGallery": true
     },
     {
       "id": 2,
@@ -509,7 +510,8 @@
       "category": "cupcakes",
       "source": "Office de tourisme / archives",
       "verifiedRights": false,
-      "oldLocationPossible": true
+      "oldLocationPossible": true,
+      "displayInGallery": true
     },
     {
       "id": 3,
@@ -518,7 +520,8 @@
       "category": "brunch",
       "source": "Office de tourisme / archives",
       "verifiedRights": false,
-      "oldLocationPossible": true
+      "oldLocationPossible": true,
+      "displayInGallery": true
     },
     {
       "id": 4,
@@ -527,7 +530,8 @@
       "category": "salon",
       "source": "Office de tourisme / archives",
       "verifiedRights": false,
-      "oldLocationPossible": true
+      "oldLocationPossible": true,
+      "displayInGallery": true
     },
     {
       "id": 5,
@@ -536,7 +540,9 @@
       "category": "salon",
       "source": "Galeries publiques / photos de visiteurs",
       "verifiedRights": false,
-      "oldLocationPossible": true
+      "oldLocationPossible": true,
+      "displayInGallery": false,
+      "qualityNote": "Image de galerie publique possiblement filigranée ; masquée dans la galerie premium."
     },
     {
       "id": 6,
@@ -545,7 +551,8 @@
       "category": "patisserie",
       "source": "Office de tourisme / archives",
       "verifiedRights": false,
-      "oldLocationPossible": true
+      "oldLocationPossible": true,
+      "displayInGallery": true
     },
     {
       "id": 7,
@@ -554,7 +561,8 @@
       "category": "salon",
       "source": "Galeries publiques / photos de visiteurs",
       "verifiedRights": false,
-      "oldLocationPossible": true
+      "oldLocationPossible": true,
+      "displayInGallery": true
     },
     {
       "id": 8,
@@ -563,7 +571,8 @@
       "category": "patisserie",
       "source": "Galeries publiques / photos de visiteurs",
       "verifiedRights": false,
-      "oldLocationPossible": true
+      "oldLocationPossible": true,
+      "displayInGallery": true
     },
     {
       "id": 9,
@@ -572,7 +581,8 @@
       "category": "cupcakes",
       "source": "Office de tourisme / archives",
       "verifiedRights": false,
-      "oldLocationPossible": true
+      "oldLocationPossible": true,
+      "displayInGallery": true
     },
     {
       "id": 10,
@@ -581,7 +591,9 @@
       "category": "patisserie",
       "source": "Galeries publiques / photos de visiteurs",
       "verifiedRights": false,
-      "oldLocationPossible": true
+      "oldLocationPossible": true,
+      "displayInGallery": false,
+      "qualityNote": "Image de galerie publique possiblement filigranée ; masquée dans la galerie premium."
     },
     {
       "id": 11,
@@ -590,7 +602,9 @@
       "category": "brunch",
       "source": "Galeries publiques / photos de visiteurs",
       "verifiedRights": false,
-      "oldLocationPossible": true
+      "oldLocationPossible": true,
+      "displayInGallery": false,
+      "qualityNote": "Image de galerie publique possiblement filigranée ; masquée dans la galerie premium."
     },
     {
       "id": 12,
@@ -599,7 +613,9 @@
       "category": "brunch",
       "source": "Galeries publiques / photos de visiteurs",
       "verifiedRights": false,
-      "oldLocationPossible": true
+      "oldLocationPossible": true,
+      "displayInGallery": false,
+      "qualityNote": "Image de galerie publique possiblement filigranée ; masquée dans la galerie premium."
     },
     {
       "id": 13,
@@ -608,7 +624,9 @@
       "category": "patisserie",
       "source": "Galeries publiques / photos de visiteurs",
       "verifiedRights": false,
-      "oldLocationPossible": true
+      "oldLocationPossible": true,
+      "displayInGallery": false,
+      "qualityNote": "Image de galerie publique possiblement filigranée ; masquée dans la galerie premium."
     },
     {
       "id": 14,
@@ -617,7 +635,9 @@
       "category": "salon",
       "source": "Galeries publiques / photos de visiteurs",
       "verifiedRights": false,
-      "oldLocationPossible": true
+      "oldLocationPossible": true,
+      "displayInGallery": false,
+      "qualityNote": "Image de galerie publique possiblement filigranée ; masquée dans la galerie premium."
     }
   ],
   "contact": {
