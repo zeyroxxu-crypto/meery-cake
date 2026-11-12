@@ -149,6 +149,15 @@ function extendNavigation(){
   const col=foot.children[1];
   if(col&&!col.querySelector('[href="carnet.html"]')){const a=el('a','','♡ Mon carnet gourmand');a.href='carnet.html';col.append(a)}
  }
+ // Make the new notebook discoverable at the moment visitors save a favourite.
+ const menuHeading=document.querySelector('.menu-panel-head');
+ if(menuHeading&&!menuHeading.querySelector('[href="carnet.html"]')){
+   const link=el('a','inline-link','Voir mon carnet ♡');link.href='carnet.html';link.setAttribute('aria-label','Ouvrir mon carnet de favoris');menuHeading.append(link);
+ }
+ const toolbar=document.querySelector('.catalog-toolbar');
+ if(toolbar&&!toolbar.querySelector('[href="carnet.html"]')){
+   const link=el('a','button secondary small','♡ Mon carnet gourmand');link.href='carnet.html';toolbar.append(link);
+ }
  const meta=document.querySelector('.footer-meta');
  if(meta&&!meta.querySelector('#mcReadableButton')){
   const toggle=el('button','mc-contrast-trigger','Confort de lecture +');toggle.id='mcReadableButton';toggle.type='button';
