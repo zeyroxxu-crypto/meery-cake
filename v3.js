@@ -15,7 +15,7 @@ pl:{home:'Strona główna',menu:'Menu',explore:'Odkryj',reviews:'Opinie',contact
 },
 get lang(){try{return localStorage.getItem(this.langKey)||'fr'}catch{return 'fr'}},
 set lang(v){try{localStorage.setItem(this.langKey,v)}catch{}},
-get favorites(){try{return JSON.parse(localStorage.getItem(this.storeKey)||'[]')}catch{return []}},
+get favorites(){try{const a=JSON.parse(localStorage.getItem(this.storeKey)||'[]');return Array.isArray(a)?a.filter(v=>typeof v==='string').slice(0,300):[]}catch{return []}},
 saveFavorites(a){try{localStorage.setItem(this.storeKey,JSON.stringify(a))}catch{}},
 t(k){return (this.translations[this.lang]||this.translations.fr)[k]||k},
 toast(m){const t=document.getElementById('toast');if(!t)return;t.textContent=m;t.hidden=false;clearTimeout(this.toastTimeout);this.toastTimeout=setTimeout(()=>{t.hidden=true},3200)},
@@ -24,7 +24,7 @@ productById(id){for(const g of this.data?.menu||[]){const p=g.items.find(x=>x.id
 async copy(s){try{await navigator.clipboard.writeText(s);this.toast('Message copié !');return true}catch{this.toast('Copie indisponible : sélectionnez le texte.');return false}},
 today(){const d=new Date();d.setMinutes(d.getMinutes()-d.getTimezoneOffset());return d.toISOString().slice(0,10)},
 byId(id){return document.getElementById(id)},
-markLinks(){const path=location.pathname.split('/').pop()||'index.html';document.querySelectorAll('.nav-list>a').forEach(a=>{const p=(a.getAttribute('href')||'').split('#')[0];if(p&&p===path)a.setAttribute('aria-current','page')})},
+markLinks(){const path=location.pathname.split('/').pop()||'index.html',hash=location.hash;document.querySelectorAll('.nav-list>a').forEach(a=>{const href=a.getAttribute('href')||'',parts=href.split('#'),p=parts[0],h=parts[1]?'#'+parts[1]:'';if(p===path&&(!h||h===hash||(path==='index.html'&&!hash&&h==='#accueil')))a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')})},
 initNav(){
  const toggle=this.byId('navToggle'),nav=this.byId('mainNav');
  if(toggle&&nav){
