@@ -140,3 +140,12 @@ html.mc-motion-ready .reveal.revealed{
  .button,.editorial-card,.catalog-card,.event-card,.promo-box,.gallery-tile,.contact-card,.review-summary,.panel{transition:none!important}
  .nav-sub{animation:none!important}
 }
+
+/* Keep the gentle hover lift after an element has finished its scroll reveal. */
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+ html.mc-motion-ready .reveal.revealed.editorial-card:hover,
+ html.mc-motion-ready .reveal.revealed.catalog-card:hover,
+ html.mc-motion-ready .reveal.revealed.event-card:hover{transform:translate3d(0,-6px,0)}
+ html.mc-motion-ready .reveal.revealed.promo-box:hover,
+ html.mc-motion-ready .reveal.revealed.contact-card:hover{transform:translate3d(0,-3px,0)}
+}
