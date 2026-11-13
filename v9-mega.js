@@ -4,7 +4,7 @@
 'use strict';
 const $=id=>document.getElementById(id);
 const create=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n};
-const motion=()=>!window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+const motion=()=>true;
 const dataFile='v3-data.json';
 function progressBar(){
  const meter=create('div','mc9-progress');meter.setAttribute('aria-hidden','true');document.body.append(meter);
@@ -145,8 +145,7 @@ function scrollSections(){
   '.page-hero .container','.section .review-side-card','.section .google-panel',
   '.section .menu-shell','.section .promo-row'
  ].join(',');
- const reduced=window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
- if(reduced||!('IntersectionObserver' in window))return;
+ if(!('IntersectionObserver' in window))return;
  const seen=new WeakSet();
  const observer=new IntersectionObserver(entries=>{
   for(const entry of entries){
