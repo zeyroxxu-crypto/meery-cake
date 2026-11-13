@@ -5,14 +5,14 @@ var ROOT="https://video.blender.org";
 function mp4(id){return ROOT+"/static/webseed/"+id+"-720.mp4";}
 function commons(file,width){return "https://commons.wikimedia.org/wiki/Special:FilePath/"+encodeURIComponent(file).replace(/%2F/g,"/")+"?width="+(width||750);}
 var films=[
-{id:"sintel",title:"Sintel",year:2010,duration:15,genre:"Fantastique",tags:["Animation","Fantastique"],age:"Tout public",description:"Une jeune aventurière traverse un monde de glace et de feu pour retrouver le petit dragon qu'elle a autrefois sauvé. Une quête inoubliable sur l'amitié et le courage.",poster:"Sintel poster.jpg",backdrop:"Durian - Sintel-wallpaper-dragon.jpg",video:"https://storage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",official:"https://video.blender.org/videos/watch/0eb052d0-fd51-43e6-aa33-ecdbf77a5d40",license:"CC BY 3.0",credit:"© Blender Foundation / durian.blender.org",featured:true},
-{id:"tears",title:"Tears of Steel",year:2012,duration:12,genre:"Science-fiction",tags:["Science-fiction","Action"],age:"12+",description:"Dans un Amsterdam futuriste, un groupe de scientifiques tente de réparer une erreur du passé pour offrir une dernière chance à l'humanité.",poster:"Tos-poster.png",backdrop:"Tears of Steel frame 01 2a.png",video:"https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",official:"https://mango.blender.org/",license:"CC BY 3.0",credit:"© Blender Foundation / Project Mango",featured:true},
-{id:"bunny",title:"Big Buck Bunny",year:2008,duration:10,genre:"Comédie",tags:["Animation","Comédie"],age:"Tout public",description:"Un lapin géant au grand cœur profite d'un jour paisible… jusqu'à ce que trois petits malins viennent troubler la forêt. Une aventure drôle et pleine de surprises.",poster:"Big buck bunny poster big.jpg",backdrop:"Big buck bunny poster big.jpg",video:"https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",official:"https://peach.blender.org/",license:"CC BY 3.0",credit:"© Blender Foundation / peach.blender.org",featured:true},
-{id:"spring",title:"Spring",year:2019,duration:8,genre:"Fantastique",tags:["Animation","Fantastique"],age:"Tout public",description:"Une jeune bergère et son chien croisent les esprits de la nature dans une histoire poétique où le printemps n'arrive jamais sans un peu de magie.",posterUrl:"https://i.vimeocdn.com/video/772422891-d079fb2d57a1958fc2599ec700f44fda975c1dbd921203d71d56ff0a12468474-d",backdropUrl:"https://i.vimeocdn.com/video/772422891-d079fb2d57a1958fc2599ec700f44fda975c1dbd921203d71d56ff0a12468474-d",video:mp4("3d95fb3d-c866-42c8-9db1-fe82f48ccb95"),official:"https://studio.blender.org/films/",license:"CC BY 4.0",credit:"© Blender Studio / Andy Goralczyk"},
-{id:"sprite",title:"Sprite Fright",year:2021,duration:11,genre:"Comédie",tags:["Animation","Comédie"],age:"12+",description:"Une bande d'amis part camper dans une forêt peuplée de petites créatures. Leur aventure va rapidement prendre un tour imprévu.",poster:"Sprite Fright-movie poster.jpg",backdrop:"Sprite Fright-movie poster.jpg",video:"https://video.blender.org/download/videos/a69d68a5-a0e0-4a80-9d66-49f093c97aaf-720.mp4",official:"https://studio.blender.org/films/",license:"CC BY 4.0",credit:"© Blender Studio"},
-{id:"agent",title:"Agent 327",year:2017,duration:4,genre:"Action",tags:["Animation","Action","Comédie"],age:"Tout public",description:"Un agent secret entre dans un salon de coiffure d'Amsterdam. Une coupe ordinaire ? Pas tout à fait. Une parodie d'espionnage pleine de détails.",posterUrl:"https://studio.blender.org/files/public/thumbnail/6f/a4/6fa4b9cc15464f0a9996408794c859ff_m.webp",video:mp4("264ff760-803e-430e-8d81-15648e904183"),official:"https://video.blender.org/videos/watch/264ff760-803e-430e-8d81-15648e904183",license:"CC BY-ND 4.0",credit:"© Blender Animation Studio / Agent 327",},
-{id:"caminandes",title:"Caminandes",year:2013,duration:3,genre:"Comédie",tags:["Animation","Comédie"],age:"Tout public",description:"Un lama obstiné cherche à manger une baie dans les montagnes de Patagonie. Le problème ? La nature semble avoir d'autres projets.",poster:"Blender Foundation - Caminandes - Episode 2 - Gran Dillama - Cover thumbnail.png",video:mp4("fb70d459-48d2-4db5-adba-813c84f9200a"),official:"https://video.blender.org/",license:"CC BY 3.0",credit:"© Blender Foundation / Caminandes"},
-{id:"glass",title:"Glass Half",year:2015,duration:3,genre:"Comédie",tags:["Animation","Comédie"],age:"Tout public",description:"Deux critiques d'art ne voient jamais la même chose dans une peinture. Une comédie courte et colorée sur le regard que l'on porte au monde.",poster:"Glass Half - screenshot-intro scene.png",video:mp4("64222c8a-c4c7-4b3b-9850-7fb2078edcf6"),official:"https://studio.blender.org/films/",license:"CC BY 4.0",credit:"© Blender Foundation"}
+{id:"sintel",youtubeId:"eRsGyueVLvQ",title:"Sintel",year:2010,duration:15,genre:"Fantastique",tags:["Animation","Fantastique"],age:"Tout public",description:"Une jeune aventurière traverse un monde de glace et de feu pour retrouver le petit dragon qu'elle a autrefois sauvé. Une quête inoubliable sur l'amitié et le courage.",poster:"Sintel poster.jpg",backdrop:"Durian - Sintel-wallpaper-dragon.jpg",video:"https://storage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",official:"https://video.blender.org/videos/watch/0eb052d0-fd51-43e6-aa33-ecdbf77a5d40",license:"CC BY 3.0",credit:"© Blender Foundation / durian.blender.org",featured:true},
+{id:"tears",youtubeId:"R6MlUcmOul8",title:"Tears of Steel",year:2012,duration:12,genre:"Science-fiction",tags:["Science-fiction","Action"],age:"12+",description:"Dans un Amsterdam futuriste, un groupe de scientifiques tente de réparer une erreur du passé pour offrir une dernière chance à l'humanité.",poster:"Tos-poster.png",backdrop:"Tears of Steel frame 01 2a.png",video:"https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",official:"https://mango.blender.org/",license:"CC BY 3.0",credit:"© Blender Foundation / Project Mango",featured:true},
+{id:"bunny",youtubeId:"YE7VzlLtp-4",title:"Big Buck Bunny",year:2008,duration:10,genre:"Comédie",tags:["Animation","Comédie"],age:"Tout public",description:"Un lapin géant au grand cœur profite d'un jour paisible… jusqu'à ce que trois petits malins viennent troubler la forêt. Une aventure drôle et pleine de surprises.",poster:"Big buck bunny poster big.jpg",backdrop:"Big buck bunny poster big.jpg",video:"https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",official:"https://peach.blender.org/",license:"CC BY 3.0",credit:"© Blender Foundation / peach.blender.org",featured:true},
+{id:"spring",youtubeId:"WhWc3b3KhnY",title:"Spring",year:2019,duration:8,genre:"Fantastique",tags:["Animation","Fantastique"],age:"Tout public",description:"Une jeune bergère et son chien croisent les esprits de la nature dans une histoire poétique où le printemps n'arrive jamais sans un peu de magie.",posterUrl:"https://i.vimeocdn.com/video/772422891-d079fb2d57a1958fc2599ec700f44fda975c1dbd921203d71d56ff0a12468474-d",backdropUrl:"https://i.vimeocdn.com/video/772422891-d079fb2d57a1958fc2599ec700f44fda975c1dbd921203d71d56ff0a12468474-d",video:mp4("3d95fb3d-c866-42c8-9db1-fe82f48ccb95"),official:"https://studio.blender.org/films/",license:"CC BY 4.0",credit:"© Blender Studio / Andy Goralczyk"},
+{id:"sprite",youtubeId:"_cMxraX_5RE",title:"Sprite Fright",year:2021,duration:11,genre:"Comédie",tags:["Animation","Comédie"],age:"12+",description:"Une bande d'amis part camper dans une forêt peuplée de petites créatures. Leur aventure va rapidement prendre un tour imprévu.",poster:"Sprite Fright-movie poster.jpg",backdrop:"Sprite Fright-movie poster.jpg",video:"https://video.blender.org/download/videos/a69d68a5-a0e0-4a80-9d66-49f093c97aaf-720.mp4",official:"https://studio.blender.org/films/",license:"CC BY 4.0",credit:"© Blender Studio"},
+{id:"agent",youtubeId:"mNOzP0pADL4",title:"Agent 327",year:2017,duration:4,genre:"Action",tags:["Animation","Action","Comédie"],age:"Tout public",description:"Un agent secret entre dans un salon de coiffure d'Amsterdam. Une coupe ordinaire ? Pas tout à fait. Une parodie d'espionnage pleine de détails.",posterUrl:"https://studio.blender.org/files/public/thumbnail/6f/a4/6fa4b9cc15464f0a9996408794c859ff_m.webp",video:mp4("264ff760-803e-430e-8d81-15648e904183"),official:"https://video.blender.org/videos/watch/264ff760-803e-430e-8d81-15648e904183",license:"CC BY-ND 4.0",credit:"© Blender Animation Studio / Agent 327",},
+{id:"caminandes",youtubeId:"Z4C82eyhwgU",title:"Caminandes",year:2013,duration:3,genre:"Comédie",tags:["Animation","Comédie"],age:"Tout public",description:"Un lama obstiné cherche à manger une baie dans les montagnes de Patagonie. Le problème ? La nature semble avoir d'autres projets.",poster:"Blender Foundation - Caminandes - Episode 2 - Gran Dillama - Cover thumbnail.png",video:mp4("fb70d459-48d2-4db5-adba-813c84f9200a"),official:"https://video.blender.org/",license:"CC BY 3.0",credit:"© Blender Foundation / Caminandes"},
+{id:"glass",youtubeId:"lqiN98z6Dak",title:"Glass Half",year:2015,duration:3,genre:"Comédie",tags:["Animation","Comédie"],age:"Tout public",description:"Deux critiques d'art ne voient jamais la même chose dans une peinture. Une comédie courte et colorée sur le regard que l'on porte au monde.",poster:"Glass Half - screenshot-intro scene.png",video:mp4("64222c8a-c4c7-4b3b-9850-7fb2078edcf6"),official:"https://studio.blender.org/films/",license:"CC BY 4.0",credit:"© Blender Foundation"}
 ];
 function getFilm(id){return films.find(function(f){return f.id===id;});}
 function art(f,bg){return (bg&&f.backdropUrl)||(bg&&f.backdrop?commons(f.backdrop,1400):null)||f.posterUrl||commons(f.poster||"Sintel poster.jpg",bg?1400:700);}
@@ -125,48 +125,18 @@ var f=getFilm(id);if(!f)return;
 closeDetail();closeSearch();
 var root=document.getElementById("player-root");
 document.body.style.overflow="hidden";currentPlayer=id;
+var yt="https://www.youtube.com/watch?v="+encodeURIComponent(f.youtubeId);
 root.innerHTML='<div class="player-overlay" role="dialog" aria-modal="true" aria-label="Lecture de '+text(f.title)+'">'+
 '<div class="player-top"><button class="player-back" data-close="player">'+icon("arrow").replace('class="icon"','class="icon" style="transform:rotate(180deg)"')+' Retour</button><div class="player-title"><span>VANTA / LECTURE</span>'+text(f.title)+'</div><button class="btn-quiet" data-close="player" aria-label="Fermer">'+icon("close")+'</button></div>'+
-'<div class="player-main">'+
-'<video id="film-video" controls playsinline webkit-playsinline preload="auto" poster="'+art(f,true)+'"><source src="'+f.video+'" type="video/mp4">Votre navigateur ne prend pas en charge ce lecteur.</video></div>'+
-'<div class="player-footer"><span>'+text(f.credit)+' · '+text(f.license)+'</span><a href="'+f.official+'" target="_blank" rel="noopener noreferrer">Voir la source officielle '+icon("external")+'</a></div></div>';
-var video=document.getElementById("film-video"),loading=null;
-var saved=progress[id]&&progress[id].time||0;
-var timeoutId=null,alreadyErrored=false,ready=false;
-function hideLoading(){if(loading){loading.classList.add("hidden");loading.style.pointerEvents="none";}}
-function stopTimer(){if(timeoutId){clearTimeout(timeoutId);timeoutId=null;}}
-function showProblem(message){
-if(alreadyErrored||currentPlayer!==id)return;
-alreadyErrored=true;stopTimer();hideLoading();
-var area=document.querySelector(".player-main");
-if(area)area.insertAdjacentHTML("beforeend",'<div class="player-error"><h2>Lecture indisponible</h2><p>'+text(message)+'</p><a class="btn-primary" href="'+f.official+'" target="_blank" rel="noopener noreferrer">Voir le film sur sa page officielle '+icon("external")+'</a><button class="btn-outline" style="margin-top:12px" data-close="player">Retour au catalogue</button></div>');
-}
-function loaded(){
-if(currentPlayer!==id)return;
-ready=true;stopTimer();hideLoading();
-}
-video.addEventListener("loadedmetadata",function(){
-if(saved>2&&isFinite(video.duration)&&saved<video.duration-10){try{video.currentTime=saved;}catch(e){}}
-});
-video.addEventListener("loadeddata",loaded);
-video.addEventListener("canplay",loaded);
-video.addEventListener("playing",loaded);
-video.addEventListener("timeupdate",function(){
-if(!isFinite(video.duration)||video.duration<=0)return;
-progress[id]={time:video.currentTime,duration:video.duration,updated:Date.now()};
-if(Math.floor(video.currentTime)%2===0)save();
-});
-video.addEventListener("ended",function(){progress[id]={time:0,duration:video.duration||f.duration*60,updated:Date.now()};save();toast("Film terminé. Belle séance !");});
-video.addEventListener("error",function(){showProblem("Le fichier vidéo est momentanément indisponible. Tu peux ouvrir le film sur son site d’origine.");});
-/* Aucun délai artificiel : sur un réseau mobile, le lecteur conserve le temps de charger. */
-video.load();
-/* Lecture déclenchée par le bouton natif du lecteur : iOS autorise plus facilement la vidéo après une interaction directe. */
+'<div class="player-main" style="flex-direction:column;gap:16px;padding:12px 14px">'+
+'<div class="video-frame-shell" style="width:100%;max-width:1100px;aspect-ratio:16/9;position:relative;overflow:hidden;border-radius:12px;background:#111"><iframe id="film-iframe" title="Film '+text(f.title)+' - lecteur officiel Blender" src="https://www.youtube-nocookie.com/embed/'+encodeURIComponent(f.youtubeId)+'?playsinline=1&rel=0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" loading="eager" style="display:block;width:100%;height:100%;border:0;background:#000"></iframe></div>'+
+'<p style="color:#a9a9a9;text-align:center;font-size:12px;line-height:1.5;margin:0">Appuie sur Lecture dans la vidéo. Si elle ne démarre pas, ouvre-la directement sur YouTube.</p>'+
+'<a class="btn-primary" style="min-height:46px" href="'+yt+'" target="_blank" rel="noopener noreferrer">'+icon("play")+' Ouvrir le film sur YouTube '+icon("external")+'</a></div>'+
+'<div class="player-footer"><span>'+text(f.credit)+' · '+text(f.license)+'</span><a href="'+yt+'" target="_blank" rel="noopener noreferrer">Film officiel sur YouTube '+icon("external")+'</a></div></div>';
 }
 function closePlayer(){
-var video=document.getElementById("film-video");if(video){video.pause();video.removeAttribute("src");video.load();}
 document.getElementById("player-root").innerHTML="";currentPlayer=null;
-document.body.style.overflow="";
-render();
+document.body.style.overflow="";render();
 }
 function openSearch(){
 searchOpened=true;document.body.style.overflow="hidden";
