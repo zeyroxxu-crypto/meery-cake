@@ -37,13 +37,13 @@ function save(){try{localStorage.setItem("vanta-favorites",JSON.stringify(favs))
 function hero(){
 return '<section class="hero" id="hero"><div class="hero-bg vanta-hero-abstract"></div><div class="hero-tint"></div>'+
 '<div class="hero-inner hero-content-anim"><div class="hero-eyebrow">VANTA / CINÉMA À REGARDER</div>'+
-'<div class="hero-overline">11 VIDÉOS INTÉGRÉES</div>'+
+'<div class="hero-overline">'+films.length+' VIDÉOS INTÉGRÉES</div>'+
 '<h1 class="hero-title smaller">LE CINÉMA LIBRE.</h1>'+
-'<div class="hero-meta"><span>11 FILMS ET COURTS MÉTRAGES</span><span class="dot"></span><span>EN LECTURE</span></div>'+
+'<div class="hero-meta"><span>'+films.length+' FILMS ET COURTS MÉTRAGES</span><span class="dot"></span><span>EN LECTURE</span></div>'+
 '<p class="hero-desc">Chaque titre de cette sélection possède une vidéo intégrée. De la science-fiction, de l’animation, du fantastique et de la comédie.</p>'+
 '<div class="hero-actions"><button class="btn-primary" data-nav="movies">'+icon("play")+' Découvrir les films</button>'+
 '<button class="btn-soft" data-watch="film-selection">'+icon("play")+' Regarder Salem</button></div></div>'+
-'<div class="hero-bottom"><span class="hero-selection">LES FILMS SONT DISPONIBLES VIA LEURS HÉBERGEURS</span><span class="vanta-hero-count">11 VIDÉOS</span></div></section>';
+'<div class="hero-bottom"><span class="hero-selection">LES FILMS SONT DISPONIBLES VIA LEURS HÉBERGEURS</span><span class="vanta-hero-count">'+films.length+' VIDÉOS</span></div></section>';
 }
 function card(f){
 var watch=!!(f.youtubeId||f.archiveId||f.embedId),hasFav=favs.indexOf(f.id)!==-1;
@@ -64,7 +64,7 @@ return '<section class="section"><div class="section-head reveal"><div><p class=
 }
 function catalogueBanner(title,sub){
 return '<div class="catalogue-top"><p class="eyebrow">VANTA / FILMS AVEC VIDÉO INTÉGRÉE</p><h1 class="catalogue-title">'+title+'</h1><p class="catalogue-intro">'+sub+'</p>'+
-'<div class="filters">'+["Tous","Longs métrages","Courts métrages","Animation","Science-fiction","Fantastique","Action","Comédie","Drame"].map(function(t){
+'<div class="filters">'+["Tous","Longs métrages","Courts métrages","Comédie","Thriller","Aventure","Science-fiction","Animation","Fantastique","Action","Drame","Romance","Famille","Western"].map(function(t){
 return '<button class="filter '+(filter===t?"active":"")+'" data-filter="'+text(t)+'">'+text(t)+'</button>';}).join("")+'</div>'+
 '<p class="vanta-film-total">'+filtered().length+' vidéo(s) dans la sélection</p></div>';
 }
@@ -75,13 +75,17 @@ function empty(title,desc,button){return '<div class="empty-container"><div clas
 function render(){
 var out="";
 if(view==="home"){
-out=hero()+'<div class="kicker-strip"><span>VANTA <strong> / 11 VIDÉOS INTÉGRÉES</strong></span><span class="kicker-right">SOURCES DES CRÉATEURS</span></div>'+
-rail("Tous les films disponibles","01 / LECTURE SUR VANTA",films,true)+
-rail("Science-fiction","02 / VOYAGE DANS LE FUTUR",films.filter(function(f){return f.tags.indexOf("Science-fiction")!==-1;}),true)+
-rail("Animation et fantastique","03 / IMAGINAIRE",films.filter(function(f){return f.tags.indexOf("Animation")!==-1||f.tags.indexOf("Fantastique")!==-1;}),true)+
-rail("Comédie et action","04 / DIVERTISSEMENT",films.filter(function(f){return f.tags.indexOf("Comédie")!==-1||f.tags.indexOf("Action")!==-1;}),true);
+out=hero()+'<div class="kicker-strip"><span>VANTA <strong> / '+films.length+' VIDÉOS INTÉGRÉES</strong></span><span class="kicker-right">SOURCES DES CRÉATEURS</span></div>'+
+rail("Tous les films disponibles","01 / LECTURE SUR VANTA",films.slice(0,15),true)+
+rail("Thrillers et suspense","02 / ENQUÊTES ET MYSTÈRE",films.filter(function(f){return f.genre==="Thriller";}),true)+
+rail("Comédies","03 / HUMOUR",films.filter(function(f){return f.genre==="Comédie";}),true)+
+rail("Aventure et western","04 / ACTION ET AVENTURE",films.filter(function(f){return f.genre==="Aventure"||f.genre==="Western";}),true)+
+rail("Science-fiction","05 / VOYAGE DANS LE FUTUR",films.filter(function(f){return f.tags.indexOf("Science-fiction")!==-1;}),true)+
+rail("Animation et fantastique","06 / IMAGINAIRE",films.filter(function(f){return f.tags.indexOf("Animation")!==-1||f.tags.indexOf("Fantastique")!==-1;}),true)+
+rail("Drame et romance","07 / HISTOIRES ET ÉMOTIONS",films.filter(function(f){return f.genre==="Drame"||f.genre==="Romance";}),true)+
+rail("Action et courts métrages","08 / ÉNERGIE",films.filter(function(f){return f.genre==="Action";}),true);
 }else if(view==="movies"||view==="discover"){
-out='<div style="padding-top:90px"></div>'+catalogueBanner("Films à regarder","Aucune fausse fiche : chaque vidéo de cette sélection s’ouvre dans VANTA. La lecture dépend du service qui héberge le film.")+catalogueGrid(filtered());
+out='<div style="padding-top:90px"></div>'+catalogueBanner("Films à regarder","Chaque titre a un lecteur intégré. Les classiques sont diffusés depuis Internet Archive : la disponibilité et les droits des versions peuvent varier selon le pays.")+catalogueGrid(filtered());
 }else if(view==="list"){
 var items=films.filter(function(f){return favs.indexOf(f.id)!==-1;});
 out='<div style="padding-top:90px"></div><div class="catalogue-top"><p class="eyebrow">VANTA / FAVORIS</p><h1 class="catalogue-title">Ma liste.</h1></div>'+(items.length?catalogueGrid(items):empty("Aucun favori","Ajoute les films qui te plaisent."));
@@ -132,7 +136,7 @@ function closeDetail(){document.getElementById("detail-root").innerHTML="";if(!d
 function openCredits(){
 modal('<button class="modal-close" data-close="detail" aria-label="Fermer">'+icon("close")+'</button>'+
 '<div class="modal-body"><p class="eyebrow">VANTA / CRÉDITS</p><h2>Sources et autorisations</h2>'+
-'<p>Les films Blender sont des créations ouvertes proposées par Blender Studio. Sita Sings the Blues est librement diffusé par Nina Paley. Star Wreck est distribué gratuitement sous conditions par ses créateurs.</p>'+
+'<p>Les films Blender sont des créations ouvertes. Sita Sings the Blues et Star Wreck sont distribués librement par leurs créateurs sous certaines conditions. Les films classiques sont diffusés par Internet Archive et identifiés comme domaine public aux États-Unis dans une sélection spécialisée : leur situation peut différer en France selon les œuvres et éditions.</p>'+
 '<p>Salem utilise le lien YouTube fourni et déclaré autorisé par l’utilisateur. Tous les lecteurs sont externes ; leur fonctionnement peut varier selon l’appareil et les réglages de l’hébergeur.</p></div>');
 }
 function openPlayer(id){
