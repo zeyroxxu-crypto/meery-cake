@@ -211,6 +211,7 @@ add('Ouvrir Google Maps ↗','Open Google Maps ↗','Abrir Google Maps ↗','Goo
 add('Merci pour votre visite ♡','Thank you for visiting ♡','Gracias por tu visita ♡','Danke für Ihren Besuch ♡','Grazie per la visita ♡','Obrigado pela visita ♡','Bedankt voor je bezoek ♡','Dziękujemy za wizytę ♡');
 
 const originalText=new WeakMap(),originalAttr=new WeakMap();
+const originalTitle=document.title;
 const excluded=new Set(['SCRIPT','STYLE','NOSCRIPT','TEXTAREA','CODE','PRE','OPTION_GAP']);
 let translating=false,scheduled=false,current='fr';
 function language(){try{const l=localStorage.getItem('meerycake-v3-lang')||'fr';return langs.includes(l)?l:'fr'}catch{return 'fr'}}
@@ -250,7 +251,7 @@ function walk(root){
  const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
  let text;
  while((text=walker.nextNode()))translateText(text);
- if(root.nodeType!==1||!root.matches('[placeholder],[title],[aria-label]')){}
+ 
  if(root.querySelectorAll)for(const el of root.querySelectorAll('[placeholder],[title],[aria-label]'))translateAttr(el);
 }
 function run(){
@@ -262,7 +263,7 @@ function run(){
  // handled by MC's existing 8-language dictionary.
  const footer=document.getElementById('siteFooter');if(footer)walk(footer);
  const header=document.getElementById('siteHeader');if(header)walk(header);
- document.title=(dict.get(document.title)||[])[langs.indexOf(current)]||document.title;
+ document.title=(dict.get(originalTitle)||[])[langs.indexOf(current)]||originalTitle;
  translating=false;
 }
 function queue(){if(scheduled)return;scheduled=true;requestAnimationFrame(()=>{scheduled=false;run()})}
