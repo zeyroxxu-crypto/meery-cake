@@ -72,7 +72,7 @@ const year=document.getElementById('currentYear');if(year)year.textContent=new D
  const overlay=document.createElement('div');
  overlay.className='mc-v4-curtain';
  overlay.setAttribute('aria-hidden','true');
- overlay.innerHTML='<div class="mc-v4-curtain-glow"></div><div class="mc-v4-brand"><span class="mc-v4-symbol">✧</span><span class="mc-v4-name">Meery Cake</span><span class="mc-v4-sub">UN INSTANT DE DOUCEUR</span><span class="mc-v4-dots"><i></i><i></i><i></i></span></div>';
+ overlay.innerHTML='<div class="mc-v4-curtain-glow"></div><div class="mc-v4-brand"><span class="mc-v4-symbol">✧</span><span class="mc-v4-name">Meery Cake</span><span class="mc-v4-sub">UN INSTANT DE DOUCEUR</span><span class="mc-v4-wait">Patientez, une douceur arrive…</span><span class="mc-v4-dots"><i></i><i></i><i></i></span></div>';
  document.body.appendChild(overlay);
  const pill=document.createElement('div');
  pill.className='mc-v4-anchor-pill';
@@ -167,7 +167,7 @@ const year=document.getElementById('currentYear');if(year)year.textContent=new D
    document.documentElement.classList.add('mc-v4-navigating');
    setHandoff(next);
    // A real full-screen interstitial, held briefly so users can see it on mobile.
-   exitTimer=window.setTimeout(()=>window.location.assign(next.href),790);
+   exitTimer=window.setTimeout(()=>window.location.assign(next.href),1250);
    window.setTimeout(()=>{
      if(document.visibilityState==='visible')clearLeave();
    },2200);
