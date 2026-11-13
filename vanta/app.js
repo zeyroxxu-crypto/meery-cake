@@ -7,7 +7,7 @@ function commons(file,width){return "https://commons.wikimedia.org/wiki/Special:
 var films=[{
  id:"simpsons-fr",title:"Les Simpson — Le Film (VF)",year:2007,duration:87,
  genre:"Animation",tags:["Animation","Comédie"],age:"Tout public",
- description:"La famille Simpson au cinéma. Vidéo proposée par son diffuseur sur YouTube.",
+ description:"La famille Simpson au cinéma. Vidéo YouTube fournie pour être intégrée au catalogue VANTA.",
  posterUrl:"https://i.ytimg.com/vi/NMx5zpsxfbU/hqdefault.jpg",
  backdropUrl:"https://i.ytimg.com/vi/NMx5zpsxfbU/maxresdefault.jpg",
  youtubeId:"NMx5zpsxfbU",official:"https://www.youtube.com/watch?v=NMx5zpsxfbU",
@@ -27,7 +27,7 @@ function save(){try{localStorage.setItem("vanta-favorites",JSON.stringify(favs))
 function hero(){
 var f=films[0];
 return '<section class="hero" id="hero"><div class="hero-bg" style="background-image:url(&quot;'+art(f,true)+'&quot;)"></div><div class="hero-tint"></div><div class="hero-noise"></div>'+
-'<div class="hero-inner hero-content-anim"><div class="hero-eyebrow">La sélection VANTA</div><div class="hero-overline"><span></span> À la une <span></span> CINÉMA LIBRE</div>'+
+'<div class="hero-inner hero-content-anim"><div class="hero-eyebrow">La sélection VANTA</div><div class="hero-overline"><span></span> À la une <span></span> CINÉMA EN FRANÇAIS</div>'+
 '<h1 class="hero-title '+(f.title.length>12?"smaller":"")+'">'+text(f.title)+'</h1>'+
 '<div class="hero-meta"><span>'+f.year+'</span><span class="dot"></span><span>'+f.duration+' min</span><span class="dot"></span><span>'+text(f.genre)+'</span><span class="dot"></span><span class="rating-pill">'+text(f.age)+'</span></div>'+
 '<p class="hero-desc">'+text(f.description)+'</p><div class="hero-actions"><button class="btn-primary" data-watch="'+f.id+'">'+icon("play")+' Regarder le film</button><button class="btn-soft" data-info="'+f.id+'">'+icon("info")+' En savoir plus</button></div></div>'+
