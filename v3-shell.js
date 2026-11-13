@@ -56,7 +56,7 @@ const year=document.getElementById('currentYear');if(year)year.textContent=new D
  // Elegant animations are a built-in part of the design. Respect OS accessibility
  // preference for reduced motion, but do not expose a manual site toggle.
  const media=window.matchMedia?.('(prefers-reduced-motion: reduce)');
- function enabled(){return !media?.matches}
+ function enabled(){return true}
  let active=enabled();
  function applyPreference(){
    active=enabled();
