@@ -13,7 +13,7 @@ youtubeId:"aIVKaiaHkpk",official:"https://www.youtube.com/watch?v=aIVKaiaHkpk",
 credit:"Vidéo YouTube intégrée",license:"Lecture YouTube",featured:true,kind:"long",available:true
 }].concat(window.VANTA_CATALOGUE||[]);
 function getFilm(id){return films.find(function(f){return f.id===id;});}
-function art(f,bg){return (bg&&f.backdropUrl)||(bg&&f.backdrop?commons(f.backdrop,1400):null)||f.posterUrl||commons(f.poster||"Sintel poster.jpg",bg?1400:700);}
+function art(f,bg){return (bg&&f.backdropUrl)||f.posterUrl||"";}
 function loadPosters(){
 var images=[].slice.call(document.querySelectorAll("img[data-movie]"));
 function load(img){
