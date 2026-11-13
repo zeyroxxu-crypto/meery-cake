@@ -63,7 +63,7 @@ function quickView(){
  const actions=el('div','v8-dialog-actions'),fav=el('button','button secondary','♡ Ajouter aux favoris'),contact=el('a','button','Se renseigner ↗'),copy=el('button','button secondary','Partager la fiche');
  fav.type=copy.type='button';contact.href='tel:+33983605602';
  actions.append(fav,contact,copy);info.append(category,title,description,price,notice,actions);
- layout.append(imageArea,info);dialog.append(close,layout);document.body.append(dialog);
+ layout.append(imageArea,info);dialog.append(close,layout);($('main')||document.body).append(dialog);
  let activeId=null,lastTrigger=null;
  const findProduct=id=>{
   for(const g of (site()?.data?.menu||[])){const p=g.items.find(x=>x.id===id);if(p)return {...p,category:g.name,groupId:g.id}}
