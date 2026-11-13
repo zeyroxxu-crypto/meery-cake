@@ -52,44 +52,23 @@ const year=document.getElementById('currentYear');if(year)year.textContent=new D
 /* Meery Cake — V4 Motion / tested fallback-friendly page and section choreography.
    This is shared by all pages via v3-shell.js and does NOT require a SPA. */
 (function initMeeryMotion(){
- const prefKey='meerycake-motion-preference';
  const handoffKey='meerycake-page-transition';
- const prefersReduced=!!(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches);
- function readPreference(){try{return window.localStorage.getItem(prefKey)}catch{return null}}
- function writePreference(v){try{window.localStorage.setItem(prefKey,v)}catch{}}
- function enabled(){const v=readPreference();return v==='on'||(v!=='off'&&!prefersReduced)}
+ // Elegant animations are a built-in part of the design. Respect OS accessibility
+ // preference for reduced motion, but do not expose a manual site toggle.
+ const media=window.matchMedia?.('(prefers-reduced-motion: reduce)');
+ function enabled(){return !media?.matches}
  let active=enabled();
  function applyPreference(){
    active=enabled();
    document.documentElement.classList.toggle('mc-motion-enabled',active);
    document.documentElement.classList.toggle('mc-motion-disabled',!active);
-   const btn=document.getElementById('mcMotionToggle');
-   if(btn){
-     btn.textContent=active?'✦':'○';
-     btn.setAttribute('aria-pressed',String(active));
-     btn.setAttribute('aria-label',active?'Désactiver les animations':'Activer les animations');
-     btn.title=active?'Animations activées — cliquer pour désactiver':'Animations désactivées — cliquer pour activer';
-   }
- }
- const navActions=document.querySelector('.nav-actions');
- if(navActions&&!document.getElementById('mcMotionToggle')){
-   const button=document.createElement('button');
-   button.id='mcMotionToggle';
-   button.type='button';
-   button.className='mc-motion-toggle';
-   button.setAttribute('aria-pressed','true');
-   const lang=navActions.querySelector('#langSelect');
-   if(lang)navActions.insertBefore(button,lang);else navActions.appendChild(button);
-   button.addEventListener('click',()=>{
-     writePreference(active?'off':'on');
-     applyPreference();
-     try{window.dispatchEvent(new Event('mc:motion-preference-change'))}catch{}
-     if(active&&typeof button.animate==='function'){
-       button.animate([{transform:'scale(.85) rotate(-15deg)'},{transform:'scale(1.2) rotate(15deg)'},{transform:'scale(1) rotate(0)'}],{duration:540,easing:'ease-out'});
-     }
-   });
+   document.getElementById('mcMotionToggle')?.remove();
  }
  applyPreference();
+ if(media?.addEventListener)media.addEventListener('change',()=>{
+   applyPreference();
+   try{window.dispatchEvent(new Event('mc:motion-preference-change'))}catch{}
+ });
  const overlay=document.createElement('div');
  overlay.className='mc-v4-curtain';
  overlay.setAttribute('aria-hidden','true');
