@@ -121,7 +121,7 @@ function enrichCake(){
  const form=$('cakeForm');if(!form||$('mc9CakeIntro'))return;
  const parent=form.parentElement,block=create('div','mc9-cake-intro');block.id='mc9CakeIntro';
  const icon=create('span','mc9-cake-intro-icon','✿'),copy=create('div');
- copy.append(create('strong','','Imaginez votre gâteau en quelques étapes'),create('p','','Personnalisez votre idée, découvrez l’aperçu illustré et préparez un message. Le salon confirmera le devis et la faisabilité.'));
+ copy.append(create('strong','','Votre demande de gâteau personnalisé'),create('p','','Indiquez vos envies dans le formulaire pour préparer une demande à transmettre au salon. Le devis et la faisabilité restent à confirmer.'));
  const checklist=create('div','mc9-cake-checklist');
  for(const x of ['✦ Forme','✦ Couleurs','✦ Décoration','✦ Aperçu 2D'])checklist.append(create('span','',x));
  copy.append(checklist);block.append(icon,copy);form.before(block);
