@@ -88,4 +88,4 @@ html.mc-readable .field input,html.mc-readable .field select,html.mc-readable .f
  .mc-notebook-recap .form-notice{display:block}
  #notebookPreview{font-size:13pt;white-space:pre-wrap;box-shadow:none;border:0}
 }
-@media(prefers-reduced-motion:reduce){.mc-search-dialog,.mc-search-entry{animation:none!important;transition:none!important}}
+
