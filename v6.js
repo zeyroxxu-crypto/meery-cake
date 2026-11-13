@@ -26,30 +26,35 @@ function enhanceHome(){
 }
 function makeCakeSvg(){
  const NS='http://www.w3.org/2000/svg';
- const svg=document.createElementNS(NS,'svg');svg.setAttribute('viewBox','0 0 520 340');
- svg.setAttribute('role','img');svg.setAttribute('aria-label','Aperçu artistique du gâteau, non contractuel');
- const defs=document.createElementNS(NS,'defs');
- defs.innerHTML='<linearGradient id="v6-glaze" x1="0" x2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".62"/><stop offset=".55" stop-color="#ffffff" stop-opacity=".12"/><stop offset="1" stop-color="#704257" stop-opacity=".12"/></linearGradient><filter id="v6-shadow" x="-30%" y="-30%" width="160%" height="200%"><feGaussianBlur stdDeviation="8"/></filter>';
- svg.append(defs);
- const stage=document.createElementNS(NS,'g');stage.innerHTML='<ellipse cx="260" cy="296" rx="170" ry="22" fill="#785064" opacity=".13" filter="url(#v6-shadow)"/><ellipse cx="260" cy="300" rx="156" ry="17" fill="#bd95a4"/><ellipse cx="260" cy="295" rx="153" ry="15" fill="#f4e8e8"/><ellipse cx="260" cy="289" rx="148" ry="10" fill="#fff9f4"/>';
- svg.append(stage);
- const parts=document.createElementNS(NS,'g');parts.id='v6CakeLayers';svg.append(parts);
- const flowers=document.createElementNS(NS,'g');flowers.id='v6CakeDecoration';svg.append(flowers);
- const signature=document.createElementNS(NS,'text');signature.setAttribute('x','260');signature.setAttribute('y','330');signature.setAttribute('text-anchor','middle');signature.setAttribute('font-size','10');signature.setAttribute('fill','#9e7c8a');signature.setAttribute('font-family','Arial');signature.textContent='APERÇU ILLUSTRATIF · MEERY CAKE';svg.append(signature);
+ const svg=document.createElementNS(NS,'svg');
+ svg.setAttribute('viewBox','0 0 520 340');
+ svg.setAttribute('role','img');
+ svg.setAttribute('aria-label','Illustration en deux dimensions, vue du dessus du gâteau personnalisé');
+ const background=document.createElementNS(NS,'g');
+ background.innerHTML='<circle cx="260" cy="168" r="155" fill="#fffaf8" stroke="#e6cad2" stroke-width="1.8"/><circle cx="260" cy="168" r="146" fill="none" stroke="#eddce1" stroke-dasharray="3 9" stroke-width="1.5"/>';
+ svg.append(background);
+ const layers=document.createElementNS(NS,'g');layers.id='v6CakeLayers';svg.append(layers);
+ const decorations=document.createElementNS(NS,'g');decorations.id='v6CakeDecoration';svg.append(decorations);
+ const label=document.createElementNS(NS,'text');
+ label.setAttribute('x','260');label.setAttribute('y','336');label.setAttribute('text-anchor','middle');
+ label.setAttribute('font-family','Arial, sans-serif');label.setAttribute('font-size','9');
+ label.setAttribute('letter-spacing','2');label.setAttribute('fill','#996d80');
+ label.textContent='VUE DU DESSUS · ILLUSTRATION 2D';
+ svg.append(label);
  return svg;
 }
 function cakeVisual(){
  const form=$('cakeForm');if(!form||$('v6CakeStudio'))return;
  const layout=form.closest('.page-layout');if(layout)layout.classList.add('v6-cake-layout');
  const panel=form.closest('.panel');if(!panel)return;
- const studio=node('section','v6-cake-studio');studio.id='v6CakeStudio';studio.setAttribute('aria-label','Aperçu visuel interactif du gâteau');
+ const studio=node('section','v6-cake-studio');studio.id='v6CakeStudio';studio.setAttribute('aria-label','Illustration 2D du gâteau, vue du dessus');
  const head=node('div','v6-cake-studio-header'),left=node('div');
- left.append(node('span','eyebrow','Cake design studio'),node('strong','','Votre création en direct'));
- head.append(left,node('span','v6-preview-tag','Aperçu indicatif'));
+ left.append(node('span','eyebrow','Atelier de création'),node('strong','','Votre gâteau en 2D'));
+ head.append(left,node('span','v6-preview-tag','Dessin 2D · vue du dessus'));
  const stage=node('div','v6-cake-stage');
  const svg=makeCakeSvg();stage.append(svg);
  const chips=node('div','v6-preview-details');chips.id='v6CakeChips';
- const actions=node('div','v6-preview-actions'),note=node('p','','Visualisation artistique uniquement : forme, décor et résultat final devront être confirmés par Meery Cake.');
+ const actions=node('div','v6-preview-actions'),note=node('p','','Illustration 2D simplifiée : la réalisation réelle, la forme et les décorations doivent être confirmées par Meery Cake.');
  const dl=node('button','','Enregistrer l’aperçu ↧');dl.type='button';dl.id='v6CakeDownload';actions.append(note,dl);
  const caption=node('p','v6-cake-caption','La simulation ne constitue pas un devis ni une photographie d’un gâteau réalisable.');
  studio.append(head,stage,chips,actions,caption);
@@ -85,42 +90,50 @@ function cakeVisual(){
   const count=Number(safeText('cakeParts','8'))||8;
   const layers=svg.querySelector('#v6CakeLayers'),decors=svg.querySelector('#v6CakeDecoration');
   layers.replaceChildren();decors.replaceChildren();
-  function tier(x,y,width,height,color,shade){
-   shape('rect',{x,y,width,height,rx:square?7:width*.17,fill:color,stroke:shade,'stroke-width':2},layers);
-   shape('rect',{x:x+4,y:y+4,width:width-8,height:height*.58,rx:square?4:width*.16,fill:'url(#v6-glaze)'},layers);
-   shape('path',{d:'M'+(x+16)+' '+(y+height*.8)+' Q'+(x+width/2)+' '+(y+height*.75)+' '+(x+width-16)+' '+(y+height*.8),stroke:shade,'stroke-width':5,'stroke-linecap':'round',fill:'none',opacity:.55},layers);
-   for(let i=1;i<7;i++){const px=x+i*width/7;shape('circle',{cx:px,cy:y+height-11,r:4,fill:'#fff9f5',opacity:.96},layers)}
+  const cx=260,cy=168,outer=115;
+  // Strictly flat, top-down graphic: no perspective, side panels, cast shadow or 3D highlights.
+  if(square){
+   shape('rect',{x:145,y:53,width:230,height:230,rx:12,fill:colors[0],stroke:colors[1],'stroke-width':5},layers);
+   shape('rect',{x:160,y:68,width:200,height:200,rx:9,fill:'none',stroke:'#fffaf6','stroke-width':6},layers);
+   if(stacked)shape('rect',{x:182,y:90,width:156,height:156,rx:8,fill:'none',stroke:colors[1],'stroke-width':6},layers);
+  }else{
+   shape('circle',{cx,cy,r:outer,fill:colors[0],stroke:colors[1],'stroke-width':5},layers);
+   shape('circle',{cx,cy,r:99,fill:'none',stroke:'#fffaf6','stroke-width':7},layers);
+   if(stacked)shape('circle',{cx,cy,r:78,fill:'none',stroke:colors[1],'stroke-width':6},layers);
   }
-  tier(130,190,260,100,colors[0],colors[1]);
-  if(stacked)tier(170,110,180,85,colors[0],colors[1]);
-  else tier(148,161,224,55,colors[0],colors[1]);
-  const top=stacked?105:157,occasion=safeText('cakeOccasion','').toLowerCase(),notes=safeText('cakeNotes','').toLowerCase();
+  const occasion=safeText('cakeOccasion','').toLowerCase(),notes=safeText('cakeNotes','').toLowerCase();
   const isPearls=/perles sucrées|sugar pearls|perlas|zuckerperlen|perline|pérolas|suikerparels|perełki/i.test(notes);
   const isBerries=/fruits rouges|berries|frutos rojos|rote früchte|frutti rossi|frutos vermelhos|rood fruit|owoce leśne/i.test(notes);
   const isFlowers=!isPearls&&!isBerries&&(/fleur|flor|flower|blumen|bloem|kwiat/i.test(notes)||/mariage|wedding|bod|hochzeit|matrimonio|casamento|ślub/i.test(occasion));
+  const positions=[[217,124],[257,111],[303,131],[208,179],[259,173],[309,195],[242,220],[281,221]];
   if(isFlowers){
-    [[222,top+4],[260,top-3],[297,top+5],[346,225],[172,230]].forEach(([cx,cy],i)=>{
-      for(let petal=0;petal<5;petal++){const theta=petal*Math.PI*2/5;shape('ellipse',{cx:cx+Math.cos(theta)*9,cy:cy+Math.sin(theta)*9,rx:7,ry:9,fill:i%2?'#fbf4dd':'#fff8f3',transform:'rotate('+(petal*72)+' '+(cx+Math.cos(theta)*9)+' '+(cy+Math.sin(theta)*9)+')'},decors)}
-      shape('circle',{cx,cy,r:5,fill:'#d4a36f'},decors);
-    });
-  }else if(isPearls){
-    for(let j=0;j<24;j++){
-      const angle=j*Math.PI*2/24, cx=260+Math.cos(angle)*Math.min(83,84),cy=top+10+Math.sin(angle)*13;
-      shape('circle',{cx:cx.toFixed(2),cy:cy.toFixed(2),r:j%3===0?5:3.6,fill:j%3===0?'#f5cf9c':'#fffcf5',stroke:'#d9bdbf','stroke-width':.5},decors);
+   for(const [x,y] of positions.slice(0,6)){
+    for(let j=0;j<5;j++){
+     const a=j*Math.PI*2/5;
+     shape('circle',{cx:(x+Math.cos(a)*9).toFixed(2),cy:(y+Math.sin(a)*9).toFixed(2),r:8,fill:'#fff9f3',stroke:'#e3cad2','stroke-width':1},decors);
     }
+    shape('circle',{cx:x,cy:y,r:5,fill:'#c99b72'},decors);
+   }
   }else if(isBerries){
-    [[204,top+7],[226,top+2],[260,top-3],[292,top+4],[316,top+9]].forEach(([cx,cy],i)=>{
-      shape('ellipse',{cx,cy,rx:9,ry:8,fill:i%2?'#c44966':'#ab3750'},decors);
-      shape('circle',{cx:cx-2,cy:cy-3,r:2,fill:'#fff9ec',opacity:.65},decors);
-      shape('path',{d:'M'+cx+' '+(cy-6)+' q3 -8 8 -6',stroke:'#7b9d72','stroke-width':3,fill:'none'},decors);
-    });
+   for(const [x,y] of positions){
+    shape('circle',{cx:x,cy:y,r:9,fill:'#b64d68'},decors);
+    shape('circle',{cx:x-3,cy:y-3,r:2,fill:'#fff8f4',opacity:.75},decors);
+    shape('path',{d:'M'+x+' '+(y-8)+' l6 -7',stroke:'#749b76','stroke-width':2,'stroke-linecap':'round'},decors);
+   }
   }else{
-    [[202,top+7],[228,top-4],[259,top-1],[290,top+4],[319,top+9]].forEach(([cx,cy],i)=>{
-      shape('circle',{cx,cy,r:i%2?5:7,fill:i%2?'#f8f1d9':'#fffcf7'},decors);
-      shape('circle',{cx:cx+2,cy:cy-1,r:2,fill:'#d8a86d'},decors);
-    });
+   const radius=isPearls?85:79;
+   for(let j=0;j<24;j++){
+    const a=j*Math.PI*2/24;
+    shape('circle',{cx:(cx+Math.cos(a)*radius).toFixed(2),cy:(cy+Math.sin(a)*radius).toFixed(2),r:isPearls?4.8:3.6,fill:isPearls?'#fff9f0':'#f8f3ea',stroke:isPearls?'#d4aa88':'#ddc6b3','stroke-width':1},decors);
+   }
+   if(!isPearls){
+    shape('text',{x:cx,y:cy+7,'text-anchor':'middle','font-family':'Georgia,serif','font-size':28,'font-style':'italic',fill:'#80556c'},decors).textContent='Meery Cake';
+   }
   }
-  if(count>=20){shape('path',{d:'M235 '+(top-15)+' Q260 '+(top-47)+' 285 '+(top-15),stroke:'#bb997f','stroke-width':3,fill:'none'},decors)}
+  if(count>=20){
+   const t=shape('text',{x:cx,y:cy+46,'text-anchor':'middle','font-size':12,'font-family':'Arial,sans-serif',fill:'#80556c'},decors);
+   t.textContent=count+' parts';
+  }
   chips.replaceChildren();
   [[safeText('cakeShape','Forme à discuter')],[safeText('cakeOccasion','Occasion à définir')],[count+' parts envisagées'],[safeText('cakeFlavor','Parfum à confirmer')]].forEach(([value])=>chips.append(node('span','tag',value.slice(0,55))));
  }
