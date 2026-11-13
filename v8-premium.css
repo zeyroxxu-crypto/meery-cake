@@ -156,10 +156,6 @@ img{height:auto}
  .v8-dialog-info h2{font-size:35px}
  .v8-cake-themes{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
-@media(prefers-reduced-motion:reduce){
- .v8-reveal,.v8-reveal.v8-visible{opacity:1;filter:none;transform:none;transition:none}
- .v8-dialog-grid,.v8-product-dialog[open]{animation:none}
- .v8-cake-swatch,.gallery-tile,.catalog-card{transition:none!important}
-}
+
 html.mc-motion-disabled .v8-reveal,html.mc-motion-disabled .v8-reveal.v8-visible{opacity:1;filter:none;transform:none;transition:none!important}
 @media print{.v8-dialog-close,.v8-cake-swatches,.v8-cake-themes{display:none!important}}
