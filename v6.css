@@ -81,7 +81,7 @@ body{background:#fffaf8}
 @media(max-width:980px){.hero{min-height:0}.hero-content h1{font-size:clamp(52px,7vw,84px)}.v6-service-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:760px){.v6-connection-grid,.v6-service-grid{grid-template-columns:1fr}.v6-banner{flex-direction:column;align-items:flex-start}.v6-cake-stage{min-height:285px}.v6-cake-stage svg{height:265px}.v6-home-menu-photo{max-width:100%}}
 @media(max-width:600px){.hero-content h1{font-size:clamp(49px,11.2vw,67px)}.v6-ribbon .container{gap:8px 13px;padding-block:13px}.v6-ribbon span{font-size:9px}.v6-ribbon i{font-size:11px}.v6-cake-studio{padding:13px;border-radius:14px}.v6-cake-stage{min-height:250px}.v6-cake-stage svg{height:240px}.v6-cake-studio-header strong{font-size:21px}.v6-product-content{padding:19px}.v6-product-photo{aspect-ratio:1.65}.v6-banner{padding:24px}}
-@media(prefers-reduced-motion:reduce){.v6-skeleton{animation:none!important}.v6-product-photo img{transition:none!important}}
+
 
 /* V10 — flattened cake illustration; manual animation switch retired. */
 .mc-motion-toggle{display:none!important}
