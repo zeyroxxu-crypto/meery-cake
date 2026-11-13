@@ -132,7 +132,7 @@ modal('<div class="modal-bg" style="'+(f.posterUrl?'background-image:url(&quot;'
 '<div class="modal-meta"><span>'+text(f.year||"Vidéo")+'</span><span>•</span><span>'+(f.duration?f.duration+" min":"Durée non précisée")+'</span><span>•</span><span>'+text(f.genre)+'</span></div>'+
 '<p>'+text(f.description||"Un film à découvrir.")+'</p><div class="modal-actions">'+action+
 '<button class="btn-outline" data-fav="'+f.id+'">'+icon(added?"check":"plus")+' '+(added?"Dans ma liste":"Ajouter à ma liste")+'</button></div>'+
-'<div class="modal-credit">'+(watch?"Lecture depuis YouTube, sous réserve que la vidéo autorise l'intégration.":"Fiche de découverte uniquement : ce film n'est pas hébergé ni diffusé en entier sur VANTA. Les offres et prix peuvent varier. Aucun accès gratuit n'est garanti.")+'</div></div>');
+'<div class="modal-credit">'+(watch?"Lecture depuis le lecteur officiel de la plateforme source. La disponibilité peut varier selon l’appareil et le pays. Les droits des films anciens peuvent différer selon les versions.":"Fiche de découverte uniquement : ce film n'est pas hébergé ni diffusé en entier sur VANTA. Les offres et prix peuvent varier. Aucun accès gratuit n'est garanti.")+'</div></div>');
 }
 function closeDetail(){document.getElementById("detail-root").innerHTML="";if(!document.getElementById("player-root").innerHTML&&!searchOpened)document.body.style.overflow="";}
 function openCredits(){
