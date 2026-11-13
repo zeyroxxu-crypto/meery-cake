@@ -78,7 +78,11 @@ function addCatalogueTools(){
  const sort=()=>{
   if(updating)return;updating=true;
   const direction=select.value,cards=allItems();
-  if(direction!=='original'){
+  if(direction==='original'){
+   const catalog=typeof MC!=='undefined'&&MC.data?.menu?MC.data.menu:[];
+   const positions=new Map(catalog.flatMap(g=>g.items).map((p,i)=>[p.id,i]));
+   cards.sort((a,b)=>(positions.get(a.dataset.productId)??9999)-(positions.get(b.dataset.productId)??9999));
+  }else{
    cards.sort((a,b)=>{
     const nameA=a.querySelector('h3')?.textContent||'',nameB=b.querySelector('h3')?.textContent||'';
     if(direction==='name')return nameA.localeCompare(nameB,'fr',{sensitivity:'base'});
