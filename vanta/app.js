@@ -65,7 +65,7 @@ rail("Pour une soirée différente","03 / NOS COUPS DE CŒUR",[films[1],films[6]
 out='<div style="padding-top:78px"></div>'+catalogueBanner("Tous les films","Un catalogue de courts métrages et de créations originales, proposés sous licences ouvertes. Choisis un genre et lance ta séance.")+catalogueGrid(filtered());
 if(!filtered().length)out+=empty("Aucun film dans ce genre","Essaie une autre catégorie.");
 }else if(view==="discover"){
-out='<div style="padding-top:78px"></div><div class="catalogue-top"><p class="eyebrow">VANTA / DÉCOUVERTES</p><h1 class="catalogue-title">La curiosité fait les meilleurs films.</h1><p class="catalogue-intro">Une sélection pour ceux qui veulent changer d'univers, de rythme et d'ambiance.</p><button class="btn-primary" data-random="1">'+icon("shuffle")+' Lancer un film au hasard</button></div>'+
+out='<div style="padding-top:78px"></div><div class="catalogue-top"><p class="eyebrow">VANTA / DÉCOUVERTES</p><h1 class="catalogue-title">La curiosité fait les meilleurs films.</h1><p class="catalogue-intro">Une sélection pour ceux qui veulent changer d’univers, de rythme et d’ambiance.</p><button class="btn-primary" data-random="1">'+icon("shuffle")+' Lancer un film au hasard</button></div>'+
 rail("Voyage dans l'imaginaire","LA SÉLECTION FANTASTIQUE",[films[0],films[3],films[2]],false)+
 rail("Court. Intense. Mémorable.","POUR UNE PAUSE CINÉMA",[films[5],films[6],films[7]],false)+
 rail("À voir cette semaine","NOS INCONTOURNABLES",[films[1],films[4],films[0],films[2]],false);
