@@ -90,3 +90,9 @@ html.mc-motion-disabled .mc9-reveal,html.mc-motion-disabled .mc9-reveal.mc9-reve
 }
 @keyframes mc9-showcase-enter{from{opacity:.35;transform:translateY(30px) scale(.975)}to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes mc9-ambient{from{transform:translate(0,0)}to{transform:translate(-40px,45px)}}
+
+/* Branded animated page transition: always visible during internal navigation. */
+.mc-v4-curtain .mc-v4-wait{font:600 12px/1.7 var(--font,Arial,sans-serif);letter-spacing:.12em;color:#ffe9ed;margin-top:7px}
+.mc-v4-curtain.mc-v4-leave .mc-v4-wait{animation:mc9-wait-enter .45s .18s both}
+.mc-v4-curtain.mc-v4-leave .mc-v4-dots{margin-top:9px}
+@keyframes mc9-wait-enter{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
