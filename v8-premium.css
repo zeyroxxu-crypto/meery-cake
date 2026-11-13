@@ -84,7 +84,7 @@ body{overflow-x:clip}
 .v8-gallery-controls{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:18px}
 .v8-gallery-controls .button{min-width:44px}
 .v8-lightbox-controls{position:absolute;z-index:101;bottom:18px;left:50%;transform:translateX(-50%);display:flex;gap:10px;align-items:center;padding:7px;border-radius:90px;background:#fff9f4e8;backdrop-filter:blur(12px);box-shadow:0 15px 35px #2c101a52}
-.v8-lightbox-controls button{width:44px;height:44px;border:0;border-radius:50%;background:#f3e3e9;color:#764355;font-size:20px;cursor:pointer}
+.lightbox .v8-lightbox-controls button{position:static;top:auto;right:auto;width:44px;height:44px;flex:none;border:0;border-radius:50%;background:#f3e3e9;color:#764355;font-size:20px;cursor:pointer}
 .v8-lightbox-controls span{font-size:11px;font-weight:800;color:#6a4054;min-width:50px;text-align:center}
 .v8-cake-swatch-label{display:block;font-weight:800;color:#704255;font-size:11px;margin:14px 0 9px}
 .v8-cake-swatches{display:flex;flex-wrap:wrap;gap:9px;padding-bottom:5px}
