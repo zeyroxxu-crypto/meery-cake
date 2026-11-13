@@ -108,5 +108,16 @@ drawDossier();
   lightbox.addEventListener('click',e=>{if(e.target===lightbox)close()});
   window.addEventListener('keydown',e=>{if(e.key==='Escape')close()});
   renderGallery();
+
+  // Navigation cohérente entre les pages même depuis les anciennes ancres du site.
+  const sectionTabs={classes:'formations',dossier:'formations',orientation:'formations',parcours:'accueil',etablissements:'accueil',galerie:'galerie',vie:'vie',pratique:'pratique',questions:'pratique',contact:'pratique'};
+  document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+    if(a.hasAttribute('data-go'))return;
+    const target=a.getAttribute('href').slice(1);
+    if(!target||!sectionTabs[target])return;
+    e.preventDefault();go(sectionTabs[target],false);
+    if(target==='contact'){window.setTimeout(()=>document.getElementById('contact')?.scrollIntoView({behavior:'smooth'}),60)}
+    else if(target!=='parcours'&&target!=='etablissements'){window.setTimeout(()=>document.getElementById(target)?.scrollIntoView({behavior:'smooth',block:'start'}),60)}
+  }));
 })();
 </script></body></html>
