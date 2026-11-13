@@ -5,6 +5,7 @@ var ROOT="https://video.blender.org";
 function mp4(id){return ROOT+"/static/webseed/"+id+"-720.mp4";}
 function commons(file,width){return "https://commons.wikimedia.org/wiki/Special:FilePath/"+encodeURIComponent(file).replace(/%2F/g,"/")+"?width="+(width||750);}
 var films=[
+{"id":"starwreck","title":"Star Wreck: In the Pirkinning","year":2005,"duration":103,"genre":"Science-fiction","tags":["Science-fiction","Action","Comédie"],"age":"12+","description":"Un capitaine égaré dans le temps tente de reconstruire son empire spatial. Une vraie aventure de science-fiction finlandaise, tournée avec des effets spéciaux et un humour décalé.","archiveId":"StarWreckInThePirkining","posterUrl":"https://archive.org/services/img/StarWreckInThePirkining","backdropUrl":"https://archive.org/services/img/StarWreckInThePirkining","official":"https://archive.org/details/StarWreckInThePirkining","license":"Creative Commons BY-SA 3.0 (édition Internet Archive ; conditions de redistribution à vérifier)","credit":"© Energia Productions / Timo Vuorensola","featured":true,"kind":"long"},
 {"id":"sita","title":"Sita Sings the Blues","year":2008,"duration":82,"genre":"Animation","tags":["Animation","Fantastique"],"description":"Une grande fresque musicale animée inspirée du Ramayana, signée Nina Paley.","archiveId":"Sita_Sings_the_Blues","poster":"Sita STB Poster.jpg","official":"https://archive.org/details/Sita_Sings_the_Blues","credit":"Film de Nina Paley","license":"Film librement diffusé par la créatrice ; musique sous droits distincts","kind":"long","age":"Tout public","featured":true},
 {"id":"nosferatu","title":"Nosferatu","year":1922,"duration":94,"genre":"Fantastique","tags":["Classique","Fantastique"],"description":"Un jeune homme rencontre le mystérieux comte Orlok, un vampire dont l’ombre hante le cinéma depuis un siècle.","archiveId":"Nosferatu_DVD_quality","poster":"Nosferatu.jpg","official":"https://archive.org/details/Nosferatu_DVD_quality","credit":"Film de F. W. Murnau","license":"Film historique du domaine public, selon les versions","kind":"long","age":"12+","featured":true},
 {"id":"caligari","title":"Le Cabinet du Dr Caligari","year":1920,"duration":77,"genre":"Fantastique","tags":["Classique","Fantastique"],"description":"Un hypnotiseur inquiétant présente un somnambule qui prédit l'avenir, dans un monde aux décors tourmentés.","archiveId":"the-cabinet-of-dr-caligari-1920_202501","posterUrl":"https://archive.org/services/img/the-cabinet-of-dr-caligari-1920_202501","official":"https://archive.org/details/the-cabinet-of-dr-caligari-1920_202501","credit":"Film de Robert Wiene","license":"Film historique du domaine public, selon les versions","kind":"long","age":"12+","featured":true},
@@ -32,7 +33,7 @@ var view="home",filter="Tous",slide=0,currentPlayer=null,toastTimeout=null,searc
 var app=document.getElementById("app");
 function save(){try{localStorage.setItem("vanta-favorites",JSON.stringify(favs));localStorage.setItem("vanta-progress",JSON.stringify(progress));}catch(e){}}
 function hero(){
-var f=getFilm(["sita","nosferatu","caligari"][slide]);
+var f=getFilm(["starwreck","sita","nosferatu"][slide]);
 return '<section class="hero" id="hero"><div class="hero-bg" style="background-image:url(&quot;'+art(f,true)+'&quot;)"></div><div class="hero-tint"></div><div class="hero-noise"></div>'+
 '<div class="hero-inner hero-content-anim"><div class="hero-eyebrow">La sélection VANTA</div><div class="hero-overline"><span></span> À la une <span></span> CINÉMA LIBRE</div>'+
 '<h1 class="hero-title '+(f.title.length>12?"smaller":"")+'">'+text(f.title)+'</h1>'+
@@ -63,19 +64,19 @@ function render(){
 var out="";
 if(view==="home"){
 out=hero()+'<div class="kicker-strip"><span>LE BON FILM. AU BON MOMENT. <strong>SANS ABONNEMENT.</strong></span><span class="kicker-right"><i class="status-dot"></i> LA SÉANCE COMMENCE ICI</span></div>'+
-rail("Les longs métrages","01 / SÉANCE COMPLÈTE",films.filter(function(f){return f.kind==="long";}),true)+
-rail("Films courts & créations libres","02 / ANIMATION & DÉCOUVERTES",films.filter(function(f){return f.kind!=="long";}),true)+
+rail("Des films à regarder ce soir","01 / FILMS COMPLETS",[getFilm("starwreck"),getFilm("sita"),getFilm("tears"),getFilm("sintel"),getFilm("bunny"),getFilm("spring"),getFilm("sprite")],true)+
+rail("Science-fiction & aventures","02 / ACTION ET IMAGINAIRE",films.filter(function(f){return f.tags.indexOf("Science-fiction")!==-1||f.tags.indexOf("Action")!==-1;}),true)+
 '<section class="spotlight reveal"><div class="spotlight-content"><p class="eyebrow">UNE EXPÉRIENCE À PART</p><h2>Une autre façon<br>de <em>vivre le cinéma.</em></h2><p>Des films soigneusement choisis, une interface pensée pour le plaisir des yeux. Tu choisis l’histoire. On s’occupe du reste.</p><div class="spotlight-buttons"><button class="btn-primary" data-random="1">'+icon("shuffle")+' Surprends-moi</button><button class="btn-outline" data-nav="movies">Explorer le catalogue '+icon("arrow")+'</button></div></div><div class="spotlight-card"><img src="'+art(films[4])+'" alt="Sprite Fright" loading="lazy"></div></section>'+
-rail("Les classiques du cinéma","03 / LE GRAND ÉCRAN",films.filter(function(f){return f.tags.indexOf("Classique")!==-1;}),true)+
+rail("Les classiques du cinéma","03 / CINÉMA DE LÉGENDE",films.filter(function(f){return f.tags.indexOf("Classique")!==-1;}),true)+
 '<div class="statement"><span>MOINS DE SCROLL. <strong>PLUS D’ÉMOTIONS.</strong></span><small>VANTA. MADE FOR MOVIES.</small></div>';
 }else if(view==="movies"){
-out='<div style="padding-top:78px"></div>'+catalogueBanner("Tous les films","De vrais longs métrages et des courts métrages à découvrir. Les vidéos s’ouvrent dans VANTA depuis des archives publiques, sans YouTube.")+catalogueGrid(filtered());
+out='<div style="padding-top:78px"></div>'+catalogueBanner("Tous les films","Des longs métrages de science-fiction, des films d’animation et de grands classiques. Lecture directement sur VANTA, depuis les archives des créateurs.")+catalogueGrid(filtered());
 if(!filtered().length)out+=empty("Aucun film dans ce genre","Essaie une autre catégorie.");
 }else if(view==="discover"){
 out='<div style="padding-top:78px"></div><div class="catalogue-top"><p class="eyebrow">VANTA / DÉCOUVERTES</p><h1 class="catalogue-title">La curiosité fait les meilleurs films.</h1><p class="catalogue-intro">Une sélection pour ceux qui veulent changer d’univers, de rythme et d’ambiance.</p><button class="btn-primary" data-random="1">'+icon("shuffle")+' Lancer un film au hasard</button></div>'+
-rail("Les grands classiques","LE CINÉMA DE LÉGENDE",films.filter(function(f){return f.kind==="long";}),false)+
-rail("Court. Intense. Mémorable.","POUR UNE PAUSE CINÉMA",films.filter(function(f){return f.kind!=="long";}).slice(0,7),false)+
-rail("Fantastique et imaginaire","NOS INCONTOURNABLES",films.filter(function(f){return f.tags.indexOf("Fantastique")!==-1;}),false);
+rail("Les films de science-fiction","LES AVENTURES MODERNES",films.filter(function(f){return f.tags.indexOf("Science-fiction")!==-1;}),false)+
+rail("L’animation en grand","COURTS MÉTRAGES À DÉCOUVRIR",films.filter(function(f){return f.tags.indexOf("Animation")!==-1;}),false)+
+rail("Classiques de légende","LES FILMS HISTORIQUES",films.filter(function(f){return f.tags.indexOf("Classique")!==-1;}),false);
 }else if(view==="list"){
 var list=films.filter(function(f){return favs.indexOf(f.id)!==-1;});
 out='<div style="padding-top:78px"></div><div class="catalogue-top"><p class="eyebrow">VANTA / ESPACE PERSONNEL</p><h1 class="catalogue-title">Ma liste<span style="color:var(--accent)">.</span></h1><p class="catalogue-intro">Tous les films que tu as enregistrés, retrouvés ici, sur cet appareil.</p></div>'+(list.length?catalogueGrid(list):empty("Ta liste est encore vide.","Ajoute des films avec le cœur sur leur affiche. Ils apparaîtront ici.","Trouver un film"));
