@@ -118,7 +118,10 @@ initCatalog(){
  const inner=this.el('div',{cls:'v6-product-content'});
  const actions=this.el('div',{cls:'catalog-actions'}),fav=this.el('button',{text:this.favorites.includes(p.id)?'♥ Favori':'♡ Favori',type:'button',cls:this.favorites.includes(p.id)?'active':''}),ask=this.el('a',{text:'Se renseigner →',href:'tel:+33983605602'});
  ask.className='inline-link';fav.addEventListener('click',()=>this.toggleFavorite(p.id));
- actions.append(fav,ask);inner.append(label,title,desc,price,actions);card.append(photo,inner);result.append(card)
+ const detail=this.el('button',{cls:'v8-product-details',type:'button',text:'Découvrir ce produit ↗'});
+ detail.dataset.productId=p.id;detail.setAttribute('aria-label','Voir la fiche de '+p.name);
+ card.dataset.productId=p.id;
+ actions.append(fav,ask);inner.append(label,title,desc,price,detail,actions);card.append(photo,inner);result.append(card)
  }
  };
  const filters=this.byId('catalogFilters');
