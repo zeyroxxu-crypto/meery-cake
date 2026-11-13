@@ -5,6 +5,7 @@
 'use strict';
 const $=id=>document.getElementById(id);
 const el=(tag,cls,content)=>{const x=document.createElement(tag);if(cls)x.className=cls;if(content!==undefined)x.textContent=content;return x};
+const site=()=>typeof MC!=='undefined'?MC:null;
 const motion=()=>{try{const p=localStorage.getItem('meerycake-motion-preference');return p==='on'||(p!=='off'&&!matchMedia('(prefers-reduced-motion: reduce)').matches)}catch{return !matchMedia('(prefers-reduced-motion: reduce)').matches}};
 function galleryEditor(){
  const grid=$('galleryGrid'),lightbox=$('lightbox');
@@ -65,12 +66,12 @@ function quickView(){
  layout.append(imageArea,info);dialog.append(close,layout);document.body.append(dialog);
  let activeId=null,lastTrigger=null;
  const findProduct=id=>{
-  for(const g of (window.MC?.data?.menu||[])){const p=g.items.find(x=>x.id===id);if(p)return {...p,category:g.name,groupId:g.id}}
+  for(const g of (site()?.data?.menu||[])){const p=g.items.find(x=>x.id===id);if(p)return {...p,category:g.name,groupId:g.id}}
   return null
  };
  const refreshFav=()=>{
   if(!activeId)return;
-  const yes=window.MC?.favorites?.includes(activeId);
+  const yes=site()?.favorites?.includes(activeId);
   fav.textContent=yes?'♥ Retirer des favoris':'♡ Ajouter aux favoris';
   fav.setAttribute('aria-pressed',String(!!yes))
  };
@@ -101,7 +102,7 @@ function quickView(){
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&dialog.open&&typeof dialog.close!=='function'){closeModal();lastTrigger?.focus?.()}});
  fav.addEventListener('click',()=>{
   if(!activeId)return;
-  window.MC?.toggleFavorite?.(activeId);
+  site()?.toggleFavorite?.(activeId);
   refreshFav();
  });
  copy.addEventListener('click',async()=>{
@@ -109,8 +110,8 @@ function quickView(){
   const url=new URL('carte.html',location.href);url.searchParams.set('q',title.textContent);url.hash='catalogue';
   const text=title.textContent+' · Meery Cake\n'+url.href+'\nInformations, prix et disponibilités à confirmer auprès du salon.';
   if(navigator.share){try{await navigator.share({title:'Meery Cake · '+title.textContent,text,url:url.href});return}catch(e){if(e?.name==='AbortError')return}}
-  try{await navigator.clipboard.writeText(text);window.MC?.toast?.('Lien de la fiche copié ♡')}
-  catch{window.MC?.toast?.('Partage indisponible sur cet appareil.')}
+  try{await navigator.clipboard.writeText(text);site()?.toast?.('Lien de la fiche copié ♡')}
+  catch{site()?.toast?.('Partage indisponible sur cet appareil.')}
  });
 }
 function cakeCustomizer(){
