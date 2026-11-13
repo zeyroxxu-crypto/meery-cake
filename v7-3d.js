@@ -244,7 +244,8 @@ function startCakeStudio(){
  controls.append(three,illustration);
  currentStage.before(controls);
  const controller=build3D(wrapper.querySelector('canvas'),{editor:true});
- const showThree=()=>{wrapper.hidden=false;currentStage.hidden=true;three.classList.add('active');illustration.classList.remove('active');controller?.redraw()};
+ if(!controller){wrapper.remove();controls.remove();return} // Keep the original 2D preview if Canvas is unavailable.
+ const showThree=()=>{wrapper.hidden=false;currentStage.hidden=true;three.classList.add('active');illustration.classList.remove('active');controller.redraw()};
  const showTwo=()=>{wrapper.hidden=true;currentStage.hidden=false;three.classList.remove('active');illustration.classList.add('active')};
  three.addEventListener('click',showThree);illustration.addEventListener('click',showTwo);
  showThree();
