@@ -68,8 +68,7 @@ function addCatalogueTools(){
  const count=()=>{
   const x=allItems();total.textContent=x.length+' produit'+(x.length>1?'s':'')+' affiché'+(x.length>1?'s':'');
   empty.hidden=x.length!==0;
-  const nativeEmpty=items.querySelector('p:not(.v6-product-content p)');
-  if(nativeEmpty)nativeEmpty.hidden=x.length===0;
+  for(const message of items.querySelectorAll(':scope > p'))message.hidden=x.length===0;
  };
  const priceOf=card=>{
   const text=card.querySelector('.price')?.textContent||'';
@@ -89,7 +88,7 @@ function addCatalogueTools(){
     return direction==='price-desc'?pB-pA:pA-pB;
    });
   }
-  if(cards.length)items.append(...cards);
+  if(cards.length&&cards.some((card,index)=>items.children[index]!==card))items.append(...cards);
   count();updating=false;
  };
  const observer=new MutationObserver(()=>{if(updating)return;requestAnimationFrame(sort)});
