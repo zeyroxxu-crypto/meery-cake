@@ -5,9 +5,9 @@ var ROOT="https://video.blender.org";
 function mp4(id){return ROOT+"/static/webseed/"+id+"-720.mp4";}
 function commons(file,width){return "https://commons.wikimedia.org/wiki/Special:FilePath/"+encodeURIComponent(file).replace(/%2F/g,"/")+"?width="+(width||750);}
 var films=[
-{id:"sintel",title:"Sintel",year:2010,duration:15,genre:"Fantastique",tags:["Animation","Fantastique"],age:"Tout public",description:"Une jeune aventurière traverse un monde de glace et de feu pour retrouver le petit dragon qu'elle a autrefois sauvé. Une quête inoubliable sur l'amitié et le courage.",poster:"Sintel poster.jpg",backdrop:"Durian - Sintel-wallpaper-dragon.jpg",video:mp4("0eb052d0-fd51-43e6-aa33-ecdbf77a5d40"),official:"https://video.blender.org/videos/watch/0eb052d0-fd51-43e6-aa33-ecdbf77a5d40",license:"CC BY 3.0",credit:"© Blender Foundation / durian.blender.org",featured:true},
-{id:"tears",title:"Tears of Steel",year:2012,duration:12,genre:"Science-fiction",tags:["Science-fiction","Action"],age:"12+",description:"Dans un Amsterdam futuriste, un groupe de scientifiques tente de réparer une erreur du passé pour offrir une dernière chance à l'humanité.",poster:"Tos-poster.png",backdrop:"Tears of Steel frame 01 2a.png",video:mp4("8533ea43-4271-4a57-9694-e9d0b35e1aa1"),official:"https://mango.blender.org/",license:"CC BY 3.0",credit:"© Blender Foundation / Project Mango",featured:true},
-{id:"bunny",title:"Big Buck Bunny",year:2008,duration:10,genre:"Comédie",tags:["Animation","Comédie"],age:"Tout public",description:"Un lapin géant au grand cœur profite d'un jour paisible… jusqu'à ce que trois petits malins viennent troubler la forêt. Une aventure drôle et pleine de surprises.",poster:"Big buck bunny poster big.jpg",backdrop:"Big buck bunny poster big.jpg",video:mp4("bf1f3fb5-b119-4f9f-9930-8e20e892b898"),official:"https://peach.blender.org/",license:"CC BY 3.0",credit:"© Blender Foundation / peach.blender.org",featured:true},
+{id:"sintel",title:"Sintel",year:2010,duration:15,genre:"Fantastique",tags:["Animation","Fantastique"],age:"Tout public",description:"Une jeune aventurière traverse un monde de glace et de feu pour retrouver le petit dragon qu'elle a autrefois sauvé. Une quête inoubliable sur l'amitié et le courage.",poster:"Sintel poster.jpg",backdrop:"Durian - Sintel-wallpaper-dragon.jpg",video:"https://storage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",official:"https://video.blender.org/videos/watch/0eb052d0-fd51-43e6-aa33-ecdbf77a5d40",license:"CC BY 3.0",credit:"© Blender Foundation / durian.blender.org",featured:true},
+{id:"tears",title:"Tears of Steel",year:2012,duration:12,genre:"Science-fiction",tags:["Science-fiction","Action"],age:"12+",description:"Dans un Amsterdam futuriste, un groupe de scientifiques tente de réparer une erreur du passé pour offrir une dernière chance à l'humanité.",poster:"Tos-poster.png",backdrop:"Tears of Steel frame 01 2a.png",video:"https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",official:"https://mango.blender.org/",license:"CC BY 3.0",credit:"© Blender Foundation / Project Mango",featured:true},
+{id:"bunny",title:"Big Buck Bunny",year:2008,duration:10,genre:"Comédie",tags:["Animation","Comédie"],age:"Tout public",description:"Un lapin géant au grand cœur profite d'un jour paisible… jusqu'à ce que trois petits malins viennent troubler la forêt. Une aventure drôle et pleine de surprises.",poster:"Big buck bunny poster big.jpg",backdrop:"Big buck bunny poster big.jpg",video:"https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",official:"https://peach.blender.org/",license:"CC BY 3.0",credit:"© Blender Foundation / peach.blender.org",featured:true},
 {id:"spring",title:"Spring",year:2019,duration:8,genre:"Fantastique",tags:["Animation","Fantastique"],age:"Tout public",description:"Une jeune bergère et son chien croisent les esprits de la nature dans une histoire poétique où le printemps n'arrive jamais sans un peu de magie.",posterUrl:"https://i.vimeocdn.com/video/772422891-d079fb2d57a1958fc2599ec700f44fda975c1dbd921203d71d56ff0a12468474-d",backdropUrl:"https://i.vimeocdn.com/video/772422891-d079fb2d57a1958fc2599ec700f44fda975c1dbd921203d71d56ff0a12468474-d",video:mp4("3d95fb3d-c866-42c8-9db1-fe82f48ccb95"),official:"https://studio.blender.org/films/",license:"CC BY 4.0",credit:"© Blender Studio / Andy Goralczyk"},
 {id:"sprite",title:"Sprite Fright",year:2021,duration:11,genre:"Comédie",tags:["Animation","Comédie"],age:"12+",description:"Une bande d'amis part camper dans une forêt peuplée de petites créatures. Leur aventure va rapidement prendre un tour imprévu.",poster:"Sprite Fright-movie poster.jpg",backdrop:"Sprite Fright-movie poster.jpg",video:"https://video.blender.org/download/videos/a69d68a5-a0e0-4a80-9d66-49f093c97aaf-720.mp4",official:"https://studio.blender.org/films/",license:"CC BY 4.0",credit:"© Blender Studio"},
 {id:"agent",title:"Agent 327",year:2017,duration:4,genre:"Action",tags:["Animation","Action","Comédie"],age:"Tout public",description:"Un agent secret entre dans un salon de coiffure d'Amsterdam. Une coupe ordinaire ? Pas tout à fait. Une parodie d'espionnage pleine de détails.",posterUrl:"https://studio.blender.org/files/public/thumbnail/6f/a4/6fa4b9cc15464f0a9996408794c859ff_m.webp",video:mp4("264ff760-803e-430e-8d81-15648e904183"),official:"https://video.blender.org/videos/watch/264ff760-803e-430e-8d81-15648e904183",license:"CC BY-ND 4.0",credit:"© Blender Animation Studio / Agent 327",},
@@ -127,30 +127,46 @@ var root=document.getElementById("player-root");
 document.body.style.overflow="hidden";currentPlayer=id;
 root.innerHTML='<div class="player-overlay" role="dialog" aria-modal="true" aria-label="Lecture de '+text(f.title)+'">'+
 '<div class="player-top"><button class="player-back" data-close="player">'+icon("arrow").replace('class="icon"','class="icon" style="transform:rotate(180deg)"')+' Retour</button><div class="player-title"><span>VANTA / LECTURE</span>'+text(f.title)+'</div><button class="btn-quiet" data-close="player" aria-label="Fermer">'+icon("close")+'</button></div>'+
-'<div class="player-main"><div class="player-loading" id="player-loading"><strong>VANTA<span>.</span></strong><div class="spinner"></div><p>Préparation de votre séance</p></div>'+
-'<video id="film-video" controls playsinline autoplay preload="auto" poster="'+art(f,true)+'"><source src="'+f.video+'" type="video/mp4">Votre navigateur ne prend pas en charge ce lecteur.</video></div>'+
+'<div class="player-main"><div class="player-loading" id="player-loading"><strong>VANTA<span>.</span></strong><div class="spinner"></div><p>Ouverture de votre film</p></div>'+
+'<video id="film-video" controls playsinline webkit-playsinline preload="metadata" poster="'+art(f,true)+'"><source src="'+f.video+'" type="video/mp4">Votre navigateur ne prend pas en charge ce lecteur.</video></div>'+
 '<div class="player-footer"><span>'+text(f.credit)+' · '+text(f.license)+'</span><a href="'+f.official+'" target="_blank" rel="noopener noreferrer">Voir la source officielle '+icon("external")+'</a></div></div>';
 var video=document.getElementById("film-video"),loading=document.getElementById("player-loading");
 var saved=progress[id]&&progress[id].time||0;
-function hideLoading(){if(loading)loading.classList.add("hidden");}
+var timeoutId=null,alreadyErrored=false,ready=false;
+function hideLoading(){if(loading){loading.classList.add("hidden");loading.style.pointerEvents="none";}}
+function stopTimer(){if(timeoutId){clearTimeout(timeoutId);timeoutId=null;}}
+function showProblem(message){
+if(alreadyErrored||currentPlayer!==id)return;
+alreadyErrored=true;stopTimer();hideLoading();
+var area=document.querySelector(".player-main");
+if(area)area.insertAdjacentHTML("beforeend",'<div class="player-error"><h2>Lecture indisponible</h2><p>'+text(message)+'</p><a class="btn-primary" href="'+f.official+'" target="_blank" rel="noopener noreferrer">Voir le film sur sa page officielle '+icon("external")+'</a><button class="btn-outline" style="margin-top:12px" data-close="player">Retour au catalogue</button></div>');
+}
+function loaded(){
+if(currentPlayer!==id)return;
+ready=true;stopTimer();hideLoading();
+}
 video.addEventListener("loadedmetadata",function(){
-if(saved>2&&saved<video.duration-10){try{video.currentTime=saved;}catch(e){}}
-setTimeout(hideLoading,400);
+if(saved>2&&isFinite(video.duration)&&saved<video.duration-10){try{video.currentTime=saved;}catch(e){}}
 });
-video.addEventListener("playing",hideLoading);
-video.addEventListener("canplay",hideLoading);
+video.addEventListener("loadeddata",loaded);
+video.addEventListener("canplay",loaded);
+video.addEventListener("playing",loaded);
 video.addEventListener("timeupdate",function(){
 if(!isFinite(video.duration)||video.duration<=0)return;
 progress[id]={time:video.currentTime,duration:video.duration,updated:Date.now()};
 if(Math.floor(video.currentTime)%2===0)save();
 });
 video.addEventListener("ended",function(){progress[id]={time:0,duration:video.duration||f.duration*60,updated:Date.now()};save();toast("Film terminé. Belle séance !");});
-video.addEventListener("error",function(){
-hideLoading();
-var area=document.querySelector(".player-main");
-if(area)area.insertAdjacentHTML("beforeend",'<div class="player-error"><h2>La vidéo ne se charge pas</h2><p>La source publique peut être momentanément indisponible.</p><a class="btn-primary" href="'+f.official+'" target="_blank" rel="noopener noreferrer">Ouvrir la source officielle '+icon("external")+'</a></div>');
+video.addEventListener("error",function(){showProblem("La source vidéo ne répond pas. Tu peux ouvrir le film sur son site d'origine.");});
+timeoutId=setTimeout(function(){
+if(currentPlayer===id&&!ready)showProblem("La connexion à la vidéo est trop longue. Essaie la source officielle.");
+},10000);
+video.load();
+var p=video.play();
+if(p&&p.catch)p.catch(function(){
+/* iOS peut empêcher la lecture automatique : afficher le lecteur pour un lancement manuel. */
+stopTimer();hideLoading();
 });
-var p=video.play();if(p&&p.catch)p.catch(function(){hideLoading();});
 }
 function closePlayer(){
 var video=document.getElementById("film-video");if(video){video.pause();video.removeAttribute("src");video.load();}
