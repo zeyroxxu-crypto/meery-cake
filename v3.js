@@ -105,8 +105,20 @@ initCatalog(){
  if(!matches.length)result.append(this.el('p',{text:this.t('noresults')}));
  for(const p of matches){
  const card=this.el('article',{cls:'catalog-card'}),title=this.el('h3',{cls:'name',text:p.name}),label=this.el('span',{cls:'tag',text:p.category}),desc=this.el('p',{text:p.description||'Description à confirmer auprès du salon.'}),price=this.el('span',{cls:'price',text:p.price||this.t('confirm')});
+ const photo=this.el('div',{cls:'v6-product-photo'});
+ // Source photos are category ambience, NOT a verified photograph of each named item.
+ const photosByGroup={brunch:2,'boissons-chaudes':3,'boissons-froides':3,sale:2,desserts:0};
+ const archival=this.data.photos?.[photosByGroup[p.groupId]];
+ if(archival&&archival.src){
+  const img=this.el('img');img.src=archival.src;img.loading='lazy';img.decoding='async';
+  img.alt='Photographie d’ambiance de Meery Cake — ne représente pas nécessairement '+p.name;
+  photo.append(img)
+ }else photo.append(this.el('span',{cls:'v6-product-icon',text:'✧'}));
+ const credit=this.el('span',{cls:'v6-photo-label',text:'Photo d’ambiance · non contractuelle'});photo.append(credit);
+ const inner=this.el('div',{cls:'v6-product-content'});
  const actions=this.el('div',{cls:'catalog-actions'}),fav=this.el('button',{text:this.favorites.includes(p.id)?'♥ Favori':'♡ Favori',type:'button',cls:this.favorites.includes(p.id)?'active':''}),ask=this.el('a',{text:'Se renseigner →',href:'tel:+33983605602'});
- ask.className='inline-link';fav.addEventListener('click',()=>this.toggleFavorite(p.id));actions.append(fav,ask);card.append(label,title,desc,price,actions);result.append(card)
+ ask.className='inline-link';fav.addEventListener('click',()=>this.toggleFavorite(p.id));
+ actions.append(fav,ask);inner.append(label,title,desc,price,actions);card.append(photo,inner);result.append(card)
  }
  };
  const filters=this.byId('catalogFilters');
