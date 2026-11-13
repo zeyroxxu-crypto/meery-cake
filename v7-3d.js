@@ -205,8 +205,10 @@ function makeStage(mode){
 function startHome(){
  const host=$('mc7Home3D');if(!host)return;
  const stage=makeStage('home');
- host.append(stage);
- stage.mc7Controller=build3D(stage.querySelector('canvas'));
+ const controller=build3D(stage.querySelector('canvas'));
+ if(!controller)return; // Preserve the fallback message if canvas is unavailable.
+ host.replaceChildren(stage);
+ stage.mc7Controller=controller;
  const tiers=$('mc7TierToggle');
  tiers?.addEventListener('click',()=>{
   const mode=tiers.getAttribute('aria-pressed')!=='true';
