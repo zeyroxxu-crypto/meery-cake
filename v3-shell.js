@@ -17,6 +17,7 @@ if(header)header.innerHTML=`
 <a href="brunch.html" data-t="brunch">Réserver un brunch</a>
 <a href="ateliers.html" data-t="workshops">Ateliers</a>
 <a href="boutique.html" data-t="gifts">Cadeaux & gourmandises</a>
+<a href="click-collect.html">Click & Collect (demande)</a>
 </div></details>
 <a href="avis.html" data-t="reviews">Avis clients</a>
 <a href="index.html#contact" data-t="contact">Contact</a>
@@ -32,8 +33,8 @@ if(footer){
 footer.innerHTML=`
 <footer class="footer"><div class="container"><div class="footer-grid">
 <div><a class="logo" href="index.html">Meery Cake<small>Salon de thé · Carcassonne</small></a><p>Une parenthèse gourmande, au cœur de Carcassonne.</p><p>Maquette indépendante non officielle : photographies, horaires, prix, prestations et modalités à valider avec les propriétaires.</p></div>
-<div><strong>À découvrir</strong><a href="index.html#carte" data-t="menu">La carte</a><a href="gateaux.html" data-t="cakes">Gâteaux personnalisés</a><a href="brunch.html" data-t="brunch">Brunch</a><a href="galerie.html" data-t="gallery">Galerie</a><a href="ateliers.html" data-t="workshops">Ateliers</a><a href="boutique.html" data-t="gifts">Cadeaux</a></div>
-<div><strong>Informations</strong><a href="tel:+33983605602">09 83 60 56 02</a><a href="https://www.google.com/maps/search/?api=1&amp;query=Meery%20Cake%206%20rue%20Victor%20Hugo%2011000%20Carcassonne" target="_blank" rel="noopener noreferrer">6 rue Victor Hugo, Carcassonne ↗</a><a href="avis.html" data-t="reviews">Avis Google</a><a href="https://www.instagram.com/meery_cake/" target="_blank" rel="noopener noreferrer">Instagram ↗</a><a href="https://www.facebook.com/Meery-Cake-135627053291530/" target="_blank" rel="noopener noreferrer">Facebook ↗</a><a href="informations.html">FAQ & informations</a><a href="confidentialite.html">Confidentialité</a><a href="mentions-legales.html">Mentions légales</a></div></div>
+<div><strong>À découvrir</strong><a href="index.html#carte" data-t="menu">La carte</a><a href="gateaux.html" data-t="cakes">Gâteaux personnalisés</a><a href="brunch.html" data-t="brunch">Brunch</a><a href="galerie.html" data-t="gallery">Galerie</a><a href="ateliers.html" data-t="workshops">Ateliers</a><a href="boutique.html" data-t="gifts">Cadeaux</a><a href="click-collect.html">Click & Collect</a></div>
+<div><strong>Informations</strong><a href="tel:+33983605602">09 83 60 56 02</a><a href="https://www.google.com/maps/search/?api=1&amp;query=Meery%20Cake%206%20rue%20Victor%20Hugo%2011000%20Carcassonne" target="_blank" rel="noopener noreferrer">6 rue Victor Hugo, Carcassonne ↗</a><a href="avis.html" data-t="reviews">Avis Google</a><a href="https://www.instagram.com/meery_cake/" target="_blank" rel="noopener noreferrer">Instagram ↗</a><a href="https://www.facebook.com/Meery-Cake-135627053291530/" target="_blank" rel="noopener noreferrer">Facebook ↗</a><a href="informations.html">FAQ & informations</a><a href="confidentialite.html">Confidentialité</a><a href="mentions-legales.html">Mentions légales</a><a href="integrations.html">Connexions du site</a></div></div>
 <div class="footer-meta">© <span id="currentYear"></span> Meery Cake · Démonstration indépendante · <a style="display:inline" href="gestion-demo.html">Aperçu d'administration</a> · Réservations, paiements et commandes non confirmés par cette maquette.</div>
 </div></footer>
 <nav class="bottom-nav" aria-label="Accès rapide sur mobile">
