@@ -236,7 +236,7 @@ function enhanceFormShares(){
  }
 }
 function additions(){
- extendNavigation();createSearch();installImageFallback();cakePreview();enhanceFormShares();
+ extendNavigation();createSearch();installImageFallback();enhanceFormShares();
 }
 document.addEventListener('DOMContentLoaded',additions);
 })();
