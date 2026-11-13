@@ -134,7 +134,7 @@ function cakeCustomizer(){
   b.addEventListener('click',()=>{field.value=name;field.dispatchEvent(new Event('input',{bubbles:true}));setPressed()});
   buttons.push(b);bar.append(b)
  }
- parent.append(label,bar);field.addEventListener('input',setPressed);setPressed();
+ const swatchGroup=el('div','field full');swatchGroup.append(label,bar);parent.after(swatchGroup);field.addEventListener('input',setPressed);setPressed();
  const nParent=notes.closest('.field');if(!nParent)return;
  const title=el('span','v8-cake-swatch-label','Quel style de décoration ?'),themes=el('div','v8-cake-themes');
  const choices=[['Fleurs','✿'],['Fruits rouges','●'],['Perles sucrées','✧']];
@@ -157,7 +157,7 @@ function cakeCustomizer(){
   themeButtons.push(b);themes.append(b)
  }
  const tip=el('p','v8-cake-help','Ces styles sont des inspirations visuelles. Le salon doit confirmer le résultat possible et le devis.');
- nParent.append(title,themes,tip);notes.addEventListener('input',update);update();
+ const themeGroup=el('div','field full');themeGroup.append(title,themes,tip);nParent.after(themeGroup);notes.addEventListener('input',update);update();
  const steps=form.querySelector('.step-progress');
  if(steps){
   const progress=el('div','v8-cake-progress'),fill=el('span');progress.setAttribute('aria-hidden','true');progress.append(fill);steps.after(progress);
