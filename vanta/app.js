@@ -127,28 +127,43 @@ modal('<button class="modal-close" data-close="detail" aria-label="Fermer">'+ico
 films.map(function(f){return '<li><strong>'+text(f.title)+'</strong> — '+text(f.credit)+' — '+text(f.license)+'</li>';}).join("")+
 '</ul><p>Les affiches et miniatures proviennent de ressources Wikimedia Commons, Internet Archive et de galeries officielles. Les droits sur les éditions restaurées peuvent être distincts de ceux des films originaux. <a href="https://studio.blender.org/films/" target="_blank" rel="noopener">Découvrez les films chez Blender Studio</a>.</p><p>VANTA n’héberge pas les fichiers vidéo et n’est affilié ni à Internet Archive ni à Blender Studio. La disponibilité des lecteurs dépend des hébergeurs.</p></div></div>');
 }
-function archiveVideoUrl(f){
+function archiveVideoCandidates(f){
+/* Stream smaller, iPhone-compatible MP4 files directly; avoid choosing unplayable HEVC/4K encodes. */
+var known={
+sita:["https://archive.org/download/Sita_Sings_the_Blues/Sita_Sings_the_Blues_medium.mp4"],
+sintel:["https://storage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"],
+tears:["https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"],
+bunny:["https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"]
+};
+var fixed=known[f.id]||[];
+if(!f.archiveId)return Promise.resolve(fixed.length?fixed:[f.video]);
 return fetch("https://archive.org/metadata/"+encodeURIComponent(f.archiveId),{mode:"cors"}).then(function(response){
-if(!response.ok)throw new Error("Métadonnées indisponibles");
+if(!response.ok)throw Error("Metadata unavailable");
 return response.json();
 }).then(function(data){
 var files=(data.files||[]).filter(function(file){
-return /\.mp4$/i.test(file.name||"") && !/sample|trailer|preview/i.test(file.name||"") && file.private!==true && file.private!=="true";
+var name=String(file.name||"");
+return /\.mp4$/i.test(name)&& !/sample|trailer|preview|x265|hevc|4k|10bit|av1/i.test(name)&& file.private!==true&&file.private!=="true";
 });
 files.sort(function(a,b){
 function rank(file){
-var name=(file.name||"").toLowerCase(),score=0;
-if(/512kb|h\.?264|mpeg4|_480p|_720p/.test(name))score+=20;
-if(/_1080p|4k|x265|hevc/.test(name))score-=15;
-if(file.source==="derivative")score+=3;
-if(Number(file.size)>1200000000)score-=10;
+var n=String(file.name||"").toLowerCase(),format=String(file.format||"").toLowerCase(),size=Number(file.size||0),score=0;
+if(/medium|480p|512kb|h\.?264|mpeg4/.test(n+" "+format))score+=35;
+if(/320p|360p|720p/.test(n))score+=8;
+if(/1080p|2160p|bluray|remux/.test(n))score-=35;
+if(/h\.?264|mpeg4/.test(format))score+=15;
+if(/xvid|divx|mpeg2/.test(format+" "+n))score-=45;
+if(size>0 && size<1200000000)score+=10;
+if(size>1600000000)score-=25;
 return score;
 }
 return rank(b)-rank(a);
 });
-if(!files.length)throw new Error("Aucun fichier MP4 compatible");
-return "https://archive.org/download/"+encodeURIComponent(f.archiveId)+"/"+files[0].name.split("/").map(encodeURIComponent).join("/");
+var urls=files.slice(0,4).map(function(file){
+return "https://archive.org/download/"+encodeURIComponent(f.archiveId)+"/"+file.name.split("/").map(encodeURIComponent).join("/");
 });
+return fixed.concat(urls.filter(function(url){return fixed.indexOf(url)<0;}));
+}).catch(function(){return fixed;});
 }
 function openPlayer(id){
 var f=getFilm(id);if(!f)return;
@@ -171,6 +186,7 @@ var video=document.getElementById("simple-film");
 var status=document.getElementById("simple-status");
 var playButtons=root.querySelectorAll('[data-video-action="play"]');
 var saved=progress[id]&&progress[id].time||0;
+var choices=[],choiceIndex=0,playerPreparing=true;
 function setStatus(message){if(currentPlayer===id&&status){status.textContent=message;status.style.display=message?"block":"none";}}
 function updateButtons(){
 var isPaused=video.paused;
@@ -196,19 +212,27 @@ progress[id]={time:video.currentTime,duration:video.duration,updated:Date.now()}
 if(Math.floor(video.currentTime)%5===0)save();
 });
 video.addEventListener("error",function(){
-setStatus("Vidéo momentanément indisponible. Essaie un autre film.");
+if(currentPlayer!==id)return;
+if(choices.length>choiceIndex+1){
+choiceIndex++;setStatus("Essai d’une autre qualité vidéo…");
+video.src=choices[choiceIndex];video.load();return;
+}
+playerPreparing=false;
+setStatus("Ce fichier ne peut pas être lu sur cet appareil.");
+var note=document.getElementById("simple-note");
+if(note)note.innerHTML='<a href="'+f.official+'" target="_blank" rel="noopener noreferrer" style="color:white;text-decoration:underline">Voir la source originale du film</a>';
 });
 video.addEventListener("ended",function(){progress[id]={time:0,duration:video.duration||1,updated:Date.now()};save();updateButtons();});
-if(f.archiveId){
-archiveVideoUrl(f).then(function(url){
+archiveVideoCandidates(f).then(function(urls){
 if(currentPlayer!==id)return;
-video.src=url;video.load();setStatus("Appuie sur lecture");
+choices=urls;
+if(!choices.length){setStatus("Aucun fichier vidéo compatible trouvé.");return;}
+video.src=choices[0];
+video.load();
+setStatus("Appuie sur Lecture");
 }).catch(function(){
-if(currentPlayer===id)setStatus("Impossible de récupérer ce film pour le moment.");
+if(currentPlayer===id)setStatus("Le fichier vidéo est temporairement inaccessible.");
 });
-}else{
-video.src=f.video;video.load();setStatus("Appuie sur lecture");
-}
 updateButtons();
 }
 function videoAction(action){
