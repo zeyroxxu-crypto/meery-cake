@@ -25,7 +25,7 @@ var view="home",filter="Tous",slide=0,currentPlayer=null,toastTimeout=null,searc
 var app=document.getElementById("app");
 function save(){try{localStorage.setItem("vanta-favorites",JSON.stringify(favs));localStorage.setItem("vanta-progress",JSON.stringify(progress));}catch(e){}}
 function hero(){
-var f=films[["sintel","tears","bunny"][slide]];
+var f=getFilm(["sintel","tears","bunny"][slide]);
 return '<section class="hero" id="hero"><div class="hero-bg" style="background-image:url(&quot;'+art(f,true)+'&quot;)"></div><div class="hero-tint"></div><div class="hero-noise"></div>'+
 '<div class="hero-inner hero-content-anim"><div class="hero-eyebrow">La sélection VANTA</div><div class="hero-overline"><span></span> À la une <span></span> CINÉMA LIBRE</div>'+
 '<h1 class="hero-title '+(f.title.length>12?"smaller":"")+'">'+text(f.title)+'</h1>'+
@@ -195,5 +195,5 @@ if((e.key==="Enter"||e.key===" ")&&e.target.matches(".card[role=button]")){e.pre
 window.addEventListener("scroll",function(){document.getElementById("topbar").classList.toggle("scrolled",window.scrollY>25);},{passive:true});
 setInterval(function(){if(view==="home"&&!currentPlayer&&!searchOpened&&!document.getElementById("detail-root").innerHTML){slide=(slide+1)%3;var h=document.getElementById("hero");if(h){var section=document.createElement("div");section.innerHTML=hero();h.replaceWith(section.firstElementChild);}}},8800);
 render();
-setTimeout(function(){document.getElementById("intro").classList.add("out");},980);
+
 })();
