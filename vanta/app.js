@@ -5,16 +5,33 @@ var ROOT="https://video.blender.org";
 function mp4(id){return ROOT+"/static/webseed/"+id+"-720.mp4";}
 function commons(file,width){return "https://commons.wikimedia.org/wiki/Special:FilePath/"+encodeURIComponent(file).replace(/%2F/g,"/")+"?width="+(width||750);}
 var films=[{
- id:"film-selection",title:"Salem",year:"",duration:"",genre:"Film",
- tags:["Film"],age:"",description:"Découvre la nouvelle vidéo choisie pour VANTA.",
- posterUrl:"https://i.ytimg.com/vi/aIVKaiaHkpk/hqdefault.jpg",
- backdropUrl:"https://i.ytimg.com/vi/aIVKaiaHkpk/hqdefault.jpg",
- youtubeId:"aIVKaiaHkpk",official:"https://www.youtube.com/watch?v=aIVKaiaHkpk",
- credit:"Vidéo diffusée par son auteur sur YouTube",license:"Lecture via le lecteur intégré YouTube",
- featured:true,kind:"long"
-}];
+id:"film-selection",title:"Salem",year:"",duration:"",genre:"À regarder",tags:["À regarder"],age:"",
+description:"La vidéo que tu as choisie pour VANTA, dans le lecteur YouTube intégré.",
+posterUrl:"https://i.ytimg.com/vi/aIVKaiaHkpk/hqdefault.jpg",
+backdropUrl:"https://i.ytimg.com/vi/aIVKaiaHkpk/hqdefault.jpg",
+youtubeId:"aIVKaiaHkpk",official:"https://www.youtube.com/watch?v=aIVKaiaHkpk",
+credit:"Vidéo YouTube intégrée",license:"Lecture YouTube",featured:true,kind:"long",available:true
+}].concat(window.VANTA_CATALOGUE||[]);
 function getFilm(id){return films.find(function(f){return f.id===id;});}
 function art(f,bg){return (bg&&f.backdropUrl)||(bg&&f.backdrop?commons(f.backdrop,1400):null)||f.posterUrl||commons(f.poster||"Sintel poster.jpg",bg?1400:700);}
+function loadPosters(){
+var images=[].slice.call(document.querySelectorAll("img[data-movie]"));
+function load(img){
+var title=img.getAttribute("data-movie"),year=img.getAttribute("data-year");
+var key="vanta-poster-"+title+"-"+year;
+var cached="";try{cached=localStorage.getItem(key)||"";}catch(e){}
+if(cached){img.src=cached;img.onload=function(){img.style.opacity="1";};return;}
+var url="https://en.wikipedia.org/w/api.php?origin=*&format=json&action=query&generator=search&gsrsearch="+encodeURIComponent(title+" "+year+" film")+"&gsrlimit=1&prop=pageimages&piprop=thumbnail&pithumbsize=500";
+fetch(url).then(function(r){return r.json();}).then(function(d){
+var pages=d.query&&d.query.pages||{},p=Object.keys(pages).map(function(k){return pages[k];})[0];
+if(p&&p.thumbnail&&p.thumbnail.source){img.onload=function(){img.style.opacity="1";};img.src=p.thumbnail.source;try{localStorage.setItem(key,p.thumbnail.source);}catch(e){}}
+}).catch(function(){});
+}
+if("IntersectionObserver" in window){
+var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){obs.unobserve(e.target);load(e.target);}});},{rootMargin:"250px"});
+images.forEach(function(img){obs.observe(img);});
+}else{images.slice(0,20).forEach(load);}
+}
 function icon(name){return '<svg class="icon" aria-hidden="true"><use href="#i-'+name+'"></use></svg>';}
 function text(s){return String(s||"").replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
 function storeRead(k,def){try{var v=JSON.parse(localStorage.getItem(k));return v&&typeof v==="object"?v:def;}catch(e){return def;}}
@@ -24,50 +41,66 @@ var view="home",filter="Tous",slide=0,currentPlayer=null,toastTimeout=null,searc
 var app=document.getElementById("app");
 function save(){try{localStorage.setItem("vanta-favorites",JSON.stringify(favs));localStorage.setItem("vanta-progress",JSON.stringify(progress));}catch(e){}}
 function hero(){
-var f=films[0];
-return '<section class="hero" id="hero"><div class="hero-bg" style="background-image:url(&quot;'+art(f,true)+'&quot;)"></div><div class="hero-tint"></div><div class="hero-noise"></div>'+
-'<div class="hero-inner hero-content-anim"><div class="hero-eyebrow">La sélection VANTA</div><div class="hero-overline"><span></span> À la une <span></span> NOUVELLE SÉLECTION</div>'+
-'<h1 class="hero-title '+(f.title.length>12?"smaller":"")+'">'+text(f.title)+'</h1>'+
-'<div class="hero-meta"><span>'+f.year+'</span><span class="dot"></span><span>'+f.duration+' min</span><span class="dot"></span><span>'+text(f.genre)+'</span><span class="dot"></span><span class="rating-pill">'+text(f.age)+'</span></div>'+
-'<p class="hero-desc">'+text(f.description)+'</p><div class="hero-actions"><button class="btn-primary" data-watch="'+f.id+'">'+icon("play")+' Regarder le film</button><button class="btn-soft" data-info="'+f.id+'">'+icon("info")+' En savoir plus</button></div></div>'+
-'<div class="hero-bottom"><span class="hero-selection">DES HISTOIRES QUI MÉRITENT LE GRAND ÉCRAN</span><div class="hero-controls"><button class="hero-arrow prev" data-slide="-1" aria-label="Film précédent">'+icon("arrow")+'</button><div class="slide-number">0'+(slide+1)+' <span>/ 03</span></div><div class="hero-progress"><span style="transform:translateX('+(slide*100)+'%)"></span></div><button class="hero-arrow" data-slide="1" aria-label="Film suivant">'+icon("arrow")+'</button></div></div></section>';
+return '<section class="hero" id="hero"><div class="hero-bg vanta-hero-abstract"></div><div class="hero-tint"></div>'+
+'<div class="hero-inner hero-content-anim"><div class="hero-eyebrow">VANTA / LE CINÉMA À EXPLORER</div>'+
+'<div class="hero-overline">130 LONGS MÉTRAGES · 9 CATÉGORIES</div>'+
+'<h1 class="hero-title smaller">LE GRAND CINÉMA.</h1>'+
+'<div class="hero-meta"><span>130 FILMS</span><span class="dot"></span><span>2 HEURES ET PLUS</span></div>'+
+'<p class="hero-desc">Horreur, comédie, action, science-fiction, fantastique et plus encore. Explore les films sortis au cinéma, retrouve tes favoris et découvre où les regarder légalement.</p>'+
+'<div class="hero-actions"><button class="btn-primary" data-nav="movies">'+icon("arrow")+' Explorer les films</button>'+
+'<button class="btn-soft" data-watch="film-selection">'+icon("play")+' Regarder Salem</button></div></div>'+
+'<div class="hero-bottom"><span class="hero-selection">LE CINÉMA PAR GENRE</span><span class="vanta-hero-count">130 FILMS / 09 CATÉGORIES</span></div></section>';
 }
 function card(f){
-var percent=progress[f.id]&&progress[f.id].duration?Math.min(100,Math.round(progress[f.id].time/progress[f.id].duration*100)):0,hasFav=favs.indexOf(f.id)!==-1;
-return '<article class="card reveal" tabindex="0" role="button" aria-label="Détails de '+text(f.title)+'" data-info="'+f.id+'"><div class="card-art"><div class="card-skeleton">V.</div><img src="'+art(f,false)+'" loading="lazy" alt="Affiche de '+text(f.title)+'" onerror="this.style.opacity=0"><div class="card-gradient"></div>'+
-(f.kind==="long"?'<span class="card-label">FILM COMPLET</span>':(f.featured?'<span class="card-label">SÉLECTION</span>':''))+
+var watch=!!f.youtubeId,hasFav=favs.indexOf(f.id)!==-1;
+var label=watch?"VIDÉO DISPONIBLE":"FICHE DU FILM";
+var cover=f.posterUrl?'<img src="'+text(f.posterUrl)+'" loading="lazy" alt="" onerror="this.style.opacity=0">':'<img class="vanta-poster-img" data-movie="'+text(f.title)+'" data-year="'+text(f.year)+'" loading="lazy" alt="" style="opacity:0">';
+return '<article class="card reveal vanta-movie-card" tabindex="0" role="button" data-info="'+f.id+'" aria-label="Fiche de '+text(f.title)+'">'+
+'<div class="card-art vanta-film-art genre-'+f.genre.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z]/g,"")+'">'+
+'<div class="vanta-poster-fallback"><span>'+text(f.genre)+'</span><strong>'+text(f.title)+'</strong><small>'+text(f.year||"VANTA")+'</small></div>'+
+cover+'<div class="card-gradient"></div><span class="card-label '+(watch?"vanta-watch-label":"vanta-discovery-label")+'">'+label+'</span>'+
 '<button class="card-fav '+(hasFav?"active":"")+'" data-fav="'+f.id+'" aria-label="'+(hasFav?"Retirer de":"Ajouter à")+' ma liste">'+icon("heart")+'</button>'+
-'<button class="card-play" data-watch="'+f.id+'" aria-label="Regarder '+text(f.title)+'">'+icon("play")+'</button>'+
-(percent?'<span class="card-progress" style="width:'+percent+'%"></span>':'')+'</div><h3 class="card-title">'+text(f.title)+'</h3>'+
-'<div class="card-meta"><span>'+f.year+'</span><span class="tiny-dot"></span><span>'+f.duration+' min</span><span class="tiny-dot"></span><span>'+text(f.genre)+'</span></div></article>';
+'<button class="card-play" data-info="'+f.id+'" aria-label="Détails de '+text(f.title)+'">'+icon("info")+'</button></div>'+
+'<h3 class="card-title">'+text(f.title)+'</h3><div class="card-meta"><span>'+text(f.year||"Vidéo")+'</span><span class="tiny-dot"></span><span>'+(f.duration?f.duration+" min":"À regarder")+'</span><span class="tiny-dot"></span><span>'+text(f.genre)+'</span></div></article>';
 }
 function rail(name,eyebrow,list,button){
 return '<section class="section"><div class="section-head reveal"><div><p class="eyebrow">'+eyebrow+'</p><h2>'+name+'</h2></div>'+
 (button?'<button class="text-link" data-nav="movies">Tout voir '+icon("arrow")+'</button>':'')+'</div>'+
 '<div class="rail">'+list.map(card).join("")+'</div></section>';
 }
-function catalogueBanner(title,sub){return '<div class="catalogue-top"><p class="eyebrow">VANTA / LA CINÉMATHÈQUE</p><h1 class="catalogue-title">'+title+'</h1><p class="catalogue-intro">'+sub+'</p>'+
-'<div class="filters">'+["Tous","Longs métrages","Courts métrages","Classique","Animation","Fantastique","Science-fiction","Drame","Comédie","Action"].map(function(t){return '<button class="filter '+(filter===t?"active":"")+'" data-filter="'+text(t)+'">'+text(t)+"</button>";}).join("")+'</div></div>';}
-function filtered(){return films.filter(function(f){return filter==="Tous"||(filter==="Longs métrages"&&f.kind==="long")||(filter==="Courts métrages"&&f.kind!=="long")||f.tags.indexOf(filter)!==-1;});}
+function catalogueBanner(title,sub){
+return '<div class="catalogue-top"><p class="eyebrow">VANTA / 130 FILMS DE CINÉMA</p><h1 class="catalogue-title">'+title+'</h1><p class="catalogue-intro">'+sub+'</p>'+
+'<div class="filters">'+["Tous","Horreur","Comédie","Action","Science-fiction","Fantastique","Animation","Aventure","Thriller","Drame","À regarder"].map(function(t){
+return '<button class="filter '+(filter===t?"active":"")+'" data-filter="'+text(t)+'">'+text(t)+'</button>';
+}).join("")+'</div><p class="vanta-film-total">'+filtered().length+' titre(s) dans cette sélection</p></div>';
+}
+function filtered(){return films.filter(function(f){return filter==="Tous"||f.genre===filter;});}
 function catalogueGrid(items){return '<div class="catalogue-grid">'+items.map(card).join("")+'</div>';}
 function empty(title,desc,button){return '<div class="empty-container"><div class="empty-state">'+icon("info")+'<h3>'+title+'</h3><p>'+desc+'</p><button class="btn-primary" data-nav="movies">'+icon("arrow")+' '+(button||"Explorer les films")+'</button></div></div>';}
 function render(){
-var f=films[0],out='';
+var out="";
 if(view==="home"){
-out=hero()+'<div class="kicker-strip"><span>VANTA <strong> / PREMIER FILM</strong></span><span class="kicker-right">LECTURE INTÉGRÉE AU SITE</span></div>'+
-rail("Notre sélection","01 / LE CATALOGUE",films,false);
+out=hero()+'<div class="kicker-strip"><span>VANTA <strong> / 130 FILMS, 9 GENRES</strong></span><span class="kicker-right">CATALOGUE DE DÉCOUVERTE</span></div>'+
+rail("À regarder sur VANTA","01 / VIDÉO INTÉGRÉE",films.filter(function(f){return f.available;}),true)+
+rail("Horreur","02 / FRISSONS",films.filter(function(f){return f.genre==="Horreur";}).slice(0,10),true)+
+rail("Comédie","03 / HUMOUR",films.filter(function(f){return f.genre==="Comédie";}),true)+
+rail("Action","04 / ADRÉNALINE",films.filter(function(f){return f.genre==="Action";}).slice(0,10),true)+
+rail("Science-fiction","05 / VERS LE FUTUR",films.filter(function(f){return f.genre==="Science-fiction";}).slice(0,10),true)+
+rail("Fantastique","06 / MONDES MAGIQUES",films.filter(function(f){return f.genre==="Fantastique";}).slice(0,10),true)+
+rail("Animation","07 / ANIMATION",films.filter(function(f){return f.genre==="Animation";}),true)+
+rail("Aventure","08 / ÉVASION",films.filter(function(f){return f.genre==="Aventure";}).slice(0,10),true)+
+rail("Thriller","09 / SUSPENSE",films.filter(function(f){return f.genre==="Thriller";}).slice(0,10),true)+
+rail("Drame","10 / GRANDES HISTOIRES",films.filter(function(f){return f.genre==="Drame";}).slice(0,10),true);
 }else if(view==="movies"||view==="discover"){
-out='<div style="padding-top:90px"></div>'+catalogueBanner("Tous les films","La nouvelle sélection VANTA, à regarder avec le lecteur intégré.")+catalogueGrid(filtered());
+out='<div style="padding-top:90px"></div>'+catalogueBanner("Tous les films","130 films de 2 heures ou plus à découvrir. Les fiches indiquent où rechercher une offre légale ; seuls les films signalés comme disponibles se regardent dans VANTA.")+catalogueGrid(filtered());
 }else if(view==="list"){
-var l=films.filter(function(f){return favs.indexOf(f.id)!==-1;});
-out='<div style="padding-top:90px"></div><div class="catalogue-top"><p class="eyebrow">VANTA / FAVORIS</p><h1 class="catalogue-title">Ma liste.</h1></div>'+(l.length?catalogueGrid(l):empty("Aucun favori","Ajoute des films à ta liste."));
-}else{
-out='<div style="padding-top:90px"></div>'+catalogueGrid(films);
-}
+var items=films.filter(function(f){return favs.indexOf(f.id)!==-1;});
+out='<div style="padding-top:90px"></div><div class="catalogue-top"><p class="eyebrow">VANTA / FAVORIS</p><h1 class="catalogue-title">Ma liste.</h1></div>'+(items.length?catalogueGrid(items):empty("Aucun favori","Ajoute les films qui te plaisent."));
+}else{out='<div style="padding-top:90px"></div>'+catalogueGrid(films);}
 app.innerHTML=out;
 document.querySelectorAll(".nav-item").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-nav")===view);});
 document.getElementById("mobile-nav").classList.remove("open");
-reveal();
+reveal();loadPosters();
 }
 var observer;
 function reveal(){
@@ -94,60 +127,28 @@ document.getElementById("detail-root").innerHTML='<div class="overlay" id="detai
 }
 function openDetail(id){
 var f=getFilm(id);if(!f)return;
-var added=favs.indexOf(id)!==-1;
-modal('<div class="modal-bg" style="background-image:url(&quot;'+art(f,true)+'&quot;)"></div><button class="modal-close" data-close="detail" aria-label="Fermer">'+icon("close")+'</button>'+
-'<div class="modal-body"><p class="eyebrow">VANTA / EN AVANT-PREMIÈRE</p><h2>'+text(f.title)+'</h2>'+
-'<div class="modal-meta"><span>'+f.year+'</span><span>•</span><span>'+f.duration+' min</span><span>•</span><span>'+text(f.genre)+'</span><span>•</span><span>'+text(f.age)+'</span></div>'+
-'<p>'+text(f.description)+'</p><div class="modal-actions"><button class="btn-primary" data-watch="'+f.id+'">'+icon("play")+' Regarder maintenant</button>'+
+var added=favs.indexOf(id)!==-1,watch=!!f.youtubeId;
+var where="https://www.justwatch.com/fr/recherche?q="+encodeURIComponent(f.title);
+var action=watch?'<button class="btn-primary" data-watch="'+f.id+'">'+icon("play")+' Regarder dans VANTA</button>':
+'<a class="btn-primary" href="'+where+'" target="_blank" rel="noopener noreferrer">'+icon("external")+' Où regarder légalement</a>';
+modal('<div class="modal-bg" style="'+(f.posterUrl?'background-image:url(&quot;'+text(f.posterUrl)+'&quot;)':'background-image:linear-gradient(120deg,#222,#070707)')+'"></div>'+
+'<button class="modal-close" data-close="detail" aria-label="Fermer">'+icon("close")+'</button>'+
+'<div class="modal-body"><p class="eyebrow">VANTA / '+(watch?"VIDÉO INTÉGRÉE":"FICHE CINÉMA")+'</p><h2>'+text(f.title)+'</h2>'+
+'<div class="modal-meta"><span>'+text(f.year||"Vidéo")+'</span><span>•</span><span>'+(f.duration?f.duration+" min":"Durée non précisée")+'</span><span>•</span><span>'+text(f.genre)+'</span></div>'+
+'<p>'+text(f.description||"Un film à découvrir.")+'</p><div class="modal-actions">'+action+
 '<button class="btn-outline" data-fav="'+f.id+'">'+icon(added?"check":"plus")+' '+(added?"Dans ma liste":"Ajouter à ma liste")+'</button></div>'+
-'<div class="modal-credit">Œuvre : '+text(f.credit)+' · Licence '+text(f.license)+'. Diffusion depuis une source externe. <a href="'+f.official+'" target="_blank" rel="noopener noreferrer">Source officielle '+icon("external")+'</a>. VANTA est indépendant des institutions qui conservent ces films.</div></div>');
+'<div class="modal-credit">'+(watch?"Lecture depuis YouTube, sous réserve que la vidéo autorise l'intégration.":"Fiche de découverte uniquement : ce film n'est pas hébergé ni diffusé en entier sur VANTA. Les offres et prix peuvent varier. Aucun accès gratuit n'est garanti.")+'</div></div>');
 }
 function closeDetail(){document.getElementById("detail-root").innerHTML="";if(!document.getElementById("player-root").innerHTML&&!searchOpened)document.body.style.overflow="";}
 function openCredits(){
-modal('<button class="modal-close" data-close="detail" aria-label="Fermer">'+icon("close")+'</button><div class="modal-body" style="margin-top:0;padding-top:50px"><p class="eyebrow">VANTA / TRANSPARENCE</p><h2 style="font-size:50px">Crédits & licences</h2><div class="credits-panel"><p>VANTA présente une sélection de films historiques et de créations indépendantes hébergées par Internet Archive ou Blender Studio. La situation juridique peut dépendre des versions, restaurations et bandes-son.</p><ul>'+
-films.map(function(f){return '<li><strong>'+text(f.title)+'</strong> — '+text(f.credit)+' — '+text(f.license)+'</li>';}).join("")+
-'</ul><p>Les affiches et miniatures proviennent de ressources Wikimedia Commons, Internet Archive et de galeries officielles. Les droits sur les éditions restaurées peuvent être distincts de ceux des films originaux. <a href="https://studio.blender.org/films/" target="_blank" rel="noopener">Découvrez les films chez Blender Studio</a>.</p><p>VANTA n’héberge pas les fichiers vidéo et n’est affilié ni à Internet Archive ni à Blender Studio. La disponibilité des lecteurs dépend des hébergeurs.</p></div></div>');
-}
-function archiveVideoCandidates(f){
-/* Stream smaller, iPhone-compatible MP4 files directly; avoid choosing unplayable HEVC/4K encodes. */
-var known={
-sita:["https://archive.org/download/Sita_Sings_the_Blues/Sita_Sings_the_Blues_medium.mp4"],
-sintel:["https://storage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"],
-tears:["https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"],
-bunny:["https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"]
-};
-var fixed=known[f.id]||[];
-if(!f.archiveId)return Promise.resolve(fixed.length?fixed:[f.video]);
-return fetch("https://archive.org/metadata/"+encodeURIComponent(f.archiveId),{mode:"cors"}).then(function(response){
-if(!response.ok)throw Error("Metadata unavailable");
-return response.json();
-}).then(function(data){
-var files=(data.files||[]).filter(function(file){
-var name=String(file.name||"");
-return /\.mp4$/i.test(name)&& !/sample|trailer|preview|x265|hevc|4k|10bit|av1/i.test(name)&& file.private!==true&&file.private!=="true";
-});
-files.sort(function(a,b){
-function rank(file){
-var n=String(file.name||"").toLowerCase(),format=String(file.format||"").toLowerCase(),size=Number(file.size||0),score=0;
-if(/medium|480p|512kb|h\.?264|mpeg4/.test(n+" "+format))score+=35;
-if(/320p|360p|720p/.test(n))score+=8;
-if(/1080p|2160p|bluray|remux/.test(n))score-=35;
-if(/h\.?264|mpeg4/.test(format))score+=15;
-if(/xvid|divx|mpeg2/.test(format+" "+n))score-=45;
-if(size>0 && size<1200000000)score+=10;
-if(size>1600000000)score-=25;
-return score;
-}
-return rank(b)-rank(a);
-});
-var urls=files.slice(0,4).map(function(file){
-return "https://archive.org/download/"+encodeURIComponent(f.archiveId)+"/"+file.name.split("/").map(encodeURIComponent).join("/");
-});
-return fixed.concat(urls.filter(function(url){return fixed.indexOf(url)<0;}));
-}).catch(function(){return fixed;});
+modal('<button class="modal-close" data-close="detail" aria-label="Fermer">'+icon("close")+'</button>'+
+'<div class="modal-body"><p class="eyebrow">VANTA / TRANSPARENCE</p><h2>Films & droits</h2>'+
+'<p>VANTA répertorie 130 vrais longs métrages de deux heures ou plus. Cette sélection est un catalogue de découverte, pas une bibliothèque de 130 films gratuits en streaming.</p>'+
+'<p>Les fiches « Où regarder » ouvrent une recherche de services légaux. Salem reste la vidéo intégrée fournie par l’utilisateur, accessible sous réserve des paramètres de YouTube.</p></div>');
 }
 function openPlayer(id){
 var f=getFilm(id);if(!f)return;
+if(!f.youtubeId){openDetail(id);return;}
 closeDetail();closeSearch();
 document.body.style.overflow="hidden";currentPlayer=id;
 var embeds={sintel:"0eb052d0-fd51-43e6-aa33-ecdbf77a5d40",tears:"8533ea43-4271-4a57-9694-e9d0b35e1aa1",bunny:"bf1f3fb5-b119-4f9f-9930-8e20e892b898",spring:"3d95fb3d-c866-42c8-9db1-fe82f48ccb95",sprite:"a69d68a5-a0e0-4a80-9d66-49f093c97aaf",agent:"264ff760-803e-430e-8d81-15648e904183",caminandes:"fb70d459-48d2-4db5-adba-813c84f9200a",glass:"64222c8a-c4c7-4b3b-9850-7fb2078edcf6"};
@@ -195,7 +196,7 @@ var field=document.getElementById("search-input");field.addEventListener("input"
 }
 function updateSearch(){
 var inp=document.getElementById("search-input");if(!inp)return;
-var q=inp.value.trim().toLowerCase(),found=films.filter(function(f){return !q||[f.title,f.genre,f.description,f.year].join(" ").toLowerCase().includes(q);});
+var q=inp.value.trim().toLowerCase(),found=films.filter(function(f){return !q||[f.title,f.genre,f.description,f.year].join(" ").toLowerCase().includes(q);}).slice(0,30);
 var target=document.getElementById("search-results");
 target.innerHTML=found.length?found.map(function(f){return '<button class="search-result" data-info="'+f.id+'"><img src="'+art(f)+'" alt=""><span><strong>'+text(f.title)+'</strong><small>'+f.year+' · '+f.duration+' min · '+text(f.genre)+'</small></span>'+icon("arrow")+'</button>';}).join(""):'<div style="padding:25px;color:#9aa0ad;text-align:center">Aucun résultat. Essaie un autre titre.</div>';
 }
@@ -207,7 +208,7 @@ var sd=el.closest("[data-slide]");if(sd){slide=(slide+3+Number(sd.getAttribute("
 var f=el.closest("[data-fav]");if(f){e.stopPropagation();toggleFav(f.getAttribute("data-fav"));return;}
 var w=el.closest("[data-watch]");if(w){e.stopPropagation();openPlayer(w.getAttribute("data-watch"));return;}
 var d=el.closest("[data-info]");if(d){e.stopPropagation();if(searchOpened)closeSearch();openDetail(d.getAttribute("data-info"));return;}
-if(el.closest("[data-random]")){if(films.length)openPlayer(films[Math.floor(Math.random()*films.length)].id);return;}
+if(el.closest("[data-random]")){if(films.length)openDetail(films[Math.floor(Math.random()*films.length)].id);return;}
 var c=el.closest("[data-close]");if(c){var t=c.getAttribute("data-close");if(t==="player")closePlayer();else if(t==="search")closeSearch();else closeDetail();return;}
 if(el.id==="search-trigger"){openSearch();return;}
 var fs=el.closest("[data-cinema-fullscreen]");if(fs){toggleCinemaFullscreen();return;}
