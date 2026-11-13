@@ -5,6 +5,13 @@ var ROOT="https://video.blender.org";
 function mp4(id){return ROOT+"/static/webseed/"+id+"-720.mp4";}
 function commons(file,width){return "https://commons.wikimedia.org/wiki/Special:FilePath/"+encodeURIComponent(file).replace(/%2F/g,"/")+"?width="+(width||750);}
 var films=[
+{"id":"sita","title":"Sita Sings the Blues","year":2008,"duration":82,"genre":"Animation","tags":["Animation","Fantastique"],"description":"Une grande fresque musicale animée inspirée du Ramayana, signée Nina Paley.","archiveId":"Sita_Sings_the_Blues","poster":"Sita STB Poster.jpg","official":"https://archive.org/details/Sita_Sings_the_Blues","credit":"Film de Nina Paley","license":"Film librement diffusé par la créatrice ; musique sous droits distincts","kind":"long","age":"Tout public","featured":true},
+{"id":"nosferatu","title":"Nosferatu","year":1922,"duration":94,"genre":"Fantastique","tags":["Classique","Fantastique"],"description":"Un jeune homme rencontre le mystérieux comte Orlok, un vampire dont l’ombre hante le cinéma depuis un siècle.","archiveId":"Nosferatu_DVD_quality","poster":"Nosferatu.jpg","official":"https://archive.org/details/Nosferatu_DVD_quality","credit":"Film de F. W. Murnau","license":"Film historique du domaine public, selon les versions","kind":"long","age":"12+","featured":true},
+{"id":"caligari","title":"Le Cabinet du Dr Caligari","year":1920,"duration":77,"genre":"Fantastique","tags":["Classique","Fantastique"],"description":"Un hypnotiseur inquiétant présente un somnambule qui prédit l'avenir, dans un monde aux décors tourmentés.","archiveId":"the-cabinet-of-dr-caligari-1920_202501","posterUrl":"https://archive.org/services/img/the-cabinet-of-dr-caligari-1920_202501","official":"https://archive.org/details/the-cabinet-of-dr-caligari-1920_202501","credit":"Film de Robert Wiene","license":"Film historique du domaine public, selon les versions","kind":"long","age":"12+","featured":true},
+{"id":"faust","title":"Faust","year":1926,"duration":116,"genre":"Fantastique","tags":["Classique","Fantastique"],"description":"Un pacte avec Méphistophélès bouleverse le destin d’un savant dans ce grand film expressionniste.","archiveId":"faust-4k","posterUrl":"https://archive.org/services/img/faust-4k","official":"https://archive.org/details/faust-4k","credit":"Film de F. W. Murnau","license":"Film historique du domaine public, selon les versions","kind":"long","age":"12+","featured":false},
+{"id":"lastlaugh","title":"Le Dernier des hommes","year":1924,"duration":90,"genre":"Drame","tags":["Classique","Drame"],"description":"Un portier d’hôtel perd son uniforme et le statut social qui donnait un sens à sa vie.","archiveId":"lastlaugh4k","posterUrl":"https://archive.org/services/img/lastlaugh4k","official":"https://archive.org/details/lastlaugh4k","credit":"Film de F. W. Murnau","license":"Film historique du domaine public, selon les versions","kind":"long","age":"Tout public","featured":false},
+{"id":"sunrise","title":"L'Aurore","year":1927,"duration":94,"genre":"Drame","tags":["Classique","Drame"],"description":"L'histoire d'un couple mis à l’épreuve, un film légendaire et poétique des débuts du cinéma.","archiveId":"sunrise-a-song-of-two-humans-1927-bluray-1080p-aac-2.0-x265-rarbg","posterUrl":"https://archive.org/services/img/sunrise-a-song-of-two-humans-1927-bluray-1080p-aac-2.0-x265-rarbg","official":"https://archive.org/details/sunrise-a-song-of-two-humans-1927-bluray-1080p-aac-2.0-x265-rarbg","credit":"Film de F. W. Murnau","license":"Film historique ; droits de versions et musiques à vérifier","kind":"long","age":"Tout public","featured":false},
+{"id":"moon","title":"Le Voyage dans la Lune","year":1902,"duration":14,"genre":"Science-fiction","tags":["Classique","Science-fiction","Fantastique"],"description":"Des astronomes décollent dans une fusée et découvrent une Lune peuplée de créatures extraordinaires.","archiveId":"Levoyagedanslalune","posterUrl":"https://archive.org/services/img/Levoyagedanslalune","official":"https://archive.org/details/Levoyagedanslalune","credit":"Film de Georges Méliès","license":"Œuvre originale du domaine public ; versions et musiques distinctes","kind":"court","age":"Tout public","featured":false},
 {id:"sintel",youtubeId:"eRsGyueVLvQ",title:"Sintel",year:2010,duration:15,genre:"Fantastique",tags:["Animation","Fantastique"],age:"Tout public",description:"Une jeune aventurière traverse un monde de glace et de feu pour retrouver le petit dragon qu'elle a autrefois sauvé. Une quête inoubliable sur l'amitié et le courage.",poster:"Sintel poster.jpg",backdrop:"Durian - Sintel-wallpaper-dragon.jpg",video:"https://storage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4",official:"https://video.blender.org/videos/watch/0eb052d0-fd51-43e6-aa33-ecdbf77a5d40",license:"CC BY 3.0",credit:"© Blender Foundation / durian.blender.org",featured:true},
 {id:"tears",youtubeId:"R6MlUcmOul8",title:"Tears of Steel",year:2012,duration:12,genre:"Science-fiction",tags:["Science-fiction","Action"],age:"12+",description:"Dans un Amsterdam futuriste, un groupe de scientifiques tente de réparer une erreur du passé pour offrir une dernière chance à l'humanité.",poster:"Tos-poster.png",backdrop:"Tears of Steel frame 01 2a.png",video:"https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4",official:"https://mango.blender.org/",license:"CC BY 3.0",credit:"© Blender Foundation / Project Mango",featured:true},
 {id:"bunny",youtubeId:"YE7VzlLtp-4",title:"Big Buck Bunny",year:2008,duration:10,genre:"Comédie",tags:["Animation","Comédie"],age:"Tout public",description:"Un lapin géant au grand cœur profite d'un jour paisible… jusqu'à ce que trois petits malins viennent troubler la forêt. Une aventure drôle et pleine de surprises.",poster:"Big buck bunny poster big.jpg",backdrop:"Big buck bunny poster big.jpg",video:"https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",official:"https://peach.blender.org/",license:"CC BY 3.0",credit:"© Blender Foundation / peach.blender.org",featured:true},
@@ -25,7 +32,7 @@ var view="home",filter="Tous",slide=0,currentPlayer=null,toastTimeout=null,searc
 var app=document.getElementById("app");
 function save(){try{localStorage.setItem("vanta-favorites",JSON.stringify(favs));localStorage.setItem("vanta-progress",JSON.stringify(progress));}catch(e){}}
 function hero(){
-var f=getFilm(["sintel","tears","bunny"][slide]);
+var f=getFilm(["sita","nosferatu","caligari"][slide]);
 return '<section class="hero" id="hero"><div class="hero-bg" style="background-image:url(&quot;'+art(f,true)+'&quot;)"></div><div class="hero-tint"></div><div class="hero-noise"></div>'+
 '<div class="hero-inner hero-content-anim"><div class="hero-eyebrow">La sélection VANTA</div><div class="hero-overline"><span></span> À la une <span></span> CINÉMA LIBRE</div>'+
 '<h1 class="hero-title '+(f.title.length>12?"smaller":"")+'">'+text(f.title)+'</h1>'+
@@ -36,7 +43,7 @@ return '<section class="hero" id="hero"><div class="hero-bg" style="background-i
 function card(f){
 var percent=progress[f.id]&&progress[f.id].duration?Math.min(100,Math.round(progress[f.id].time/progress[f.id].duration*100)):0,hasFav=favs.indexOf(f.id)!==-1;
 return '<article class="card reveal" tabindex="0" role="button" aria-label="Détails de '+text(f.title)+'" data-info="'+f.id+'"><div class="card-art"><div class="card-skeleton">V.</div><img src="'+art(f,false)+'" loading="lazy" alt="Affiche de '+text(f.title)+'" onerror="this.style.opacity=0"><div class="card-gradient"></div>'+
-(f.featured?'<span class="card-label">SÉLECTION</span>':'')+
+(f.kind==="long"?'<span class="card-label">FILM COMPLET</span>':(f.featured?'<span class="card-label">SÉLECTION</span>':''))+
 '<button class="card-fav '+(hasFav?"active":"")+'" data-fav="'+f.id+'" aria-label="'+(hasFav?"Retirer de":"Ajouter à")+' ma liste">'+icon("heart")+'</button>'+
 '<button class="card-play" data-watch="'+f.id+'" aria-label="Regarder '+text(f.title)+'">'+icon("play")+'</button>'+
 (percent?'<span class="card-progress" style="width:'+percent+'%"></span>':'')+'</div><h3 class="card-title">'+text(f.title)+'</h3>'+
@@ -48,27 +55,27 @@ return '<section class="section"><div class="section-head reveal"><div><p class=
 '<div class="rail">'+list.map(card).join("")+'</div></section>';
 }
 function catalogueBanner(title,sub){return '<div class="catalogue-top"><p class="eyebrow">VANTA / LA CINÉMATHÈQUE</p><h1 class="catalogue-title">'+title+'</h1><p class="catalogue-intro">'+sub+'</p>'+
-'<div class="filters">'+["Tous","Animation","Fantastique","Science-fiction","Comédie","Action"].map(function(t){return '<button class="filter '+(filter===t?"active":"")+'" data-filter="'+text(t)+'">'+text(t)+"</button>";}).join("")+'</div></div>';}
-function filtered(){return films.filter(function(f){return filter==="Tous"||f.tags.indexOf(filter)!==-1;});}
+'<div class="filters">'+["Tous","Longs métrages","Courts métrages","Classique","Animation","Fantastique","Science-fiction","Drame","Comédie","Action"].map(function(t){return '<button class="filter '+(filter===t?"active":"")+'" data-filter="'+text(t)+'">'+text(t)+"</button>";}).join("")+'</div></div>';}
+function filtered(){return films.filter(function(f){return filter==="Tous"||(filter==="Longs métrages"&&f.kind==="long")||(filter==="Courts métrages"&&f.kind!=="long")||f.tags.indexOf(filter)!==-1;});}
 function catalogueGrid(items){return '<div class="catalogue-grid">'+items.map(card).join("")+'</div>';}
 function empty(title,desc,button){return '<div class="empty-container"><div class="empty-state">'+icon("info")+'<h3>'+title+'</h3><p>'+desc+'</p><button class="btn-primary" data-nav="movies">'+icon("arrow")+' '+(button||"Explorer les films")+'</button></div></div>';}
 function render(){
 var out="";
 if(view==="home"){
 out=hero()+'<div class="kicker-strip"><span>LE BON FILM. AU BON MOMENT. <strong>SANS ABONNEMENT.</strong></span><span class="kicker-right"><i class="status-dot"></i> LA SÉANCE COMMENCE ICI</span></div>'+
-rail("À l'affiche","01 / NOTRE SÉLECTION",films.slice(0,7),true)+
-rail("Des mondes à explorer","02 / FANTASTIQUE & ANIMATION",films.filter(function(f){return f.tags.indexOf("Fantastique")!==-1||f.tags.indexOf("Animation")!==-1;}),true)+
+rail("Les longs métrages","01 / SÉANCE COMPLÈTE",films.filter(function(f){return f.kind==="long";}),true)+
+rail("Films courts & créations libres","02 / ANIMATION & DÉCOUVERTES",films.filter(function(f){return f.kind!=="long";}),true)+
 '<section class="spotlight reveal"><div class="spotlight-content"><p class="eyebrow">UNE EXPÉRIENCE À PART</p><h2>Une autre façon<br>de <em>vivre le cinéma.</em></h2><p>Des films soigneusement choisis, une interface pensée pour le plaisir des yeux. Tu choisis l’histoire. On s’occupe du reste.</p><div class="spotlight-buttons"><button class="btn-primary" data-random="1">'+icon("shuffle")+' Surprends-moi</button><button class="btn-outline" data-nav="movies">Explorer le catalogue '+icon("arrow")+'</button></div></div><div class="spotlight-card"><img src="'+art(films[4])+'" alt="Sprite Fright" loading="lazy"></div></section>'+
-rail("Pour une soirée différente","03 / NOS COUPS DE CŒUR",[films[1],films[6],films[7],films[4],films[3]],true)+
+rail("Les classiques du cinéma","03 / LE GRAND ÉCRAN",films.filter(function(f){return f.tags.indexOf("Classique")!==-1;}),true)+
 '<div class="statement"><span>MOINS DE SCROLL. <strong>PLUS D’ÉMOTIONS.</strong></span><small>VANTA. MADE FOR MOVIES.</small></div>';
 }else if(view==="movies"){
-out='<div style="padding-top:78px"></div>'+catalogueBanner("Tous les films","Un catalogue de courts métrages et de créations originales, proposés sous licences ouvertes. Choisis un genre et lance ta séance.")+catalogueGrid(filtered());
+out='<div style="padding-top:78px"></div>'+catalogueBanner("Tous les films","De vrais longs métrages et des courts métrages à découvrir. Les vidéos s’ouvrent dans VANTA depuis des archives publiques, sans YouTube.")+catalogueGrid(filtered());
 if(!filtered().length)out+=empty("Aucun film dans ce genre","Essaie une autre catégorie.");
 }else if(view==="discover"){
 out='<div style="padding-top:78px"></div><div class="catalogue-top"><p class="eyebrow">VANTA / DÉCOUVERTES</p><h1 class="catalogue-title">La curiosité fait les meilleurs films.</h1><p class="catalogue-intro">Une sélection pour ceux qui veulent changer d’univers, de rythme et d’ambiance.</p><button class="btn-primary" data-random="1">'+icon("shuffle")+' Lancer un film au hasard</button></div>'+
-rail("Voyage dans l'imaginaire","LA SÉLECTION FANTASTIQUE",[films[0],films[3],films[2]],false)+
-rail("Court. Intense. Mémorable.","POUR UNE PAUSE CINÉMA",[films[5],films[6],films[7]],false)+
-rail("À voir cette semaine","NOS INCONTOURNABLES",[films[1],films[4],films[0],films[2]],false);
+rail("Les grands classiques","LE CINÉMA DE LÉGENDE",films.filter(function(f){return f.kind==="long";}),false)+
+rail("Court. Intense. Mémorable.","POUR UNE PAUSE CINÉMA",films.filter(function(f){return f.kind!=="long";}).slice(0,7),false)+
+rail("Fantastique et imaginaire","NOS INCONTOURNABLES",films.filter(function(f){return f.tags.indexOf("Fantastique")!==-1;}),false);
 }else if(view==="list"){
 var list=films.filter(function(f){return favs.indexOf(f.id)!==-1;});
 out='<div style="padding-top:78px"></div><div class="catalogue-top"><p class="eyebrow">VANTA / ESPACE PERSONNEL</p><h1 class="catalogue-title">Ma liste<span style="color:var(--accent)">.</span></h1><p class="catalogue-intro">Tous les films que tu as enregistrés, retrouvés ici, sur cet appareil.</p></div>'+(list.length?catalogueGrid(list):empty("Ta liste est encore vide.","Ajoute des films avec le cœur sur leur affiche. Ils apparaîtront ici.","Trouver un film"));
@@ -123,16 +130,17 @@ films.map(function(f){return '<li><strong>'+text(f.title)+'</strong> — '+text(
 function openPlayer(id){
 var f=getFilm(id);if(!f)return;
 closeDetail();closeSearch();
-var root=document.getElementById("player-root");
 document.body.style.overflow="hidden";currentPlayer=id;
-var yt="https://www.youtube.com/watch?v="+encodeURIComponent(f.youtubeId);
-root.innerHTML='<div class="player-overlay" role="dialog" aria-modal="true" aria-label="Lecture de '+text(f.title)+'">'+
-'<div class="player-top"><button class="player-back" data-close="player">'+icon("arrow").replace('class="icon"','class="icon" style="transform:rotate(180deg)"')+' Retour</button><div class="player-title"><span>VANTA / LECTURE</span>'+text(f.title)+'</div><button class="btn-quiet" data-close="player" aria-label="Fermer">'+icon("close")+'</button></div>'+
+var isArchive=!!f.archiveId;
+var embeds={sintel:"0eb052d0-fd51-43e6-aa33-ecdbf77a5d40",tears:"8533ea43-4271-4a57-9694-e9d0b35e1aa1",bunny:"bf1f3fb5-b119-4f9f-9930-8e20e892b898",spring:"3d95fb3d-c866-42c8-9db1-fe82f48ccb95",sprite:"a69d68a5-a0e0-4a80-9d66-49f093c97aaf",agent:"264ff760-803e-430e-8d81-15648e904183",caminandes:"fb70d459-48d2-4db5-adba-813c84f9200a",glass:"64222c8a-c4c7-4b3b-9850-7fb2078edcf6"};
+var url=isArchive?"https://archive.org/embed/"+encodeURIComponent(f.archiveId):"https://video.blender.org/videos/embed/"+embeds[id];
+document.getElementById("player-root").innerHTML='<div class="player-overlay" role="dialog" aria-modal="true" aria-label="Lecture de '+text(f.title)+'">'+
+'<div class="player-top"><button class="player-back" data-close="player">'+icon("arrow").replace('class="icon"','class="icon" style="transform:rotate(180deg)"')+' Retour</button><div class="player-title"><span>VANTA / FILM COMPLET</span>'+text(f.title)+'</div><button class="btn-quiet" data-close="player" aria-label="Fermer">'+icon("close")+'</button></div>'+
 '<div class="player-main" style="flex-direction:column;gap:16px;padding:12px 14px">'+
-'<div class="video-frame-shell" style="width:100%;max-width:1100px;aspect-ratio:16/9;position:relative;overflow:hidden;border-radius:12px;background:#111"><iframe id="film-iframe" title="Film '+text(f.title)+' - lecteur officiel Blender" src="https://www.youtube-nocookie.com/embed/'+encodeURIComponent(f.youtubeId)+'?playsinline=1&rel=0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" loading="eager" style="display:block;width:100%;height:100%;border:0;background:#000"></iframe></div>'+
-'<p style="color:#a9a9a9;text-align:center;font-size:12px;line-height:1.5;margin:0">Appuie sur Lecture dans la vidéo. Si elle ne démarre pas, ouvre-la directement sur YouTube.</p>'+
-'<a class="btn-primary" style="min-height:46px" href="'+yt+'" target="_blank" rel="noopener noreferrer">'+icon("play")+' Ouvrir le film sur YouTube '+icon("external")+'</a></div>'+
-'<div class="player-footer"><span>'+text(f.credit)+' · '+text(f.license)+'</span><a href="'+yt+'" target="_blank" rel="noopener noreferrer">Film officiel sur YouTube '+icon("external")+'</a></div></div>';
+'<div class="video-frame-shell" style="width:100%;max-width:1100px;aspect-ratio:16/9;overflow:hidden;border-radius:12px;background:#111"><iframe id="film-iframe" title="Lecture de '+text(f.title)+'" src="'+url+'" allow="fullscreen; autoplay; picture-in-picture" allowfullscreen webkitallowfullscreen loading="eager" style="width:100%;height:100%;border:0;background:#000;display:block"></iframe></div>'+
+'<p style="color:#c0c0c0;font-size:12px;max-width:720px;text-align:center;line-height:1.65;margin:0">Lecture directement dans VANTA · '+(isArchive?"Source : Internet Archive":"Source : Blender Studio")+'. Appuie sur Lecture dans le lecteur.</p>'+
+'<div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap"><button class="btn-outline" data-refresh-player="'+f.id+'">Réessayer la vidéo</button><a class="btn-soft" href="'+f.official+'" target="_blank" rel="noopener noreferrer">Source du film '+icon("external")+'</a></div></div>'+
+'<div class="player-footer"><span>'+text(f.credit)+' · '+text(f.license)+'</span><span>Films diffusés depuis des bibliothèques vidéo publiques.</span></div></div>';
 }
 function closePlayer(){
 document.getElementById("player-root").innerHTML="";currentPlayer=null;
@@ -160,6 +168,7 @@ var d=el.closest("[data-info]");if(d){e.stopPropagation();if(searchOpened)closeS
 if(el.closest("[data-random]")){openPlayer(films[Math.floor(Math.random()*films.length)].id);return;}
 var c=el.closest("[data-close]");if(c){var t=c.getAttribute("data-close");if(t==="player")closePlayer();else if(t==="search")closeSearch();else closeDetail();return;}
 if(el.id==="search-trigger"){openSearch();return;}
+var rp=el.closest("[data-refresh-player]");if(rp){openPlayer(rp.getAttribute("data-refresh-player"));return;}
 if(el.id==="credits-btn"){openCredits();return;}
 if(el.id==="mobile-menu"){document.getElementById("mobile-nav").classList.toggle("open");return;}
 if(el.id==="profile-btn"){toast("Tes favoris et tes séances sont enregistrés sur cet appareil.");return;}
