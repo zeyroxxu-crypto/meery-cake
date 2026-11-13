@@ -13,7 +13,7 @@ if(header)header.innerHTML=`
 <details class="nav-discover" id="discoverNav"><summary data-t="explore">Découvrir</summary><div class="nav-sub">
 <a href="index.html#salon" data-t="about">Le salon</a>
 <a href="galerie.html" data-t="gallery">Galerie</a>
-<a href="gateaux.html" data-t="cakes">Gâteaux sur mesure</a>
+<a href="gateaux.html" data-t="cakes">Gâteaux sur mesure</a><a href="index.html#experience-3d">Expérience 3D ↻</a>
 <a href="brunch.html" data-t="brunch">Réserver un brunch</a>
 <a href="ateliers.html" data-t="workshops">Ateliers</a>
 <a href="boutique.html" data-t="gifts">Cadeaux & gourmandises</a>
