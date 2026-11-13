@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080a10">
+  <meta name="description" content="VANTA — Une sélection de films libres à regarder gratuitement. Le cinéma à votre rythme.">
+  <title>VANTA — Le cinéma autrement.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <svg class="sprite" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7V5Z" fill="currentColor" stroke="currentColor" stroke-linejoin="round"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="6.8" stroke="currentColor" stroke-width="2" fill="none"/><path d="m16 16 5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m5 5 14 14M19 5 5 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" fill="none" stroke-width="1.8"/><path d="M12 11v6m0-10v1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="m5 12 14 0m-6-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 8.8c0 5-8.8 10.6-8.8 10.6S3.2 13.8 3.2 8.8a4.7 4.7 0 0 1 8.8-2 4.7 4.7 0 0 1 8.8 2Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M12 7v5l3 2" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-shuffle" viewBox="0 0 24 24"><path d="m3 6 3 0c7 0 6 12 13 12h2m-4-4 4 4-4 4M3 18h3c3 0 4-2 6-5m2-3c2-3 3-4 5-4h2m-4-4 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M13 5h6v6m0-6-9 9M19 14v5H5V5h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  </svg>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="intro" id="intro" aria-hidden="true"><span class="intro-mark">V<span class="accent-dot">.</span></span><span class="intro-caption">LE CINÉMA, AUTREMENT.</span><span class="intro-line"></span></div>
+  <header class="topbar" id="topbar">
+    <div class="nav-left">
+      <a href="#" class="brand" data-nav="home" aria-label="Accueil VANTA"><span class="brand-glyph">V<span>.</span></span><span class="brand-word">VANTA</span></a>
+      <div class="nav-links">
+        <button class="nav-item active" data-nav="home">Accueil</button>
+        <button class="nav-item" data-nav="movies">Films</button>
+        <button class="nav-item" data-nav="discover">Explorer</button>
+        <button class="nav-item" data-nav="list">Ma liste</button>
+      </div>
+    </div>
+    <div class="nav-right">
+      <button class="search-trigger" id="search-trigger" aria-label="Rechercher"><svg class="icon"><use href="#i-search"></use></svg><span>Rechercher un film</span><kbd>⌘ K</kbd></button>
+      <button class="profile-btn" id="profile-btn" aria-label="À propos de votre profil"><span>V</span><span class="profile-indicator"></span></button>
+      <button class="mobile-menu" id="mobile-menu" aria-label="Ouvrir le menu"><svg class="icon"><use href="#i-menu"></use></svg></button>
+    </div>
+  </header>
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Menu mobile">
+    <button data-nav="home">Accueil</button><button data-nav="movies">Films</button><button data-nav="discover">Explorer</button><button data-nav="list">Ma liste</button>
+  </nav>
+  <main id="app"></main>
+  <footer class="footer" id="footer">
+    <div><a class="footer-logo" href="#" data-nav="home">VANTA<span>.</span></a><p>Le cinéma mérite mieux qu'un simple défilement.</p></div>
+    <div class="footer-right"><span>Films diffusés depuis des sources publiques, sous licences ouvertes.</span><a href="https://studio.blender.org/films/" target="_blank" rel="noopener noreferrer">Blender Studio <svg class="icon"><use href="#i-external"></use></svg></a><button id="credits-btn">Crédits & licences</button></div>
+    <div class="footer-bottom"><span>© 2026 VANTA. Une expérience indépendante.</span><span>Fait pour les histoires qui restent.</span></div>
+  </footer>
+  <div id="detail-root"></div>
+  <div id="player-root"></div>
+  <div id="search-root"></div>
+  <div id="toast-root" role="status" aria-live="polite"></div>
+  <script src="app.js" defer></script>
+</body>
+</html>
