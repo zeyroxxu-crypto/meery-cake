@@ -162,3 +162,33 @@ linear-gradient(115deg,#070707 1%,#131313 40%,#303030 80%,#080808 100%);
 .vanta-poster-fallback:after{font-size:180px}
 .vanta-hero-count{font-size:9px}
 }
+
+/* VANTA / Affiches authentiques : cadrage cinématographique V25 */
+.vanta-film-art{aspect-ratio:2/3;overflow:hidden;isolation:isolate;background:#111;}
+.vanta-film-art:before{
+ content:"";position:absolute;inset:-14%;z-index:0;
+ background-image:var(--vanta-cover,none);
+ background-size:cover;background-position:center;
+ filter:blur(20px) brightness(.39) saturate(.8);
+ opacity:.88;transform:scale(1.09);
+}
+.vanta-film-art .vanta-poster-fallback{z-index:0;}
+.vanta-film-art img.vanta-poster-img{
+ width:100%;height:100%;position:absolute;inset:0;
+ object-fit:cover;object-position:center center;
+ z-index:1;display:block;
+ transition:opacity .35s ease,transform .45s ease;
+ filter:none;
+}
+.vanta-film-art.vanta-landscape-image img.vanta-poster-img{
+ object-fit:contain;object-position:center center;
+}
+.vanta-film-art .card-gradient{
+ background:linear-gradient(180deg,rgba(0,0,0,.08),transparent 26%,transparent 70%,rgba(0,0,0,.4));
+}
+.vanta-movie-card:hover img.vanta-poster-img{transform:scale(1.035);filter:none}
+.vanta-movie-card .card-art img:not(.vanta-poster-img){object-fit:cover;object-position:50% 40%;}
+@media(max-width:600px){
+ .vanta-movie-card .card-art{aspect-ratio:2/3;min-height:0}
+ .vanta-film-art img.vanta-poster-img{object-position:center}
+}
