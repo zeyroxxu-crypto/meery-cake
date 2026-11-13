@@ -6,7 +6,7 @@
 const $=id=>document.getElementById(id);
 const el=(tag,cls,content)=>{const x=document.createElement(tag);if(cls)x.className=cls;if(content!==undefined)x.textContent=content;return x};
 const site=()=>typeof MC!=='undefined'?MC:null;
-const motion=()=>{try{const p=localStorage.getItem('meerycake-motion-preference');return p==='on'||(p!=='off'&&!matchMedia('(prefers-reduced-motion: reduce)').matches)}catch{return !matchMedia('(prefers-reduced-motion: reduce)').matches}};
+const motion=()=>!window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
 function galleryEditor(){
  const grid=$('galleryGrid'),lightbox=$('lightbox');
  if(!grid||!lightbox||$('v8LightboxControls'))return;
