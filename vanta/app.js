@@ -5,7 +5,7 @@ var ROOT="https://video.blender.org";
 function mp4(id){return ROOT+"/static/webseed/"+id+"-720.mp4";}
 function commons(file,width){return "https://commons.wikimedia.org/wiki/Special:FilePath/"+encodeURIComponent(file).replace(/%2F/g,"/")+"?width="+(width||750);}
 var films=[{
- id:"film-selection",title:"Le film sélectionné",year:"",duration:"",genre:"Film",
+ id:"film-selection",title:"Salem",year:"",duration:"",genre:"Film",
  tags:["Film"],age:"",description:"Découvre la nouvelle vidéo choisie pour VANTA.",
  posterUrl:"https://i.ytimg.com/vi/aIVKaiaHkpk/hqdefault.jpg",
  backdropUrl:"https://i.ytimg.com/vi/aIVKaiaHkpk/hqdefault.jpg",
