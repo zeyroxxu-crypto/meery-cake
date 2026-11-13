@@ -60,3 +60,12 @@
 .simple-big-play{width:58px;height:58px}
 .simple-note{font-size:11px}
 }
+/* VANTA stable cinema player: native controls belong to the video archive. */
+.vanta-clean-player{background:#050505}
+.vanta-clean-player .player-top{flex:0 0 72px}
+.vanta-clean-player .player-exit{border:0;background:transparent;color:#eee;display:grid;place-items:center;width:43px;height:43px}
+.clean-player-stage{flex:1;display:flex;justify-content:center;align-items:center;flex-direction:column;gap:16px;padding:12px 3%}
+.clean-player-frame{width:100%;max-width:1120px;aspect-ratio:16/9;border-radius:12px;overflow:hidden;background:#000}
+.clean-player-note{margin:0;color:#aaa;font-size:12px;text-align:center}
+.clean-player-foot{flex:0 0 60px;padding:0 3.5%;display:flex;align-items:center;justify-content:space-between;gap:15px;color:#818181;font-size:11px}
+@media(max-width:600px){.vanta-clean-player .player-top{flex-basis:66px}.clean-player-stage{padding:8px 0;gap:15px}.clean-player-frame{border-radius:0}.clean-player-foot{flex-basis:55px;font-size:10px}.vanta-clean-player .player-title{max-width:43%;font-size:13px;text-align:center}}
