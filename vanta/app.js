@@ -11,6 +11,18 @@ posterUrl:"https://i.ytimg.com/vi/aIVKaiaHkpk/hqdefault.jpg",
 backdropUrl:"https://i.ytimg.com/vi/aIVKaiaHkpk/hqdefault.jpg",
 youtubeId:"aIVKaiaHkpk",official:"https://www.youtube.com/watch?v=aIVKaiaHkpk",
 credit:"Vidéo YouTube intégrée",license:"Lecture YouTube",featured:true,kind:"long",available:true
+},{
+id:"starwreck",title:"Star Wreck: In the Pirkinning",year:2005,duration:103,genre:"Science-fiction",tags:["Science-fiction","Comédie"],kind:"long",
+description:"Une parodie spatiale finlandaise en long métrage. Disponible gratuitement sous licence Creative Commons.",
+archiveId:"StarWreckInThePirkining",official:"https://archive.org/details/StarWreckInThePirkining",
+posterUrl:"https://archive.org/services/img/StarWreckInThePirkining",available:true,
+credit:"Energia Productions",license:"Creative Commons BY-NC-ND"
+},{
+id:"sita",title:"Sita Sings the Blues",year:2008,duration:82,genre:"Animation",tags:["Animation","Comédie"],kind:"long",
+description:"Un film d’animation musical réalisé par Nina Paley et mis librement à disposition par sa créatrice.",
+archiveId:"Sita_Sings_the_Blues",official:"https://www.sitasingstheblues.com/watch.html",
+posterUrl:"https://archive.org/services/img/Sita_Sings_the_Blues",available:true,
+credit:"Nina Paley",license:"Mise à disposition libre par sa réalisatrice"
 }].concat(window.VANTA_CATALOGUE||[]);
 function getFilm(id){return films.find(function(f){return f.id===id;});}
 function art(f,bg){return (bg&&f.backdropUrl)||f.posterUrl||"";}
@@ -37,7 +49,7 @@ function text(s){return String(s||"").replace(/[&<>"']/g,function(c){return {"&"
 function storeRead(k,def){try{var v=JSON.parse(localStorage.getItem(k));return v&&typeof v==="object"?v:def;}catch(e){return def;}}
 var favs=storeRead("vanta-favorites",[]);if(!Array.isArray(favs))favs=[];
 var progress=storeRead("vanta-progress",{});
-var view="home",filter="Tous",slide=0,currentPlayer=null,toastTimeout=null,searchOpened=false;
+var view="home",filter="Disponibles",slide=0,currentPlayer=null,toastTimeout=null,searchOpened=false;
 var app=document.getElementById("app");
 function save(){try{localStorage.setItem("vanta-favorites",JSON.stringify(favs));localStorage.setItem("vanta-progress",JSON.stringify(progress));}catch(e){}}
 function hero(){
@@ -52,7 +64,7 @@ return '<section class="hero" id="hero"><div class="hero-bg vanta-hero-abstract"
 '<div class="hero-bottom"><span class="hero-selection">LE CINÉMA PAR GENRE</span><span class="vanta-hero-count">130 FILMS / 09 CATÉGORIES</span></div></section>';
 }
 function card(f){
-var watch=!!f.youtubeId,hasFav=favs.indexOf(f.id)!==-1;
+var watch=!!(f.youtubeId||f.archiveId),hasFav=favs.indexOf(f.id)!==-1;
 var label=watch?"VIDÉO DISPONIBLE":"FICHE DU FILM";
 var cover=f.posterUrl?'<img src="'+text(f.posterUrl)+'" loading="lazy" alt="" onerror="this.style.opacity=0">':'<img class="vanta-poster-img" data-movie="'+text(f.title)+'" data-year="'+text(f.year)+'" loading="lazy" alt="" style="opacity:0">';
 return '<article class="card reveal vanta-movie-card" tabindex="0" role="button" data-info="'+f.id+'" aria-label="Fiche de '+text(f.title)+'">'+
@@ -70,18 +82,18 @@ return '<section class="section"><div class="section-head reveal"><div><p class=
 }
 function catalogueBanner(title,sub){
 return '<div class="catalogue-top"><p class="eyebrow">VANTA / 130 FILMS DE CINÉMA</p><h1 class="catalogue-title">'+title+'</h1><p class="catalogue-intro">'+sub+'</p>'+
-'<div class="filters">'+["Tous","Horreur","Comédie","Action","Science-fiction","Fantastique","Animation","Aventure","Thriller","Drame","À regarder"].map(function(t){
+'<div class="filters">'+["Disponibles","Tous","Horreur","Comédie","Action","Science-fiction","Fantastique","Animation","Aventure","Thriller","Drame"].map(function(t){
 return '<button class="filter '+(filter===t?"active":"")+'" data-filter="'+text(t)+'">'+text(t)+'</button>';
 }).join("")+'</div><p class="vanta-film-total">'+filtered().length+' titre(s) dans cette sélection</p></div>';
 }
-function filtered(){return films.filter(function(f){return filter==="Tous"||f.genre===filter;});}
+function filtered(){return films.filter(function(f){return filter==="Tous"||(filter==="Disponibles"&&f.available)||f.genre===filter;});}
 function catalogueGrid(items){return '<div class="catalogue-grid">'+items.map(card).join("")+'</div>';}
 function empty(title,desc,button){return '<div class="empty-container"><div class="empty-state">'+icon("info")+'<h3>'+title+'</h3><p>'+desc+'</p><button class="btn-primary" data-nav="movies">'+icon("arrow")+' '+(button||"Explorer les films")+'</button></div></div>';}
 function render(){
 var out="";
 if(view==="home"){
 out=hero()+'<div class="kicker-strip"><span>VANTA <strong> / 130 FILMS, 9 GENRES</strong></span><span class="kicker-right">CATALOGUE DE DÉCOUVERTE</span></div>'+
-rail("À regarder sur VANTA","01 / VIDÉO INTÉGRÉE",films.filter(function(f){return f.available;}),true)+
+rail("À regarder sur VANTA","01 / FILMS EN LECTURE",films.filter(function(f){return f.available;}),true)+
 rail("Horreur","02 / FRISSONS",films.filter(function(f){return f.genre==="Horreur";}).slice(0,10),true)+
 rail("Comédie","03 / HUMOUR",films.filter(function(f){return f.genre==="Comédie";}),true)+
 rail("Action","04 / ADRÉNALINE",films.filter(function(f){return f.genre==="Action";}).slice(0,10),true)+
@@ -92,7 +104,7 @@ rail("Aventure","08 / ÉVASION",films.filter(function(f){return f.genre==="Avent
 rail("Thriller","09 / SUSPENSE",films.filter(function(f){return f.genre==="Thriller";}).slice(0,10),true)+
 rail("Drame","10 / GRANDES HISTOIRES",films.filter(function(f){return f.genre==="Drame";}).slice(0,10),true);
 }else if(view==="movies"||view==="discover"){
-out='<div style="padding-top:90px"></div>'+catalogueBanner("Tous les films","130 films de 2 heures ou plus à découvrir. Les fiches indiquent où rechercher une offre légale ; seuls les films signalés comme disponibles se regardent dans VANTA.")+catalogueGrid(filtered());
+out='<div style="padding-top:90px"></div>'+catalogueBanner("Tous les films","130 films de 2 heures ou plus à découvrir. Le filtre « Disponibles » montre uniquement les vidéos que tu peux lancer dans VANTA. Pour les autres, consulte leur fiche.")+catalogueGrid(filtered());
 }else if(view==="list"){
 var items=films.filter(function(f){return favs.indexOf(f.id)!==-1;});
 out='<div style="padding-top:90px"></div><div class="catalogue-top"><p class="eyebrow">VANTA / FAVORIS</p><h1 class="catalogue-title">Ma liste.</h1></div>'+(items.length?catalogueGrid(items):empty("Aucun favori","Ajoute les films qui te plaisent."));
@@ -111,7 +123,7 @@ observer=new IntersectionObserver(function(entries){entries.forEach(function(ent
 targets.forEach(function(n,i){n.style.transitionDelay=(i%6)*55+"ms";observer.observe(n);});
 }
 function go(n){
-view=n;filter="Tous";render();window.scrollTo({top:0,behavior:"smooth"});
+view=n;filter="Disponibles";render();window.scrollTo({top:0,behavior:"smooth"});
 }
 function toast(msg){
 var root=document.getElementById("toast-root");root.innerHTML='<div class="toast">'+text(msg)+'</div>';clearTimeout(toastTimeout);toastTimeout=setTimeout(function(){root.innerHTML="";},2500);
@@ -127,7 +139,7 @@ document.getElementById("detail-root").innerHTML='<div class="overlay" id="detai
 }
 function openDetail(id){
 var f=getFilm(id);if(!f)return;
-var added=favs.indexOf(id)!==-1,watch=!!f.youtubeId;
+var added=favs.indexOf(id)!==-1,watch=!!(f.youtubeId||f.archiveId);
 var where="https://www.justwatch.com/fr/recherche?q="+encodeURIComponent(f.title);
 var action=watch?'<button class="btn-primary" data-watch="'+f.id+'">'+icon("play")+' Regarder dans VANTA</button>':
 '<a class="btn-primary" href="'+where+'" target="_blank" rel="noopener noreferrer">'+icon("external")+' Où regarder légalement</a>';
@@ -144,11 +156,11 @@ function openCredits(){
 modal('<button class="modal-close" data-close="detail" aria-label="Fermer">'+icon("close")+'</button>'+
 '<div class="modal-body"><p class="eyebrow">VANTA / TRANSPARENCE</p><h2>Films & droits</h2>'+
 '<p>VANTA répertorie 130 vrais longs métrages de deux heures ou plus. Cette sélection est un catalogue de découverte, pas une bibliothèque de 130 films gratuits en streaming.</p>'+
-'<p>Les fiches « Où regarder » ouvrent une recherche de services légaux. Salem reste la vidéo intégrée fournie par l’utilisateur, accessible sous réserve des paramètres de YouTube.</p></div>');
+'<p>Les fiches « Où regarder » ouvrent une recherche de services légaux. Les films accessibles dans VANTA sont Salem (via YouTube), Star Wreck et Sita Sings the Blues (via Internet Archive) ; la lecture dépend de la disponibilité des hébergeurs.</p></div>');
 }
 function openPlayer(id){
 var f=getFilm(id);if(!f)return;
-if(!f.youtubeId){openDetail(id);return;}
+if(!f.youtubeId&&!f.archiveId){openDetail(id);return;}
 closeDetail();closeSearch();
 document.body.style.overflow="hidden";currentPlayer=id;
 var embeds={sintel:"0eb052d0-fd51-43e6-aa33-ecdbf77a5d40",tears:"8533ea43-4271-4a57-9694-e9d0b35e1aa1",bunny:"bf1f3fb5-b119-4f9f-9930-8e20e892b898",spring:"3d95fb3d-c866-42c8-9db1-fe82f48ccb95",sprite:"a69d68a5-a0e0-4a80-9d66-49f093c97aaf",agent:"264ff760-803e-430e-8d81-15648e904183",caminandes:"fb70d459-48d2-4db5-adba-813c84f9200a",glass:"64222c8a-c4c7-4b3b-9850-7fb2078edcf6"};
