@@ -77,3 +77,16 @@ img[loading=lazy]{background:#f0dede}
 @media(prefers-reduced-motion:reduce){.mc9-reveal,.mc9-reveal.mc9-revealed{opacity:1;transform:none;transition:none}.mc9-collection-card,.mc9-collection-card img{transition:none!important}.mc9-progress{transition:none!important}}
 html.mc-motion-disabled .mc9-reveal,html.mc-motion-disabled .mc9-reveal.mc9-revealed{opacity:1;transform:none;transition:none}
 @media print{.mc9-announcement,.mc9-floating-scroll,.mc9-progress,.mc9-shop-tools{display:none!important}}
+
+/* Animated Meery Cake experience — built in, without an on/off button. */
+.mc-motion-toggle,#mcMotionToggle{display:none!important}
+@media(prefers-reduced-motion:no-preference){
+ html.mc-motion-enabled .hero-content::before{animation:mc-v4-ambient 11s ease-in-out infinite alternate!important}
+ html.mc-motion-enabled .hero-content::after{animation:mc-v4-ambient 15s ease-in-out infinite alternate-reverse!important}
+ .mc9-collection-card:hover img{transform:scale(1.055)}
+ .mc9-collection-card:hover{transform:translateY(-8px)}
+ .v8-photo-composition{animation:mc9-showcase-enter 1s cubic-bezier(.22,1,.36,1) both}
+ .mc9-home-collections::before{animation:mc9-ambient 18s ease-in-out infinite alternate}
+}
+@keyframes mc9-showcase-enter{from{opacity:.35;transform:translateY(30px) scale(.975)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes mc9-ambient{from{transform:translate(0,0)}to{transform:translate(-40px,45px)}}
