@@ -10,22 +10,62 @@ films=films.concat([{"id":"horror-01","title":"The Headless Horseman","year":192
 function getFilm(id){return films.find(function(f){return f.id===id;});}
 function art(f,bg){return (bg&&f.backdropUrl)||f.posterUrl||"";}
 function loadPosters(){
+/* Search for the real film image first. Never use a guessed/generated poster.
+   Fall back to the movie's own Internet Archive thumbnail if no real poster is found. */
 var images=[].slice.call(document.querySelectorAll("img[data-movie]"));
+function applyPoster(img,url,kind){
+if(!img||!img.isConnected||!url)return false;
+var test=new Image();
+test.onload=function(){
+if(!img.isConnected)return;
+var ratio=test.naturalWidth/Math.max(1,test.naturalHeight);
+img.style.objectFit=ratio>0.86?"contain":"cover";
+img.style.objectPosition="center center";
+img.src=url;
+img.style.opacity="1";
+img.classList.add("vanta-loaded-poster");
+img.parentNode.style.setProperty("--vanta-cover", 'url("'+url.replace(/["\\]/g,"")+'")');
+img.parentNode.classList.toggle("vanta-landscape-image",ratio>0.86);
+};
+test.onerror=function(){if(kind!=="fallback")applyPoster(img,img.getAttribute("data-fallback"),"fallback");};
+test.src=url;
+return true;
+}
 function load(img){
+if(img.dataset.posterLoaded)return;img.dataset.posterLoaded="1";
 var title=img.getAttribute("data-movie"),year=img.getAttribute("data-year");
-var key="vanta-poster-"+title+"-"+year;
+var fallback=img.getAttribute("data-fallback");
+var key="vanta-poster-real-v2-"+title+"-"+year;
 var cached="";try{cached=localStorage.getItem(key)||"";}catch(e){}
-if(cached){img.src=cached;img.onload=function(){img.style.opacity="1";};return;}
-var url="https://en.wikipedia.org/w/api.php?origin=*&format=json&action=query&generator=search&gsrsearch="+encodeURIComponent(title+" "+year+" film")+"&gsrlimit=1&prop=pageimages&piprop=thumbnail&pithumbsize=500";
-fetch(url).then(function(r){return r.json();}).then(function(d){
-var pages=d.query&&d.query.pages||{},p=Object.keys(pages).map(function(k){return pages[k];})[0];
-if(p&&p.thumbnail&&p.thumbnail.source){img.onload=function(){img.style.opacity="1";};img.src=p.thumbnail.source;try{localStorage.setItem(key,p.thumbnail.source);}catch(e){}}
-}).catch(function(){});
+if(cached){applyPoster(img,cached,"primary");return;}
+var query=title+" "+year+" film";
+var url="https://en.wikipedia.org/w/api.php?origin=*&format=json&action=query&generator=search&gsrsearch="+encodeURIComponent(query)+"&gsrlimit=4&prop=pageimages&pithumbsize=700";
+fetch(url).then(function(r){if(!r.ok)throw Error("Wikipedia unavailable");return r.json();}).then(function(d){
+var pages=d.query&&d.query.pages||{};
+var list=Object.keys(pages).map(function(k){return pages[k];}).filter(function(p){return p&&p.thumbnail&&p.thumbnail.source;});
+var normalize=function(value){return String(value||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g," ").trim();};
+var wanted=normalize(title),tokens=wanted.split(" ").filter(function(x){return x.length>2;});
+list.sort(function(p,q){
+function score(x){var v=normalize(x.title);var score=0;if(v.indexOf(wanted)!==-1)score+=8;
+tokens.forEach(function(t){if(v.indexOf(t)!==-1)score+=2;});
+if(v.indexOf(String(year))!==-1)score+=2;
+if(/film|movie|192[0-9]|193[0-9]|194[0-9]/i.test(x.title))score+=1;
+return score;}
+return score(q)-score(p);
+});
+var match=list[0];
+if(!match){applyPoster(img,fallback,"fallback");return;}
+var v=normalize(match.title);var matches=tokens.filter(function(t){return v.indexOf(t)!==-1;}).length;
+if(tokens.length&&matches<Math.max(1,Math.ceil(tokens.length*.65))){applyPoster(img,fallback,"fallback");return;}
+var source=match.thumbnail.source;
+try{localStorage.setItem(key,source);}catch(e){}
+applyPoster(img,source,"primary");
+}).catch(function(){applyPoster(img,fallback,"fallback");});
 }
 if("IntersectionObserver" in window){
-var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){obs.unobserve(e.target);load(e.target);}});},{rootMargin:"250px"});
-images.forEach(function(img){obs.observe(img);});
-}else{images.slice(0,20).forEach(load);}
+var observer=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){observer.unobserve(e.target);load(e.target);}});},{rootMargin:"360px"});
+images.forEach(function(img){observer.observe(img);});
+}else{images.forEach(load);}
 }
 function icon(name){return '<svg class="icon" aria-hidden="true"><use href="#i-'+name+'"></use></svg>';}
 function text(s){return String(s||"").replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
@@ -49,7 +89,7 @@ return '<section class="hero" id="hero"><div class="hero-bg vanta-hero-abstract"
 function card(f){
 var watch=!!(f.youtubeId||f.archiveId||f.embedId),hasFav=favs.indexOf(f.id)!==-1;
 var label="LECTURE INTÉGRÉE";
-var cover=f.posterUrl?'<img src="'+text(f.posterUrl)+'" loading="lazy" alt="" onerror="this.style.opacity=0">':'<img class="vanta-poster-img" data-movie="'+text(f.title)+'" data-year="'+text(f.year)+'" loading="lazy" alt="" style="opacity:0">';
+var cover=f.youtubeId?'<img src="'+text(f.posterUrl)+'" loading="lazy" alt="" onerror="this.style.opacity=0">':'<img class="vanta-poster-img" data-movie="'+text(f.title)+'" data-year="'+text(f.year)+'" data-fallback="'+text(f.posterUrl||"")+'" loading="lazy" alt="Affiche de '+text(f.title)+'" style="opacity:0">';
 return '<article class="card reveal vanta-movie-card" tabindex="0" role="button" data-info="'+f.id+'" aria-label="Fiche de '+text(f.title)+'">'+
 '<div class="card-art vanta-film-art genre-'+f.genre.normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase().replace(/[^a-z]/g,"")+'">'+
 '<div class="vanta-poster-fallback"><span>'+text(f.genre)+'</span><strong>'+text(f.title)+'</strong><small>'+text(f.year||"VANTA")+'</small></div>'+
