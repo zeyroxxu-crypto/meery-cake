@@ -170,14 +170,19 @@ var f=getFilm(id);if(!f)return;
 closeDetail();closeSearch();
 document.body.style.overflow="hidden";currentPlayer=id;
 var embeds={sintel:"0eb052d0-fd51-43e6-aa33-ecdbf77a5d40",tears:"8533ea43-4271-4a57-9694-e9d0b35e1aa1",bunny:"bf1f3fb5-b119-4f9f-9930-8e20e892b898",spring:"3d95fb3d-c866-42c8-9db1-fe82f48ccb95",sprite:"a69d68a5-a0e0-4a80-9d66-49f093c97aaf",agent:"264ff760-803e-430e-8d81-15648e904183",caminandes:"fb70d459-48d2-4db5-adba-813c84f9200a",glass:"64222c8a-c4c7-4b3b-9850-7fb2078edcf6"};
-var provider=f.archiveId?"archive":"blender";
 var filmUrl=f.archiveId?"https://archive.org/embed/"+encodeURIComponent(f.archiveId):"https://video.blender.org/videos/embed/"+embeds[id];
-var root=document.getElementById("player-root");
-root.innerHTML='<div class="player-overlay vanta-clean-player" role="dialog" aria-modal="true" aria-label="Lecture de '+text(f.title)+'">'+
-'<div class="player-top"><button class="player-back" data-close="player">'+icon("arrow").replace('class="icon"','class="icon" style="transform:rotate(180deg)"')+' Retour</button><div class="player-title">'+text(f.title)+'</div><button class="player-exit" data-close="player" aria-label="Fermer">'+icon("close")+'</button></div>'+
-'<div class="clean-player-stage"><div class="clean-player-frame"><iframe id="film-iframe" title="Film '+text(f.title)+'" src="'+filmUrl+'" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen webkitallowfullscreen loading="eager" style="height:100%;width:100%;display:block;border:0;background:black"></iframe></div>'+
-'<p class="clean-player-note">Appuie sur Lecture pour regarder le film.</p></div>'+
-'<div class="clean-player-foot"><span>'+text(f.credit)+'</span><span>'+ (provider==="archive"?"Source : Internet Archive":"Source : Blender Studio") +'</span></div></div>';
+document.getElementById("player-root").innerHTML='<div class="player-overlay vanta-cinema-player" id="vanta-cinema-player" role="dialog" aria-modal="true" aria-label="Lecture de '+text(f.title)+'">'+
+'<div class="cinema-toolbar"><button class="cinema-back" data-close="player" aria-label="Quitter le film">'+icon("arrow").replace('class="icon"','class="icon" style="transform:rotate(180deg)"')+'</button><strong class="cinema-film-title">'+text(f.title)+'</strong><div class="cinema-toolbar-actions"><button class="cinema-fullscreen-btn" id="cinema-fullscreen-btn" data-cinema-fullscreen="1" aria-label="Passer en plein écran"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H3v5M16 3h5v5M3 16v5h5m13-5v5h-5"/></svg><span>Plein écran</span></button><button class="cinema-close" data-close="player" aria-label="Fermer">'+icon("close")+'</button></div></div>'+
+'<div class="cinema-video-zone"><div class="cinema-iframe-wrap" id="cinema-iframe-wrap"><iframe id="film-iframe" title="Film '+text(f.title)+'" src="'+filmUrl+'" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen webkitallowfullscreen loading="eager"></iframe></div></div>'+
+'<button class="cinema-exit-fullscreen" data-cinema-fullscreen="1" aria-label="Quitter le plein écran">'+icon("close")+'</button></div>';
+}
+function toggleCinemaFullscreen(){
+var p=document.getElementById("vanta-cinema-player");
+if(!p)return;
+var next=!p.classList.contains("cinema-is-fullscreen");
+p.classList.toggle("cinema-is-fullscreen",next);
+var btn=document.getElementById("cinema-fullscreen-btn");
+if(btn){btn.setAttribute("aria-label",next?"Quitter le plein écran":"Passer en plein écran");}
 }
 function closePlayer(){
 document.getElementById("player-root").innerHTML="";
@@ -205,6 +210,7 @@ var d=el.closest("[data-info]");if(d){e.stopPropagation();if(searchOpened)closeS
 if(el.closest("[data-random]")){openPlayer(films[Math.floor(Math.random()*films.length)].id);return;}
 var c=el.closest("[data-close]");if(c){var t=c.getAttribute("data-close");if(t==="player")closePlayer();else if(t==="search")closeSearch();else closeDetail();return;}
 if(el.id==="search-trigger"){openSearch();return;}
+var fs=el.closest("[data-cinema-fullscreen]");if(fs){toggleCinemaFullscreen();return;}
 
 if(el.id==="credits-btn"){openCredits();return;}
 if(el.id==="mobile-menu"){document.getElementById("mobile-nav").classList.toggle("open");return;}
@@ -214,7 +220,7 @@ var fl=el.closest("[data-filter]");if(fl){filter=fl.getAttribute("data-filter");
 
 document.addEventListener("click",function(e){if(e.target.id==="detail-overlay")closeDetail();if(e.target.id==="search-overlay")closeSearch();});
 document.addEventListener("keydown",function(e){
-if(e.key==="Escape"){if(currentPlayer)closePlayer();else if(searchOpened)closeSearch();else closeDetail();document.getElementById("mobile-nav").classList.remove("open");}
+if(e.key==="Escape"){var cp=document.getElementById("vanta-cinema-player");if(cp&&cp.classList.contains("cinema-is-fullscreen"))toggleCinemaFullscreen();else if(currentPlayer)closePlayer();else if(searchOpened)closeSearch();else closeDetail();document.getElementById("mobile-nav").classList.remove("open");}
 if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==="k"){e.preventDefault();if(!searchOpened)openSearch();else closeSearch();}
 if(e.key==="/"&&!e.target.matches("input")){e.preventDefault();if(!searchOpened)openSearch();}
 if((e.key==="Enter"||e.key===" ")&&e.target.matches(".card[role=button]")){e.preventDefault();openDetail(e.target.getAttribute("data-info"));}
