@@ -116,3 +116,49 @@ transform:none;overflow:hidden;border-radius:0;flex:none;
 @media (orientation:landscape){
 .cinema-is-fullscreen .cinema-iframe-wrap{width:min(100vw,calc(100dvh * 16 / 9));height:auto;max-height:100dvh;aspect-ratio:16/9}
 }
+
+/* VANTA CINEMA: 130 films — immersive black and white film catalogue */
+.vanta-hero-abstract{
+background:
+radial-gradient(ellipse at 75% 29%,rgba(228,228,228,.24),transparent 26%),
+radial-gradient(ellipse at 82% 61%,rgba(124,124,124,.2),transparent 32%),
+linear-gradient(115deg,#070707 1%,#131313 40%,#303030 80%,#080808 100%);
+}
+.vanta-hero-abstract:after{content:"V";position:absolute;right:7%;top:2%;font-family:var(--display);font-size:clamp(330px,54vw,760px);font-weight:900;line-height:1;color:rgba(255,255,255,.09);text-shadow:0 20px 40px #0003;transform:rotate(-8deg)}
+.vanta-hero-count{font-size:11px;font-weight:900;letter-spacing:.16em;color:#ddd}
+.vanta-movie-card .card-art{background:#171717}
+.vanta-film-art{position:relative;isolation:isolate}
+.vanta-film-art img{position:absolute;inset:0;z-index:1;width:100%;height:100%;object-fit:cover}
+.vanta-film-art .card-gradient{z-index:2}
+.vanta-film-art .card-label{z-index:4}
+.vanta-film-art .card-fav,.vanta-film-art .card-play{z-index:5}
+.vanta-poster-fallback{position:absolute;z-index:0;inset:0;overflow:hidden;background:linear-gradient(145deg,#414141 0%,#161616 54%,#070707 100%);display:flex;flex-direction:column;justify-content:space-between;padding:22px 17px;color:#fff}
+.vanta-poster-fallback:before{content:"";position:absolute;inset:-30%;background:repeating-linear-gradient(122deg,transparent 0,transparent 36px,rgba(255,255,255,.06) 37px,transparent 39px);transform:rotate(-7deg);pointer-events:none}
+.vanta-poster-fallback:after{content:"V";position:absolute;right:-18%;top:16%;font-size:260px;font-weight:900;color:rgba(255,255,255,.07);line-height:1}
+.vanta-poster-fallback span{font-size:10px;text-transform:uppercase;letter-spacing:.13em;font-weight:800;position:relative;z-index:1}
+.vanta-poster-fallback strong{font-family:var(--display);font-size:clamp(20px,2vw,30px);line-height:1.09;letter-spacing:-.045em;position:relative;z-index:1;overflow-wrap:break-word;hyphens:auto}
+.vanta-poster-fallback small{font-size:13px;font-weight:800;position:relative;z-index:1}
+.genre-horreur .vanta-poster-fallback{background:linear-gradient(145deg,#5e242a,#230e12 57%,#090606)}
+.genre-comedie .vanta-poster-fallback{background:linear-gradient(145deg,#6a4b25,#251e14 57%,#0e0a06)}
+.genre-action .vanta-poster-fallback{background:linear-gradient(145deg,#395469,#121d2d 57%,#070b11)}
+.genre-sciencefiction .vanta-poster-fallback{background:linear-gradient(145deg,#315a60,#15242b 57%,#060a0f)}
+.genre-fantastique .vanta-poster-fallback{background:linear-gradient(145deg,#514267,#1e1931 57%,#0a0710)}
+.genre-animation .vanta-poster-fallback{background:linear-gradient(145deg,#725453,#2a1b28 57%,#130a11)}
+.genre-aventure .vanta-poster-fallback{background:linear-gradient(145deg,#53614a,#202c1d 57%,#0b0e09)}
+.genre-thriller .vanta-poster-fallback{background:linear-gradient(145deg,#4c505b,#171a22 57%,#0a0b0f)}
+.genre-drame .vanta-poster-fallback{background:linear-gradient(145deg,#60504c,#241c20 57%,#0c090b)}
+.vanta-film-art .card-gradient{pointer-events:none;opacity:.65}
+.vanta-discovery-label{font-size:9px;letter-spacing:.075em;max-width:75%;background:rgba(13,13,13,.76)}
+.vanta-watch-label{background:#fff;color:#111;border-color:#fff}
+.vanta-film-total{color:#a8a8a8;margin-top:16px;font-size:12px;letter-spacing:.08em}
+.catalogue-top .filters{display:flex;flex-wrap:wrap;gap:8px}
+.catalogue-top .filters button{transition:background .2s,color .2s,transform .2s}
+.catalogue-top .filters button:hover{transform:translateY(-2px)}
+.vanta-movie-card:hover .vanta-poster-fallback{filter:brightness(1.15)}
+@media(max-width:600px){
+.vanta-hero-abstract:after{right:-14%;top:24%;font-size:390px}
+.vanta-poster-fallback{padding:17px 12px}
+.vanta-poster-fallback strong{font-size:21px}
+.vanta-poster-fallback:after{font-size:180px}
+.vanta-hero-count{font-size:9px}
+}
