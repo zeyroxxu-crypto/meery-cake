@@ -1,0 +1,84 @@
+/* MEERY CAKE V6 — refined editorial redesign and functional previews */
+:root{--v6-plum:#6d3650;--v6-rose:#e9c4d0;--v6-gold:#b48a5b}
+body{background:#fffaf8}
+.site-header{box-shadow:0 5px 25px #653e510a}
+.hero{min-height:min(760px,90vh)}
+.hero-content{background:radial-gradient(ellipse at -10% 95%,#efd4dc 0,transparent 43%),radial-gradient(circle at 100% 0,#f9e5db 0,transparent 38%),#fffaf5;position:relative;overflow:hidden}
+.hero-content h1{font-size:clamp(55px,6.5vw,104px);letter-spacing:-.066em}
+.hero-content h1 em{position:relative;display:inline-block}
+.hero-content h1 em:after{content:"";display:block;margin-top:5px;height:2px;background:linear-gradient(90deg,#aa7186,#d7a8b7,transparent);transform-origin:left}
+.hero-visual>img{filter:saturate(.98) contrast(.99)}
+.hero-visual:before{content:"";position:absolute;z-index:2;inset:0;background:linear-gradient(90deg,#442f3216,transparent 32%),linear-gradient(0deg,#45262a6e,transparent 46%);pointer-events:none}
+.hero-float{border:1px solid #ffffffea;box-shadow:0 19px 54px #3f1f3035}
+.v6-hero-kicker{display:inline-flex;gap:9px;align-items:center;padding:9px 13px;border:1px solid #dec5ca;border-radius:40px;background:#fffefaad;letter-spacing:.09em!important}
+.v6-hero-kicker:before{content:"✦";font-size:14px;color:#9f5a76}
+.v6-hero-stats{display:flex;flex-wrap:wrap;gap:15px 21px;margin-top:29px;padding-top:23px;border-top:1px solid #dbc6c2;align-self:stretch}
+.v6-hero-stats span{display:flex;flex-direction:column;gap:2px;font-size:10px;color:#967480}
+.v6-hero-stats strong{font-size:12px;color:#693950}
+.v6-ribbon{position:relative;background:#fff8f4;border-top:1px solid #e4d5ce;border-bottom:1px solid #e4d5ce}
+.v6-ribbon .container{display:flex;justify-content:center;align-items:center;gap:22px;flex-wrap:wrap;padding-block:18px}
+.v6-ribbon span{font-size:11px;letter-spacing:.06em;font-weight:800;color:#7a4b61}
+.v6-ribbon i{font-size:15px;font-style:normal;color:#b0836f}
+.v6-ambient-section{position:relative;isolation:isolate;overflow:hidden}
+.v6-ambient-section:before{content:"";position:absolute;pointer-events:none;width:360px;height:360px;top:-180px;right:-130px;border:1px solid #dfb8bf50;border-radius:50%;box-shadow:0 0 0 53px #ecd1d01f,0 0 0 108px #e7c4cb10;z-index:-1}
+.editorial-card,.catalog-card{border-color:#e9d9d8}
+.catalog-card{padding:0!important;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.v6-product-photo{position:relative;aspect-ratio:1.45;overflow:hidden;background:radial-gradient(circle at 28% 20%,#fbefdf,#efcad7);display:grid;place-items:center;isolation:isolate}
+.v6-product-photo img{width:100%;height:100%;object-fit:cover;filter:saturate(.88);transition:transform .65s cubic-bezier(.2,.7,.3,1)}
+.v6-product-photo:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(0deg,#371b2b4f,transparent 50%)}
+.catalog-card:hover .v6-product-photo img{transform:scale(1.07)}
+.v6-photo-label{position:absolute;bottom:11px;left:12px;z-index:2;display:inline-flex;gap:5px;align-items:center;padding:5px 10px;font-size:9px;letter-spacing:.03em;border-radius:7px;color:#fff;background:#3e2838a8;backdrop-filter:blur(5px)}
+.v6-product-content{padding:22px;display:flex;flex:1;flex-direction:column;gap:10px}
+.v6-product-content h3{font:500 23px/1.14 var(--serif);letter-spacing:-.035em;min-height:50px}
+.v6-product-content .tag{align-self:start}
+.v6-product-content p{flex:1;font-size:12px;color:#7a626e}
+.v6-product-content .catalog-actions{margin-top:auto;justify-content:space-between}
+.v6-product-icon{font-size:54px;line-height:1;filter:drop-shadow(0 9px 13px #71445b25)}
+.v6-skeleton{background:linear-gradient(90deg,#f8eceb,#fff8f5,#f8eceb);background-size:200% 100%;animation:v6-shimmer 1.5s linear infinite}
+@keyframes v6-shimmer{to{background-position:-200% 0}}
+.v6-cake-studio{border-radius:21px;background:radial-gradient(circle at 20% 10%,#fffefd,#f4dde2 75%);border:1px solid #e4c8d1;padding:22px;box-shadow:0 20px 45px #613b4f13;margin:0 0 23px}
+.v6-cake-stage{position:relative;background:radial-gradient(ellipse at 50% 84%,#dbb2c166,transparent 44%),linear-gradient(145deg,#fffaf8,#f1dce3);border-radius:16px;min-height:342px;overflow:hidden;display:grid;place-items:center}
+.v6-cake-stage:before{content:"";position:absolute;width:310px;height:310px;border:1px solid #ffffff90;border-radius:50%;box-shadow:0 0 0 35px #ffffff30,0 0 0 76px #ffffff16}
+.v6-cake-stage svg{width:min(100%,480px);height:325px;position:relative;z-index:2;overflow:visible;filter:drop-shadow(0 20px 23px #6038481f)}
+.v6-cake-studio-header{display:flex;justify-content:space-between;align-items:center;gap:13px;margin-bottom:14px}
+.v6-cake-studio-header strong{font:500 23px var(--serif);color:#66344e}
+.v6-cake-studio-header small{font-size:10px;color:#8f7680;display:block}
+.v6-preview-tag{font-size:10px;font-weight:800;border:1px solid #d8b2c1;border-radius:50px;color:#754359;padding:6px 10px}
+.v6-preview-details{margin-top:17px;display:flex;gap:8px;flex-wrap:wrap;min-height:28px}
+.v6-preview-details .tag{background:#fff9f7}
+.v6-preview-actions{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:16px;flex-wrap:wrap}
+.v6-preview-actions p{max-width:365px;font-size:10px;line-height:1.7;color:#896d78}
+.v6-preview-actions button{border:1px solid #c994a8;border-radius:8px;background:#fffaf8;padding:9px 14px;font-size:11px;font-weight:800;color:#764053}
+.v6-cake-caption{font-size:10px;line-height:1.7;color:#8c6c78;margin-top:10px}
+.v6-booking-status{display:flex;align-items:flex-start;gap:14px;background:#fff9f3;border:1px solid #e8cfb7;border-radius:14px;padding:19px 21px;margin-top:20px}
+.v6-booking-status .v6-status-icon{display:grid;place-items:center;width:37px;height:37px;flex:none;border-radius:50%;background:#f4e4cb;color:#895c2d;font-size:17px}
+.v6-booking-status strong{display:block;color:#6a4052;font-size:13px}
+.v6-booking-status p{font-size:11px;line-height:1.8;margin-top:5px}
+.v6-service-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:24px 0}
+.v6-service-card{background:white;border:1px solid #ead9d6;border-radius:15px;padding:22px}
+.v6-service-card span:first-child{font-size:27px}
+.v6-service-card h3{font-size:24px;margin:14px 0 8px}
+.v6-service-card p{font-size:12px;line-height:1.75}
+.v6-service-card a{display:inline-block;margin-top:16px}
+.v6-connection-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
+.v6-connection{padding:21px;border-radius:13px;border:1px solid #e6d6d2;background:#fffcfa}
+.v6-connection strong{font-size:14px}
+.v6-connection p{font-size:12px;line-height:1.7;margin-top:8px}
+.v6-connection .tag{margin-bottom:12px}
+.v6-connection li{font-size:11px;color:#76636e;line-height:1.8}
+.v6-static-control{display:inline-flex;align-items:center;justify-content:center;background:#f1e9e7;border:1px solid #e4d4d5;color:#7d6b72;border-radius:9px;padding:12px 19px;font-size:12px;font-weight:700;cursor:not-allowed}
+.v6-banner{background:linear-gradient(120deg,#69354e,#87576b);color:white;padding:35px;border-radius:19px;margin-top:28px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.v6-banner h3{font-size:30px;color:white;margin:0 0 9px}
+.v6-banner p{color:#f4e0e5;font-size:12px;line-height:1.7}
+.v6-banner .button{background:#fffaf8;color:#743e58;border-color:#fffaf8;flex:none}
+.v6-home-menu-photo{display:block;max-width:220px;width:100%;aspect-ratio:1.4;border-radius:12px;overflow:hidden;align-self:start}
+.v6-gallery-carousel{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;scrollbar-width:thin;padding-bottom:10px}
+.v6-gallery-carousel>a{width:min(75vw,285px);height:235px;flex:none;scroll-snap-align:center;border-radius:15px;overflow:hidden;position:relative}
+.v6-gallery-carousel img{height:100%;width:100%;object-fit:cover}
+.v6-gallery-carousel span{position:absolute;bottom:12px;left:13px;padding:7px 12px;background:#fffaf8e8;color:#773f56;border-radius:8px;font-weight:800;font-size:11px}
+.v6-hero-bottom-note{border-top:1px solid #dec8c4;margin-top:20px;padding-top:17px}
+@media(min-width:880px){.v6-cake-studio{position:sticky;top:105px}.v6-cake-layout{grid-template-columns:.96fr 1fr!important}.v6-cake-layout .panel{min-width:0}}
+@media(max-width:980px){.hero{min-height:0}.hero-content h1{font-size:clamp(52px,7vw,84px)}.v6-service-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:760px){.v6-connection-grid,.v6-service-grid{grid-template-columns:1fr}.v6-banner{flex-direction:column;align-items:flex-start}.v6-cake-stage{min-height:285px}.v6-cake-stage svg{height:265px}.v6-home-menu-photo{max-width:100%}}
+@media(max-width:600px){.hero-content h1{font-size:clamp(49px,11.2vw,67px)}.v6-ribbon .container{gap:8px 13px;padding-block:13px}.v6-ribbon span{font-size:9px}.v6-ribbon i{font-size:11px}.v6-cake-studio{padding:13px;border-radius:14px}.v6-cake-stage{min-height:250px}.v6-cake-stage svg{height:240px}.v6-cake-studio-header strong{font-size:21px}.v6-product-content{padding:19px}.v6-product-photo{aspect-ratio:1.65}.v6-banner{padding:24px}}
+@media(prefers-reduced-motion:reduce){.v6-skeleton{animation:none!important}.v6-product-photo img{transition:none!important}}
