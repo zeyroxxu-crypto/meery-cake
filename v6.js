@@ -91,11 +91,24 @@ function cakeVisual(){
   if(stacked)tier(170,110,180,85,colors[0],colors[1]);
   else tier(148,161,224,55,colors[0],colors[1]);
   const top=stacked?105:157,occasion=safeText('cakeOccasion','').toLowerCase(),notes=safeText('cakeNotes','').toLowerCase();
-  const isFlowers=/fleur|flor|flower|blumen|bloem|kwiat/i.test(notes)||/mariage|wedding|bod|hochzeit|matrimonio|casamento|ślub/i.test(occasion);
+  const isPearls=/perles sucrées|sugar pearls|perlas|zuckerperlen|perline|pérolas|suikerparels|perełki/i.test(notes);
+  const isBerries=/fruits rouges|berries|frutos rojos|rote früchte|frutti rossi|frutos vermelhos|rood fruit|owoce leśne/i.test(notes);
+  const isFlowers=!isPearls&&!isBerries&&(/fleur|flor|flower|blumen|bloem|kwiat/i.test(notes)||/mariage|wedding|bod|hochzeit|matrimonio|casamento|ślub/i.test(occasion));
   if(isFlowers){
     [[222,top+4],[260,top-3],[297,top+5],[346,225],[172,230]].forEach(([cx,cy],i)=>{
       for(let petal=0;petal<5;petal++){const theta=petal*Math.PI*2/5;shape('ellipse',{cx:cx+Math.cos(theta)*9,cy:cy+Math.sin(theta)*9,rx:7,ry:9,fill:i%2?'#fbf4dd':'#fff8f3',transform:'rotate('+(petal*72)+' '+(cx+Math.cos(theta)*9)+' '+(cy+Math.sin(theta)*9)+')'},decors)}
       shape('circle',{cx,cy,r:5,fill:'#d4a36f'},decors);
+    });
+  }else if(isPearls){
+    for(let j=0;j<24;j++){
+      const angle=j*Math.PI*2/24, cx=260+Math.cos(angle)*Math.min(83,84),cy=top+10+Math.sin(angle)*13;
+      shape('circle',{cx:cx.toFixed(2),cy:cy.toFixed(2),r:j%3===0?5:3.6,fill:j%3===0?'#f5cf9c':'#fffcf5',stroke:'#d9bdbf','stroke-width':.5},decors);
+    }
+  }else if(isBerries){
+    [[204,top+7],[226,top+2],[260,top-3],[292,top+4],[316,top+9]].forEach(([cx,cy],i)=>{
+      shape('ellipse',{cx,cy,rx:9,ry:8,fill:i%2?'#c44966':'#ab3750'},decors);
+      shape('circle',{cx:cx-2,cy:cy-3,r:2,fill:'#fff9ec',opacity:.65},decors);
+      shape('path',{d:'M'+cx+' '+(cy-6)+' q3 -8 8 -6',stroke:'#7b9d72','stroke-width':3,fill:'none'},decors);
     });
   }else{
     [[202,top+7],[228,top-4],[259,top-1],[290,top+4],[319,top+9]].forEach(([cx,cy],i)=>{
