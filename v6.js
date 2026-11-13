@@ -171,7 +171,7 @@ function adminStatus(){
  form.before(box);
 }
 function boot(){
- enhanceHome();cakeVisual();bookingStatus();adminStatus();
+ enhanceHome();bookingStatus();adminStatus();
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
