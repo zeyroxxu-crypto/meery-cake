@@ -313,6 +313,42 @@ add('À découvrir, à partager.','Discover and share.','Descubrir y compartir.'
 add('Une sélection qui vous ressemble','Your own sweet selection','Tu propia selección dulce','Ihre persönliche Genussauswahl','La tua selezione golosa','A sua seleção especial','Jouw eigen zoete selectie','Twój własny słodki wybór');
 add('Un gâteau pour chaque occasion','A cake for every occasion','Una tarta para cada ocasión','Eine Torte für jeden Anlass','Una torta per ogni occasione','Um bolo para cada ocasião','Een taart voor elke gelegenheid','Tort na każdą okazję');
 
+
+/* V6: verified demo notices, new cake studio, and Click & Collect interface */
+add('Votre création en direct','Your creation live','Tu creación en directo','Ihre Kreation live','La tua creazione dal vivo','A sua criação em direto','Jouw creatie live','Twój projekt na żywo');
+add('Aperçu indicatif','Illustrative preview','Vista previa orientativa','Unverbindliche Vorschau','Anteprima indicativa','Pré-visualização ilustrativa','Illustratief voorbeeld','Podgląd poglądowy');
+add('Enregistrer l’aperçu ↧','Save preview ↧','Guardar vista previa ↧','Vorschau speichern ↧','Salva anteprima ↧','Guardar pré-visualização ↧','Voorbeeld opslaan ↧','Zapisz podgląd ↧');
+add('Forme à discuter','Shape to discuss','Forma por definir','Form noch offen','Forma da definire','Forma por definir','Vorm te bespreken','Kształt do uzgodnienia');
+add('Occasion à définir','Occasion to confirm','Ocasión por definir','Anlass noch offen','Occasione da definire','Ocasião por definir','Gelegenheid nog te bepalen','Okazja do ustalenia');
+add('Parfum à confirmer','Flavour to confirm','Sabor por confirmar','Geschmack zu bestätigen','Gusto da confermare','Sabor a confirmar','Smaak nog te bevestigen','Smak do potwierdzenia');
+add('Créneaux à confirmer par le salon','Times must be confirmed by the tearoom','Horarios pendientes de confirmar','Zeiten müssen vom Teesalon bestätigt werden','Orari da confermare dal locale','Horários a confirmar pelo salão','Tijden moeten door de tearoom worden bevestigd','Terminy musi potwierdzić lokal');
+add('Administration de démonstration — aucun accès propriétaire connecté','Demo administration — no owner access connected','Administración de demostración — sin acceso del propietario','Demo-Verwaltung — kein Inhaberzugang verbunden','Amministrazione demo — nessun accesso del titolare','Administração demo — sem acesso do proprietário','Demo-beheer — geen eigenaarstoegang','Panel demo — brak dostępu właściciela');
+add('Click & Collect','Click & Collect','Pedido para recoger','Abholung vor Ort','Ritiro in negozio','Recolha na loja','Afhalen','Odbiór osobisty');
+add('Click & Collect (demande)','Pickup enquiry','Solicitud de recogida','Abholanfrage','Richiesta di ritiro','Pedido de recolha','Afhaalaanvraag','Zapytanie o odbiór');
+add('Vos douceurs,','Your treats,','Tus dulces,','Ihre Leckereien,','Le tue dolcezze,','Os seus doces,','Jouw lekkernijen,','Twoje słodkości,');
+add('à emporter.','to take away.','para llevar.','zum Mitnehmen.','da asporto.','para levar.','om mee te nemen.','na wynos.');
+add('Ma demande de retrait','My pickup enquiry','Mi solicitud de recogida','Meine Abholanfrage','La mia richiesta di ritiro','O meu pedido de recolha','Mijn afhaalaanvraag','Moje zapytanie o odbiór');
+add('Click & Collect non connecté','Online pickup not connected','Recogida online no conectada','Online-Abholung nicht verbunden','Ritiro online non attivo','Recolha online não ligada','Online afhalen niet aangesloten','Odbiór online niepodłączony');
+add('Jour souhaité','Preferred day','Día deseado','Wunschtag','Giorno desiderato','Dia pretendido','Gewenste dag','Preferowany dzień');
+add('Moment préféré','Preferred time of day','Momento preferido','Bevorzugte Tageszeit','Momento preferito','Período preferido','Gewenst dagdeel','Preferowana pora');
+add('Matin','Morning','Mañana','Morgen','Mattina','Manhã','Ochtend','Rano');
+add('Midi','Midday','Mediodía','Mittag','Mezzogiorno','Meio-dia','Middag','Południe');
+add('Après-midi','Afternoon','Tarde','Nachmittag','Pomeriggio','Tarde','Namiddag','Popołudnie');
+add('À définir avec le salon','To arrange with the tearoom','A concretar con el local','Mit dem Teesalon vereinbaren','Da concordare con il locale','A combinar com o salão','Afstemmen met de tearoom','Do ustalenia z lokalem');
+add('Préparer mon message de retrait','Prepare my pickup message','Preparar mensaje de recogida','Abholnachricht vorbereiten','Prepara messaggio di ritiro','Preparar mensagem de recolha','Afhaalbericht voorbereiden','Przygotuj wiadomość o odbiorze');
+add('Aucun favori sélectionné. Ajoutez des pâtisseries depuis la carte ou le carnet gourmand.','No favourites selected. Add products from the menu or your notebook.','No hay favoritos seleccionados. Añade productos desde la carta o tu lista.','Keine Favoriten ausgewählt. Fügen Sie Produkte aus der Karte oder Merkliste hinzu.','Nessun preferito selezionato. Aggiungi prodotti dal menù o dal taccuino.','Sem favoritos selecionados. Adicione produtos do menu ou da lista.','Geen favorieten geselecteerd. Voeg producten toe via de kaart of je lijst.','Nie wybrano ulubionych. Dodaj produkty z menu lub notatnika.');
+add('Connexion aux services','Service connections','Conexiones de servicios','Dienstverbindungen','Connessioni dei servizi','Ligações de serviços','Dienstkoppelingen','Integracje usług');
+add('Connexions professionnelles','Professional integrations','Integraciones profesionales','Professionelle Integrationen','Integrazioni professionali','Integrações profissionais','Zakelijke koppelingen','Integracje biznesowe');
+add('État des services','Service status','Estado de los servicios','Dienststatus','Stato dei servizi','Estado dos serviços','Status van diensten','Status usług');
+add('Ce qui reste à connecter','What still needs connecting','Lo que falta conectar','Noch zu verbindende Dienste','Servizi ancora da collegare','O que falta ligar','Nog te koppelen','Co pozostało do podłączenia');
+add('En attente de connexion','Connection pending','Conexión pendiente','Verbindung ausstehend','Connessione in attesa','Ligação pendente','Koppeling in afwachting','Oczekuje na połączenie');
+add('Réservations confirmées','Confirmed reservations','Reservas confirmadas','Bestätigte Reservierungen','Prenotazioni confermate','Reservas confirmadas','Bevestigde reserveringen','Potwierdzone rezerwacje');
+add('Paiement sécurisé','Secure payment','Pago seguro','Sichere Zahlung','Pagamento sicuro','Pagamento seguro','Veilige betaling','Bezpieczna płatność');
+add('Administration sécurisée','Secure administration','Administración segura','Sichere Verwaltung','Amministrazione sicura','Administração segura','Beveiligd beheer','Bezpieczny panel');
+add('Avis Google authentiques','Authentic Google reviews','Opiniones auténticas de Google','Echte Google-Bewertungen','Recensioni Google autentiche','Avaliações Google autênticas','Echte Google-reviews','Autentyczne opinie Google');
+add('Produits disponibles','Available products','Productos disponibles','Verfügbare Produkte','Prodotti disponibili','Produtos disponíveis','Beschikbare producten','Dostępne produkty');
+add('Une mise en service avec le salon','Activation with the tearoom','Activación con el local','Aktivierung mit dem Teesalon','Attivazione con il locale','Ativação com o salão','Activeren met de tearoom','Uruchomienie z lokalem');
+
 const originalText=new WeakMap(),originalAttr=new WeakMap();
 const originalTitle=document.title;
 const excluded=new Set(['SCRIPT','STYLE','NOSCRIPT','TEXTAREA','CODE','PRE','OPTION_GAP']);
