@@ -2,7 +2,6 @@
 (function(){
 'use strict';
 const DATA_PATH='v3-data.json';
-const STORAGE_NOTEBOOK='meerycake-carnet-quantities';
 const STORAGE_CAKE_DRAFT='meerycake-cake-idea-v1';
 const STORAGE_READABLE='meerycake-readable-v1';
 const norm=s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('fr').trim();
@@ -40,7 +39,6 @@ function links(){
  return [
   {title:'Accueil',desc:'Découvrir Meery Cake et son univers',url:'index.html#accueil',keywords:'salon de thé accueil'},
   {title:'La carte',desc:'Produits, boissons, pâtisseries et brunch',url:'carte.html',keywords:'menu boissons prix catalogue'},
-  {title:'Mon carnet gourmand',desc:'Favoris et sélection à partager',url:'carnet.html',keywords:'favoris liste wishlist envie'},
   {title:'Créer un gâteau',desc:'Configurateur et demande sur mesure',url:'gateaux.html',keywords:'cake design anniversaire mariage personnalisé'},
   {title:'Demander un brunch',desc:'Préparer une demande de table',url:'brunch.html',keywords:'réservation table date personnes'},
   {title:'Ateliers',desc:'Cupcakes, cake design et renseignements',url:'ateliers.html',keywords:'atelier cours événements'},
@@ -142,24 +140,6 @@ function createSearch(){
  });
 }
 function extendNavigation(){
- const sub=document.querySelector('.nav-sub');
- if(sub&&!sub.querySelector('[href="carnet.html"]')){
-  const a=el('a','','♡ Mon carnet gourmand');a.href='carnet.html';sub.insertBefore(a,sub.querySelector('[href="boutique.html"]')||null);
- }
- const foot=document.querySelector('.footer-grid');
- if(foot){
-  const col=foot.children[1];
-  if(col&&!col.querySelector('[href="carnet.html"]')){const a=el('a','','♡ Mon carnet gourmand');a.href='carnet.html';col.append(a)}
- }
- // Make the new notebook discoverable at the moment visitors save a favourite.
- const menuHeading=document.querySelector('.menu-panel-head');
- if(menuHeading&&!menuHeading.querySelector('[href="carnet.html"]')){
-   const link=el('a','inline-link','Voir mon carnet ♡');link.href='carnet.html';link.setAttribute('aria-label','Ouvrir mon carnet de favoris');menuHeading.append(link);
- }
- const toolbar=document.querySelector('.catalog-toolbar');
- if(toolbar&&!toolbar.querySelector('[href="carnet.html"]')){
-   const link=el('a','button secondary small','♡ Mon carnet gourmand');link.href='carnet.html';toolbar.append(link);
- }
  const meta=document.querySelector('.footer-meta');
  if(meta&&!meta.querySelector('#mcReadableButton')){
   const toggle=el('button','mc-contrast-trigger','Confort de lecture +');toggle.id='mcReadableButton';toggle.type='button';
@@ -242,85 +222,6 @@ function cakePreview(){
  form.addEventListener('input',redraw);form.addEventListener('change',redraw);redraw();
  if(getItem(STORAGE_CAKE_DRAFT)){status.textContent='Une idée sauvegardée est disponible · Reprendre mon idée'}
 }
-async function notebook(){
- const itemsRoot=$('notebookItems');if(!itemsRoot)return;
- let data;
- try{data=await fetchMenu()}catch(e){itemsRoot.textContent=e.message;return}
- const products=new Map(data.menu.flatMap(g=>g.items.map(p=>[p.id,{...p,group:g.name}])));
- let quantities=readJSON(STORAGE_NOTEBOOK,{});
- if(!quantities||typeof quantities!=='object'||Array.isArray(quantities))quantities={};
- const favorites=()=>{
-  const a=readJSON('meerycake-v3-favorites',[]);
-  return Array.isArray(a)?a.filter(x=>products.has(x)).slice(0,80):[];
- };
- const note=$('notebookNotes'),preview=$('notebookPreview'),counter=$('notebookCount');
- function persist(){const kept=Object.fromEntries(favorites().map(id=>[id,Math.max(1,Math.min(50,Number(quantities[id])||1))]));quantities=kept;saveItem(STORAGE_NOTEBOOK,JSON.stringify(kept))}
- function summary(){
-  const ids=favorites();const lines=['Ma sélection Meery Cake',''];
-  if(!ids.length)lines.push('Aucun produit sélectionné.');
-  else ids.forEach(id=>{const p=products.get(id);lines.push((Number(quantities[id])||1)+' × '+p.name+' · '+p.group+(p.price?' · prix indiqué '+p.price:' · prix à confirmer'))});
-  const notes=note.value.trim();if(notes)lines.push('','Précisions : '+notes);
-  lines.push('','Cette liste n’est ni une commande ni une réservation. Prix, allergènes, produits et disponibilité à confirmer auprès de Meery Cake.');
-  preview.textContent=lines.join('\n');return preview.textContent;
- }
- function render(){
-  const ids=favorites();persist();itemsRoot.replaceChildren();
-  counter.textContent=ids.length+' produit'+(ids.length>1?'s':'');
-  if(!ids.length){
-   const empty=el('div','mc-notebook-empty');
-   empty.append(el('span','heart','♡'),el('h3','','Votre carnet attend ses douceurs'),el('p','','Parcourez la carte et appuyez sur « Ajouter aux favoris ». Vous retrouverez ici votre sélection.'));
-   const link=el('a','button secondary','Découvrir la carte');link.href='carte.html';empty.append(link);itemsRoot.append(empty);
-  }
-  for(const id of ids){
-   const p=products.get(id),row=el('article','mc-notebook-row'),left=el('div'),right=el('div');
-   left.append(el('h3','',p.name),el('p','',p.group+(p.price?' · Tarif indiqué : '+p.price:' · Tarif à confirmer')));
-   if(p.description)left.append(el('p','mc-notebook-detail',p.description.slice(0,180)));
-   const qty=el('div','mc-qty'),minus=el('button','','−'),output=el('output','',String(quantities[id]||1)),plus=el('button','','+');
-   minus.type=plus.type='button';minus.setAttribute('aria-label','Réduire la quantité de '+p.name);plus.setAttribute('aria-label','Augmenter la quantité de '+p.name);
-   const setQuantity=delta=>{
-    quantities[id]=Math.max(1,Math.min(50,(Number(quantities[id])||1)+delta));
-    output.textContent=String(quantities[id]);
-    persist();summary(); // Keep the focused control in place for keyboard users.
-   };
-   minus.addEventListener('click',()=>setQuantity(-1));
-   plus.addEventListener('click',()=>setQuantity(1));
-   qty.append(minus,output,plus);right.append(qty);
-   const remove=el('button','mc-remove','Retirer');remove.type='button';remove.setAttribute('aria-label','Retirer '+p.name+' du carnet');
-   remove.addEventListener('click',()=>{
-    const newFavs=favorites().filter(f=>f!==id);
-    saveItem('meerycake-v3-favorites',JSON.stringify(newFavs));delete quantities[id];persist();render();toast('Produit retiré de votre carnet');
-   });
-   right.append(remove);row.append(left,right);itemsRoot.append(row);
-  }
-  summary();
- }
- $('notebookClear')?.addEventListener('click',()=>{
-  if(!favorites().length)return;
-  if(!confirm('Vider votre carnet et retirer tous les favoris enregistrés sur cet appareil ?'))return;
-  saveItem('meerycake-v3-favorites','[]');quantities={};persist();render();toast('Carnet vidé.');
- });
- note?.addEventListener('input',summary);
- $('notebookCopy')?.addEventListener('click',()=>copyText(summary()));
- $('notebookShare')?.addEventListener('click',()=>shareText('Ma sélection Meery Cake',summary()));
- $('notebookPrint')?.addEventListener('click',()=>window.print());
- const suggestions=$('notebookSuggestions');
- if(suggestions){
-  const picks=data.menu.flatMap(g=>g.items.map(p=>({...p,group:g.name}))).filter(p=>p.featured).slice(0,6);
-  for(const p of picks){
-   const card=el('article','catalog-card');
-   card.append(el('span','tag gold',p.group),el('h3','name',p.name),el('p','',p.description||'Un produit à découvrir directement au salon.'),el('span','price',p.price||'Prix à confirmer'));
-   const btn=el('button','button secondary small','♡ Ajouter au carnet');btn.type='button';
-   btn.addEventListener('click',()=>{
-    const a=favorites();
-    if(!a.includes(p.id)){a.push(p.id);saveItem('meerycake-v3-favorites',JSON.stringify(a));quantities[p.id]=1;persist();render();toast('Ajouté à votre carnet ♡')}
-    else toast('Ce produit est déjà dans votre carnet.');
-   });
-   card.append(btn);suggestions.append(card);
-  }
- }
- addEventListener('storage',e=>{if(['meerycake-v3-favorites',STORAGE_NOTEBOOK].includes(e.key)){quantities=readJSON(STORAGE_NOTEBOOK,{});render()}});
- render();
-}
 function enhanceFormShares(){
  for(const {result,preview,label} of [
   {result:'brunchResult',preview:'brunchSummary',label:'Partager ma demande de brunch'},
@@ -335,7 +236,7 @@ function enhanceFormShares(){
  }
 }
 function additions(){
- extendNavigation();createSearch();installImageFallback();cakePreview();enhanceFormShares();notebook();
+ extendNavigation();createSearch();installImageFallback();cakePreview();enhanceFormShares();
 }
 document.addEventListener('DOMContentLoaded',additions);
 })();
