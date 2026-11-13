@@ -127,22 +127,109 @@ modal('<button class="modal-close" data-close="detail" aria-label="Fermer">'+ico
 films.map(function(f){return '<li><strong>'+text(f.title)+'</strong> — '+text(f.credit)+' — '+text(f.license)+'</li>';}).join("")+
 '</ul><p>Les affiches et miniatures proviennent de ressources Wikimedia Commons, Internet Archive et de galeries officielles. Les droits sur les éditions restaurées peuvent être distincts de ceux des films originaux. <a href="https://studio.blender.org/films/" target="_blank" rel="noopener">Découvrez les films chez Blender Studio</a>.</p><p>VANTA n’héberge pas les fichiers vidéo et n’est affilié ni à Internet Archive ni à Blender Studio. La disponibilité des lecteurs dépend des hébergeurs.</p></div></div>');
 }
+function archiveVideoUrl(f){
+return fetch("https://archive.org/metadata/"+encodeURIComponent(f.archiveId),{mode:"cors"}).then(function(response){
+if(!response.ok)throw new Error("Métadonnées indisponibles");
+return response.json();
+}).then(function(data){
+var files=(data.files||[]).filter(function(file){
+return /\.mp4$/i.test(file.name||"") && !/sample|trailer|preview/i.test(file.name||"") && file.private!==true && file.private!=="true";
+});
+files.sort(function(a,b){
+function rank(file){
+var name=(file.name||"").toLowerCase(),score=0;
+if(/512kb|h\.?264|mpeg4|_480p|_720p/.test(name))score+=20;
+if(/_1080p|4k|x265|hevc/.test(name))score-=15;
+if(file.source==="derivative")score+=3;
+if(Number(file.size)>1200000000)score-=10;
+return score;
+}
+return rank(b)-rank(a);
+});
+if(!files.length)throw new Error("Aucun fichier MP4 compatible");
+return "https://archive.org/download/"+encodeURIComponent(f.archiveId)+"/"+files[0].name.split("/").map(encodeURIComponent).join("/");
+});
+}
 function openPlayer(id){
 var f=getFilm(id);if(!f)return;
 closeDetail();closeSearch();
 document.body.style.overflow="hidden";currentPlayer=id;
-var isArchive=!!f.archiveId;
-var embeds={sintel:"0eb052d0-fd51-43e6-aa33-ecdbf77a5d40",tears:"8533ea43-4271-4a57-9694-e9d0b35e1aa1",bunny:"bf1f3fb5-b119-4f9f-9930-8e20e892b898",spring:"3d95fb3d-c866-42c8-9db1-fe82f48ccb95",sprite:"a69d68a5-a0e0-4a80-9d66-49f093c97aaf",agent:"264ff760-803e-430e-8d81-15648e904183",caminandes:"fb70d459-48d2-4db5-adba-813c84f9200a",glass:"64222c8a-c4c7-4b3b-9850-7fb2078edcf6"};
-var url=isArchive?"https://archive.org/embed/"+encodeURIComponent(f.archiveId):"https://video.blender.org/videos/embed/"+embeds[id];
-document.getElementById("player-root").innerHTML='<div class="player-overlay" role="dialog" aria-modal="true" aria-label="Lecture de '+text(f.title)+'">'+
-'<div class="player-top"><button class="player-back" data-close="player">'+icon("arrow").replace('class="icon"','class="icon" style="transform:rotate(180deg)"')+' Retour</button><div class="player-title"><span>VANTA / FILM COMPLET</span>'+text(f.title)+'</div><button class="btn-quiet" data-close="player" aria-label="Fermer">'+icon("close")+'</button></div>'+
-'<div class="player-main" style="flex-direction:column;gap:16px;padding:12px 14px">'+
-'<div class="video-frame-shell" style="width:100%;max-width:1100px;aspect-ratio:16/9;overflow:hidden;border-radius:12px;background:#111"><iframe id="film-iframe" title="Lecture de '+text(f.title)+'" src="'+url+'" allow="fullscreen; autoplay; picture-in-picture" allowfullscreen webkitallowfullscreen loading="eager" style="width:100%;height:100%;border:0;background:#000;display:block"></iframe></div>'+
-'<p style="color:#c0c0c0;font-size:12px;max-width:720px;text-align:center;line-height:1.65;margin:0">Lecture directement dans VANTA · '+(isArchive?"Source : Internet Archive":"Source : Blender Studio")+'. Appuie sur Lecture dans le lecteur.</p>'+
-'<div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap"><button class="btn-outline" data-refresh-player="'+f.id+'">Réessayer la vidéo</button><a class="btn-soft" href="'+f.official+'" target="_blank" rel="noopener noreferrer">Source du film '+icon("external")+'</a></div></div>'+
-'<div class="player-footer"><span>'+text(f.credit)+' · '+text(f.license)+'</span><span>Films diffusés depuis des bibliothèques vidéo publiques.</span></div></div>';
+var root=document.getElementById("player-root");
+root.innerHTML='<div class="player-overlay vanta-simple-player" role="dialog" aria-modal="true" aria-label="Lecture de '+text(f.title)+'">'+
+'<div class="player-top"><button class="player-back" data-close="player">'+icon("arrow").replace('class="icon"','class="icon" style="transform:rotate(180deg)"')+' Retour</button><div class="player-title">'+text(f.title)+'</div><button class="player-exit" data-close="player" aria-label="Fermer">'+icon("close")+'</button></div>'+
+'<div class="simple-stage"><div class="simple-screen" id="simple-screen">'+
+'<video id="simple-film" playsinline webkit-playsinline preload="metadata" poster="'+art(f,true)+'" aria-label="'+text(f.title)+'"></video>'+
+'<div class="simple-status" id="simple-status">Préparation du film…</div>'+
+'<button class="simple-big-play" data-video-action="play" aria-label="Lire ou mettre en pause">'+icon("play")+'</button>'+
+'<div class="simple-controls">'+
+'<button class="simple-control" data-video-action="play" aria-label="Lecture ou pause">'+icon("play")+'</button>'+
+'<input type="range" id="simple-progress" min="0" max="100" value="0" step="0.1" aria-label="Avancer dans le film">'+
+'<button class="simple-control" data-video-action="mute" aria-label="Activer ou couper le son"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16 9c2 1.5 2 4.5 0 6m2-9c4 3 4 9 0 12"/></svg></button>'+
+'<button class="simple-control" data-video-action="fullscreen" aria-label="Plein écran"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 3H3v5M16 3h5v5M3 16v5h5m13-5v5h-5"/></svg></button>'+
+'</div></div><div class="simple-note" id="simple-note">Lecture dans VANTA</div></div></div>';
+var video=document.getElementById("simple-film");
+var status=document.getElementById("simple-status");
+var playButtons=root.querySelectorAll('[data-video-action="play"]');
+var saved=progress[id]&&progress[id].time||0;
+function setStatus(message){if(currentPlayer===id&&status){status.textContent=message;status.style.display=message?"block":"none";}}
+function updateButtons(){
+var isPaused=video.paused;
+playButtons.forEach(function(btn){
+btn.setAttribute("aria-label",isPaused?"Lire le film":"Mettre en pause");
+if(btn.classList.contains("simple-big-play"))btn.style.opacity=isPaused?"1":"0";
+else btn.innerHTML=isPaused?icon("play"):'<svg class="icon" viewBox="0 0 24 24"><path fill="currentColor" d="M6 4h4v16H6zm8 0h4v16h-4z"/></svg>';
+});
+}
+video.addEventListener("loadedmetadata",function(){
+setStatus("");
+if(saved>5 && isFinite(video.duration) && saved<video.duration-10){try{video.currentTime=saved;}catch(e){}}
+updateButtons();
+});
+video.addEventListener("canplay",function(){setStatus("");});
+video.addEventListener("playing",function(){setStatus("");updateButtons();});
+video.addEventListener("pause",updateButtons);
+video.addEventListener("timeupdate",function(){
+if(!isFinite(video.duration)||video.duration<=0)return;
+var bar=document.getElementById("simple-progress");
+if(bar&&currentPlayer===id)bar.value=(video.currentTime/video.duration*100).toFixed(2);
+progress[id]={time:video.currentTime,duration:video.duration,updated:Date.now()};
+if(Math.floor(video.currentTime)%5===0)save();
+});
+video.addEventListener("error",function(){
+setStatus("Vidéo momentanément indisponible. Essaie un autre film.");
+});
+video.addEventListener("ended",function(){progress[id]={time:0,duration:video.duration||1,updated:Date.now()};save();updateButtons();});
+if(f.archiveId){
+archiveVideoUrl(f).then(function(url){
+if(currentPlayer!==id)return;
+video.src=url;video.load();setStatus("Appuie sur lecture");
+}).catch(function(){
+if(currentPlayer===id)setStatus("Impossible de récupérer ce film pour le moment.");
+});
+}else{
+video.src=f.video;video.load();setStatus("Appuie sur lecture");
+}
+updateButtons();
+}
+function videoAction(action){
+var video=document.getElementById("simple-film");
+if(!video)return;
+if(action==="play"){
+if(video.paused){var promise=video.play();if(promise&&promise.catch)promise.catch(function(){var status=document.getElementById("simple-status");if(status)status.textContent="Impossible de lire ce fichier pour le moment.";});}
+else video.pause();
+}else if(action==="mute"){
+video.muted=!video.muted;
+var b=document.querySelector('[data-video-action="mute"]');
+if(b){b.style.opacity=video.muted?".45":"1";b.setAttribute("aria-label",video.muted?"Activer le son":"Couper le son");}
+}else if(action==="fullscreen"){
+var screen=document.getElementById("simple-screen");
+if(document.fullscreenElement){if(document.exitFullscreen)document.exitFullscreen();}
+else if(screen&&screen.requestFullscreen){var request=screen.requestFullscreen();if(request&&request.catch)request.catch(function(){if(video.webkitEnterFullscreen)video.webkitEnterFullscreen();});}
+else if(video.webkitEnterFullscreen)video.webkitEnterFullscreen();
+}
 }
 function closePlayer(){
+var video=document.getElementById("simple-film");if(video){video.pause();video.removeAttribute("src");video.load();}
 document.getElementById("player-root").innerHTML="";currentPlayer=null;
 document.body.style.overflow="";render();
 }
@@ -168,12 +255,13 @@ var d=el.closest("[data-info]");if(d){e.stopPropagation();if(searchOpened)closeS
 if(el.closest("[data-random]")){openPlayer(films[Math.floor(Math.random()*films.length)].id);return;}
 var c=el.closest("[data-close]");if(c){var t=c.getAttribute("data-close");if(t==="player")closePlayer();else if(t==="search")closeSearch();else closeDetail();return;}
 if(el.id==="search-trigger"){openSearch();return;}
-var rp=el.closest("[data-refresh-player]");if(rp){openPlayer(rp.getAttribute("data-refresh-player"));return;}
+var action=el.closest("[data-video-action]");if(action){videoAction(action.getAttribute("data-video-action"));return;}
 if(el.id==="credits-btn"){openCredits();return;}
 if(el.id==="mobile-menu"){document.getElementById("mobile-nav").classList.toggle("open");return;}
 if(el.id==="profile-btn"){toast("Tes favoris et tes séances sont enregistrés sur cet appareil.");return;}
 var fl=el.closest("[data-filter]");if(fl){filter=fl.getAttribute("data-filter");render();window.scrollTo({top:0,behavior:"smooth"});}
 });
+document.addEventListener("input",function(e){if(e.target.id==="simple-progress"){var v=document.getElementById("simple-film");if(v&&isFinite(v.duration)&&v.duration>0)v.currentTime=Number(e.target.value)*v.duration/100;}});
 document.addEventListener("click",function(e){if(e.target.id==="detail-overlay")closeDetail();if(e.target.id==="search-overlay")closeSearch();});
 document.addEventListener("keydown",function(e){
 if(e.key==="Escape"){if(currentPlayer)closePlayer();else if(searchOpened)closeSearch();else closeDetail();document.getElementById("mobile-nav").classList.remove("open");}
