@@ -127,10 +127,10 @@ var root=document.getElementById("player-root");
 document.body.style.overflow="hidden";currentPlayer=id;
 root.innerHTML='<div class="player-overlay" role="dialog" aria-modal="true" aria-label="Lecture de '+text(f.title)+'">'+
 '<div class="player-top"><button class="player-back" data-close="player">'+icon("arrow").replace('class="icon"','class="icon" style="transform:rotate(180deg)"')+' Retour</button><div class="player-title"><span>VANTA / LECTURE</span>'+text(f.title)+'</div><button class="btn-quiet" data-close="player" aria-label="Fermer">'+icon("close")+'</button></div>'+
-'<div class="player-main"><div class="player-loading" id="player-loading"><strong>VANTA<span>.</span></strong><div class="spinner"></div><p>Ouverture de votre film</p></div>'+
-'<video id="film-video" controls playsinline webkit-playsinline preload="metadata" poster="'+art(f,true)+'"><source src="'+f.video+'" type="video/mp4">Votre navigateur ne prend pas en charge ce lecteur.</video></div>'+
+'<div class="player-main">'+
+'<video id="film-video" controls playsinline webkit-playsinline preload="auto" poster="'+art(f,true)+'"><source src="'+f.video+'" type="video/mp4">Votre navigateur ne prend pas en charge ce lecteur.</video></div>'+
 '<div class="player-footer"><span>'+text(f.credit)+' · '+text(f.license)+'</span><a href="'+f.official+'" target="_blank" rel="noopener noreferrer">Voir la source officielle '+icon("external")+'</a></div></div>';
-var video=document.getElementById("film-video"),loading=document.getElementById("player-loading");
+var video=document.getElementById("film-video"),loading=null;
 var saved=progress[id]&&progress[id].time||0;
 var timeoutId=null,alreadyErrored=false,ready=false;
 function hideLoading(){if(loading){loading.classList.add("hidden");loading.style.pointerEvents="none";}}
@@ -157,16 +157,10 @@ progress[id]={time:video.currentTime,duration:video.duration,updated:Date.now()}
 if(Math.floor(video.currentTime)%2===0)save();
 });
 video.addEventListener("ended",function(){progress[id]={time:0,duration:video.duration||f.duration*60,updated:Date.now()};save();toast("Film terminé. Belle séance !");});
-video.addEventListener("error",function(){showProblem("La source vidéo ne répond pas. Tu peux ouvrir le film sur son site d'origine.");});
-timeoutId=setTimeout(function(){
-if(currentPlayer===id&&!ready)showProblem("La connexion à la vidéo est trop longue. Essaie la source officielle.");
-},10000);
+video.addEventListener("error",function(){showProblem("Le fichier vidéo est momentanément indisponible. Tu peux ouvrir le film sur son site d’origine.");});
+/* Aucun délai artificiel : sur un réseau mobile, le lecteur conserve le temps de charger. */
 video.load();
-var p=video.play();
-if(p&&p.catch)p.catch(function(){
-/* iOS peut empêcher la lecture automatique : afficher le lecteur pour un lancement manuel. */
-stopTimer();hideLoading();
-});
+/* Lecture déclenchée par le bouton natif du lecteur : iOS autorise plus facilement la vidéo après une interaction directe. */
 }
 function closePlayer(){
 var video=document.getElementById("film-video");if(video){video.pause();video.removeAttribute("src");video.load();}
