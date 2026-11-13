@@ -210,6 +210,49 @@ add('Copier mon commentaire','Copy my comment','Copiar comentario','Kommentar ko
 add('Ouvrir Google Maps ↗','Open Google Maps ↗','Abrir Google Maps ↗','Google Maps öffnen ↗','Apri Google Maps ↗','Abrir Google Maps ↗','Open Google Maps ↗','Otwórz Google Maps ↗');
 add('Merci pour votre visite ♡','Thank you for visiting ♡','Gracias por tu visita ♡','Danke für Ihren Besuch ♡','Grazie per la visita ♡','Obrigado pela visita ♡','Bedankt voor je bezoek ♡','Dziękujemy za wizytę ♡');
 
+
+/* Menu categories and frequently seen products */
+add('Petit-déjeuner & brunch','Breakfast & brunch','Desayuno y brunch','Frühstück & Brunch','Colazione e brunch','Pequeno-almoço e brunch','Ontbijt en brunch','Śniadanie i brunch');
+add('Boissons chaudes','Hot drinks','Bebidas calientes','Heißgetränke','Bevande calde','Bebidas quentes','Warme dranken','Gorące napoje');
+add('Boissons fraîches','Cold drinks','Bebidas frías','Kalte Getränke','Bevande fresche','Bebidas frescas','Koude dranken','Zimne napoje');
+add('Carte salée','Savoury dishes','Platos salados','Herzhafte Speisen','Piatti salati','Pratos salgados','Hartige gerechten','Dania wytrawne');
+add('Pâtisseries & desserts','Pastries & desserts','Pasteles y postres','Gebäck & Desserts','Dolci e dessert','Bolos e sobremesas','Gebak en desserts','Ciasta i desery');
+add("Formule P'tit Déj",'Breakfast set','Menú desayuno','Frühstücksangebot','Menù colazione','Menu pequeno-almoço','Ontbijtmenu','Zestaw śniadaniowy');
+add('Brunch du dimanche','Sunday brunch','Brunch de domingo','Sonntagsbrunch','Brunch domenicale','Brunch de domingo','Zondagsbrunch','Niedzielny brunch');
+add('Brunch gourmand','Gourmet brunch','Brunch gourmet','Genießerbrunch','Brunch goloso','Brunch gourmet','Luxe brunch','Brunch dla smakoszy');
+add('Le Classique Anglais','The English classic','El clásico inglés','Der englische Klassiker','Il classico inglese','O clássico inglês','De Engelse klassieker','Angielski klasyk');
+add('Menu enfant',"Children's menu",'Menú infantil','Kindermenü','Menù bambini','Menu infantil','Kindermenu','Menu dla dzieci');
+add('Expresso','Espresso','Espresso','Espresso','Espresso','Expresso','Espresso','Espresso');
+add('Double expresso','Double espresso','Espresso doble','Doppelter Espresso','Espresso doppio','Expresso duplo','Dubbele espresso','Podwójne espresso');
+add('Chocolat chaud','Hot chocolate','Chocolate caliente','Heiße Schokolade','Cioccolata calda','Chocolate quente','Warme chocolademelk','Gorąca czekolada');
+add('Chocolat viennois','Viennese hot chocolate','Chocolate vienés','Wiener Schokolade','Cioccolata viennese','Chocolate vienense','Weense chocolademelk','Czekolada po wiedeńsku');
+add('Chocolat chaud caramel','Caramel hot chocolate','Chocolate caliente con caramelo','Heiße Karamellschokolade','Cioccolata calda al caramello','Chocolate quente com caramelo','Warme karamelchocolade','Gorąca czekolada karmelowa');
+add('Chocolat chaud Nutella','Nutella hot chocolate','Chocolate caliente con Nutella','Heiße Nutella-Schokolade','Cioccolata calda alla Nutella','Chocolate quente com Nutella','Warme Nutella-chocolade','Gorąca czekolada z Nutellą');
+add('Chocolat chaud tiramisu','Tiramisu hot chocolate','Chocolate caliente tiramisú','Heiße Tiramisu-Schokolade','Cioccolata calda al tiramisù','Chocolate quente tiramisu','Warme tiramisu-chocolade','Gorąca czekolada tiramisu');
+add('Thé','Tea','Té','Tee','Tè','Chá','Thee','Herbata');
+add('Café crème','Coffee with cream','Café con leche','Milchkaffee','Caffè crema','Café com leite','Koffie verkeerd','Kawa z mlekiem');
+add("Jus d'orange pressé",'Fresh orange juice','Zumo de naranja natural','Frisch gepresster Orangensaft','Spremuta d’arancia','Sumo de laranja natural','Vers sinaasappelsap','Świeżo wyciskany sok pomarańczowy');
+add('Jus de pamplemousse pressé','Fresh grapefruit juice','Zumo de pomelo natural','Frisch gepresster Grapefruitsaft','Spremuta di pompelmo','Sumo de toranja natural','Vers grapefruitsap','Świeży sok grejpfrutowy');
+add('Citronnade maison','Homemade lemonade','Limonada casera','Hausgemachte Limonade','Limonata fatta in casa','Limonada caseira','Huisgemaakte limonade','Domowa lemoniada');
+add('Jus de pomme ou ananas','Apple or pineapple juice','Zumo de manzana o piña','Apfel- oder Ananassaft','Succo di mela o ananas','Sumo de maçã ou ananás','Appel- of ananassap','Sok jabłkowy lub ananasowy');
+add('Thé glacé maison','Homemade iced tea','Té helado casero','Hausgemachter Eistee','Tè freddo fatto in casa','Chá gelado caseiro','Huisgemaakte ijsthee','Domowa mrożona herbata');
+add('Tartine de campagne','Country toast','Tostada rústica','Landbrot-Toast','Toast rustico','Tosta rústica','Boerentoast','Tost wiejski');
+add('Croque-monsieur de campagne','Rustic croque-monsieur','Croque-monsieur rústico','Rustikaler Croque Monsieur','Croque monsieur rustico','Croque-monsieur rústico','Rustieke croque monsieur','Wiejski croque monsieur');
+add("Tartines d'été",'Summer toasts','Tostadas de verano','Sommerliche Brote','Toast estivi','Tostas de verão','Zomerse toasts','Letnie grzanki');
+add('Avocado toast saumon ou féta','Avocado toast with salmon or feta','Tostada de aguacate con salmón o feta','Avocadotoast mit Lachs oder Feta','Toast avocado con salmone o feta','Tosta de abacate com salmão ou feta','Avocadotoast met zalm of feta','Tost z awokado i łososiem lub fetą');
+add('Salade de chèvre chaud au miel','Warm goat cheese salad with honey','Ensalada de queso de cabra con miel','Warmer Ziegenkäsesalat mit Honig','Insalata di caprino caldo al miele','Salada de queijo de cabra com mel','Salade met warme geitenkaas en honing','Sałatka z ciepłym kozim serem i miodem');
+add('Salade tomates, mozzarella burrata et pesto','Tomato, burrata and pesto salad','Ensalada de tomate, burrata y pesto','Tomaten-Burrata-Salat mit Pesto','Insalata pomodoro, burrata e pesto','Salada de tomate, burrata e pesto','Tomaten-burratasalade met pesto','Sałatka z pomidorami, burratą i pesto');
+add('Suggestion du jour','Today’s special','Sugerencia del día','Tagesempfehlung','Suggerimento del giorno','Sugestão do dia','Dagspecial','Danie dnia');
+add('Quiche du jour','Quiche of the day','Quiche del día','Quiche des Tages','Quiche del giorno','Quiche do dia','Quiche van de dag','Quiche dnia');
+add('Tartine du jour','Toast of the day','Tostada del día','Brot des Tages','Toast del giorno','Tosta do dia','Toast van de dag','Tost dnia');
+add('Tartines variées','Assorted toasts','Tostadas variadas','Verschiedene Toasts','Toast assortiti','Tostas variadas','Diverse toasts','Różne grzanki');
+add('Banoffee pie','Banoffee pie','Tarta banoffee','Banoffee-Pie','Banoffee pie','Tarte banoffee','Banoffee pie','Ciasto banoffee');
+add('Tarte canadienne','Canadian tart','Tarta canadiense','Kanadischer Kuchen','Crostata canadese','Tarte canadiana','Canadese taart','Tarta kanadyjska');
+add('Cupcake praliné','Praline cupcake','Cupcake de praliné','Praliné-Cupcake','Cupcake al praliné','Cupcake de praliné','Praliné-cupcake','Babeczka pralinowa');
+add('Pancakes moelleux','Fluffy pancakes','Tortitas esponjosas','Fluffige Pancakes','Pancake soffici','Panquecas fofas','Luchtige pancakes','Puszyste placuszki');
+add('Mini-pâtisseries maison','Homemade mini pastries','Mini pasteles caseros','Hausgemachtes Kleingebäck','Mini dolci fatti in casa','Mini doces caseiros','Huisgemaakte mini-gebakjes','Domowe mini wypieki');
+add('Mini-viennoiseries','Mini breakfast pastries','Mini bollería','Mini-Plundergebäck','Mini brioche','Mini pastelaria','Mini viennoiserie','Mini wypieki śniadaniowe');
+
 const originalText=new WeakMap(),originalAttr=new WeakMap();
 const originalTitle=document.title;
 const excluded=new Set(['SCRIPT','STYLE','NOSCRIPT','TEXTAREA','CODE','PRE','OPTION_GAP']);
