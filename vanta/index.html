@@ -46,30 +46,7 @@
   <nav class="mobile-nav" id="mobile-nav" aria-label="Menu mobile">
     <button data-nav="home">Accueil</button><button data-nav="movies">Films</button><button data-nav="discover">Explorer</button><button data-nav="list">Ma liste</button>
   </nav>
-  <main id="app">
-    <section class="hero" id="hero">
-      <div class="hero-bg" style="background-image:url('https://archive.org/services/img/StarWreckInThePirkining')"></div>
-      <div class="hero-tint"></div><div class="hero-noise"></div>
-      <div class="hero-inner">
-        <div class="hero-eyebrow">La sélection VANTA</div>
-        <div class="hero-overline"><span></span> LE CINÉMA, AUTREMENT</div>
-        <h1 class="hero-title smaller">STAR WRECK</h1>
-        <div class="hero-meta"><span>2005</span><span class="dot"></span><span>103 min</span><span class="dot"></span><span>Science-fiction</span></div>
-        <p class="hero-desc">Un vrai long métrage de science-fiction, avec des aventures spatiales et de l’humour.</p>
-        <div class="hero-actions"><button class="btn-primary" data-watch="starwreck"><svg class="icon"><use href="#i-play"></use></svg> Regarder le film</button><button class="btn-soft" data-info="starwreck"><svg class="icon"><use href="#i-info"></use></svg> En savoir plus</button></div>
-      </div>
-      <div class="hero-bottom"><span class="hero-selection">DES HISTOIRES QUI MÉRITENT LE GRAND ÉCRAN</span></div>
-    </section>
-    <div class="kicker-strip"><span>LE BON FILM. AU BON MOMENT. <strong>SANS ABONNEMENT.</strong></span></div>
-    <section class="section">
-      <div class="section-head"><div><p class="eyebrow">01 / FILMS COMPLETS</p><h2>Les longs métrages</h2></div></div>
-      <div class="rail">
-        <article class="card" role="button" tabindex="0" data-info="sintel"><div class="card-art"><img alt="Sintel" src="https://commons.wikimedia.org/wiki/Special:FilePath/Sintel%20poster.jpg?width=700"></div><h3 class="card-title">Sintel</h3><div class="card-meta">2010 · 15 min · Fantastique</div></article>
-        <article class="card" role="button" tabindex="0" data-info="bunny"><div class="card-art"><img alt="Big Buck Bunny" src="https://commons.wikimedia.org/wiki/Special:FilePath/Big%20buck%20bunny%20poster%20big.jpg?width=700"></div><h3 class="card-title">Big Buck Bunny</h3><div class="card-meta">2008 · 10 min · Comédie</div></article>
-        <article class="card" role="button" tabindex="0" data-info="tears"><div class="card-art"><img alt="Tears of Steel" src="https://commons.wikimedia.org/wiki/Special:FilePath/Tos-poster.png?width=700"></div><h3 class="card-title">Tears of Steel</h3><div class="card-meta">2012 · 12 min · Science-fiction</div></article>
-      </div>
-    </section>
-  </main>
+  <main id="app"><section class="catalogue-top" style="padding-top:150px;min-height:72vh;text-align:center;display:flex;align-items:center;justify-content:center;flex-direction:column"><p class="eyebrow">VANTA / NOUVELLE COLLECTION</p><h1 class="catalogue-title" style="font-size:clamp(48px,10vw,110px);letter-spacing:-.06em">LE CINÉMA, <span style="color:#aaa">À VENIR.</span></h1><p class="catalogue-intro" style="max-width:560px">Le catalogue a été remis à zéro. Une nouvelle sélection de films et de vidéos autorisés sera bientôt disponible ici.</p><div style="display:flex;gap:12px;align-items:center;margin-top:24px"><span class="status-dot"></span><span style="font-size:12px;color:#aaa;letter-spacing:.15em;font-weight:800">COLLECTION EN PRÉPARATION</span></div></section></main>
   <footer class="footer" id="footer">
     <div><a class="footer-logo" href="#" data-nav="home">VANTA<span>.</span></a><p>Le cinéma mérite mieux qu'un simple défilement.</p></div>
     <div class="footer-right"><span>Films historiques et indépendants depuis des archives publiques. Les droits varient selon les éditions.</span><a href="https://studio.blender.org/films/" target="_blank" rel="noopener noreferrer">Blender Studio <svg class="icon"><use href="#i-external"></use></svg></a><button id="credits-btn">Crédits & licences</button></div>
@@ -79,6 +56,6 @@
   <div id="player-root"></div>
   <div id="search-root"></div>
   <div id="toast-root" role="status" aria-live="polite"></div>
-  <script src="app.js?v=20261113-starwreck16" defer></script>
+  <script src="app.js?v=20261113-reset17" defer></script>
 </body>
 </html>
