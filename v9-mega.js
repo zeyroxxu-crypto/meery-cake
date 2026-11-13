@@ -4,7 +4,7 @@
 'use strict';
 const $=id=>document.getElementById(id);
 const create=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n};
-const motion=()=>{try{const pref=localStorage.getItem('meerycake-motion-preference');return pref==='on'||(pref!=='off'&&!matchMedia('(prefers-reduced-motion: reduce)').matches)}catch{return !matchMedia('(prefers-reduced-motion: reduce)').matches}};
+const motion=()=>!window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
 const dataFile='v3-data.json';
 function progressBar(){
  const meter=create('div','mc9-progress');meter.setAttribute('aria-hidden','true');document.body.append(meter);
