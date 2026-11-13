@@ -4,7 +4,16 @@
 var ROOT="https://video.blender.org";
 function mp4(id){return ROOT+"/static/webseed/"+id+"-720.mp4";}
 function commons(file,width){return "https://commons.wikimedia.org/wiki/Special:FilePath/"+encodeURIComponent(file).replace(/%2F/g,"/")+"?width="+(width||750);}
-var films=[];
+var films=[{
+ id:"simpsons-fr",title:"Les Simpson — Le Film (VF)",year:2007,duration:87,
+ genre:"Animation",tags:["Animation","Comédie"],age:"Tout public",
+ description:"La famille Simpson au cinéma. Vidéo proposée par son diffuseur sur YouTube.",
+ posterUrl:"https://i.ytimg.com/vi/NMx5zpsxfbU/hqdefault.jpg",
+ backdropUrl:"https://i.ytimg.com/vi/NMx5zpsxfbU/maxresdefault.jpg",
+ youtubeId:"NMx5zpsxfbU",official:"https://www.youtube.com/watch?v=NMx5zpsxfbU",
+ credit:"Vidéo YouTube fournie par l'utilisateur",license:"Intégration via le lecteur YouTube",
+ featured:true,kind:"long"
+}];
 function getFilm(id){return films.find(function(f){return f.id===id;});}
 function art(f,bg){return (bg&&f.backdropUrl)||(bg&&f.backdrop?commons(f.backdrop,1400):null)||f.posterUrl||commons(f.poster||"Sintel poster.jpg",bg?1400:700);}
 function icon(name){return '<svg class="icon" aria-hidden="true"><use href="#i-'+name+'"></use></svg>';}
@@ -16,7 +25,7 @@ var view="home",filter="Tous",slide=0,currentPlayer=null,toastTimeout=null,searc
 var app=document.getElementById("app");
 function save(){try{localStorage.setItem("vanta-favorites",JSON.stringify(favs));localStorage.setItem("vanta-progress",JSON.stringify(progress));}catch(e){}}
 function hero(){
-var f=getFilm(["starwreck","sita","nosferatu"][slide]);
+var f=films[0];
 return '<section class="hero" id="hero"><div class="hero-bg" style="background-image:url(&quot;'+art(f,true)+'&quot;)"></div><div class="hero-tint"></div><div class="hero-noise"></div>'+
 '<div class="hero-inner hero-content-anim"><div class="hero-eyebrow">La sélection VANTA</div><div class="hero-overline"><span></span> À la une <span></span> CINÉMA LIBRE</div>'+
 '<h1 class="hero-title '+(f.title.length>12?"smaller":"")+'">'+text(f.title)+'</h1>'+
@@ -44,15 +53,22 @@ function filtered(){return films.filter(function(f){return filter==="Tous"||(fil
 function catalogueGrid(items){return '<div class="catalogue-grid">'+items.map(card).join("")+'</div>';}
 function empty(title,desc,button){return '<div class="empty-container"><div class="empty-state">'+icon("info")+'<h3>'+title+'</h3><p>'+desc+'</p><button class="btn-primary" data-nav="movies">'+icon("arrow")+' '+(button||"Explorer les films")+'</button></div></div>';}
 function render(){
-var out='<div class="catalogue-top" style="padding-top:150px;min-height:72vh;text-align:center;display:flex;align-items:center;justify-content:center;flex-direction:column">'+
-'<p class="eyebrow">VANTA / NOUVELLE COLLECTION</p>'+
-'<h1 class="catalogue-title" style="font-size:clamp(48px,10vw,110px);letter-spacing:-.06em">LE CINÉMA, <span style="color:#aaa">À VENIR.</span></h1>'+
-'<p class="catalogue-intro" style="max-width:560px">Le catalogue a été remis à zéro. Une nouvelle sélection de films et de vidéos autorisés sera bientôt disponible ici.</p>'+
-'<div style="display:flex;gap:12px;align-items:center;margin-top:24px"><span class="status-dot"></span><span style="font-size:12px;color:#aaa;letter-spacing:.15em;font-weight:800">COLLECTION EN PRÉPARATION</span></div>'+
-'</div>';
+var f=films[0],out='';
+if(view==="home"){
+out=hero()+'<div class="kicker-strip"><span>VANTA <strong> / PREMIER FILM</strong></span><span class="kicker-right">LECTURE INTÉGRÉE AU SITE</span></div>'+
+rail("Notre sélection","01 / LE CATALOGUE",films,false);
+}else if(view==="movies"||view==="discover"){
+out='<div style="padding-top:90px"></div>'+catalogueBanner("Tous les films","La nouvelle sélection VANTA, à regarder avec le lecteur intégré.")+catalogueGrid(filtered());
+}else if(view==="list"){
+var l=films.filter(function(f){return favs.indexOf(f.id)!==-1;});
+out='<div style="padding-top:90px"></div><div class="catalogue-top"><p class="eyebrow">VANTA / FAVORIS</p><h1 class="catalogue-title">Ma liste.</h1></div>'+(l.length?catalogueGrid(l):empty("Aucun favori","Ajoute des films à ta liste."));
+}else{
+out='<div style="padding-top:90px"></div>'+catalogueGrid(films);
+}
 app.innerHTML=out;
 document.querySelectorAll(".nav-item").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-nav")===view);});
 document.getElementById("mobile-nav").classList.remove("open");
+reveal();
 }
 var observer;
 function reveal(){
@@ -136,7 +152,7 @@ var f=getFilm(id);if(!f)return;
 closeDetail();closeSearch();
 document.body.style.overflow="hidden";currentPlayer=id;
 var embeds={sintel:"0eb052d0-fd51-43e6-aa33-ecdbf77a5d40",tears:"8533ea43-4271-4a57-9694-e9d0b35e1aa1",bunny:"bf1f3fb5-b119-4f9f-9930-8e20e892b898",spring:"3d95fb3d-c866-42c8-9db1-fe82f48ccb95",sprite:"a69d68a5-a0e0-4a80-9d66-49f093c97aaf",agent:"264ff760-803e-430e-8d81-15648e904183",caminandes:"fb70d459-48d2-4db5-adba-813c84f9200a",glass:"64222c8a-c4c7-4b3b-9850-7fb2078edcf6"};
-var filmUrl=f.archiveId?"https://archive.org/embed/"+encodeURIComponent(f.archiveId):"https://video.blender.org/videos/embed/"+embeds[id];
+var filmUrl=f.youtubeId?"https://www.youtube-nocookie.com/embed/"+encodeURIComponent(f.youtubeId)+"?playsinline=1&rel=0":f.archiveId?"https://archive.org/embed/"+encodeURIComponent(f.archiveId):"https://video.blender.org/videos/embed/"+embeds[id];
 document.getElementById("player-root").innerHTML='<div class="player-overlay vanta-cinema-player" id="vanta-cinema-player" role="dialog" aria-modal="true" aria-label="Lecture de '+text(f.title)+'">'+
 '<div class="cinema-toolbar"><button class="cinema-back" data-close="player" aria-label="Quitter le film">'+icon("arrow").replace('class="icon"','class="icon" style="transform:rotate(180deg)"')+'</button><strong class="cinema-film-title">'+text(f.title)+'</strong><div class="cinema-toolbar-actions"><button class="cinema-fullscreen-btn" id="cinema-fullscreen-btn" data-cinema-fullscreen="1" aria-label="Passer en plein écran"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H3v5M16 3h5v5M3 16v5h5m13-5v5h-5"/></svg><span>Plein écran</span></button><button class="cinema-close" data-close="player" aria-label="Fermer">'+icon("close")+'</button></div></div>'+
 '<div class="cinema-video-zone"><div class="cinema-iframe-wrap" id="cinema-iframe-wrap"><iframe id="film-iframe" title="Film '+text(f.title)+'" src="'+filmUrl+'" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen webkitallowfullscreen loading="eager"></iframe></div></div>'+
