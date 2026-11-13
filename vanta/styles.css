@@ -99,7 +99,20 @@
 .cinema-video-zone{padding:0}
 .cinema-iframe-wrap{border-radius:0}
 }
-@media (max-width:600px) and (orientation:portrait){
-.cinema-is-fullscreen .cinema-iframe-wrap{position:fixed;left:50%;top:50%;width:100dvh;height:100vw;max-width:none;aspect-ratio:auto;transform:translate(-50%,-50%) rotate(90deg);z-index:165}
-.cinema-is-fullscreen .cinema-exit-fullscreen{top:max(12px,env(safe-area-inset-top));right:max(12px,env(safe-area-inset-right))}
+
+
+/* Cinematic fullscreen correction: letterbox to actual 16:9, NEVER rotate or stretch the provider iframe. */
+.vanta-cinema-player.cinema-is-fullscreen{position:fixed;inset:0;inset:0 0 0 0;width:100%;height:100%;height:100dvh;overflow:hidden}
+.cinema-is-fullscreen .cinema-video-zone{display:flex;align-items:center;justify-content:center;min-height:0;flex:1;padding:0;background:#000}
+.cinema-is-fullscreen .cinema-iframe-wrap{
+position:relative;left:auto;top:auto;
+height:auto;width:min(100vw,calc(100dvh * 16 / 9));
+max-width:100vw;max-height:100dvh;aspect-ratio:16/9;
+transform:none;overflow:hidden;border-radius:0;flex:none;
+}
+.cinema-is-fullscreen .cinema-exit-fullscreen{display:flex;position:fixed;right:max(14px,env(safe-area-inset-right));top:max(14px,env(safe-area-inset-top));z-index:180}
+.cinema-iframe-wrap:fullscreen,.cinema-iframe-wrap:-webkit-full-screen{background:#000;display:flex;align-items:center;justify-content:center;width:100vw;height:100dvh;max-width:none;border-radius:0}
+.cinema-iframe-wrap:fullscreen iframe,.cinema-iframe-wrap:-webkit-full-screen iframe{width:100%;height:100%;max-height:calc(100vw * 9 / 16);aspect-ratio:16/9;flex:none}
+@media (orientation:landscape){
+.cinema-is-fullscreen .cinema-iframe-wrap{width:min(100vw,calc(100dvh * 16 / 9));height:auto;max-height:100dvh;aspect-ratio:16/9}
 }
