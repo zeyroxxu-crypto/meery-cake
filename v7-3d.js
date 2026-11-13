@@ -204,6 +204,21 @@ function makeStage(mode){
  stage.append(canvas);
  const aria=make('p','mc7-rotation-status','Glissez pour faire pivoter le gâteau');
  wrapper.append(stage,aria);
+ const exportRow=make('div','mc7-export-row');
+ const download=make('button','mc7-export-button','↓ Enregistrer la vue 3D');
+ download.type='button';
+ download.addEventListener('click',()=>{
+  try{
+   const link=document.createElement('a');
+   link.href=canvas.toDataURL('image/png');
+   link.download='meery-cake-vue-3d.png';
+   document.body.append(link);link.click();link.remove();
+  }catch{
+   const status=wrapper.querySelector('.mc7-rotation-status');
+   if(status)status.textContent='Image indisponible dans ce navigateur';
+  }
+ });
+ exportRow.append(download);wrapper.append(exportRow);
  if(mode==='home'){
   const bar=make('div','mc7-presets');
   for(const [name,label] of [['rose','Rose poudré'],['cacao','Chocolat'],['lilas','Lilas'],['vanille','Vanille']]){
