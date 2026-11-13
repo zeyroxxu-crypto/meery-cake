@@ -132,17 +132,52 @@ function enrichCake(){
  const color=$('cakeColors');if(color){color.setAttribute('autocomplete','off')}
 }
 function scrollSections(){
- const targets=document.querySelectorAll('.mc9-collection-head,.mc9-collection-card,.v8-editorial-copy,.v8-photo-composition');
- if(!('IntersectionObserver'in window)||!motion())return;
- const io=new IntersectionObserver(entries=>{
-  for(const e of entries){if(e.isIntersecting){e.target.classList.add('mc9-revealed');io.unobserve(e.target)}}
- },{threshold:.1,rootMargin:'0px 0px -20px 0px'});
- targets.forEach(x=>{
-  const r=x.getBoundingClientRect();
-  x.classList.add('mc9-reveal');
-  if(r.top<innerHeight*.92)x.classList.add('mc9-revealed');else io.observe(x)
- });
- window.addEventListener('mc:motion-preference-change',()=>{if(!motion())targets.forEach(x=>x.classList.add('mc9-revealed'))})
+ // Independent scroll reveals for every page, including mobile and late-loaded cards.
+ const selector=[
+  '.section .section-head','.section .editorial-card','.section .event-card',
+  '.section .promo-box','.section .contact-card','.section .review-summary',
+  '.section .review-status','.section .contact-map','.section .panel',
+  '.section .gallery-tile','.section .gallery-photo','.section .catalog-card',
+  '.section .review-panel','.section .faq details','.section .featured-gallery a',
+  '.feature-split .feature-copy','.feature-split .feature-image',
+  '.v8-editorial-copy','.v8-photo-composition','.mc9-collection-head',
+  '.mc9-collection-card','.award-copy','.menu-panel','.top-strip > a',
+  '.page-hero .container','.section .review-side-card','.section .google-panel',
+  '.section .menu-shell','.section .promo-row'
+ ].join(',');
+ const reduced=window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+ if(reduced||!('IntersectionObserver' in window))return;
+ const seen=new WeakSet();
+ const observer=new IntersectionObserver(entries=>{
+  for(const entry of entries){
+   if(entry.isIntersecting){
+    entry.target.classList.add('mc10-inview');
+    observer.unobserve(entry.target);
+   }
+  }
+ },{threshold:.06,rootMargin:'0px 0px -10% 0px'});
+ function collect(){
+  document.querySelectorAll(selector).forEach((el,i)=>{
+   if(seen.has(el))return;
+   seen.add(el);
+   const rect=el.getBoundingClientRect();
+   const visible=rect.top<window.innerHeight*.86||rect.bottom<=0;
+   el.style.setProperty('--mc10-stagger',((i%3)*85)+'ms');
+   el.classList.add('mc10-enter');
+   if(visible)el.classList.add('mc10-inview');
+   else observer.observe(el);
+  });
+ }
+ collect();
+ const main=$('main');
+ if(main){
+  let pending=false;
+  new MutationObserver(()=>{
+   if(pending)return;
+   pending=true;
+   requestAnimationFrame(()=>{pending=false;collect()});
+  }).observe(main,{subtree:true,childList:true});
+ }
 }
 function siteUtilities(){
  const addMissingAlt=document.querySelectorAll('img:not([alt])');addMissingAlt.forEach(img=>img.alt='Photographie d’ambiance Meery Cake');
