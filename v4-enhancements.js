@@ -56,8 +56,8 @@ function createSearch(){
  const btn=el('button','mc-search-trigger');btn.innerHTML=icon;btn.id='mcSearchButton';btn.type='button';
  btn.title='Rechercher une page ou un produit (Ctrl/⌘ + K)';
  btn.setAttribute('aria-label','Rechercher sur Meery Cake');
- const contrast=$('mcMotionToggle'),lang=$('langSelect');
- if(contrast)nav.insertBefore(btn,contrast);else if(lang)nav.insertBefore(btn,lang);else nav.append(btn);
+ const lang=$('langSelect');
+ if(lang)nav.insertBefore(btn,lang);else nav.append(btn);
  const backdrop=el('div','mc-search-backdrop');backdrop.id='mcSearchBackdrop';backdrop.setAttribute('aria-hidden','true');
  const dialog=el('section','mc-search-dialog');dialog.setAttribute('role','dialog');dialog.setAttribute('aria-modal','true');dialog.setAttribute('aria-label','Recherche rapide');
  const header=el('div','mc-search-dialog-top'),glass=el('span','glass'),input=el('input','mc-search-input');glass.innerHTML=icon;
