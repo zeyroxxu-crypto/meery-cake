@@ -57,7 +57,14 @@ function cakeVisual(){
  const caption=node('p','v6-cake-caption','La simulation ne constitue pas un devis ni une photographie d’un gâteau réalisable.');
  studio.append(head,stage,chips,actions,caption);
  const aside=layout?.querySelector(':scope > aside');
- if(aside)aside.prepend(studio);else panel.prepend(studio);
+ const smallScreen=window.matchMedia?.('(max-width: 879px)');
+ const placeStudio=()=>{
+  if(smallScreen?.matches||!aside)form.before(studio);
+  else aside.prepend(studio);
+ };
+ placeStudio();
+ if(smallScreen?.addEventListener)smallScreen.addEventListener('change',placeStudio);
+ else smallScreen?.addListener?.(placeStudio);
  const namespace='http://www.w3.org/2000/svg';
  function shape(tag,attrs,parent){const e=document.createElementNS(namespace,tag);for(const [k,v] of Object.entries(attrs))e.setAttribute(k,String(v));parent.append(e);return e}
  function palette(){
