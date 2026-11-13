@@ -5,9 +5,6 @@ const $=id=>document.getElementById(id);
 const node=(tag,cls,txt)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(txt!==undefined)e.textContent=txt;return e};
 const escapeXml=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
 const safeText=(id,fallback)=>($(id)?.value||'').trim()||fallback;
-const flagPath='v6-integrations.json';
-let config=null;
-async function loadConfig(){try{const r=await fetch(flagPath,{cache:'no-store'});if(r.ok){const p=await r.json();if(p?.demo===true)return p}}catch{}return null}
 function enhanceHome(){
  const hero=document.querySelector('.hero');if(!hero)return;
  const label=hero.querySelector('.hero-content>.eyebrow');if(label)label.classList.add('v6-hero-kicker');
@@ -160,50 +157,8 @@ function adminStatus(){
  box.append(icon,content);
  form.before(box);
 }
-function renderConnectionStatus(){
- const target=$('v6ConnectionGrid');if(!target)return;
- const configs=[
-  {id:'reservationsConnected',title:'Réservations confirmées',body:'Calendrier, capacités et confirmation par le salon.',requires:'Disponibilités officielles, outil de réservation et notification sécurisée'},
-  {id:'preordersConnected',title:'Click & Collect',body:'Validation des commandes et créneaux de retrait.',requires:'Prix et produits validés, stock, CGV, réception privée des commandes'},
-  {id:'paymentsConnected',title:'Paiement sécurisé',body:'Paiements gérés par un prestataire agréé.',requires:'Compte commerçant, contrat du prestataire et conditions de vente'},
-  {id:'adminBackendConnected',title:'Administration sécurisée',body:'Accès propriétaire avec comptes et droits.',requires:'Identité des administrateurs, base de données et authentification'},
-  {id:'googleReviewsConnected',title:'Avis Google authentiques',body:'Synchronisation des avis après autorisation.',requires:'Accès OAuth Google Business Profile de la fiche vérifiée'},
-  {id:'realTimeInventoryConnected',title:'Produits disponibles',body:'Stock et disponibilité mis à jour par le salon.',requires:'Gestion de stock fiable et produits vérifiés'}
- ];
- for(const item of configs){
-  const ok=config?.features?.[item.id]?.connected===true;
-  const card=node('article','v6-connection'),tag=node('span','tag '+(ok?'gold':'muted'),ok?'Connecté':'En attente de connexion');
-  const heading=node('strong','',item.title),desc=node('p','',item.body),detail=node('p','','Pour activer : '+item.requires+'.');
-  card.append(tag,heading,desc,detail);target.append(card)
- }
-}
-async function clickCollect(){
- const form=$('v6PickupForm');if(!form)return;
- const list=$('v6PickupItems'),out=$('v6PickupResult'),text=$('v6PickupSummary'),date=$('v6PickupDate');
- const data=await fetch('v3-data.json',{cache:'no-store'}).then(x=>x.json()).catch(()=>({menu:[]}));
- const inventory=new Map((data.menu||[]).flatMap(g=>g.items.map(p=>[p.id,p])));
- let selected=[];
- try{selected=JSON.parse(localStorage.getItem('meerycake-v3-favorites')||'[]')}catch{}
- if(!Array.isArray(selected))selected=[];
- selected=selected.filter(id=>inventory.has(id)).slice(0,60);
- list.replaceChildren();
- if(!selected.length){list.append(node('p','','Aucun favori sélectionné. Ajoutez des pâtisseries depuis la carte ou le carnet gourmand.'));form.querySelector('button[type="submit"]').disabled=true}
- else for(const id of selected){const p=inventory.get(id),row=node('label','field full'),checkbox=document.createElement('input');checkbox.type='checkbox';checkbox.value=id;checkbox.checked=true;checkbox.style.width='19px';checkbox.style.minHeight='19px';row.style.flexDirection='row';row.style.alignItems='center';row.append(checkbox,node('span','',p.name+' · '+(p.price||'prix à confirmer')));list.append(row)}
- if(date){const now=new Date();now.setMinutes(now.getMinutes()-now.getTimezoneOffset());date.min=now.toISOString().slice(0,10)}
- form.addEventListener('submit',e=>{
-  e.preventDefault();if(!form.reportValidity())return;
-  const chosen=[...list.querySelectorAll('input:checked')].map(i=>inventory.get(i.value)).filter(Boolean);
-  if(!chosen.length){out.hidden=false;text.textContent='Sélectionnez au moins un produit.';return}
-  const v=id=>$(id)?.value.trim()||'Non renseigné';
-  const msg=['Bonjour Meery Cake, je souhaite demander si une commande à récupérer sur place serait possible.','','Produits souhaités :',...chosen.map(p=>'• '+p.name+' — '+(p.price||'prix à confirmer')),'','Date de retrait souhaitée : '+v('v6PickupDate'),'Moment préféré : '+v('v6PickupTime'),'Nom : '+v('v6PickupName'),'Contact : '+v('v6PickupContact'),'Précisions : '+(v('v6PickupNotes')||'Aucune'),'', 'Pouvez-vous confirmer les produits disponibles, le tarif, les conditions de retrait et la faisabilité ?','Ceci est seulement une demande préparée, sans commande ni paiement.'].join('\n');
-  text.textContent=msg;out.hidden=false;out.scrollIntoView({behavior:'smooth',block:'nearest'})
- });
- $('v6PickupCopy')?.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(text.textContent);window.MC?.toast?.('Demande copiée ♡')}catch{window.MC?.toast?.('Copie indisponible.')}});
- $('v6PickupShare')?.addEventListener('click',async()=>{if(navigator.share)try{await navigator.share({title:'Demande de retrait Meery Cake',text:text.textContent})}catch{}});
-}
-async function boot(){
+function boot(){
  enhanceHome();cakeVisual();bookingStatus();adminStatus();
- config=await loadConfig();renderConnectionStatus();await clickCollect();
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot);else boot();
 })();
