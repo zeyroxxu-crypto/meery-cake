@@ -178,13 +178,32 @@ document.getElementById("player-root").innerHTML='<div class="player-overlay van
 }
 function toggleCinemaFullscreen(){
 var p=document.getElementById("vanta-cinema-player");
-if(!p)return;
-var next=!p.classList.contains("cinema-is-fullscreen");
-p.classList.toggle("cinema-is-fullscreen",next);
-var btn=document.getElementById("cinema-fullscreen-btn");
-if(btn){btn.setAttribute("aria-label",next?"Quitter le plein écran":"Passer en plein écran");}
+var wrap=document.getElementById("cinema-iframe-wrap");
+if(!p||!wrap)return;
+var exiting=p.classList.contains("cinema-is-fullscreen")||document.fullscreenElement===wrap;
+if(exiting){
+p.classList.remove("cinema-is-fullscreen");
+if(document.fullscreenElement&&document.exitFullscreen){var exit=document.exitFullscreen();if(exit&&exit.catch)exit.catch(function(){});}
+}else{
+/* Request genuine fullscreen where supported. Safari embedded browsers may reject it. */
+if(wrap.requestFullscreen){
+try{
+var request=wrap.requestFullscreen();
+if(request&&request.then){
+request.then(function(){p.classList.add("cinema-native-fullscreen");}).catch(function(){p.classList.add("cinema-is-fullscreen");});
+}else{p.classList.add("cinema-is-fullscreen");}
+}catch(e){p.classList.add("cinema-is-fullscreen");}
+}else{p.classList.add("cinema-is-fullscreen");}
 }
+var btn=document.getElementById("cinema-fullscreen-btn");
+if(btn)btn.setAttribute("aria-label",exiting?"Passer en plein écran":"Quitter le plein écran");
+}
+document.addEventListener("fullscreenchange",function(){
+var p=document.getElementById("vanta-cinema-player");
+if(p&&!document.fullscreenElement){p.classList.remove("cinema-native-fullscreen","cinema-is-fullscreen");}
+});
 function closePlayer(){
+if(document.fullscreenElement&&document.exitFullscreen){var ex=document.exitFullscreen();if(ex&&ex.catch)ex.catch(function(){});}
 document.getElementById("player-root").innerHTML="";
 currentPlayer=null;document.body.style.overflow="";render();
 }
