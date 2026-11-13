@@ -26,7 +26,7 @@ function build3D(canvas,{editor=false}={}){
  if(!canvas?.getContext)return null;
  const ctx=canvas.getContext('2d',{alpha:true});
  if(!ctx)return null;
- let rect={w:0,h:0},dpr=1,drag=false,dragOrigin=null,yaw=-.55,pitch=.35,prevTime=0,frame=0,visible=true,disposed=false,renderPending=false;
+ let rect={w:0,h:0},dpr=1,drag=false,dragOrigin=null,yaw=-.55,pitch=.35,prevTime=0,frame=0,visible=true,disposed=false,lastPaint=0;
  let preset='rose',tierCount=2,flowers=false,square=false;
  canvas.style.touchAction='pan-y';
  const status=canvas.closest('.mc7-canvas-shell')?.querySelector('.mc7-rotation-status');
@@ -60,6 +60,19 @@ function build3D(canvas,{editor=false}={}){
   return {depth:projections.reduce((s,p)=>s+p.depth,0)/projections.length+priority,fill,stroke,points:projections}
  }
  function tier(polys,base,r,y0,y1,detail=32){
+  // Square cake is a genuine cuboid mesh, not a round cake with square corners.
+  if(square){
+   const d=r*.78,corners=[[-d,-d],[d,-d],[d,d],[-d,d]];
+   for(let i=0;i<4;i++){
+    const [x1,z1]=corners[i],[x2,z2]=corners[(i+1)%4];
+    const shade=[-.08,.10,-.20,.18][i];
+    const side=mix(base[0],shade);
+    polys.push(poly([[x1,y0,z1],[x2,y0,z2],[x2,y1,z2],[x1,y1,z1]],side,base[1],.002));
+    polys.push(poly([[x1,y1-.11,z1],[x2,y1-.11,z2],[x2,y1-.07,z2],[x1,y1-.07,z1]],base[2],base[2],.008));
+    polys.push(poly([[0,y1,0],[x1,y1,z1],[x2,y1,z2]],mix(base[0],.23),mix(base[0],.23),.001));
+   }
+   return;
+  }
   // Side faces plus the top surface triangulation in genuine perspective.
   for(let i=0;i<detail;i++){
    const a=i/detail*Math.PI*2,b=(i+1)/detail*Math.PI*2,mid=(a+b)/2;
@@ -130,9 +143,10 @@ function build3D(canvas,{editor=false}={}){
  function motion(){return readMotion()&&!document.hidden&&visible}
  function tick(time){
   frame=0;if(disposed)return;
+  // Avoid painting 60 expensive mesh frames per second on mobile devices.
   const dt=clamp(time-(prevTime||time),0,48);prevTime=time;
   if(motion()&&!drag){yaw+=dt*.00014}
-  paint();
+  if(!motion()||drag||time-lastPaint>=30){paint();lastPaint=time}
   if(motion())frame=requestAnimationFrame(tick)
  }
  function redraw(){if(frame)return;frame=requestAnimationFrame(tick)}
