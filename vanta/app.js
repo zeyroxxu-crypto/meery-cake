@@ -4,26 +4,7 @@
 var ROOT="https://video.blender.org";
 function mp4(id){return ROOT+"/static/webseed/"+id+"-720.mp4";}
 function commons(file,width){return "https://commons.wikimedia.org/wiki/Special:FilePath/"+encodeURIComponent(file).replace(/%2F/g,"/")+"?width="+(width||750);}
-var films=[{
-id:"film-selection",title:"Salem",year:"",duration:"",genre:"À regarder",tags:["À regarder"],age:"",
-description:"La vidéo que tu as choisie pour VANTA, dans le lecteur YouTube intégré.",
-posterUrl:"https://i.ytimg.com/vi/aIVKaiaHkpk/hqdefault.jpg",
-backdropUrl:"https://i.ytimg.com/vi/aIVKaiaHkpk/hqdefault.jpg",
-youtubeId:"aIVKaiaHkpk",official:"https://www.youtube.com/watch?v=aIVKaiaHkpk",
-credit:"Vidéo YouTube intégrée",license:"Lecture YouTube",featured:true,kind:"long",available:true
-},{
-id:"starwreck",title:"Star Wreck: In the Pirkinning",year:2005,duration:103,genre:"Science-fiction",tags:["Science-fiction","Comédie"],kind:"long",
-description:"Une parodie spatiale finlandaise en long métrage. Disponible gratuitement sous licence Creative Commons.",
-archiveId:"StarWreckInThePirkining",official:"https://archive.org/details/StarWreckInThePirkining",
-posterUrl:"https://archive.org/services/img/StarWreckInThePirkining",available:true,
-credit:"Energia Productions",license:"Creative Commons BY-NC-ND"
-},{
-id:"sita",title:"Sita Sings the Blues",year:2008,duration:82,genre:"Animation",tags:["Animation","Comédie"],kind:"long",
-description:"Un film d’animation musical réalisé par Nina Paley et mis librement à disposition par sa créatrice.",
-archiveId:"Sita_Sings_the_Blues",official:"https://www.sitasingstheblues.com/watch.html",
-posterUrl:"https://archive.org/services/img/Sita_Sings_the_Blues",available:true,
-credit:"Nina Paley",license:"Mise à disposition libre par sa réalisatrice"
-}].concat(window.VANTA_CATALOGUE||[]);
+var films=[{"id":"film-selection","title":"Salem","year":null,"duration":null,"genre":"Drame","tags":["Drame"],"youtubeId":"aIVKaiaHkpk","posterUrl":"https://i.ytimg.com/vi/aIVKaiaHkpk/hqdefault.jpg","official":"https://www.youtube.com/watch?v=aIVKaiaHkpk","description":"Vidéo fournie par l'utilisateur; lecture selon YouTube","kind":"short","available":true,"credit":"YouTube","license":"Lecteur YouTube"},{"id":"starwreck","title":"Star Wreck: In the Pirkinning","year":2005,"duration":103,"genre":"Science-fiction","tags":["Science-fiction"],"archiveId":"StarWreckInThePirkining","posterUrl":"https://archive.org/services/img/StarWreckInThePirkining","official":"https://archive.org/details/StarWreckInThePirkining","description":"Long métrage indépendant de science-fiction diffusé gratuitement par ses créateurs","kind":"long","available":true,"credit":"Créateurs du film","license":"Diffusion libre par les créateurs"},{"id":"sita","title":"Sita Sings the Blues","year":2008,"duration":82,"genre":"Animation","tags":["Animation"],"archiveId":"Sita_Sings_the_Blues","posterUrl":"https://archive.org/services/img/Sita_Sings_the_Blues","official":"https://www.sitasingstheblues.com/watch.html","description":"Film musical librement distribué par Nina Paley","kind":"long","available":true,"credit":"Créateurs du film","license":"Diffusion libre par les créateurs"},{"id":"sintel","title":"Sintel","year":2010,"duration":15,"genre":"Fantastique","tags":["Fantastique"],"embedId":"0eb052d0-fd51-43e6-aa33-ecdbf77a5d40","official":"https://studio.blender.org/films/sintel/","description":"Une aventurière cherche un jeune dragon","kind":"short","available":true,"credit":"Blender Studio","license":"Blender Open Movie, licence Creative Commons"},{"id":"tears","title":"Tears of Steel","year":2012,"duration":12,"genre":"Science-fiction","tags":["Science-fiction"],"embedId":"8533ea43-4271-4a57-9694-e9d0b35e1aa1","official":"https://studio.blender.org/films/tears-of-steel/","description":"Science-fiction et effets spéciaux","kind":"short","available":true,"credit":"Blender Studio","license":"Blender Open Movie, licence Creative Commons"},{"id":"bunny","title":"Big Buck Bunny","year":2008,"duration":10,"genre":"Comédie","tags":["Comédie"],"embedId":"bf1f3fb5-b119-4f9f-9930-8e20e892b898","official":"https://studio.blender.org/films/big-buck-bunny/","description":"Comédie animée autour d'un lapin géant","kind":"short","available":true,"credit":"Blender Studio","license":"Blender Open Movie, licence Creative Commons"},{"id":"spring","title":"Spring","year":2019,"duration":8,"genre":"Fantastique","tags":["Fantastique"],"embedId":"3d95fb3d-c866-42c8-9db1-fe82f48ccb95","official":"https://studio.blender.org/films/spring/","description":"Une bergère rencontre les esprits de la nature","kind":"short","available":true,"credit":"Blender Studio","license":"Blender Open Movie, licence Creative Commons"},{"id":"sprite","title":"Sprite Fright","year":2021,"duration":11,"genre":"Animation","tags":["Animation"],"embedId":"a69d68a5-a0e0-4a80-9d66-49f093c97aaf","official":"https://studio.blender.org/films/sprite-fright/","description":"Des ados croisent des créatures étranges dans la forêt","kind":"short","available":true,"credit":"Blender Studio","license":"Blender Open Movie, licence Creative Commons"},{"id":"agent","title":"Agent 327","year":2017,"duration":4,"genre":"Action","tags":["Action"],"embedId":"264ff760-803e-430e-8d81-15648e904183","official":"https://studio.blender.org/films/agent-327/","description":"Un agent secret en mission","kind":"short","available":true,"credit":"Blender Studio","license":"Blender Open Movie, licence Creative Commons"},{"id":"caminandes","title":"Caminandes: Llamigos","year":2016,"duration":3,"genre":"Comédie","tags":["Comédie"],"embedId":"fb70d459-48d2-4db5-adba-813c84f9200a","official":"https://studio.blender.org/films/caminandes-3/","description":"Aventures humoristiques d'un lama","kind":"short","available":true,"credit":"Blender Studio","license":"Blender Open Movie, licence Creative Commons"},{"id":"glass","title":"Glass Half","year":2015,"duration":3,"genre":"Comédie","tags":["Comédie"],"embedId":"64222c8a-c4c7-4b3b-9850-7fb2078edcf6","official":"https://studio.blender.org/films/glass-half/","description":"Deux critiques d'art n'ont pas les mêmes goûts","kind":"short","available":true,"credit":"Blender Studio","license":"Blender Open Movie, licence Creative Commons"}];
 function getFilm(id){return films.find(function(f){return f.id===id;});}
 function art(f,bg){return (bg&&f.backdropUrl)||f.posterUrl||"";}
 function loadPosters(){
@@ -49,7 +30,7 @@ function text(s){return String(s||"").replace(/[&<>"']/g,function(c){return {"&"
 function storeRead(k,def){try{var v=JSON.parse(localStorage.getItem(k));return v&&typeof v==="object"?v:def;}catch(e){return def;}}
 var favs=storeRead("vanta-favorites",[]);if(!Array.isArray(favs))favs=[];
 var progress=storeRead("vanta-progress",{});
-var view="home",filter="Disponibles",slide=0,currentPlayer=null,toastTimeout=null,searchOpened=false;
+var view="home",filter="Tous",slide=0,currentPlayer=null,toastTimeout=null,searchOpened=false;
 var app=document.getElementById("app");
 function save(){try{localStorage.setItem("vanta-favorites",JSON.stringify(favs));localStorage.setItem("vanta-progress",JSON.stringify(progress));}catch(e){}}
 function hero(){
@@ -64,7 +45,7 @@ return '<section class="hero" id="hero"><div class="hero-bg vanta-hero-abstract"
 '<div class="hero-bottom"><span class="hero-selection">LE CINÉMA PAR GENRE</span><span class="vanta-hero-count">130 FILMS / 09 CATÉGORIES</span></div></section>';
 }
 function card(f){
-var watch=!!(f.youtubeId||f.archiveId),hasFav=favs.indexOf(f.id)!==-1;
+var watch=!!(f.youtubeId||f.archiveId||f.embedId),hasFav=favs.indexOf(f.id)!==-1;
 var label=watch?"VIDÉO DISPONIBLE":"FICHE DU FILM";
 var cover=f.posterUrl?'<img src="'+text(f.posterUrl)+'" loading="lazy" alt="" onerror="this.style.opacity=0">':'<img class="vanta-poster-img" data-movie="'+text(f.title)+'" data-year="'+text(f.year)+'" loading="lazy" alt="" style="opacity:0">';
 return '<article class="card reveal vanta-movie-card" tabindex="0" role="button" data-info="'+f.id+'" aria-label="Fiche de '+text(f.title)+'">'+
@@ -123,7 +104,7 @@ observer=new IntersectionObserver(function(entries){entries.forEach(function(ent
 targets.forEach(function(n,i){n.style.transitionDelay=(i%6)*55+"ms";observer.observe(n);});
 }
 function go(n){
-view=n;filter="Disponibles";render();window.scrollTo({top:0,behavior:"smooth"});
+view=n;filter="Tous";render();window.scrollTo({top:0,behavior:"smooth"});
 }
 function toast(msg){
 var root=document.getElementById("toast-root");root.innerHTML='<div class="toast">'+text(msg)+'</div>';clearTimeout(toastTimeout);toastTimeout=setTimeout(function(){root.innerHTML="";},2500);
@@ -139,7 +120,7 @@ document.getElementById("detail-root").innerHTML='<div class="overlay" id="detai
 }
 function openDetail(id){
 var f=getFilm(id);if(!f)return;
-var added=favs.indexOf(id)!==-1,watch=!!(f.youtubeId||f.archiveId);
+var added=favs.indexOf(id)!==-1,watch=!!(f.youtubeId||f.archiveId||f.embedId);
 var where="https://www.justwatch.com/fr/recherche?q="+encodeURIComponent(f.title);
 var action=watch?'<button class="btn-primary" data-watch="'+f.id+'">'+icon("play")+' Regarder dans VANTA</button>':
 '<a class="btn-primary" href="'+where+'" target="_blank" rel="noopener noreferrer">'+icon("external")+' Où regarder légalement</a>';
@@ -160,11 +141,11 @@ modal('<button class="modal-close" data-close="detail" aria-label="Fermer">'+ico
 }
 function openPlayer(id){
 var f=getFilm(id);if(!f)return;
-if(!f.youtubeId&&!f.archiveId){openDetail(id);return;}
+if(!f.youtubeId&&!f.archiveId&&!f.embedId){openDetail(id);return;}
 closeDetail();closeSearch();
 document.body.style.overflow="hidden";currentPlayer=id;
 var embeds={sintel:"0eb052d0-fd51-43e6-aa33-ecdbf77a5d40",tears:"8533ea43-4271-4a57-9694-e9d0b35e1aa1",bunny:"bf1f3fb5-b119-4f9f-9930-8e20e892b898",spring:"3d95fb3d-c866-42c8-9db1-fe82f48ccb95",sprite:"a69d68a5-a0e0-4a80-9d66-49f093c97aaf",agent:"264ff760-803e-430e-8d81-15648e904183",caminandes:"fb70d459-48d2-4db5-adba-813c84f9200a",glass:"64222c8a-c4c7-4b3b-9850-7fb2078edcf6"};
-var filmUrl=f.youtubeId?"https://www.youtube-nocookie.com/embed/"+encodeURIComponent(f.youtubeId)+"?playsinline=1&rel=0":f.archiveId?"https://archive.org/embed/"+encodeURIComponent(f.archiveId):"https://video.blender.org/videos/embed/"+embeds[id];
+var filmUrl=f.youtubeId?"https://www.youtube-nocookie.com/embed/"+encodeURIComponent(f.youtubeId)+"?playsinline=1&rel=0":f.archiveId?"https://archive.org/embed/"+encodeURIComponent(f.archiveId):"https://video.blender.org/videos/embed/"+(f.embedId||embeds[id]);
 document.getElementById("player-root").innerHTML='<div class="player-overlay vanta-cinema-player" id="vanta-cinema-player" role="dialog" aria-modal="true" aria-label="Lecture de '+text(f.title)+'">'+
 '<div class="cinema-toolbar"><button class="cinema-back" data-close="player" aria-label="Quitter le film">'+icon("arrow").replace('class="icon"','class="icon" style="transform:rotate(180deg)"')+'</button><strong class="cinema-film-title">'+text(f.title)+'</strong><div class="cinema-toolbar-actions"><button class="cinema-fullscreen-btn" id="cinema-fullscreen-btn" data-cinema-fullscreen="1" aria-label="Passer en plein écran"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H3v5M16 3h5v5M3 16v5h5m13-5v5h-5"/></svg><span>Plein écran</span></button><button class="cinema-close" data-close="player" aria-label="Fermer">'+icon("close")+'</button></div></div>'+
 '<div class="cinema-video-zone"><div class="cinema-iframe-wrap" id="cinema-iframe-wrap"><iframe id="film-iframe" title="Film '+text(f.title)+'" src="'+filmUrl+'" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen webkitallowfullscreen loading="eager"></iframe></div></div>'+
