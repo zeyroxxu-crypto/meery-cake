@@ -123,7 +123,7 @@ function enrichCake(){
  const icon=create('span','mc9-cake-intro-icon','✿'),copy=create('div');
  copy.append(create('strong','','Votre demande de gâteau personnalisé'),create('p','','Indiquez vos envies dans le formulaire pour préparer une demande à transmettre au salon. Le devis et la faisabilité restent à confirmer.'));
  const checklist=create('div','mc9-cake-checklist');
- for(const x of ['✦ Forme','✦ Couleurs','✦ Décoration','✦ Aperçu 2D'])checklist.append(create('span','',x));
+ for(const x of ['✦ Forme','✦ Couleurs','✦ Décoration','✦ Demande simple'])checklist.append(create('span','',x));
  copy.append(checklist);block.append(icon,copy);form.before(block);
  const date=$('cakeDate');if(date){
   const now=new Date();const local=new Date(now.getTime()-now.getTimezoneOffset()*60000);
