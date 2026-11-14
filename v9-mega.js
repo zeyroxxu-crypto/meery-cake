@@ -187,8 +187,44 @@ function siteUtilities(){
  let busy=false;const update=()=>{busy=false;reminder.classList.toggle('mc9-visible',scrollY>900)};
  addEventListener('scroll',()=>{if(!busy){busy=true;requestAnimationFrame(update)}},{passive:true});update();
 }
+
+function premiumInteractions(){
+ // Navigation, image loading, gallery gestures and lightweight entrance effects.
+ const nav=document.querySelector('.site-header');
+ const updateNav=()=>nav?.classList.toggle('mc11-nav-scrolled',window.scrollY>24);
+ updateNav();addEventListener('scroll',updateNav,{passive:true});
+ const current=location.pathname.split('/').pop()||'index.html';
+ document.querySelectorAll('.nav-list a,.bottom-nav a').forEach(a=>{
+  const href=(a.getAttribute('href')||'').split('#')[0];
+  if(href&&href===current){a.classList.add('mc11-current');if(a.closest('.nav-list'))a.setAttribute('aria-current','page')}
+ });
+ document.querySelectorAll('img').forEach(img=>{
+  if(!img.hasAttribute('decoding'))img.decoding='async';
+  if(!img.hasAttribute('loading')&&!img.closest('.hero,.page-hero'))img.loading='lazy';
+ });
+ const lb=$('lightbox');
+ if(lb){
+  let startX=null;
+  lb.addEventListener('touchstart',e=>{if(e.touches.length===1)startX=e.touches[0].clientX},{passive:true});
+  lb.addEventListener('touchend',e=>{
+   if(startX===null||!lb.classList.contains('open'))return;
+   const dx=e.changedTouches[0].clientX-startX;startX=null;
+   if(Math.abs(dx)<65)return;
+   const buttons=lb.querySelectorAll('.v8-lightbox-controls button');
+   const target=dx<0?buttons[1]:buttons[0];
+   target?.click();
+  },{passive:true});
+ }
+ const header=$('siteHeader');
+ if(header&&!header.querySelector('.mc11-mobile-cta')){
+  const link=create('a','mc11-mobile-cta','Demander un gâteau');
+  link.href='gateaux.html';link.setAttribute('aria-label','Faire une demande de gâteau personnalisé');
+  header.append(link);
+ }
+}
+
 function init(){
- renderHomeCollections();addCatalogueTools();galleryCount();enrichCake();siteUtilities();scrollSections()
+ renderHomeCollections();addCatalogueTools();galleryCount();enrichCake();siteUtilities();scrollSections();premiumInteractions()
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
