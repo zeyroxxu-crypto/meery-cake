@@ -101,7 +101,7 @@ html.mc-motion-disabled .mc9-reveal,html.mc-motion-disabled .mc9-reveal.mc9-reve
 
  html .mc10-enter{
   opacity:0!important;
-  filter:blur(5px)!important;
+  filter:blur(1.5px)!important;
   transform:translate3d(0,42px,0) scale(.98)!important;
   transition:opacity .86s cubic-bezier(.22,1,.36,1),
              transform .86s cubic-bezier(.22,1,.36,1),
@@ -154,3 +154,14 @@ html.mc-motion-disabled .mc9-reveal,html.mc-motion-disabled .mc9-reveal.mc9-reve
 }
 @media(min-width:881px){.hero-content{padding-top:clamp(80px,9vw,155px);padding-bottom:clamp(80px,9vw,155px)}}
 @media(max-width:600px){.hero-visual>img{object-position:center}.mc11-mobile-cta{right:12px;bottom:83px;padding:11px 14px;font-size:11px}}
+
+/* Once an entrance has completed, preserve clarity at every scroll position. */
+html .mc10-enter.mc10-done,
+html .mc10-enter.mc10-done.mc10-inview{
+ opacity:1!important;
+ filter:none!important;
+ transform:none!important;
+ transition:none!important;
+ will-change:auto!important;
+}
+html .mc10-enter:not(.mc10-inview){filter:blur(1.5px)!important}
