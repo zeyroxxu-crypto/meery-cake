@@ -324,3 +324,64 @@ body{background:linear-gradient(140deg,#fff8f0 0%,#fae5e3 48%,#fff1e6 100%) fixe
 @media(max-width:920px){.mc25-hero-layout{grid-template-columns:1fr;gap:0}.mc25-hero-copy{padding:16px 0 12px}.mc25-hero-copy h1{font-size:clamp(58px,9vw,94px)}.mc25-hero-visual{height:410px;max-width:720px;width:100%;margin:0 auto}.mc25-editorial-hero{padding:35px 0 45px}}
 @media(max-width:600px){.mc25-editorial-hero{padding:28px 0 34px}.mc25-hero-copy h1{font-size:clamp(47px,11vw,72px)}.mc25-hero-copy>p{font-size:12px;line-height:1.8}.mc25-hero-visual{height:285px;margin:8px auto 22px}.mc25-photo{border-width:4px;border-radius:17px}.mc25-photo-main{width:74%;height:83%;left:1%}.mc25-photo-side{width:46%;height:55%;right:1%}.mc25-visual-signature{font-size:8px;bottom:-12px}.mc25-hero-copy .hero-actions{gap:9px;margin-top:22px}.mc25-hero-copy .hero-actions .button{font-size:12px}.mc25-hero-petal{width:22px;height:12px}#main .panel{padding:20px}}
 @media(prefers-reduced-motion:reduce){.mc25-photo,.mc25-hero-petal{animation:none}}
+
+/* V26: distinct welcome experience on first site launch. */
+.mc-v4-curtain.mc-v4-welcome{
+ transform:translate3d(0,0,0)!important;
+ transition:none!important;
+ pointer-events:auto;
+ background:radial-gradient(ellipse at 19% 16%,#d79caa 0%,transparent 48%),radial-gradient(ellipse at 90% 90%,#e7bdaf 0%,transparent 52%),linear-gradient(138deg,#713246,#a95470 55%,#c88793 100%);
+}
+.mc-v4-welcome .mc-v4-brand{
+ animation:mc26-welcome-brand .95s cubic-bezier(.22,1,.36,1) both;
+}
+.mc-v4-welcome .mc-v4-name{
+ font-size:clamp(65px,11vw,145px);
+ text-shadow:0 12px 48px #52233e55;
+}
+.mc-v4-welcome .mc-v4-symbol{
+ animation:mc-v4-symbol-drift 2.5s ease-in-out infinite!important;
+}
+.mc-v4-welcome .mc-v4-sub{font-size:clamp(10px,1.35vw,14px);letter-spacing:.29em}
+.mc-v4-welcome .mc-v4-wait{font-size:clamp(12px,1.5vw,16px);color:#fff5e9;letter-spacing:.035em;text-align:center}
+.mc-v4-welcome .mc-v4-curtain-glow{
+ background:radial-gradient(ellipse at 50% 65%,#fff5e52d,transparent 58%);
+ animation:mc26-welcome-light 2.1s ease-in-out both;
+}
+.mc-v4-welcome.mc-v4-welcome-exit{
+ transform:translate3d(0,-105%,0)!important;
+ transition:transform .78s cubic-bezier(.76,0,.18,1)!important;
+ pointer-events:none;
+}
+.mc-v4-welcome.mc-v4-welcome-exit .mc-v4-brand{
+ opacity:.85;
+ transform:translateY(-20px);
+ transition:opacity .5s,transform .5s;
+}
+@keyframes mc26-welcome-brand{
+ from{opacity:0;filter:blur(2px);transform:translateY(31px) scale(.97)}
+ to{opacity:1;filter:blur(0);transform:translateY(0) scale(1)}
+}
+@keyframes mc26-welcome-light{from{opacity:.25;transform:scale(.9)}to{opacity:1;transform:scale(1.1)}}
+@media(max-width:600px){.mc-v4-welcome .mc-v4-name{font-size:clamp(56px,14vw,95px)}.mc-v4-welcome .mc-v4-sub{font-size:9px;letter-spacing:.15em}.mc-v4-welcome .mc-v4-wait{font-size:12px;padding:0 18px}}
+
+/* V26: contact section, premium editorial address and navigation. */
+#contact{position:relative;overflow:hidden;background:radial-gradient(ellipse at 82% 8%,#e8c0c4 0%,transparent 45%),linear-gradient(145deg,#fff6ed,#f7deda 78%)!important}
+#contact::before{content:"";position:absolute;width:570px;height:570px;left:-310px;bottom:-410px;border:1px solid #c995a355;border-radius:50%;pointer-events:none}
+#contact .section-head{position:relative;max-width:760px;margin-left:auto;margin-right:auto}
+#contact .section-head h2{font-size:clamp(44px,5.5vw,78px);line-height:1.05}
+#contact .contact-grid{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);gap:23px;align-items:stretch}
+#contact .contact-card{padding:clamp(24px,3.3vw,48px);background:linear-gradient(148deg,#fffaf5 0%,#fff4ec 100%);border:1px solid #edcfc9;box-shadow:0 28px 70px #69384b23;border-radius:24px}
+#contact .contact-card h3{font:400 clamp(39px,4vw,62px)/1.03 var(--serif);letter-spacing:-.045em;color:#6e3549;margin:17px 0 20px}
+#contact .contact-card>p{color:#775966;line-height:1.85}
+#contact .contact-card>p a[href^="tel:"]{font-weight:800;color:#793b56;font-size:clamp(18px,2vw,23px);text-decoration:none}
+#contact .contact-card .form-buttons{display:flex;gap:11px;flex-wrap:wrap;margin-top:22px}
+#contact .contact-card .form-buttons a{min-height:45px;border-radius:99px;display:inline-flex;align-items:center;justify-content:center;padding:11px 19px}
+#contact .contact-card .form-notice{border-left:3px solid #b77989;background:#f9eae7;color:#6b4f5b;border-radius:9px;padding:13px 15px;margin-top:20px}
+#contact .mc26-contact-map-wrap{min-width:0;display:flex;flex-direction:column;background:#fffaf4;border:1px solid #edcfc9;border-radius:24px;overflow:hidden;box-shadow:0 28px 70px #69384b1b}
+#contact .contact-map{display:block;width:100%;height:100%;min-height:420px;flex:1;border:0;border-radius:0}
+#contact .mc26-contact-map-wrap .source-note{padding:12px 19px;margin:0;color:#785e67;font-size:11px;background:#fff9f3}
+#contact .mc26-contact-chips{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+#contact .mc26-contact-chips span{display:inline-block;background:#f1deda;border:1px solid #e3beba;border-radius:99px;color:#7c4b5d;font-size:11px;font-weight:700;padding:7px 11px}
+#contact .contact-card a:hover{opacity:.86}
+@media(max-width:850px){#contact .contact-grid{grid-template-columns:1fr}#contact .contact-map{min-height:340px}#contact .contact-card{padding:26px}}
