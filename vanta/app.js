@@ -25,6 +25,7 @@ films=Array.from(filmGroups.values()).map(function(group){
  variantsById[preferred.id]=group.filter(function(f){return f.archiveId&&f.archiveId!==preferred.archiveId;});
  return preferred;
 });
+extraFilms=extraFilms.filter(function(f){return films.indexOf(f)!==-1;});
 /* Ratings from IMDb, checked on 14 November 2026. Unrated titles remain unrated. */
 var verifiedRatings={"Metropolis|1927":{score:8.2,imdb:"tt0017136"},"The General|1926":{score:8.1,imdb:"tt0017925"},"Sherlock Jr.|1924":{score:8.1,imdb:"tt0015324"},"The Gold Rush|1925":{score:8.1,imdb:"tt0015864"},"Sunrise|1927":{score:8.1,imdb:"tt0018455"},"The Passion of Joan of Arc|1928":{score:8.1,imdb:"tt0019254"},"The Cabinet of Dr. Caligari|1920":{score:8,imdb:"tt0010323"},"Körkarlen|1921":{score:8,imdb:"tt0012364"},"Nosferatu|1922":{score:7.8,imdb:"tt0013442"},"Night of the Living Dead|1968":{score:7.8,imdb:"tt0063350"},"His Girl Friday|1940":{score:7.8,imdb:"tt0032599"}};
 films.forEach(function(f){
@@ -78,6 +79,7 @@ var pendingCatalogRefresh=null;
 function hideUnavailable(f){
  if(!f)return;
  films=films.filter(function(other){return other!==f;});
+ extraFilms=extraFilms.filter(function(other){return other!==f;});
  ratedFilms=ratedFilms.filter(function(other){return other!==f;});
  if(pendingCatalogRefresh)clearTimeout(pendingCatalogRefresh);
  pendingCatalogRefresh=setTimeout(function(){if(!currentPlayer)render();},300);
@@ -85,7 +87,7 @@ function hideUnavailable(f){
 function preflightVisible(){
  var ids=[].slice.call(document.querySelectorAll(".vanta-movie-card[data-info]")).slice(0,24)
   .map(function(el){return el.getAttribute("data-info");});
- var batch=ids.map(getFilm).filter(function(f){return f&&f.archiveId;});
+ var seen={};var batch=ids.map(getFilm).filter(function(f){if(!f||!f.archiveId||seen[f.id])return false;seen[f.id]=true;return true;});
  var i=0;
  function next(){if(i>=batch.length)return Promise.resolve();
   var f=batch[i++];return resolveFilm(f).then(function(v){if(v===null)hideUnavailable(f);}).then(next);
