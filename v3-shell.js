@@ -100,7 +100,13 @@ const year=document.getElementById('currentYear');if(year)year.textContent=new D
      return Date.now()-j.created<15000&&j.path===window.location.pathname;
    }catch{return false}
  }
- if(active&&consumeHandoff()){
+ // Welcome appears once when the site is first opened in this browser tab.
+ // Page-to-page navigation keeps the original branded curtain instead.
+ const arrivedFromSite=consumeHandoff();
+ const welcomeKey='meerycake-welcome-shown-v26';
+ let hasWelcomed=false;
+ try{hasWelcomed=sessionStorage.getItem(welcomeKey)==='yes'}catch{}
+ if(active&&arrivedFromSite){
    overlay.classList.add('mc-v4-arrival');
    document.documentElement.classList.add('mc-v4-just-arrived');
    window.setTimeout(()=>{
@@ -110,6 +116,25 @@ const year=document.getElementById('currentYear');if(year)year.textContent=new D
        document.documentElement.classList.remove('mc-v4-just-arrived');
      },870);
    },160);
+ }else if(active&&!hasWelcomed){
+   try{sessionStorage.setItem(welcomeKey,'yes')}catch{}
+   const sub=overlay.querySelector('.mc-v4-sub');
+   const message=overlay.querySelector('.mc-v4-wait');
+   if(sub)sub.textContent='BIENVENUE CHEZ MEERY CAKE';
+   if(message)message.textContent='Une parenthèse gourmande vous attend…';
+   overlay.classList.add('mc-v4-welcome');
+   document.documentElement.classList.add('mc-v4-welcoming');
+   const dismissWelcome=()=>{
+     if(!overlay.classList.contains('mc-v4-welcome'))return;
+     overlay.classList.add('mc-v4-welcome-exit');
+     document.documentElement.classList.remove('mc-v4-welcoming');
+     window.setTimeout(()=>{
+       overlay.classList.remove('mc-v4-welcome','mc-v4-welcome-exit');
+     },820);
+   };
+   window.setTimeout(dismissWelcome,1950);
+   // A user must never get trapped behind a welcome animation.
+   window.setTimeout(()=>{overlay.classList.remove('mc-v4-welcome','mc-v4-welcome-exit');document.documentElement.classList.remove('mc-v4-welcoming')},3400);
  }
  function spotlight(label,target,href){
    if(!active)return;
