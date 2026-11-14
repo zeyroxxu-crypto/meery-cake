@@ -305,6 +305,39 @@ function premiumInteractions(){
 }
 
 
+
+function editorialStoriesV28(){
+ const path=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+ const config={
+  'brunch.html':{
+   eyebrow:'L’ART DE PRENDRE LE TEMPS',heading:'Une pause qui se savoure.',copy:'Un cadre chaleureux et des idées gourmandes pour partager un moment. Demandez au salon les formules et les jours de brunch actuellement proposés.',
+   href:'#brunchBooking',cta:'Préparer ma demande',
+   images:[['https://cdt11.media.tourinsoft.eu/upload/MEERY-CAKE-2.jpg','Brunch gourmand en photo d’archive'],['https://cdn.iris-etourism.io/uploads/grand_carcassonne_v3/2e7/meery-cake-2.webp','Pâtisseries et boissons présentées en archive']]
+  },
+  'gateaux.html':{
+   eyebrow:'VOTRE CRÉATION, VOTRE HISTOIRE',heading:'Les beaux moments méritent leur douceur.',copy:'Une occasion, des couleurs, une idée : préparez les détails de votre gâteau et transmettez votre demande. La réalisation et le devis sont à confirmer.',
+   href:'#designer',cta:'Créer ma demande',
+   images:[['https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770','Gâteau photographié dans les archives du salon'],['https://cdt34.media.tourinsoft.eu/upload/MEERY-CAKE.jpg?width=770','Cupcakes décorés en photo d’archive']]
+  },
+  'ateliers.html':{
+   eyebrow:'DES IDÉES À CRÉER ENSEMBLE',heading:'Le plaisir de faire soi-même.',copy:'Décoration, couleurs et créativité : découvrez des idées d’ateliers et demandez au salon les prochaines possibilités. Aucun créneau n’est annoncé sans confirmation.',
+   href:'#atelier-demande',cta:'Se renseigner',
+   images:[['https://cdt34.media.tourinsoft.eu/upload/MEERY-CAKE.jpg?width=770','Décorations de cupcakes présentées en archive'],['https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770','Pâtisserie photographiée en archive']]
+  }
+ };
+ const x=config[path],main=$('main');if(!x||!main||main.querySelector('.mc28-story'))return;
+ const hero=main.querySelector('.mc25-editorial-hero');if(!hero)return;
+ const section=create('section','mc28-story');
+ section.setAttribute('aria-label','Découvrir l’univers Meery Cake');
+ const wrap=create('div','container mc28-story-layout'),copy=create('div','mc28-story-copy'),photos=create('div','mc28-story-photos');
+ const tag=create('span','eyebrow',x.eyebrow),heading=create('h2','',x.heading),p=create('p','',x.copy),link=create('a','button secondary',x.cta+' →');
+ link.href=x.href;copy.append(tag,heading,p,link);
+ x.images.forEach(([src,alt],i)=>{const fig=create('figure',i?'mc28-story-photo mc28-story-photo-small':'mc28-story-photo');const img=create('img');img.src=src;img.alt=alt;img.loading='lazy';img.decoding='async';fig.append(img);photos.append(fig)});
+ const note=create('small','mc28-story-credit','Photographies d’archives ; leur actualité et leurs droits doivent être confirmés avec les auteurs.');
+ photos.append(note);wrap.append(copy,photos);section.append(wrap);
+ const quick=main.querySelector('.mc28-quick-links');
+ (quick||hero).after(section);
+}
 // V28: consistent useful interaction across all public pages.
 function siteExperienceV28(){
  const main=$('main');if(!main)return;
@@ -368,7 +401,7 @@ function siteExperienceV28(){
  });
 }
 function init(){
- addCatalogueTools();galleryCount();enrichCake();siteUtilities();scrollSections();premiumInteractions();menuShowcase();boutiqueDepth();siteExperienceV28()
+ addCatalogueTools();galleryCount();enrichCake();siteUtilities();scrollSections();premiumInteractions();menuShowcase();boutiqueDepth();siteExperienceV28();editorialStoriesV28()
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
