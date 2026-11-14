@@ -526,3 +526,17 @@ body{background:linear-gradient(140deg,#fff8f0 0%,#fae5e3 48%,#fff1e6 100%) fixe
  body.mc28-print-cake #cakeResult .summary-pre{font:13px/1.7 Arial,sans-serif;white-space:pre-wrap;overflow-wrap:anywhere;color:#111}
  body.mc28-print-cake #designer{box-shadow:none!important;border:0!important}
 }
+
+/* V29 — 51 individual AI menu photographs, cropped consistently at 4:3. */
+#catalogue .v6-product-photo.mc29-ai{aspect-ratio:4/3;min-height:0;display:block;position:relative;overflow:hidden;background:linear-gradient(125deg,#f7e7de,#e6c7cb)}
+#catalogue .v6-product-photo.mc29-ai::before{display:none}
+#catalogue .v6-product-photo.mc29-ai img{position:absolute;inset:0;width:100%;height:100%;padding:0;display:block;object-fit:cover;object-position:center;filter:saturate(1.035) contrast(1.01);opacity:0;transform:scale(1);transition:opacity .35s ease,transform .65s cubic-bezier(.2,.8,.2,1);z-index:1}
+#catalogue .v6-product-photo.mc29-ai.mc29-loaded img{opacity:1}
+#catalogue .catalog-card:hover .v6-product-photo.mc29-ai img{transform:scale(1.025)}
+#catalogue .v6-product-photo.mc29-ai .v6-photo-label{position:absolute;z-index:5;left:11px;bottom:11px;right:auto;border-radius:7px;padding:6px 10px;max-width:calc(100% - 22px);background:#502841cf;backdrop-filter:blur(5px);color:#fff9f2;font-size:9px;letter-spacing:.02em;line-height:1.35;white-space:normal}
+#catalogue .v6-product-photo.mc29-ai.v6-photo-unavailable{display:grid;place-items:center}
+#catalogue .v6-product-photo.mc29-ai.v6-photo-unavailable .v6-product-icon{font-size:12px;color:#7e4d5d;font-weight:700;text-align:center}
+#catalogue .catalog-card .name{line-height:1.25}
+#catalogue .catalog-card .v6-product-content{min-height:236px}
+@media(max-width:600px){#catalogue .v6-product-photo.mc29-ai{aspect-ratio:4/3}#catalogue .catalog-card .v6-product-content{min-height:0}}
+@media(prefers-reduced-motion:reduce){#catalogue .v6-product-photo.mc29-ai img{transition:none!important;transform:none!important}}
