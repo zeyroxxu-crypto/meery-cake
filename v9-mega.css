@@ -493,3 +493,21 @@ body{background:linear-gradient(140deg,#fff8f0 0%,#fae5e3 48%,#fff1e6 100%) fixe
 @media(max-width:600px){#main .section-head{margin-bottom:24px}#main .section-head h2{font-size:clamp(34px,9vw,49px)}#main .section .panel{padding:19px}#main .page-layout{gap:18px}.mc28-quick-links>.container{gap:8px}.mc28-quick-link{font-size:10px;min-height:38px;padding:8px 13px}}
 @media(prefers-reduced-motion:reduce){.mc28-quick-link,.mc27-boutique .mc27-gift-card,#main .editorial-card .photo img,#main .featured-gallery img,#main .gallery-tile img{transition:none!important;transform:none!important}}
 @media print{.mc28-quick-links,.mc9-progress,.mc9-floating-scroll,.mc-v4-curtain,.mc-v4-anchor-pill,.bottom-nav,.site-header{display:none!important}body{background:#fff!important;color:#111!important}#main .section,.mc25-editorial-hero{background:#fff!important;box-shadow:none!important}#main .panel{box-shadow:none!important}}
+
+/* V28 — photographic editorial interludes for the Brunch, Cake and Workshops pages. */
+.mc28-story{background:radial-gradient(ellipse at 96% 3%,#f2c7c7 0%,transparent 39%),linear-gradient(137deg,#fff7ef,#fbe6e3);padding:clamp(55px,7.5vw,115px) 0;overflow:hidden}
+.mc28-story-layout{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(27px,5vw,70px);align-items:center}
+.mc28-story-copy .eyebrow{color:#9c5770;letter-spacing:.23em;font-weight:850;font-size:10px}
+.mc28-story-copy h2{font:400 clamp(45px,5vw,77px)/1.08 var(--serif);color:#71384d;letter-spacing:-.055em;text-wrap:balance;margin:19px 0 25px}
+.mc28-story-copy p{font-size:14px;color:#775965;line-height:1.95;max-width:450px;margin-bottom:28px}
+.mc28-story-copy .button{border-radius:99px}
+.mc28-story-photos{min-height:430px;position:relative;isolation:isolate}
+.mc28-story-photos::before{content:"";position:absolute;inset:5%;z-index:-1;border-radius:50%;background:#e9c3bb;filter:blur(70px)}
+.mc28-story-photo{position:absolute;margin:0;overflow:hidden;border-radius:25px;border:6px solid #fff8f2;box-shadow:0 28px 62px #743e5036;transform:rotate(-4deg);width:70%;height:83%;left:2%;top:1%;transition:transform .55s}
+.mc28-story-photo img{width:100%;height:100%;object-fit:cover;object-position:center;filter:saturate(1.06)}
+.mc28-story-photo-small{width:45%;height:54%;left:auto;right:0;top:auto;bottom:0;transform:rotate(7deg)}
+.mc28-story-photo:hover{transform:translateY(-9px) rotate(0deg)}
+.mc28-story-credit{position:absolute;bottom:-20px;left:1%;right:1%;font-size:9px;line-height:1.5;color:#8e6a75}
+@media(max-width:900px){.mc28-story-layout{grid-template-columns:1fr}.mc28-story-photos{max-width:680px;width:100%;height:400px;margin:10px auto 8px}.mc28-story-copy h2{font-size:clamp(42px,8vw,70px)}}
+@media(max-width:600px){.mc28-story{padding:50px 0 65px}.mc28-story-photos{height:290px;min-height:290px}.mc28-story-photo{border-width:4px;border-radius:16px}.mc28-story-copy h2{font-size:clamp(36px,10vw,53px)}.mc28-story-copy p{font-size:12px}.mc28-story-credit{bottom:-30px}}
+@media(prefers-reduced-motion:reduce){.mc28-story-photo{transition:none}}
