@@ -270,14 +270,75 @@ initWorkshops(){
 initGifts(){
  if(!this.byId('giftGrid'))return;
  const gifts=[
- {title:'Carte cadeau',text:'Offrir une expérience gourmande. Montants, conditions et disponibilité à confirmer directement auprès du salon.',tag:'Sur demande'},
- {title:'Coffret de douceurs',text:'Composer un assortiment de pâtisseries selon les créations disponibles, sans prix ni stock garanti.',tag:'À confirmer'},
- {title:'Gâteau pour événement',text:'Une création pour un anniversaire, une fête ou un événement professionnel.',tag:'Personnalisé'},
- {title:'Brunch à partager',text:'Se renseigner auprès du salon sur les prochaines possibilités de brunch.',tag:'Information'},
- {title:'Atelier cupcakes',text:'Demander le programme et les prochaines dates pour offrir une expérience créative.',tag:'Selon calendrier'},
- {title:'Commande à emporter',text:'Préparer une liste de favoris avant de contacter le salon. Pas de commande ou paiement en ligne.',tag:'Projet'}
+  {title:'Carte cadeau',text:'Offrir une expérience gourmande. Montants et modalités à confirmer directement auprès du salon.',tag:'Sur demande',kind:'gift'},
+  {title:'Coffret de douceurs',text:'Un assortiment gourmand à discuter selon les créations disponibles.',tag:'À confirmer',kind:'photo',src:'https://cdt11.media.tourinsoft.eu/upload/MEERY-CAKE-1.jpg',imageAlt:'Vitrine de pâtisseries Meery Cake, photographie d’archive'},
+  {title:'Gâteau pour événement',text:'Une création personnalisée pour célébrer un anniversaire ou une fête.',tag:'Personnalisé',kind:'photo',src:'https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770',imageAlt:'Pâtisserie présentée dans des archives Meery Cake'},
+  {title:'Brunch à partager',text:'Une pause gourmande à partager. Jours et disponibilités sur confirmation.',tag:'Information',kind:'photo',src:'https://cdt11.media.tourinsoft.eu/upload/MEERY-CAKE-2.jpg',imageAlt:'Brunch chez Meery Cake, photographie d’archive'},
+  {title:'Atelier cupcakes',text:'Une expérience créative à envisager, selon les prochaines dates du salon.',tag:'Selon calendrier',kind:'photo',src:'https://cdt34.media.tourinsoft.eu/upload/MEERY-CAKE.jpg?width=770',imageAlt:'Décorations de cupcakes, photo d’archive'},
+  {title:'Commande à emporter',text:'Préparer une sélection de douceurs avant de contacter le salon. Aucun paiement en ligne.',tag:'Projet',kind:'photo',src:'https://cdn.iris-etourism.io/uploads/grand_carcassonne_v3/2e7/meery-cake-2.webp',imageAlt:'Pâtisseries et boissons Meery Cake, photographie d’archive'}
  ];
- const grid=this.byId('giftGrid');for(const g of gifts){const card=this.el('article',{cls:'event-card'});card.append(this.el('span',{cls:'tag gold',text:g.tag}),this.el('h3',{text:g.title}),this.el('p',{text:g.text}));const button=this.el('button',{cls:'button secondary small',type:'button',text:'Préparer une demande'});button.addEventListener('click',()=>{this.byId('giftChoice').value=g.title;this.byId('giftForm').scrollIntoView({behavior:'smooth'})});card.append(button);grid.append(card)}
+ const grid=this.byId('giftGrid');
+ grid.classList.add('mc27-gift-grid');
+ for(const [index,g] of gifts.entries()){
+  const card=this.el('article',{cls:'event-card mc27-gift-card'});
+  const media=this.el('div',{cls:'mc27-gift-media'});
+  if(g.kind==='gift'){
+   const visual=this.el('div',{cls:'mc27-gift-certificate'});
+   visual.append(this.el('span',{cls:'mc27-gift-certificate-top',text:'MEERY CAKE'}),this.el('strong',{text:'Une douce attention'}),this.el('span',{cls:'mc27-gift-certificate-bottom',text:'CARTE CADEAU · CONCEPT À CONFIRMER'}));
+   media.append(visual);
+  }else{
+   const img=this.el('img');
+   img.src=g.src;img.alt=g.imageAlt;img.loading='lazy';img.decoding='async';
+   img.addEventListener('error',()=>{img.remove();media.classList.add('mc27-photo-missing')},{once:true});
+   media.append(img);
+   const zoom=this.el('button',{cls:'mc27-photo-zoom',type:'button',text:'Agrandir la photo'});
+   zoom.dataset.photoIndex=String(index);
+   zoom.setAttribute('aria-label','Agrandir la photo illustrative de '+g.title);
+   media.append(zoom);
+  }
+  media.append(this.el('span',{cls:'mc27-gift-index',text:String(index+1).padStart(2,'0')+' / 06'}));
+  const info=this.el('div',{cls:'mc27-gift-details'});
+  info.append(this.el('span',{cls:'tag gold',text:g.tag}),this.el('h3',{text:g.title}),this.el('p',{text:g.text}));
+  const button=this.el('button',{cls:'button secondary small mc27-gift-request',type:'button',text:'Préparer une demande →'});
+  button.addEventListener('click',()=>{const choice=this.byId('giftChoice');choice.value=g.title;this.byId('giftForm').scrollIntoView({behavior:'smooth',block:'center'});choice.focus({preventScroll:true})});
+  info.append(button);card.append(media,info);grid.append(card);
+ }
+ // One accessible gallery dialog, with keyboard arrows, swipe and Escape support.
+ const photos=gifts.filter(g=>g.kind==='photo');
+ const viewer=this.el('dialog',{cls:'mc27-image-viewer'});
+ viewer.setAttribute('aria-label','Photographie des gourmandises en grand');
+ const closer=this.el('button',{cls:'mc27-viewer-close',type:'button',text:'Fermer ×'});
+ const previous=this.el('button',{cls:'mc27-viewer-prev',type:'button',text:'‹'});
+ const next=this.el('button',{cls:'mc27-viewer-next',type:'button',text:'›'});
+ const large=this.el('img');large.alt='';
+ const legend=this.el('p',{cls:'mc27-viewer-caption'});
+ let current=0;
+ const show=i=>{current=(i+photos.length)%photos.length;large.src=photos[current].src;large.alt=photos[current].imageAlt;legend.textContent=photos[current].title+' · Photographie d’archive illustrative, produits et droits à confirmer'};
+ viewer.append(closer,previous,large,next,legend);
+ this.byId('main')?.append(viewer);
+ const closeViewer=()=>{if(viewer.open)viewer.close()};
+ closer.addEventListener('click',closeViewer);
+ viewer.addEventListener('click',e=>{if(e.target===viewer)closeViewer()});
+ previous.addEventListener('click',()=>show(current-1));
+ next.addEventListener('click',()=>show(current+1));
+ viewer.addEventListener('keydown',e=>{
+  if(e.key==='ArrowLeft'){e.preventDefault();show(current-1)}
+  if(e.key==='ArrowRight'){e.preventDefault();show(current+1)}
+ });
+ let touchX=null;
+ viewer.addEventListener('touchstart',e=>{if(e.touches.length===1)touchX=e.touches[0].clientX},{passive:true});
+ viewer.addEventListener('touchend',e=>{
+  if(touchX===null)return;const delta=e.changedTouches[0].clientX-touchX;touchX=null;
+  if(Math.abs(delta)>55)show(current+(delta<0?1:-1));
+ },{passive:true});
+ grid.addEventListener('click',e=>{
+  const trigger=e.target.closest('.mc27-photo-zoom');if(!trigger)return;
+  const gift=gifts[Number(trigger.dataset.photoIndex)];
+  if(!gift||gift.kind!=='photo')return;
+  show(photos.indexOf(gift));
+  if(typeof viewer.showModal==='function')viewer.showModal();
+  else viewer.setAttribute('open','');
+ });
  const form=this.byId('giftForm');form.addEventListener('submit',e=>{e.preventDefault();if(!form.reportValidity())return;
  const v=id=>this.byId(id).value.trim();
  const text=['Bonjour Meery Cake, je souhaite me renseigner sur : '+v('giftChoice'),'Nom : '+v('giftName'),'Coordonnées : '+v('giftContact'),'Précisions : '+(v('giftNotes')||'À définir'),'', 'Pouvez-vous me confirmer les possibilités et tarifs ? Merci !'].join('\n');
