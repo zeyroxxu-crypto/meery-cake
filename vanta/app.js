@@ -118,7 +118,7 @@ return '<article class="card reveal vanta-movie-card" tabindex="0" role="button"
 cover+'<div class="card-gradient"></div><span class="card-label '+(watch?"vanta-watch-label":"vanta-discovery-label")+'">'+label+'</span>'+
 '<button class="card-fav '+(hasFav?"active":"")+'" data-fav="'+f.id+'" aria-label="'+(hasFav?"Retirer de":"Ajouter à")+' ma liste">'+icon("heart")+'</button>'+
 '<button class="card-play" data-info="'+f.id+'" aria-label="Détails de '+text(f.title)+'">'+icon("info")+'</button></div>'+
-'<h3 class="card-title">'+text(f.title)+'</h3><div class="card-meta">'+(typeof f.rating==="number"?'<span class="vanta-rating">★ '+f.rating.toFixed(1)+'/10 IMDb</span><span class="tiny-dot"></span>':'')+<span>'+text(f.year||"Vidéo")+'</span><span class="tiny-dot"></span><span>'+(f.duration?f.duration+" min":"À regarder")+'</span><span class="tiny-dot"></span><span>'+text(f.genre)+'</span></div></article>';
+'<h3 class="card-title">'+text(f.title)+'</h3><div class="card-meta">'+(typeof f.rating==="number"?'<span class="vanta-rating">★ '+f.rating.toFixed(1)+'/10 IMDb</span><span class="tiny-dot"></span>':'')+'<span>'+text(f.year||"Vidéo")+'</span><span class="tiny-dot"></span><span>'+(f.duration?f.duration+" min":"À regarder")+'</span><span class="tiny-dot"></span><span>'+text(f.genre)+'</span></div></article>';
 }
 function rail(name,eyebrow,list,button){
 return '<section class="section"><div class="section-head reveal"><div><p class="eyebrow">'+eyebrow+'</p><h2>'+name+'</h2></div>'+
