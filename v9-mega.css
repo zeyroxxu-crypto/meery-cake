@@ -245,3 +245,12 @@ body{background:linear-gradient(150deg,#fff9f3 0%,#f8e7e5 52%,#fdf0e6 100%) fixe
 @media(max-width:970px){.mc19-menu-hero-inner{grid-template-columns:1fr;gap:0}.mc19-hero-copy{padding:0}.mc19-hero-copy h1{font-size:clamp(82px,13vw,150px)}.mc19-cake-scene{height:420px;max-width:760px;width:100%;margin:0 auto}.mc19-menu-shortcuts{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:14px}}
 @media(max-width:600px){.mc19-menu-hero{padding:32px 0 30px}.mc19-hero-copy h1{font-size:clamp(70px,17vw,112px)}.mc19-menu-hero-inner{min-height:0}.mc19-description{font-size:19px;max-width:320px}.mc19-tagline{padding-top:15px}.mc19-cake-scene{height:300px;margin-top:18px}.mc19-cake-photo{border-width:4px;border-radius:18px}.mc19-cake-photo-one{left:24%;width:52%;height:74%}.mc19-cake-photo-two{width:44%;height:51%;left:1%;bottom:7%}.mc19-cake-photo-three{width:42%;height:49%;right:0;bottom:5%}.mc19-menu-shortcuts{gap:9px}.mc19-category{padding:13px 10px;gap:6px;border-radius:13px}.mc19-category strong{font-size:17px}.mc19-category small{font-size:9px}.mc19-cat-glyph{font-size:22px}.mc19-category>span:last-child{font-size:13px}.mc19-petal{width:25px;height:12px}}
 @media(prefers-reduced-motion:reduce){.mc19-menu-ambient span,.mc19-cake-photo,.mc19-petal{animation:none}}
+
+/* Product images: consistent, carefully framed 16:10 photos across all cards. */
+#catalogue .v6-product-photo{height:auto;aspect-ratio:16/10;overflow:hidden;position:relative;display:block;background:#f1e0d9}
+#catalogue .v6-product-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 48%;filter:saturate(1.07) contrast(1.015);transform:scale(1);transition:transform .65s cubic-bezier(.2,.8,.2,1),filter .45s ease}
+#catalogue .catalog-card:hover .v6-product-photo img{transform:scale(1.035);filter:saturate(1.13)}
+#catalogue .v6-photo-label{position:absolute;bottom:10px;left:10px;right:auto;max-width:calc(100% - 20px);font-size:9px;padding:5px 8px;line-height:1.3;border-radius:6px;background:#4e263fbf;color:#fffaf5}
+#catalogue .catalog-card{overflow:hidden}
+#catalogue .catalog-card .v6-product-content{min-width:0}
+@media(max-width:600px){#catalogue .v6-product-photo{aspect-ratio:16/10}#catalogue .v6-photo-label{font-size:8px}}
