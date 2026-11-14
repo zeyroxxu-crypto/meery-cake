@@ -442,3 +442,6 @@ body{background:linear-gradient(140deg,#fff8f0 0%,#fae5e3 48%,#fff1e6 100%) fixe
 @media(max-width:980px){.mc27-gift-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:600px){.mc27-boutique #idees{padding-top:54px}.mc27-intro-strip .container{gap:8px}.mc27-intro-strip span{font-size:8px;letter-spacing:.1em}.mc27-gift-grid{grid-template-columns:1fr}.mc27-gift-media{aspect-ratio:16/11}.mc27-gift-details{padding:21px}.mc27-gift-details h3{font-size:30px}.mc27-image-viewer{padding:58px 13px 45px;border-radius:12px}.mc27-image-viewer img{max-height:calc(100dvh - 143px)}.mc27-viewer-prev,.mc27-viewer-next{top:auto;bottom:12px;width:36px;height:36px}.mc27-viewer-prev{left:10px}.mc27-viewer-next{right:10px}.mc27-viewer-caption{padding:0 31px}}
 @media(prefers-reduced-motion:reduce){.mc27-gift-card,.mc27-gift-media img{transition:none!important}}
+
+/* Gentle scroll parallax, limited to the boutique hero. */
+.mc27-boutique .mc25-hero-visual{translate:0 var(--mc27-shift,0px)}
