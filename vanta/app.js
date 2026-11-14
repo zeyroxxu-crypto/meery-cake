@@ -14,6 +14,17 @@ if(!f.archiveId||usedArchiveIds.has(f.archiveId))return false;
 usedArchiveIds.add(f.archiveId);return true;
 });
 films=films.concat(extraFilms);
+/* Group identical films, preserving alternate Archive sources to try if the primary is gone. */
+function filmKey(f){return String(f.title||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]/g,"")+"|"+String(f.year||"");}
+var filmGroups=new Map();
+films.forEach(function(f){var key=filmKey(f);if(!filmGroups.has(key))filmGroups.set(key,[]);filmGroups.get(key).push(f);});
+var variantsById={};
+films=Array.from(filmGroups.values()).map(function(group){
+ group.sort(function(a,b){return Number(!!b.sourceFile)-Number(!!a.sourceFile);});
+ var preferred=group[0];
+ variantsById[preferred.id]=group.filter(function(f){return f.archiveId&&f.archiveId!==preferred.archiveId;});
+ return preferred;
+});
 /* Ratings from IMDb, checked on 14 November 2026. Unrated titles remain unrated. */
 var verifiedRatings={"Metropolis|1927":{score:8.2,imdb:"tt0017136"},"The General|1926":{score:8.1,imdb:"tt0017925"},"Sherlock Jr.|1924":{score:8.1,imdb:"tt0015324"},"The Gold Rush|1925":{score:8.1,imdb:"tt0015864"},"Sunrise|1927":{score:8.1,imdb:"tt0018455"},"The Passion of Joan of Arc|1928":{score:8.1,imdb:"tt0019254"},"The Cabinet of Dr. Caligari|1920":{score:8,imdb:"tt0010323"},"Körkarlen|1921":{score:8,imdb:"tt0012364"},"Nosferatu|1922":{score:7.8,imdb:"tt0013442"},"Night of the Living Dead|1968":{score:7.8,imdb:"tt0063350"},"His Girl Friday|1940":{score:7.8,imdb:"tt0032599"}};
 films.forEach(function(f){
@@ -28,6 +39,60 @@ var ratedFilms=ranked(films.filter(function(f){return typeof f.rating==="number"
 var catalogueSort="rated";
 var catalogueLimit=60;
 function getFilm(id){return films.find(function(f){return f.id===id;});}
+/* The Archive embed can show removed items: check metadata before opening a film.
+   A confirmed removal is hidden for this browser, and alternatives are tested. */
+var archiveChecks={};
+function checkArchive(id){
+ if(!id)return Promise.resolve(false);
+ if(archiveChecks[id])return archiveChecks[id];
+ var cacheKey="vanta-archive-status-v1-"+id;
+ try{var old=JSON.parse(localStorage.getItem(cacheKey)||"null");
+ if(old&&Date.now()-old.time<(old.ok?86400000:21600000))return Promise.resolve(old.ok);}catch(e){}
+ var controller=typeof AbortController==="function"?new AbortController():null;
+ var timeout=setTimeout(function(){if(controller)controller.abort();},8000);
+ archiveChecks[id]=fetch("https://archive.org/metadata/"+encodeURIComponent(id),controller?{signal:controller.signal}:{})
+ .then(function(response){if(!response.ok)throw Error("Archive metadata unavailable");return response.json();})
+ .then(function(info){
+  var files=Array.isArray(info.files)?info.files:[];
+  var playable=files.some(function(file){return /\.(mp4|m4v|webm|ogv|mpeg|mpg)$/i.test(String(file.name||""));});
+  var ok=!info.is_dark&&!info.is_restricted&&playable;
+  try{localStorage.setItem(cacheKey,JSON.stringify({ok:ok,time:Date.now()}));}catch(e){}
+  return ok;
+ }).catch(function(){return null;}).finally(function(){clearTimeout(timeout);delete archiveChecks[id];});
+ return archiveChecks[id];
+}
+function resolveFilm(f){
+ if(!f||!f.archiveId)return Promise.resolve(f);
+ var sources=[f].concat(variantsById[f.id]||[]);
+ function attempt(i){
+  if(i>=sources.length)return Promise.resolve(null);
+  return checkArchive(sources[i].archiveId).then(function(verified){
+   if(verified===true){if(i>0){f.archiveId=sources[i].archiveId;f.sourceFile=sources[i].sourceFile||"";f.official=sources[i].official||f.official;}return f;}
+   if(verified===null)return {unverified:true,film:f};
+   return attempt(i+1);
+  });
+ }
+ return attempt(0);
+}
+var pendingCatalogRefresh=null;
+function hideUnavailable(f){
+ if(!f)return;
+ films=films.filter(function(other){return other!==f;});
+ ratedFilms=ratedFilms.filter(function(other){return other!==f;});
+ if(pendingCatalogRefresh)clearTimeout(pendingCatalogRefresh);
+ pendingCatalogRefresh=setTimeout(function(){if(!currentPlayer)render();},300);
+}
+function preflightVisible(){
+ var ids=[].slice.call(document.querySelectorAll(".vanta-movie-card[data-info]")).slice(0,24)
+  .map(function(el){return el.getAttribute("data-info");});
+ var batch=ids.map(getFilm).filter(function(f){return f&&f.archiveId;});
+ var i=0;
+ function next(){if(i>=batch.length)return Promise.resolve();
+  var f=batch[i++];return resolveFilm(f).then(function(v){if(v===null)hideUnavailable(f);}).then(next);
+ }
+ /* Only a small batch, quietly, to avoid hammering Archive with 500 requests. */
+ next();
+}
 function art(f,bg){return (bg&&f.backdropUrl)||f.posterUrl||"";}
 function loadPosters(){
 /* Search for the real film image first. Never use a guessed/generated poster.
@@ -173,6 +238,7 @@ app.innerHTML=out;
 document.querySelectorAll(".nav-item").forEach(function(b){b.classList.toggle("active",b.getAttribute("data-nav")===view);});
 document.getElementById("mobile-nav").classList.remove("open");
 reveal();loadPosters();
+if(view==="home"||view==="movies"||view==="discover")preflightVisible();
 }
 var observer;
 function reveal(){
@@ -219,8 +285,21 @@ modal('<button class="modal-close" data-close="detail" aria-label="Fermer">'+ico
 '<p>Salem utilise le lien YouTube fourni et déclaré autorisé par l’utilisateur. Tous les lecteurs sont externes ; leur fonctionnement peut varier selon l’appareil et les réglages de l’hébergeur.</p></div>');
 }
 function openPlayer(id){
-var f=getFilm(id);if(!f)return;
+var f=getFilm(id);if(!f){toast("Ce film n’est plus disponible.");return;}
 if(!f.youtubeId&&!f.archiveId&&!f.embedId){openDetail(id);return;}
+if(f.archiveId){
+ toast("Vérification de la vidéo…");
+ resolveFilm(f).then(function(confirmed){
+  if(confirmed===null){hideUnavailable(f);closeDetail();toast("Vidéo supprimée par la plateforme. Film retiré du catalogue.");return;}
+  if(confirmed.unverified){toast("La disponibilité de cette vidéo ne peut pas être vérifiée.");return;}
+  openVerifiedPlayer(id);
+ });
+ return;
+}
+openVerifiedPlayer(id);
+}
+function openVerifiedPlayer(id){
+var f=getFilm(id);if(!f)return;
 closeDetail();closeSearch();
 document.body.style.overflow="hidden";currentPlayer=id;
 progress[id]=Date.now();save();
