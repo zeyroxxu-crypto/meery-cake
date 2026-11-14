@@ -222,3 +222,11 @@ linear-gradient(115deg,#070707 1%,#131313 40%,#303030 80%,#080808 100%);
 .vanta-movie-card:hover{transform:translateY(-5px)}
 @media(max-width:600px){.vanta-sortbar{align-items:stretch;flex-direction:column;gap:8px}.vanta-sortbar select{width:100%}.card-meta .vanta-rating{font-size:11px}}
 @media(prefers-reduced-motion:reduce){.vanta-movie-card{transition:none}.vanta-movie-card:hover{transform:none}}
+
+/* New YouTube discovery and player fallback */
+.vanta-player-source{padding:11px 16px;color:#b3b3b3;text-align:center;font-size:12px;background:#080808}
+.vanta-player-source a{color:#fff;font-weight:750;text-decoration:underline;text-underline-offset:3px}
+.cinema-youtube-external{padding:10px 14px;border:1px solid #555;border-radius:9px;color:#f4f4f4;text-decoration:none;font-weight:750;font-size:12px;white-space:nowrap}
+.cinema-youtube-external:hover{background:#262626}
+.vanta-watch-label{max-width:80%}
+@media(max-width:600px){.cinema-youtube-external{font-size:11px;padding:10px 8px}.vanta-player-source{padding:10px 8px;font-size:11px}.cinema-toolbar{gap:5px}.cinema-film-title{max-width:32%;font-size:11px}}
