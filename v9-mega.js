@@ -304,8 +304,71 @@ function premiumInteractions(){
  }
 }
 
+
+// V28: consistent useful interaction across all public pages.
+function siteExperienceV28(){
+ const main=$('main');if(!main)return;
+ const path=(location.pathname.split('/').pop()||'index.html').toLowerCase();
+ // Dynamic local quick-nav: only link to sections that exist on this page.
+ const definitions={
+  'carte.html':[['catalogue','Explorer les produits']],
+  'galerie.html':[['galleryGrid','Voir les photos']],
+  'gateaux.html':[['designer','Créer un gâteau']],
+  'brunch.html':[['brunchBooking','Demander un brunch']],
+  'ateliers.html':[['atelier-demande','Se renseigner']],
+  'boutique.html':[['idees','Voir les cadeaux'],['giftForm','Préparer une demande']],
+  'informations.html':[],
+  'index.html':[['decouvrir','Découvrir'],['galerie','Galerie'],['contact','Contact']]
+ };
+ const items=(definitions[path]||[]).filter(([id])=>!!$(id));
+ const hero=main.querySelector('.mc25-editorial-hero,.mc19-menu-hero,.hero');
+ if(hero&&items.length){
+  const nav=create('nav','mc28-quick-links');nav.setAttribute('aria-label','Accès rapides dans cette page');
+  const inner=create('div','container');
+  for(const [id,label] of items){
+   const a=create('a','mc28-quick-link',label);a.href='#'+id;inner.append(a);
+  }
+  nav.append(inner);hero.after(nav);
+  const visible=new Map();
+  const obs=typeof IntersectionObserver!=='undefined'?new IntersectionObserver(entries=>{
+   for(const entry of entries)visible.set(entry.target.id,entry.isIntersecting);
+   const active=items.find(([id])=>visible.get(id));
+   inner.querySelectorAll('a').forEach(a=>a.classList.toggle('mc28-quick-active',!!active&&a.hash==='#'+active[0]));
+  },{rootMargin:'-18% 0px -65% 0px',threshold:0}):null;
+  items.forEach(([id])=>obs?.observe($(id)));
+ }
+ // Help visitors understand length of text fields and keep form interactions legible.
+ main.querySelectorAll('textarea[maxlength]').forEach(area=>{
+  if(area.closest('.mc28-counter-wrap'))return;
+  const max=Number(area.maxLength);if(!max||max>5000)return;
+  const counter=create('small','mc28-text-counter');
+  counter.setAttribute('aria-live','off');
+  const render=()=>counter.textContent=area.value.length+' / '+max+' caractères';
+  area.insertAdjacentElement('afterend',counter);
+  area.addEventListener('input',render,{passive:true});render();
+ });
+ // Respect user motion preference for decorative pointer effects.
+ if(!matchMedia('(pointer:fine) and (prefers-reduced-motion:no-preference)').matches)return;
+ const tiles=main.querySelectorAll('.mc27-gift-card,.mc25-photo,.mc19-cake-photo');
+ tiles.forEach(tile=>{
+  const onPointer=e=>{
+   const rect=tile.getBoundingClientRect();
+   const x=(e.clientX-rect.left)/rect.width-.5,y=(e.clientY-rect.top)/rect.height-.5;
+   tile.style.setProperty('--mc28-rotate-x',(-y*4).toFixed(2)+'deg');
+   tile.style.setProperty('--mc28-rotate-y',(x*4).toFixed(2)+'deg');
+  };
+  tile.addEventListener('pointermove',onPointer,{passive:true});
+  tile.addEventListener('pointerleave',()=>{tile.style.removeProperty('--mc28-rotate-x');tile.style.removeProperty('--mc28-rotate-y')});
+ });
+ // Gallery images and form media use priority/fetch hints without eagerly loading all imagery.
+ main.querySelectorAll('img').forEach(img=>{
+  if(img.closest('.mc25-editorial-hero,.mc19-menu-hero,.hero'))return;
+  if(!img.hasAttribute('loading'))img.loading='lazy';
+  if(!img.hasAttribute('decoding'))img.decoding='async';
+ });
+}
 function init(){
- addCatalogueTools();galleryCount();enrichCake();siteUtilities();scrollSections();premiumInteractions();menuShowcase();boutiqueDepth()
+ addCatalogueTools();galleryCount();enrichCake();siteUtilities();scrollSections();premiumInteractions();menuShowcase();boutiqueDepth();siteExperienceV28()
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
