@@ -14,6 +14,18 @@ if(!f.archiveId||usedArchiveIds.has(f.archiveId))return false;
 usedArchiveIds.add(f.archiveId);return true;
 });
 films=films.concat(extraFilms);
+/* Ratings from IMDb, checked on 14 November 2026. Unrated titles remain unrated. */
+var verifiedRatings={"Metropolis|1927":{score:8.2,imdb:"tt0017136"},"The General|1926":{score:8.1,imdb:"tt0017925"},"Sherlock Jr.|1924":{score:8.1,imdb:"tt0015324"},"The Gold Rush|1925":{score:8.1,imdb:"tt0015864"},"Sunrise|1927":{score:8.1,imdb:"tt0018455"},"The Passion of Joan of Arc|1928":{score:8.1,imdb:"tt0019254"},"The Cabinet of Dr. Caligari|1920":{score:8,imdb:"tt0010323"},"Körkarlen|1921":{score:8,imdb:"tt0012364"},"Nosferatu|1922":{score:7.8,imdb:"tt0013442"},"Night of the Living Dead|1968":{score:7.8,imdb:"tt0063350"},"His Girl Friday|1940":{score:7.8,imdb:"tt0032599"}};
+films.forEach(function(f){
+ var found=verifiedRatings[String(f.title)+"|"+String(f.year)];
+ if(found){f.rating=found.score;f.imdbId=found.imdb;}
+});
+function ranked(list){return list.slice().sort(function(a,b){
+ var ar=typeof a.rating==="number"?a.rating:-1,br=typeof b.rating==="number"?b.rating:-1;
+ return br-ar||(a.title||"").localeCompare(b.title||"","fr");
+});}
+var ratedFilms=ranked(films.filter(function(f){return typeof f.rating==="number";}));
+var catalogueSort="rated";
 var catalogueLimit=60;
 function getFilm(id){return films.find(function(f){return f.id===id;});}
 function art(f,bg){return (bg&&f.backdropUrl)||f.posterUrl||"";}
@@ -106,7 +118,7 @@ return '<article class="card reveal vanta-movie-card" tabindex="0" role="button"
 cover+'<div class="card-gradient"></div><span class="card-label '+(watch?"vanta-watch-label":"vanta-discovery-label")+'">'+label+'</span>'+
 '<button class="card-fav '+(hasFav?"active":"")+'" data-fav="'+f.id+'" aria-label="'+(hasFav?"Retirer de":"Ajouter à")+' ma liste">'+icon("heart")+'</button>'+
 '<button class="card-play" data-info="'+f.id+'" aria-label="Détails de '+text(f.title)+'">'+icon("info")+'</button></div>'+
-'<h3 class="card-title">'+text(f.title)+'</h3><div class="card-meta"><span>'+text(f.year||"Vidéo")+'</span><span class="tiny-dot"></span><span>'+(f.duration?f.duration+" min":"À regarder")+'</span><span class="tiny-dot"></span><span>'+text(f.genre)+'</span></div></article>';
+'<h3 class="card-title">'+text(f.title)+'</h3><div class="card-meta">'+(typeof f.rating==="number"?'<span class="vanta-rating">★ '+f.rating.toFixed(1)+'/10 IMDb</span><span class="tiny-dot"></span>':'')+<span>'+text(f.year||"Vidéo")+'</span><span class="tiny-dot"></span><span>'+(f.duration?f.duration+" min":"À regarder")+'</span><span class="tiny-dot"></span><span>'+text(f.genre)+'</span></div></article>';
 }
 function rail(name,eyebrow,list,button){
 return '<section class="section"><div class="section-head reveal"><div><p class="eyebrow">'+eyebrow+'</p><h2>'+name+'</h2></div>'+
@@ -117,9 +129,16 @@ function catalogueBanner(title,sub){
 return '<div class="catalogue-top"><p class="eyebrow">VANTA / FILMS AVEC VIDÉO INTÉGRÉE</p><h1 class="catalogue-title">'+title+'</h1><p class="catalogue-intro">'+sub+'</p>'+
 '<div class="filters">'+["Tous","Longs métrages","Courts métrages","Horreur","Comédie","Action","Policier","Thriller","Aventure","Science-fiction","Animation","Fantastique","Drame","Western","Romance","Guerre","Historique","Famille","Documentaire"].map(function(t){
 return '<button class="filter '+(filter===t?"active":"")+'" data-filter="'+text(t)+'">'+text(t)+'</button>';}).join("")+'</div>'+
-'<p class="vanta-film-total">'+filtered().length+' vidéo(s) dans la sélection</p></div>';
+'<div class="vanta-sortbar"><label for="vanta-sort">Trier les films</label><select id="vanta-sort" aria-label="Trier les films"><option value="rated" '+(catalogueSort==="rated"?'selected':'')+'>Mieux notés d’abord</option><option value="title" '+(catalogueSort==="title"?'selected':'')+'>Titre A–Z</option><option value="newest" '+(catalogueSort==="newest"?'selected':'')+'>Plus récents</option><option value="oldest" '+(catalogueSort==="oldest"?'selected':'')+'>Plus anciens</option></select></div><p class="vanta-film-total">'+filtered().length+' vidéo(s) dans la sélection · notes IMDb vérifiées pour '+ratedFilms.length+' titres</p></div>';
 }
-function filtered(){return films.filter(function(f){return filter==="Tous"||(filter==="Longs métrages"&&f.kind==="long")||(filter==="Courts métrages"&&f.kind==="short")||f.tags.indexOf(filter)!==-1;});}
+function filtered(){
+ var list=films.filter(function(f){return filter==="Tous"||(filter==="Longs métrages"&&f.kind==="long")||(filter==="Courts métrages"&&f.kind==="short")||(f.tags||[]).indexOf(filter)!==-1;});
+ if(catalogueSort==="rated")return ranked(list);
+ if(catalogueSort==="title")return list.sort(function(a,b){return a.title.localeCompare(b.title,"fr");});
+ if(catalogueSort==="newest")return list.sort(function(a,b){return (b.year||0)-(a.year||0);});
+ if(catalogueSort==="oldest")return list.sort(function(a,b){return (a.year||9999)-(b.year||9999);});
+ return list;
+}
 
 function catalogueGrid(items){
 var shown=items.slice(0,catalogueLimit);
@@ -131,8 +150,10 @@ function render(){
 var out="";
 if(view==="home"){
 out=hero()+'<div class="kicker-strip"><span>VANTA <strong> / '+films.length+' VIDÉOS INTÉGRÉES</strong></span><span class="kicker-right">SOURCES DES CRÉATEURS</span></div>'+
-rail("Classiques à découvrir","01 / NOUVEAUX FILMS",extraFilms.slice(0,16),true)+
-rail("Films disponibles","02 / SÉLECTION VANTA",films.slice(0,15),true)+
+rail("Les mieux notés sur VANTA","01 / NOTES IMDb VÉRIFIÉES",ratedFilms,true)+
+rail("Notre Top 10 cinéma","02 / LES INCONTOURNABLES",ratedFilms.slice(0,10),true)+
+rail("Classiques à découvrir","03 / NOUVEAUX FILMS",extraFilms.slice(0,16),true)+
+rail("Films disponibles","04 / SÉLECTION VANTA",ranked(films).slice(0,15),true)+
 rail("Films d’horreur","02 / FRISSONS ET FANTASTIQUE",films.filter(function(f){return f.genre==="Horreur";}),true)+
 rail("Thrillers et suspense","03 / ENQUÊTES ET MYSTÈRE",films.filter(function(f){return f.genre==="Thriller";}),true)+
 rail("Comédies","03 / HUMOUR",films.filter(function(f){return f.genre==="Comédie";}),true)+
@@ -184,8 +205,8 @@ var action=watch?'<button class="btn-primary" data-watch="'+f.id+'">'+icon("play
 modal('<div class="modal-bg" style="'+(f.posterUrl?'background-image:url(&quot;'+text(f.posterUrl)+'&quot;)':'background-image:linear-gradient(120deg,#222,#070707)')+'"></div>'+
 '<button class="modal-close" data-close="detail" aria-label="Fermer">'+icon("close")+'</button>'+
 '<div class="modal-body"><p class="eyebrow">VANTA / '+(watch?"VIDÉO INTÉGRÉE":"FICHE CINÉMA")+'</p><h2>'+text(f.title)+'</h2>'+
-'<div class="modal-meta"><span>'+text(f.year||"Vidéo")+'</span><span>•</span><span>'+(f.duration?f.duration+" min":"Durée non précisée")+'</span><span>•</span><span>'+text(f.genre)+'</span></div>'+
-'<p>'+text(f.description||"Un film à découvrir.")+'</p><div class="modal-actions">'+action+
+'<div class="modal-meta">'+(typeof f.rating==="number"?'<span class="vanta-rating">★ '+f.rating.toFixed(1)+'/10 IMDb</span><span>•</span>':'')+'<span>'+text(f.year||"Vidéo")+'</span><span>•</span><span>'+(f.duration?f.duration+" min":"Durée non précisée")+'</span><span>•</span><span>'+text(f.genre)+'</span></div>'+
+'<p>'+text(f.description||"Un film à découvrir.")+'</p>'+(f.imdbId?'<p class="vanta-rating-source"><a href="https://www.imdb.com/title/'+f.imdbId+'/ratings/" target="_blank" rel="noopener noreferrer">Voir la note sur IMDb ↗</a></p>':'')+'<div class="modal-actions">'+action+
 '<button class="btn-outline" data-fav="'+f.id+'">'+icon(added?"check":"plus")+' '+(added?"Dans ma liste":"Ajouter à ma liste")+'</button></div>'+
 '<div class="modal-credit">'+(watch?"Lecture depuis le lecteur officiel de la plateforme source. La disponibilité peut varier selon l’appareil et le pays. Les droits des films anciens peuvent différer selon les versions.":"Fiche de découverte uniquement : ce film n'est pas hébergé ni diffusé en entier sur VANTA. Les offres et prix peuvent varier. Aucun accès gratuit n'est garanti.")+'</div></div>');
 }
@@ -246,7 +267,7 @@ var field=document.getElementById("search-input");field.addEventListener("input"
 }
 function updateSearch(){
 var inp=document.getElementById("search-input");if(!inp)return;
-var q=inp.value.trim().toLowerCase(),found=films.filter(function(f){return !q||[f.title,f.genre,f.description,f.year].join(" ").toLowerCase().includes(q);}).slice(0,30);
+var q=inp.value.trim().toLowerCase(),found=ranked(films.filter(function(f){return !q||[f.title,f.genre,f.description,f.year].join(" ").toLowerCase().includes(q);})).slice(0,30);
 var target=document.getElementById("search-results");
 target.innerHTML=found.length?found.map(function(f){return '<button class="search-result" data-info="'+f.id+'"><img src="'+art(f)+'" alt=""><span><strong>'+text(f.title)+'</strong><small>'+f.year+' · '+f.duration+' min · '+text(f.genre)+'</small></span>'+icon("arrow")+'</button>';}).join(""):'<div style="padding:25px;color:#9aa0ad;text-align:center">Aucun résultat. Essaie un autre titre.</div>';
 }
@@ -283,6 +304,7 @@ if(el.closest("[data-load-more]")){catalogueLimit+=60;render();return;}
 var fl=el.closest("[data-filter]");if(fl){filter=fl.getAttribute("data-filter");catalogueLimit=60;render();window.scrollTo({top:0,behavior:"smooth"});}
 });
 
+document.addEventListener("change",function(e){if(e.target.id==="vanta-sort"){catalogueSort=e.target.value;catalogueLimit=60;render();}});
 document.addEventListener("click",function(e){if(e.target.id==="detail-overlay")closeDetail();if(e.target.id==="search-overlay")closeSearch();});
 document.addEventListener("keydown",function(e){
 if(e.key==="Escape"){var cp=document.getElementById("vanta-cinema-player");if(cp&&cp.classList.contains("cinema-is-fullscreen"))toggleCinemaFullscreen();else if(currentPlayer)closePlayer();else if(searchOpened)closeSearch();else closeDetail();document.getElementById("mobile-nav").classList.remove("open");}
