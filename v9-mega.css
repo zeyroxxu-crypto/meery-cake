@@ -540,3 +540,14 @@ body{background:linear-gradient(140deg,#fff8f0 0%,#fae5e3 48%,#fff1e6 100%) fixe
 #catalogue .catalog-card .v6-product-content{min-height:236px}
 @media(max-width:600px){#catalogue .v6-product-photo.mc29-ai{aspect-ratio:4/3}#catalogue .catalog-card .v6-product-content{min-height:0}}
 @media(prefers-reduced-motion:reduce){#catalogue .v6-product-photo.mc29-ai img{transition:none!important;transform:none!important}}
+
+/* V30 — text-only Carte: no product photos. */
+#catalogue .catalog-card{display:flex;flex-direction:column;min-height:0;background:#fffaf6}
+#catalogue .catalog-card .v6-product-content{padding:clamp(22px,2.4vw,32px);min-height:0;display:flex;flex-direction:column;gap:12px}
+#catalogue .catalog-card .v6-product-content .name{font:400 clamp(23px,2.3vw,32px)/1.15 var(--serif);color:#6f3449}
+#catalogue .catalog-card .v6-product-content .price{color:#a44d68;font-weight:800}
+#catalogue .catalog-card .catalog-actions{margin-top:auto}
+#catalogue .catalog-card .v8-product-details{margin-top:auto}
+.v8-dialog-grid.mc30-no-photo-dialog{display:block!important;grid-template-columns:none!important;width:min(600px,100%);max-width:100%}
+.v8-dialog-grid.mc30-no-photo-dialog .v8-dialog-info{width:100%;padding:clamp(20px,4vw,42px)}
+@media(max-width:600px){#catalogue .catalog-card .v6-product-content{padding:22px}}
