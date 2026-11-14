@@ -257,7 +257,7 @@ body{background:linear-gradient(150deg,#fff9f3 0%,#f8e7e5 52%,#fdf0e6 100%) fixe
 
 /* V23 — balanced product photo framing, without cropping portrait desserts. */
 #catalogue .v6-product-photo{position:relative;isolation:isolate;aspect-ratio:16/10;background:linear-gradient(140deg,#e9c9c9,#f9eae1)}
-#catalogue .v6-product-photo::before{content:"";position:absolute;inset:-14px;z-index:-1;background-image:var(--mc23-photo,linear-gradient(135deg,#ead1cb,#f8e6d9));background-size:cover;background-position:center;filter:blur(16px) brightness(.95);opacity:.65;transform:scale(1.08);pointer-events:none}
+#catalogue .v6-product-photo::before{content:"";position:absolute;inset:-14px;z-index:0;background-image:var(--mc23-photo,linear-gradient(135deg,#ead1cb,#f8e6d9));background-size:cover;background-position:center;filter:blur(16px) brightness(.95);opacity:.65;transform:scale(1.08);pointer-events:none}
 #catalogue .v6-product-photo img{position:relative;z-index:1;object-fit:cover;object-position:center center;transition:transform .55s cubic-bezier(.2,.7,.25,1);filter:saturate(1.04)}
 #catalogue .v6-product-photo.mc23-uncropped img{object-fit:contain;object-position:center;padding:6px;box-sizing:border-box}
 #catalogue .v6-product-photo.mc23-uncropped::after{display:none}
