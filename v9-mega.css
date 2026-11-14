@@ -180,3 +180,68 @@ html .mc10-enter.mc10-done.mc10-replay-end{
  transition:opacity .7s ease,filter .7s ease,transform .7s cubic-bezier(.22,1,.36,1)!important;
  transition-delay:0ms!important;
 }
+
+/* V19 — Meery Cake pink & beige patisserie editorial theme. */
+:root{--mc19-rose:#a95165;--mc19-wine:#6c283d;--mc19-blush:#e8b0b3;--mc19-beige:#fff0e1;--mc19-paper:#fff8f0}
+body{background:linear-gradient(150deg,#fff9f3 0%,#f8e7e5 52%,#fdf0e6 100%) fixed}
+.section:not(.dark):not(.award-ribbon),.section.tint{background:linear-gradient(135deg,#fff8f1 0%,#f9e5e4 100%)}
+.page-hero{background:linear-gradient(125deg,#b86d7d,#e3a3a9 48%,#fce7db)}
+#catalogue.section{background:linear-gradient(165deg,#fcebe4,#fff5ea 40%,#efd5d2)!important;min-height:60vh}
+#catalogue .section-head h2{font:400 clamp(42px,5.5vw,74px)/1.1 var(--serif);color:#682f3e}
+#catalogue .section-head h2 em{color:#a14f65}
+#catalogue .catalog-toolbar,#catalogue .mc9-shop-tools{background:#fffbf6d9;border-color:#e8c1bd;box-shadow:0 10px 35px #803e5510}
+#catalogue .catalog-card{background:#fff8f3;box-shadow:0 12px 36px #8d4a5520;border:1px solid #f1d3ca;border-radius:17px}
+#catalogue .catalog-card:hover{box-shadow:0 22px 50px #88475929}
+#catalogue .filter{border-radius:99px}
+.mc19-menu-hero{position:relative;isolation:isolate;overflow:hidden;padding:54px 0 48px;background:radial-gradient(ellipse at 66% 32%,#f2c7c0 0%,transparent 53%),linear-gradient(140deg,#933d54 0%,#c77385 35%,#e7a9a9 68%,#f8d9c6 100%);color:#fff6eb}
+.mc19-menu-hero::before,.mc19-menu-hero::after{content:"";position:absolute;border:1px solid #ffe8dd42;border-radius:50%;pointer-events:none}
+.mc19-menu-hero::before{width:670px;height:670px;left:-290px;top:-470px}
+.mc19-menu-hero::after{width:820px;height:820px;right:-450px;bottom:-650px}
+.mc19-menu-ambient{position:absolute;inset:0;z-index:-1;pointer-events:none}
+.mc19-menu-ambient span{position:absolute;display:block;width:460px;height:110px;border-radius:50%;background:#fff1e459;filter:blur(32px);transform:rotate(-21deg);animation:mc19-ambient 13s ease-in-out infinite alternate}
+.mc19-menu-ambient span:nth-child(1){left:-130px;bottom:130px}
+.mc19-menu-ambient span:nth-child(2){right:-190px;top:220px;animation-delay:-3s}
+.mc19-menu-ambient span:nth-child(3){left:41%;bottom:-30px;animation-delay:-7s}
+@keyframes mc19-ambient{from{transform:translate3d(-20px,0,0) rotate(-21deg)}to{transform:translate3d(35px,-28px,0) rotate(-12deg)}}
+.mc19-menu-hero-inner{display:grid;grid-template-columns:minmax(280px,.8fr) minmax(0,1.25fr);min-height:520px;align-items:center;gap:38px}
+.mc19-hero-copy{position:relative;z-index:2;padding:20px 0 70px}
+.mc19-hero-copy .breadcrumbs{color:#fff5efb8;font-size:12px;margin-bottom:24px}
+.mc19-hero-copy .breadcrumbs a{color:#fff5ef}
+.mc19-kicker{font-size:11px;letter-spacing:.27em;color:#ffebdf;font-weight:750}
+.mc19-hero-copy h1{font:400 clamp(94px,12vw,184px)/.95 var(--serif);letter-spacing:-.083em;color:#fff6eb;margin:14px 0 6px;white-space:nowrap;text-shadow:0 5px 32px #75233d24}
+.mc19-hero-copy h1 em{font-weight:400;color:#f7e3d5}
+.mc19-tagline{font-size:10px;letter-spacing:.35em;text-transform:uppercase;font-weight:750;color:#ffebdf;border-top:1px solid #ffeadd88;padding-top:24px;max-width:340px}
+.mc19-description{font:400 clamp(18px,1.7vw,23px)/1.5 var(--serif);color:#fff7f2;max-width:350px;margin:23px 0 30px}
+.mc19-discover{display:inline-flex;align-items:center;justify-content:space-between;gap:25px;padding:15px 22px;border-radius:40px;background:#ffeadc;color:#713044;text-decoration:none;font-size:13px;font-weight:800;box-shadow:0 14px 34px #612d3c36;transition:transform .3s,box-shadow .3s,background .3s}
+.mc19-discover:hover{background:#fff8ee;transform:translateY(-4px);box-shadow:0 19px 42px #612d3c42}
+.mc19-cake-scene{position:relative;height:520px;perspective:1150px;isolation:isolate}
+.mc19-cake-scene::before{content:"";position:absolute;inset:27% 6% 10%;border-radius:50%;background:#ffded69c;filter:blur(48px);z-index:-1}
+.mc19-cake-photo{position:absolute;margin:0;overflow:hidden;border:7px solid #fff7f0c9;border-radius:30px;background:#f8d0c9;box-shadow:0 32px 75px #54213650,0 3px 10px #54213630;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.22,1,.36,1),box-shadow .5s;animation:mc19-float 7s ease-in-out infinite alternate}
+.mc19-cake-photo img{display:block;width:100%;height:100%;object-fit:cover;filter:saturate(1.11) contrast(1.04)}
+.mc19-cake-photo-one{width:53%;height:67%;left:24%;top:10%;z-index:3;transform:rotate(-3deg) translateZ(45px);animation-delay:-1.5s}
+.mc19-cake-photo-two{width:43%;height:48%;left:0;bottom:3%;z-index:4;transform:rotate(-11deg) translateZ(75px);animation-delay:-4s}
+.mc19-cake-photo-three{width:39%;height:50%;right:0;bottom:3%;z-index:2;transform:rotate(8deg) translateZ(15px);animation-delay:-2s}
+.mc19-cake-photo-one img{object-position:center}
+.mc19-cake-photo-two img{object-position:60% center}
+.mc19-cake-photo-three img{object-position:center}
+@keyframes mc19-float{0%{translate:0 0}100%{translate:0 -14px}}
+.mc19-cake-photo:hover{transform:rotate(0deg) translate3d(0,-13px,100px) scale(1.035);box-shadow:0 45px 95px #56243c58}
+.mc19-scene-caption{position:absolute;bottom:-4px;right:10px;z-index:5;color:#fff8f0;letter-spacing:.16em;text-transform:uppercase;font-size:9px;font-weight:850;text-shadow:0 2px 8px #5c3145a0}
+.mc19-petal{position:absolute;z-index:6;width:38px;height:18px;border-radius:80% 10% 80% 10%;background:linear-gradient(125deg,#f9c3c4,#bd586e);box-shadow:0 8px 20px #632f4540;animation:mc19-petal 8s ease-in-out infinite alternate}
+.mc19-petal-one{right:2%;top:4%;rotate:-37deg}
+.mc19-petal-two{left:8%;top:22%;rotate:33deg;animation-delay:-4s}
+@keyframes mc19-petal{from{translate:0 0;rotate:-20deg}to{translate:-28px 36px;rotate:50deg}}
+.mc19-menu-shortcuts{position:relative;z-index:3;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-top:8px}
+.mc19-category{appearance:none;text-align:left;text-decoration:none;cursor:pointer;display:flex;align-items:center;gap:12px;min-width:0;padding:20px 16px;background:#ffefe3e3;color:#743345;border:1px solid #fff8eea8;border-radius:17px;box-shadow:0 12px 32px #73344a20;transition:transform .3s,background .3s,box-shadow .3s;font:inherit}
+.mc19-category>span:nth-child(2){flex:1;min-width:0}
+.mc19-category strong{display:block;font:500 clamp(17px,1.75vw,23px)/1.1 var(--serif)}
+.mc19-category small{display:block;font-size:10px;line-height:1.45;margin-top:6px;color:#8b5c63}
+.mc19-cat-glyph{font:400 29px/1 var(--serif);flex:none;color:#9c5063}
+.mc19-category>span:last-child{font-size:19px}
+.mc19-category:hover,.mc19-category:focus-visible{transform:translateY(-7px);background:#fff8ed;box-shadow:0 17px 37px #692d4333}
+.mc19-category-active{background:linear-gradient(130deg,#9c4358,#b55e71);color:#fff8ed}
+.mc19-category-active small,.mc19-category-active .mc19-cat-glyph{color:#ffe5dc}
+.mc19-category-active:hover{background:#984253}
+@media(max-width:970px){.mc19-menu-hero-inner{grid-template-columns:1fr;gap:0}.mc19-hero-copy{padding:0}.mc19-hero-copy h1{font-size:clamp(82px,13vw,150px)}.mc19-cake-scene{height:420px;max-width:760px;width:100%;margin:0 auto}.mc19-menu-shortcuts{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:14px}}
+@media(max-width:600px){.mc19-menu-hero{padding:32px 0 30px}.mc19-hero-copy h1{font-size:clamp(70px,17vw,112px)}.mc19-menu-hero-inner{min-height:0}.mc19-description{font-size:19px;max-width:320px}.mc19-tagline{padding-top:15px}.mc19-cake-scene{height:300px;margin-top:18px}.mc19-cake-photo{border-width:4px;border-radius:18px}.mc19-cake-photo-one{left:24%;width:52%;height:74%}.mc19-cake-photo-two{width:44%;height:51%;left:1%;bottom:7%}.mc19-cake-photo-three{width:42%;height:49%;right:0;bottom:5%}.mc19-menu-shortcuts{gap:9px}.mc19-category{padding:13px 10px;gap:6px;border-radius:13px}.mc19-category strong{font-size:17px}.mc19-category small{font-size:9px}.mc19-cat-glyph{font-size:22px}.mc19-category>span:last-child{font-size:13px}.mc19-petal{width:25px;height:12px}}
+@media(prefers-reduced-motion:reduce){.mc19-menu-ambient span,.mc19-cake-photo,.mc19-petal{animation:none}}
