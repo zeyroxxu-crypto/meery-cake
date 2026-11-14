@@ -105,32 +105,13 @@ initCatalog(){
  if(!matches.length)result.append(this.el('p',{text:this.t('noresults')}));
  for(const p of matches){
  const card=this.el('article',{cls:'catalog-card'}),title=this.el('h3',{cls:'name',text:p.name}),label=this.el('span',{cls:'tag',text:p.category}),desc=this.el('p',{text:p.description||'Description à confirmer auprès du salon.'}),price=this.el('span',{cls:'price',text:p.price||this.t('confirm')});
- const photo=this.el('div',{cls:'v6-product-photo mc29-ai'});
- const img=this.el('img');
- const safeId=/^[0-4]-[0-9]{1,2}$/.test(String(p.id))?p.id:null;
- if(safeId){
-  img.src='assets/ai-menu/'+safeId+'.webp';
-  img.loading='lazy';img.decoding='async';
-  img.width=800;img.height=600;
-  img.alt='Illustration générée par IA de '+p.name+' — aspect réel non garanti';
-  img.addEventListener('load',()=>photo.classList.add('mc29-loaded'),{once:true});
-  img.addEventListener('error',()=>{
-   img.remove();
-   photo.classList.add('v6-photo-unavailable','mc29-loaded');
-   photo.append(this.el('span',{cls:'v6-product-icon',text:'Illustration indisponible'}));
-  },{once:true});
-  photo.append(img);
-  if(img.complete&&img.naturalWidth)photo.classList.add('mc29-loaded');
- }else photo.append(this.el('span',{cls:'v6-product-icon',text:'Illustration indisponible'}));
- const credit=this.el('span',{cls:'v6-photo-label',text:'Illustration IA · non contractuelle'});
- photo.append(credit);
  const inner=this.el('div',{cls:'v6-product-content'});
  const actions=this.el('div',{cls:'catalog-actions'}),fav=this.el('button',{text:this.favorites.includes(p.id)?'♥ Favori':'♡ Favori',type:'button',cls:this.favorites.includes(p.id)?'active':''}),ask=this.el('a',{text:'Se renseigner →',href:'tel:+33983605602'});
  ask.className='inline-link';fav.addEventListener('click',()=>this.toggleFavorite(p.id));
  const detail=this.el('button',{cls:'v8-product-details',type:'button',text:'Découvrir ce produit ↗'});
  detail.dataset.productId=p.id;detail.setAttribute('aria-label','Voir la fiche de '+p.name);
  card.dataset.productId=p.id;
- actions.append(fav,ask);inner.append(label,title,desc,price,detail,actions);card.append(photo,inner);result.append(card)
+ actions.append(fav,ask);inner.append(label,title,desc,price,detail,actions);card.append(inner);result.append(card)
  }
  };
  const filters=this.byId('catalogFilters');
