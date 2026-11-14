@@ -57,7 +57,7 @@ function quickView(){
  const items=$('catalogItems');if(!items)return;
  const dialog=el('dialog','v8-product-dialog');dialog.id='v8ProductDialog';dialog.setAttribute('aria-label','Détails du produit');
  const close=el('button','v8-dialog-close','×');close.type='button';close.setAttribute('aria-label','Fermer les détails');
- const layout=el('div','v8-dialog-grid'),imageArea=el('div','v8-dialog-photo'),picture=el('img'),photoNote=el('div','v8-dialog-photo-note','Photo illustrative · Ne représente pas le produit servi chez Meery Cake');
+ const layout=el('div','v8-dialog-grid'),imageArea=el('div','v8-dialog-photo'),picture=el('img'),photoNote=el('div','v8-dialog-photo-note','Illustration générée par IA · Aspect réel du produit non garanti');
  imageArea.append(picture,photoNote);
  const info=el('div','v8-dialog-info'),category=el('span','eyebrow'),title=el('h2',''),description=el('p',''),price=el('strong',''),notice=el('p','v8-dialog-note','Produits, composition, prix et allergènes à vérifier avec Meery Cake. Cette fiche est informative, pas une commande.');
  const actions=el('div','v8-dialog-actions'),fav=el('button','button secondary','♡ Ajouter aux favoris'),contact=el('a','button','Se renseigner ↗'),copy=el('button','button secondary','Partager la fiche');
@@ -90,7 +90,7 @@ function quickView(){
   price.textContent=p.price?'Prix indiqué dans la maquette : '+p.price:'Prix à confirmer auprès du salon';
   const card=btn.closest('.catalog-card');
   const pic=card?.querySelector('.v6-product-photo img');
-  if(pic){picture.src=pic.src;picture.alt='Photo illustrative pour '+p.name+' — non prise chez Meery Cake'}
+  if(pic){picture.src=pic.src;picture.alt='Illustration générée par IA pour '+p.name+' — image non contractuelle'}
   else {picture.removeAttribute('src');picture.alt='Photographie indisponible'}
   refreshFav();
   if(typeof dialog.showModal==='function')dialog.showModal();else dialog.setAttribute('open','');
