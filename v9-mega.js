@@ -191,7 +191,7 @@ function scrollSections(){
    const rect=el.getBoundingClientRect();
    el.style.setProperty('--mc10-stagger',((i%3)*85)+'ms');
    el.classList.add('mc10-enter');
-   if(rect.top<innerHeight*.87||rect.bottom<=0){entered.add(el);el.classList.add('mc10-inview','mc10-done')}
+   if(rect.top<innerHeight*.87||rect.bottom<=0){entered.add(el);el.classList.add('mc10-inview','mc10-done');if(rect.bottom>0&&rect.top<innerHeight)onscreen.add(el)}
    io.observe(el);
   });
  }
