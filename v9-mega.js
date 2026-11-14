@@ -216,6 +216,41 @@ function siteUtilities(){
  addEventListener('scroll',()=>{if(!busy){busy=true;requestAnimationFrame(update)}},{passive:true});update();
 }
 
+function menuShowcase(){
+ const hero=document.querySelector('.mc19-menu-hero');
+ if(!hero)return;
+ const buttons=[...hero.querySelectorAll('button[data-mc19-cat]')];
+ buttons.forEach(button=>button.addEventListener('click',()=>{
+  const id=button.getAttribute('data-mc19-cat');
+  const findButton=()=>[...document.querySelectorAll('#catalogFilters button')].find(x=>{
+    const title=x.textContent.toLocaleLowerCase('fr');
+    return id==='desserts'?title.includes('pâtisserie')||title.includes('dessert'):
+      id==='brunch'?title.includes('brunch'):title.includes('chaude');
+  });
+  const found=findButton();
+  found?.click();
+  buttons.forEach(b=>b.classList.toggle('mc19-category-active',b===button));
+  document.getElementById('catalogue')?.scrollIntoView({behavior:'smooth',block:'start'});
+ }));
+ const scene=hero.querySelector('.mc19-cake-scene');
+ if(scene&&matchMedia('(pointer:fine)').matches){
+  let requested=false;
+  scene.addEventListener('pointermove',event=>{
+   if(requested)return;
+   requested=true;
+   requestAnimationFrame(()=>{
+    requested=false;
+    const rect=scene.getBoundingClientRect();
+    const dx=(event.clientX-rect.left)/rect.width-.5;
+    const dy=(event.clientY-rect.top)/rect.height-.5;
+    scene.style.setProperty('--mc19-x',(dx*13).toFixed(2)+'px');
+    scene.style.setProperty('--mc19-y',(dy*9).toFixed(2)+'px');
+    scene.querySelectorAll('.mc19-cake-photo').forEach((x,i)=>x.style.translate=(dx*(i+1)*4).toFixed(1)+'px '+(dy*(i+1)*3).toFixed(1)+'px');
+   });
+  },{passive:true});
+  scene.addEventListener('pointerleave',()=>scene.querySelectorAll('.mc19-cake-photo').forEach(x=>x.style.translate=''));
+ }
+}
 function premiumInteractions(){
  // Navigation, image loading, gallery gestures and lightweight entrance effects.
  const nav=document.querySelector('.site-header');
@@ -252,7 +287,7 @@ function premiumInteractions(){
 }
 
 function init(){
- renderHomeCollections();addCatalogueTools();galleryCount();enrichCake();siteUtilities();scrollSections();premiumInteractions()
+ renderHomeCollections();addCatalogueTools();galleryCount();enrichCake();siteUtilities();scrollSections();premiumInteractions();menuShowcase()
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
