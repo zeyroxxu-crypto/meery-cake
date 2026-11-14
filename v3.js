@@ -105,90 +105,25 @@ initCatalog(){
  if(!matches.length)result.append(this.el('p',{text:this.t('noresults')}));
  for(const p of matches){
  const card=this.el('article',{cls:'catalog-card'}),title=this.el('h3',{cls:'name',text:p.name}),label=this.el('span',{cls:'tag',text:p.category}),desc=this.el('p',{text:p.description||'Description à confirmer auprès du salon.'}),price=this.el('span',{cls:'price',text:p.price||this.t('confirm')});
- const photo=this.el('div',{cls:'v6-product-photo'});
- // Representative, independently licensed Pexels images matched to food types.
- // They are not photos of Meery Cake products. Never imply an exact match.
- const catalogIllustrations={
-  '0-0':2739268,
-  '0-1':4746573,
-  '0-2':17321263,
-  '0-3':19552394,
-  '0-4':6133453,
-  '1-0':34109986,
-  '1-1':32321176,
-  '1-2':37548742,
-  '1-3':26161036,
-  '1-4':9050519,
-  '1-5':37146476,
-  '1-6':34269426,
-  '1-7':19404174,
-  '1-8':34269420,
-  '1-9':19404174,
-  '1-10':34269426,
-  '1-11':12420818,
-  '1-12':8736395,
-  '1-13':12698359,
-  '1-14':27524210,
-  '2-0':6829918,
-  '2-1':38956011,
-  '2-2':5947064,
-  '2-3':12033562,
-  '2-4':14057898,
-  '2-5':6829918,
-  '2-6':14057898,
-  '2-7':33542187,
-  '3-0':11750369,
-  '3-1':6824498,
-  '3-2':31584178,
-  '3-3':11750369,
-  '3-4':7962694,
-  '3-5':30346820,
-  '3-6':5182119,
-  '3-7':29843069,
-  '3-8':11725599,
-  '3-9':2739268,
-  '3-10':5182119,
-  '3-11':30270636,
-  '3-12':30774111,
-  '3-13':17322372,
-  '3-14':31584178,
-  '3-15':31882544,
-  '4-0':9501719,
-  '4-1':4748366,
-  '4-2':11073464,
-  '4-3':7521488,
-  '4-4':853004,
-  '4-5':5964496,
-  '4-6':14440754
- };
- const illustrationId=catalogIllustrations[p.id];
- const fallbackPhoto=this.data.photos?.[({brunch:2,'boissons-chaudes':3,'boissons-froides':3,sale:2,desserts:0})[p.groupId]];
- if(illustrationId){
-  const img=this.el('img');
-  img.src='https://images.pexels.com/photos/'+illustrationId+'/pexels-photo-'+illustrationId+'.jpeg?auto=compress&cs=tinysrgb&w=960';
+ const photo=this.el('div',{cls:'v6-product-photo mc29-ai'});
+ const img=this.el('img');
+ const safeId=/^[0-4]-[0-9]{1,2}$/.test(String(p.id))?p.id:null;
+ if(safeId){
+  img.src='assets/ai-menu/'+safeId+'.webp';
   img.loading='lazy';img.decoding='async';
-  // Keep portrait and near-square food photos intact, with a soft matching backdrop.
-  const framePhoto=()=>{
-   if(!img.naturalWidth||!img.naturalHeight)return;
-   const ratio=img.naturalWidth/img.naturalHeight;
-   photo.classList.toggle('mc23-uncropped',ratio<1.45);
-   photo.style.setProperty('--mc23-photo',`url("${img.src}")`);
-  };
-  img.addEventListener('load',framePhoto);
-  if(img.complete&&img.naturalWidth)framePhoto();
-  img.alt='Photo illustrative pour '+p.name+' — ne représente pas le produit servi chez Meery Cake';
+  img.width=800;img.height=600;
+  img.alt='Illustration générée par IA de '+p.name+' — aspect réel non garanti';
+  img.addEventListener('load',()=>photo.classList.add('mc29-loaded'),{once:true});
   img.addEventListener('error',()=>{
-   // Avoid replacing a specific product image with an unrelated category photo.
    img.remove();
-   photo.classList.add('v6-photo-unavailable');
-   const placeholder=this.el('span',{cls:'v6-product-icon',text:'Photographie indisponible'});
-   photo.append(placeholder);
+   photo.classList.add('v6-photo-unavailable','mc29-loaded');
+   photo.append(this.el('span',{cls:'v6-product-icon',text:'Illustration indisponible'}));
   },{once:true});
   photo.append(img);
- }else if(fallbackPhoto?.src){
-  const img=this.el('img');img.src=fallbackPhoto.src;img.loading='lazy';img.alt='Photographie d’archive du salon, produit non contractuel';photo.append(img);
- }else photo.append(this.el('span',{cls:'v6-product-icon',text:'✧'}));
- const credit=this.el('span',{cls:'v6-photo-label',text:'Photo illustrative · non contractuelle'});photo.append(credit);
+  if(img.complete&&img.naturalWidth)photo.classList.add('mc29-loaded');
+ }else photo.append(this.el('span',{cls:'v6-product-icon',text:'Illustration indisponible'}));
+ const credit=this.el('span',{cls:'v6-photo-label',text:'Illustration IA · non contractuelle'});
+ photo.append(credit);
  const inner=this.el('div',{cls:'v6-product-content'});
  const actions=this.el('div',{cls:'catalog-actions'}),fav=this.el('button',{text:this.favorites.includes(p.id)?'♥ Favori':'♡ Favori',type:'button',cls:this.favorites.includes(p.id)?'active':''}),ask=this.el('a',{text:'Se renseigner →',href:'tel:+33983605602'});
  ask.className='inline-link';fav.addEventListener('click',()=>this.toggleFavorite(p.id));
