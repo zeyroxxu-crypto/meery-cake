@@ -165,3 +165,18 @@ html .mc10-enter.mc10-done.mc10-inview{
  will-change:auto!important;
 }
 html .mc10-enter:not(.mc10-inview){filter:blur(1.5px)!important}
+
+/* Re-enter viewport: subtle repeat, never disappear after the first appearance. */
+html .mc10-enter.mc10-done.mc10-replay-start{
+ opacity:.90!important;
+ filter:blur(.6px)!important;
+ transform:translate3d(0,11px,0) scale(.995)!important;
+ transition:none!important;
+}
+html .mc10-enter.mc10-done.mc10-replay-end{
+ opacity:1!important;
+ filter:none!important;
+ transform:none!important;
+ transition:opacity .7s ease,filter .7s ease,transform .7s cubic-bezier(.22,1,.36,1)!important;
+ transition-delay:0ms!important;
+}
