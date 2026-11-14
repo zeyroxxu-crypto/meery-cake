@@ -169,9 +169,12 @@ initCatalog(){
   img.loading='lazy';img.decoding='async';
   img.alt='Photo illustrative pour '+p.name+' — ne représente pas le produit servi chez Meery Cake';
   img.addEventListener('error',()=>{
-   if(fallbackPhoto?.src&&img.src!==fallbackPhoto.src){img.src=fallbackPhoto.src}
-   else{img.remove();photo.classList.add('v6-photo-unavailable')}
-  });
+   // Avoid replacing a specific product image with an unrelated category photo.
+   img.remove();
+   photo.classList.add('v6-photo-unavailable');
+   const placeholder=this.el('span',{cls:'v6-product-icon',text:'Photographie indisponible'});
+   photo.append(placeholder);
+  },{once:true});
   photo.append(img);
  }else if(fallbackPhoto?.src){
   const img=this.el('img');img.src=fallbackPhoto.src;img.loading='lazy';img.alt='Photographie d’archive du salon, produit non contractuel';photo.append(img);
