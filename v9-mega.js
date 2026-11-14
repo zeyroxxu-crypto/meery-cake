@@ -147,10 +147,21 @@ function scrollSections(){
  ].join(',');
  if(!('IntersectionObserver' in window))return;
  const seen=new WeakSet();
+ function revealOnce(el){
+  if(el.classList.contains('mc10-inview'))return;
+  el.classList.add('mc10-inview');
+  // After entrance, keep a stable visible state even when leaving the viewport.
+  el.addEventListener('transitionend',function finish(e){
+   if(e.target!==el||e.propertyName!=='opacity')return;
+   el.classList.add('mc10-done');
+   el.removeEventListener('transitionend',finish);
+  });
+  setTimeout(()=>el.classList.add('mc10-done'),1250);
+ }
  const observer=new IntersectionObserver(entries=>{
   for(const entry of entries){
    if(entry.isIntersecting){
-    entry.target.classList.add('mc10-inview');
+    revealOnce(entry.target);
     observer.unobserve(entry.target);
    }
   }
@@ -163,7 +174,7 @@ function scrollSections(){
    const visible=rect.top<window.innerHeight*.86||rect.bottom<=0;
    el.style.setProperty('--mc10-stagger',((i%3)*85)+'ms');
    el.classList.add('mc10-enter');
-   if(visible)el.classList.add('mc10-inview');
+   if(visible)revealOnce(el);
    else observer.observe(el);
   });
  }
