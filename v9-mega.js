@@ -251,6 +251,24 @@ function menuShowcase(){
   scene.addEventListener('pointerleave',()=>scene.querySelectorAll('.mc19-cake-photo').forEach(x=>x.style.translate=''));
  }
 }
+function boutiqueDepth(){
+ const root=document.querySelector('.mc27-boutique');
+ if(!root)return;
+ const visual=root.querySelector('.mc25-hero-visual');
+ if(!visual)return;
+ let pending=false;
+ const draw=()=>{
+  pending=false;
+  const bounds=visual.getBoundingClientRect();
+  if(bounds.bottom<0||bounds.top>innerHeight)return;
+  const delta=Math.max(-1,Math.min(1,(innerHeight/2-(bounds.top+bounds.height/2))/innerHeight));
+  visual.style.setProperty('--mc27-shift',(delta*14).toFixed(2)+'px');
+ };
+ const onScroll=()=>{if(pending)return;pending=true;requestAnimationFrame(draw)};
+ addEventListener('scroll',onScroll,{passive:true});
+ addEventListener('resize',onScroll,{passive:true});
+ draw();
+}
 function premiumInteractions(){
  // Navigation, image loading, gallery gestures and lightweight entrance effects.
  const nav=document.querySelector('.site-header');
@@ -287,7 +305,7 @@ function premiumInteractions(){
 }
 
 function init(){
- addCatalogueTools();galleryCount();enrichCake();siteUtilities();scrollSections();premiumInteractions();menuShowcase()
+ addCatalogueTools();galleryCount();enrichCake();siteUtilities();scrollSections();premiumInteractions();menuShowcase();boutiqueDepth()
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
