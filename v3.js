@@ -106,15 +106,38 @@ initCatalog(){
  for(const p of matches){
  const card=this.el('article',{cls:'catalog-card'}),title=this.el('h3',{cls:'name',text:p.name}),label=this.el('span',{cls:'tag',text:p.category}),desc=this.el('p',{text:p.description||'Description à confirmer auprès du salon.'}),price=this.el('span',{cls:'price',text:p.price||this.t('confirm')});
  const photo=this.el('div',{cls:'v6-product-photo'});
- // Source photos are category ambience, NOT a verified photograph of each named item.
- const photosByGroup={brunch:2,'boissons-chaudes':3,'boissons-froides':3,sale:2,desserts:0};
- const archival=this.data.photos?.[photosByGroup[p.groupId]];
- if(archival&&archival.src){
-  const img=this.el('img');img.src=archival.src;img.loading='lazy';img.decoding='async';
-  img.alt='Photographie d’ambiance de Meery Cake — ne représente pas nécessairement '+p.name;
-  photo.append(img)
+ // Representative, independently licensed Pexels images matched to food types.
+ // They are not photos of Meery Cake products. Never imply an exact match.
+ const catalogIllustrations={
+  '0-0':27152304,'0-1':28962386,'0-2':37282590,'0-3':7719180,'0-4':12377819,
+  '1-0':312418,'1-1':27524210,'1-2':27908739,'1-3':26161036,'1-4':9501606,
+  '1-5':27548803,'1-6':34269426,'1-7':34269420,'1-8':34269424,'1-9':34269426,
+  '1-10':34269420,'1-11':28730007,'1-12':27019410,'1-13':12698359,'1-14':21815130,
+  '2-0':8679338,'2-1':6469041,'2-2':25409639,'2-3':4731076,
+  '2-4':25409639,'2-5':10906407,'2-6':8679338,'2-7':33542187,
+  '3-0':27152304,'3-1':37282590,'3-2':17421065,'3-3':34793980,
+  '3-4':35628181,'3-5':37282590,'3-6':28962386,'3-7':12377819,
+  '3-8':33573600,'3-9':7719180,'3-10':28962386,'3-11':35628181,
+  '3-12':35628181,'3-13':17421065,'3-14':34793980,'3-15':37282590,
+  '4-0':9501719,'4-1':10563270,'4-2':7474204,'4-3':3977340,
+  '4-4':7474204,'4-5':36736999,'4-6':12782723
+ };
+ const illustrationId=catalogIllustrations[p.id];
+ const fallbackPhoto=this.data.photos?.[({brunch:2,'boissons-chaudes':3,'boissons-froides':3,sale:2,desserts:0})[p.groupId]];
+ if(illustrationId){
+  const img=this.el('img');
+  img.src='https://images.pexels.com/photos/'+illustrationId+'/pexels-photo-'+illustrationId+'.jpeg?auto=compress&cs=tinysrgb&w=700';
+  img.loading='lazy';img.decoding='async';
+  img.alt='Photo illustrative pour '+p.name+' — ne représente pas le produit servi chez Meery Cake';
+  img.addEventListener('error',()=>{
+   if(fallbackPhoto?.src&&img.src!==fallbackPhoto.src){img.src=fallbackPhoto.src}
+   else{img.remove();photo.classList.add('v6-photo-unavailable')}
+  });
+  photo.append(img);
+ }else if(fallbackPhoto?.src){
+  const img=this.el('img');img.src=fallbackPhoto.src;img.loading='lazy';img.alt='Photographie d’archive du salon, produit non contractuel';photo.append(img);
  }else photo.append(this.el('span',{cls:'v6-product-icon',text:'✧'}));
- const credit=this.el('span',{cls:'v6-photo-label',text:'Photo d’ambiance · non contractuelle'});photo.append(credit);
+ const credit=this.el('span',{cls:'v6-photo-label',text:'Photo illustrative · non contractuelle'});photo.append(credit);
  const inner=this.el('div',{cls:'v6-product-content'});
  const actions=this.el('div',{cls:'catalog-actions'}),fav=this.el('button',{text:this.favorites.includes(p.id)?'♥ Favori':'♡ Favori',type:'button',cls:this.favorites.includes(p.id)?'active':''}),ask=this.el('a',{text:'Se renseigner →',href:'tel:+33983605602'});
  ask.className='inline-link';fav.addEventListener('click',()=>this.toggleFavorite(p.id));
