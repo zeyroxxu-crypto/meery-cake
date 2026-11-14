@@ -150,6 +150,7 @@ function render(){
 var out="";
 if(view==="home"){
 out=hero()+'<div class="kicker-strip"><span>VANTA <strong> / '+films.length+' VIDÉOS INTÉGRÉES</strong></span><span class="kicker-right">SOURCES DES CRÉATEURS</span></div>'+
+(Object.keys(progress).length?rail("À revoir","REPRENDRE VOS DÉCOUVERTES",Object.keys(progress).sort(function(a,b){return progress[b]-progress[a];}).map(getFilm).filter(Boolean),true):"")+
 rail("Les mieux notés sur VANTA","01 / NOTES IMDb VÉRIFIÉES",ratedFilms,true)+
 rail("Notre Top 10 cinéma","02 / LES INCONTOURNABLES",ratedFilms.slice(0,10),true)+
 rail("Classiques à découvrir","03 / NOUVEAUX FILMS",extraFilms.slice(0,16),true)+
@@ -222,6 +223,7 @@ var f=getFilm(id);if(!f)return;
 if(!f.youtubeId&&!f.archiveId&&!f.embedId){openDetail(id);return;}
 closeDetail();closeSearch();
 document.body.style.overflow="hidden";currentPlayer=id;
+progress[id]=Date.now();save();
 var embeds={sintel:"0eb052d0-fd51-43e6-aa33-ecdbf77a5d40",tears:"8533ea43-4271-4a57-9694-e9d0b35e1aa1",bunny:"bf1f3fb5-b119-4f9f-9930-8e20e892b898",spring:"3d95fb3d-c866-42c8-9db1-fe82f48ccb95",sprite:"a69d68a5-a0e0-4a80-9d66-49f093c97aaf",agent:"264ff760-803e-430e-8d81-15648e904183",caminandes:"fb70d459-48d2-4db5-adba-813c84f9200a",glass:"64222c8a-c4c7-4b3b-9850-7fb2078edcf6"};
 var filmUrl=f.youtubeId?"https://www.youtube-nocookie.com/embed/"+encodeURIComponent(f.youtubeId)+"?playsinline=1&rel=0":f.archiveId?"https://archive.org/embed/"+encodeURIComponent(f.archiveId):"https://video.blender.org/videos/embed/"+(f.embedId||embeds[id]);
 document.getElementById("player-root").innerHTML='<div class="player-overlay vanta-cinema-player" id="vanta-cinema-player" role="dialog" aria-modal="true" aria-label="Lecture de '+text(f.title)+'">'+
