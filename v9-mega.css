@@ -445,3 +445,51 @@ body{background:linear-gradient(140deg,#fff8f0 0%,#fae5e3 48%,#fff1e6 100%) fixe
 
 /* Gentle scroll parallax, limited to the boutique hero. */
 .mc27-boutique .mc25-hero-visual{translate:0 var(--mc27-shift,0px)}
+
+/* V28 — cohesive editorial polish across the entire site.
+   Progressive enhancement only: content stays available without CSS animations. */
+:root{--mc28-rose-deep:#7c3854;--mc28-rose-mid:#ac627b;--mc28-pink-light:#f6dcdf;--mc28-beige:#fff3e8}
+#main{overflow:clip}
+#main .section{scroll-margin-top:120px}
+#main .section-head{max-width:850px;margin-bottom:35px}
+#main .section-head .eyebrow,.mc25-hero-copy>.eyebrow{letter-spacing:.24em;font-weight:800}
+#main .section-head p{line-height:1.9}
+#main .section-head h2{max-width:840px;text-wrap:balance}
+#main>.section{padding-block:clamp(52px,7vw,100px)}
+#main .section .panel,#main .section .promo-box,#main .section .event-card{transition:transform .45s cubic-bezier(.22,1,.36,1),box-shadow .45s ease}
+#main .section .button,#main .section button,#main .section a{scroll-margin-top:140px}
+.mc28-quick-links{position:relative;background:#fff7f0;border-bottom:1px solid #ebd4cc;border-top:1px solid #fffdf7;box-shadow:0 9px 25px #783d5810;z-index:2}
+.mc28-quick-links>.container{display:flex;gap:11px;flex-wrap:wrap;align-items:center;justify-content:center;padding-block:15px}
+.mc28-quick-link{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;border:1px solid #e9caca;color:#783f54;background:#fffdfa;border-radius:99px;min-height:40px;padding:9px 17px;font-size:11px;font-weight:800;letter-spacing:.035em;transition:background .25s,color .25s,transform .25s}
+.mc28-quick-link:hover,.mc28-quick-link:focus-visible,.mc28-quick-link.mc28-quick-active{background:#87455d;color:#fff9f5;border-color:#87455d;transform:translateY(-2px)}
+.mc28-text-counter{display:block;text-align:right;font-size:10px;line-height:1.6;color:#8e6673;margin-top:5px}
+#main .section .fields input:focus-visible,#main .section .fields select:focus-visible,#main .section .fields textarea:focus-visible{outline:2px solid #98546b;outline-offset:2px;box-shadow:0 0 0 4px #e8bfcb4d}
+#main .section .form-buttons .button{border-radius:99px}
+#main .editorial-card .photo img,#main .featured-gallery img,#main .gallery-tile img{transition:transform .65s cubic-bezier(.22,1,.36,1);object-position:center}
+#main .editorial-card:hover .photo img,#main .featured-gallery a:hover img,#main .gallery-tile:hover img{transform:scale(1.035)}
+#main .gallery-grid{grid-auto-flow:row dense}
+#main .gallery-tile{border-radius:18px;overflow:hidden;box-shadow:0 15px 34px #723b4920}
+#main .gallery-tile:focus-visible{outline:3px solid #85435c;outline-offset:4px}
+#main .faq details{transition:background .25s,box-shadow .25s}
+#main .faq details[open]{box-shadow:0 12px 29px #6a385014}
+#main .faq summary{cursor:pointer}
+#main .promo-row{align-items:stretch}
+#main .promo-row .promo-box{height:100%}
+.mc27-boutique .mc27-gift-card{transform:perspective(1000px) rotateX(var(--mc28-rotate-x,0deg)) rotateY(var(--mc28-rotate-y,0deg))}
+.mc27-boutique #main .mc27-gift-card:hover{transform:perspective(1000px) translateY(-7px) rotateX(var(--mc28-rotate-x,0deg)) rotateY(var(--mc28-rotate-y,0deg))}
+.mc25-photo,.mc19-cake-photo{transform-origin:center center}
+#main .page-layout .panel h2,#main .page-layout .panel h3{color:#6c374b}
+#main .page-layout .panel{box-shadow:0 22px 60px #804d5717}
+#main .gallery-filters .filter,#main .catalog-toolbar input{min-height:42px}
+#main .catalog-grid{align-items:stretch}
+#catalogue .catalog-card .v6-product-content{display:flex;flex-direction:column;flex:1}
+#catalogue .catalog-card .catalog-actions{margin-top:auto}
+#catalogue .catalog-card .v6-product-photo{background:#f3ddda}
+#main .success-zone{border-radius:17px;padding:22px;background:#fffaf3;border-color:#deb9bd}
+#main .summary-pre{white-space:pre-wrap;overflow-wrap:anywhere}
+#main .panel form button:disabled{opacity:.58;cursor:not-allowed}
+@media(min-width:901px){#main .event-list{gap:22px}}
+@media(max-width:800px){#main>.section{padding-block:52px}.mc28-quick-links>.container{justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin;padding-bottom:17px}.mc28-quick-link{white-space:nowrap;flex:none}}
+@media(max-width:600px){#main .section-head{margin-bottom:24px}#main .section-head h2{font-size:clamp(34px,9vw,49px)}#main .section .panel{padding:19px}#main .page-layout{gap:18px}.mc28-quick-links>.container{gap:8px}.mc28-quick-link{font-size:10px;min-height:38px;padding:8px 13px}}
+@media(prefers-reduced-motion:reduce){.mc28-quick-link,.mc27-boutique .mc27-gift-card,#main .editorial-card .photo img,#main .featured-gallery img,#main .gallery-tile img{transition:none!important;transform:none!important}}
+@media print{.mc28-quick-links,.mc9-progress,.mc9-floating-scroll,.mc-v4-curtain,.mc-v4-anchor-pill,.bottom-nav,.site-header{display:none!important}body{background:#fff!important;color:#111!important}#main .section,.mc25-editorial-hero{background:#fff!important;box-shadow:none!important}#main .panel{box-shadow:none!important}}
