@@ -13,7 +13,7 @@ var extraFilms=(window.VANTA_EXTENDED_FILMS||[]).filter(function(f){
 if(!f.archiveId||usedArchiveIds.has(f.archiveId))return false;
 usedArchiveIds.add(f.archiveId);return true;
 });
-films=films.concat(extraFilms);
+films=films.concat(extraFilms,window.VANTA_YOUTUBE_FILMS||[]);
 /* Group identical films, preserving alternate Archive sources to try if the primary is gone. */
 function filmKey(f){return String(f.title||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]/g,"")+"|"+String(f.year||"");}
 var filmGroups=new Map();
@@ -37,6 +37,7 @@ function ranked(list){return list.slice().sort(function(a,b){
  return br-ar||(a.title||"").localeCompare(b.title||"","fr");
 });}
 var ratedFilms=ranked(films.filter(function(f){return typeof f.rating==="number";}));
+var youtubeModern=films.filter(function(f){return f.youtubeModern;}).sort(function(a,b){return b.year-a.year;});
 var catalogueSort="rated";
 var catalogueLimit=60;
 function getFilm(id){return films.find(function(f){return f.id===id;});}
@@ -166,16 +167,16 @@ function hero(){
 return '<section class="hero" id="hero"><div class="hero-bg vanta-hero-abstract"></div><div class="hero-tint"></div>'+
 '<div class="hero-inner hero-content-anim"><div class="hero-eyebrow">VANTA / CINÉMA À REGARDER</div>'+
 '<div class="hero-overline">'+films.length+' VIDÉOS INTÉGRÉES</div>'+
-'<h1 class="hero-title smaller">LE CINÉMA LIBRE.</h1>'+
+'<h1 class="hero-title smaller">VOS FILMS. VOTRE CINÉMA.</h1>'+
 '<div class="hero-meta"><span>'+films.length+' FILMS ET COURTS MÉTRAGES</span><span class="dot"></span><span>EN LECTURE</span></div>'+
-'<p class="hero-desc">Chaque titre de cette sélection possède une vidéo intégrée. De la science-fiction, de l’animation, du fantastique et de la comédie.</p>'+
+'<p class="hero-desc">Films récents, comédies, aventures, horreur et grands classiques. Des vidéos de créateurs et distributeurs, selon leur disponibilité.</p>'+
 '<div class="hero-actions"><button class="btn-primary" data-nav="movies">'+icon("play")+' Découvrir les films</button>'+
-'<button class="btn-soft" data-watch="film-selection">'+icon("play")+' Regarder Salem</button></div></div>'+
+'<button class="btn-soft" data-watch="ytmodern-01">'+icon("play")+' Voir un film récent</button></div></div>'+
 '<div class="hero-bottom"><span class="hero-selection">LES FILMS SONT DISPONIBLES VIA LEURS HÉBERGEURS</span><span class="vanta-hero-count">'+films.length+' VIDÉOS</span></div></section>';
 }
 function card(f){
 var watch=!!(f.youtubeId||f.archiveId||f.embedId),hasFav=favs.indexOf(f.id)!==-1;
-var label="LECTURE INTÉGRÉE";
+var label=f.youtubeModern?"FILM YOUTUBE":"LECTURE INTÉGRÉE";
 var cover=f.youtubeId?'<img src="'+text(f.posterUrl)+'" loading="lazy" alt="" onerror="this.style.opacity=0">':
 f.posterFallback?'<img class="vanta-real-poster" src="'+text(f.posterUrl)+'" data-poster-fallback="'+text(f.posterFallback)+'" loading="lazy" alt="Affiche de '+text(f.title)+'">':
 '<img class="vanta-poster-img" data-movie="'+text(f.title)+'" data-year="'+text(f.year)+'" data-fallback="'+text(f.posterUrl||"")+'" loading="lazy" alt="Affiche de '+text(f.title)+'" style="opacity:0">';
@@ -218,7 +219,8 @@ var out="";
 if(view==="home"){
 out=hero()+'<div class="kicker-strip"><span>VANTA <strong> / '+films.length+' VIDÉOS INTÉGRÉES</strong></span><span class="kicker-right">SOURCES DES CRÉATEURS</span></div>'+
 (Object.keys(progress).length?rail("À revoir","REPRENDRE VOS DÉCOUVERTES",Object.keys(progress).sort(function(a,b){return progress[b]-progress[a];}).map(getFilm).filter(Boolean),true):"")+
-rail("Les mieux notés sur VANTA","01 / NOTES IMDb VÉRIFIÉES",ratedFilms,true)+
+rail("Films récents sur YouTube","01 / CINÉMA DES ANNÉES 2010–2020",youtubeModern,true)+
+rail("Les mieux notés sur VANTA","02 / NOTES IMDb VÉRIFIÉES",ratedFilms,true)+
 rail("Notre Top 10 cinéma","02 / LES INCONTOURNABLES",ratedFilms.slice(0,10),true)+
 rail("Classiques à découvrir","03 / NOUVEAUX FILMS",extraFilms.slice(0,16),true)+
 rail("Films disponibles","04 / SÉLECTION VANTA",ranked(films).slice(0,15),true)+
@@ -230,7 +232,9 @@ rail("Science-fiction","05 / VOYAGE DANS LE FUTUR",films.filter(function(f){retu
 rail("Animation et fantastique","06 / IMAGINAIRE",films.filter(function(f){return f.tags.indexOf("Animation")!==-1||f.tags.indexOf("Fantastique")!==-1;}),true)+
 rail("Drame et romance","07 / HISTOIRES ET ÉMOTIONS",films.filter(function(f){return f.genre==="Drame"||f.genre==="Romance";}),true)+
 rail("Action et courts métrages","08 / ÉNERGIE",films.filter(function(f){return f.genre==="Action";}),true);
-}else if(view==="movies"||view==="discover"){
+}else if(view==="discover"){
+out='<div style="padding-top:90px"></div><div class="catalogue-top"><p class="eyebrow">VANTA / FILMS SUR YOUTUBE</p><h1 class="catalogue-title">Films plus récents.</h1><p class="catalogue-intro">Longs métrages publiés par des créateurs ou distributeurs. Certains lecteurs peuvent être restreints selon le pays.</p></div>'+catalogueGrid(youtubeModern);
+}else if(view==="movies"){
 out='<div style="padding-top:90px"></div>'+catalogueBanner("Films à regarder","Chaque titre a un lecteur intégré. Les classiques sont diffusés depuis Internet Archive : la disponibilité et les droits des versions peuvent varier selon le pays.")+catalogueGrid(filtered());
 }else if(view==="list"){
 var items=films.filter(function(f){return favs.indexOf(f.id)!==-1;});
@@ -276,7 +280,7 @@ modal('<div class="modal-bg" style="'+(f.posterUrl?'background-image:url(&quot;'
 '<div class="modal-body"><p class="eyebrow">VANTA / '+(watch?"VIDÉO INTÉGRÉE":"FICHE CINÉMA")+'</p><h2>'+text(f.title)+'</h2>'+
 '<div class="modal-meta">'+(typeof f.rating==="number"?'<span class="vanta-rating">★ '+f.rating.toFixed(1)+'/10 IMDb</span><span>•</span>':'')+'<span>'+text(f.year||"Vidéo")+'</span><span>•</span><span>'+(f.duration?f.duration+" min":"Durée non précisée")+'</span><span>•</span><span>'+text(f.genre)+'</span></div>'+
 '<p>'+text(f.description||"Un film à découvrir.")+'</p>'+(f.imdbId?'<p class="vanta-rating-source"><a href="https://www.imdb.com/title/'+f.imdbId+'/ratings/" target="_blank" rel="noopener noreferrer">Voir la note sur IMDb ↗</a></p>':'')+'<div class="modal-actions">'+action+
-'<button class="btn-outline" data-fav="'+f.id+'">'+icon(added?"check":"plus")+' '+(added?"Dans ma liste":"Ajouter à ma liste")+'</button></div>'+
+'<button class="btn-outline" data-fav="'+f.id+'">'+icon(added?"check":"plus")+' '+(added?"Dans ma liste":"Ajouter à ma liste")+'</button>'+(f.youtubeId?'<a class="btn-outline" href="'+text(f.official||"https://www.youtube.com/watch?v="+f.youtubeId)+'" target="_blank" rel="noopener noreferrer">'+icon("external")+' Ouvrir sur YouTube</a>':'')+'</div>'+
 '<div class="modal-credit">'+(watch?"Lecture depuis le lecteur officiel de la plateforme source. La disponibilité peut varier selon l’appareil et le pays. Les droits des films anciens peuvent différer selon les versions.":"Fiche de découverte uniquement : ce film n'est pas hébergé ni diffusé en entier sur VANTA. Les offres et prix peuvent varier. Aucun accès gratuit n'est garanti.")+'</div></div>');
 }
 function closeDetail(){document.getElementById("detail-root").innerHTML="";if(!document.getElementById("player-root").innerHTML&&!searchOpened)document.body.style.overflow="";}
@@ -308,9 +312,9 @@ progress[id]=Date.now();save();
 var embeds={sintel:"0eb052d0-fd51-43e6-aa33-ecdbf77a5d40",tears:"8533ea43-4271-4a57-9694-e9d0b35e1aa1",bunny:"bf1f3fb5-b119-4f9f-9930-8e20e892b898",spring:"3d95fb3d-c866-42c8-9db1-fe82f48ccb95",sprite:"a69d68a5-a0e0-4a80-9d66-49f093c97aaf",agent:"264ff760-803e-430e-8d81-15648e904183",caminandes:"fb70d459-48d2-4db5-adba-813c84f9200a",glass:"64222c8a-c4c7-4b3b-9850-7fb2078edcf6"};
 var filmUrl=f.youtubeId?"https://www.youtube-nocookie.com/embed/"+encodeURIComponent(f.youtubeId)+"?playsinline=1&rel=0":f.archiveId?"https://archive.org/embed/"+encodeURIComponent(f.archiveId):"https://video.blender.org/videos/embed/"+(f.embedId||embeds[id]);
 document.getElementById("player-root").innerHTML='<div class="player-overlay vanta-cinema-player" id="vanta-cinema-player" role="dialog" aria-modal="true" aria-label="Lecture de '+text(f.title)+'">'+
-'<div class="cinema-toolbar"><button class="cinema-back" data-close="player" aria-label="Quitter le film">'+icon("arrow").replace('class="icon"','class="icon" style="transform:rotate(180deg)"')+'</button><strong class="cinema-film-title">'+text(f.title)+'</strong><div class="cinema-toolbar-actions"><button class="cinema-fullscreen-btn" id="cinema-fullscreen-btn" data-cinema-fullscreen="1" aria-label="Passer en plein écran"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H3v5M16 3h5v5M3 16v5h5m13-5v5h-5"/></svg><span>Plein écran</span></button><button class="cinema-close" data-close="player" aria-label="Fermer">'+icon("close")+'</button></div></div>'+
+'<div class="cinema-toolbar"><button class="cinema-back" data-close="player" aria-label="Quitter le film">'+icon("arrow").replace('class="icon"','class="icon" style="transform:rotate(180deg)"')+'</button><strong class="cinema-film-title">'+text(f.title)+'</strong><div class="cinema-toolbar-actions">'+(f.youtubeId?'<a class="cinema-youtube-external" target="_blank" rel="noopener noreferrer" href="'+text(f.official||"https://www.youtube.com/watch?v="+f.youtubeId)+'">YouTube ↗</a>':'')+'<button class="cinema-fullscreen-btn" id="cinema-fullscreen-btn" data-cinema-fullscreen="1" aria-label="Passer en plein écran"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H3v5M16 3h5v5M3 16v5h5m13-5v5h-5"/></svg><span>Plein écran</span></button><button class="cinema-close" data-close="player" aria-label="Fermer">'+icon("close")+'</button></div></div>'+
 '<div class="cinema-video-zone"><div class="cinema-iframe-wrap" id="cinema-iframe-wrap"><iframe id="film-iframe" title="Film '+text(f.title)+'" src="'+filmUrl+'" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen webkitallowfullscreen loading="eager"></iframe></div></div>'+
-'<button class="cinema-exit-fullscreen" data-cinema-fullscreen="1" aria-label="Quitter le plein écran">'+icon("close")+'</button></div>';
+'<button class="cinema-exit-fullscreen" data-cinema-fullscreen="1" aria-label="Quitter le plein écran">'+icon("close")+'</button>'+(f.youtubeId?'<div class="vanta-player-source">Lecture bloquée ? <a href="'+text(f.official||"https://www.youtube.com/watch?v="+f.youtubeId)+'" target="_blank" rel="noopener noreferrer">Regarder sur YouTube ↗</a></div>':'')+'</div>';
 }
 function toggleCinemaFullscreen(){
 var p=document.getElementById("vanta-cinema-player");
