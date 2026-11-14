@@ -165,8 +165,17 @@ initCatalog(){
  const fallbackPhoto=this.data.photos?.[({brunch:2,'boissons-chaudes':3,'boissons-froides':3,sale:2,desserts:0})[p.groupId]];
  if(illustrationId){
   const img=this.el('img');
-  img.src='https://images.pexels.com/photos/'+illustrationId+'/pexels-photo-'+illustrationId+'.jpeg?auto=compress&cs=tinysrgb&w=900&h=640&fit=crop';
+  img.src='https://images.pexels.com/photos/'+illustrationId+'/pexels-photo-'+illustrationId+'.jpeg?auto=compress&cs=tinysrgb&w=960';
   img.loading='lazy';img.decoding='async';
+  // Keep portrait and near-square food photos intact, with a soft matching backdrop.
+  const framePhoto=()=>{
+   if(!img.naturalWidth||!img.naturalHeight)return;
+   const ratio=img.naturalWidth/img.naturalHeight;
+   photo.classList.toggle('mc23-uncropped',ratio<1.45);
+   photo.style.setProperty('--mc23-photo',`url("${img.src}")`);
+  };
+  img.addEventListener('load',framePhoto);
+  if(img.complete&&img.naturalWidth)framePhoto();
   img.alt='Photo illustrative pour '+p.name+' — ne représente pas le produit servi chez Meery Cake';
   img.addEventListener('error',()=>{
    // Avoid replacing a specific product image with an unrelated category photo.
