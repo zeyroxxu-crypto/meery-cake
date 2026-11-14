@@ -30,6 +30,27 @@ body{font-family:'Outfit',sans-serif;background:#fbfaf6;color:#183047}header{bac
 .quick-course{display:flex;text-align:left;width:100%;flex-direction:column;align-items:flex-start;justify-content:flex-start;min-height:206px;cursor:pointer;color:#1f3653;transition:transform .32s ease,box-shadow .32s ease,border-color .32s ease;font-family:inherit}.quick-course:hover{border-color:#9ab4ea;box-shadow:0 18px 38px #2c4ba724;transform:translateY(-7px)}.quick-course:focus-visible{outline:3px solid #4769cd;outline-offset:4px}.quick-course h3{font:800 clamp(18px,2vw,24px)/1.16 'Manrope','DM Sans',sans-serif;letter-spacing:-.04em;margin:24px 0 9px}.quick-course p{font-size:13px;line-height:1.55}.quick-course-arrow{color:#385ab9;font-size:12px;font-weight:800;margin-top:auto;padding-top:20px;letter-spacing:.02em}.sl-results-count{font-size:13px;color:#657b92;margin:8px 0 18px}.sl-campus-banner{height:min(45vw,480px);max-height:480px;min-height:270px;position:relative;overflow:hidden;background:#e4effb}.sl-campus-banner img{height:100%;width:100%;object-fit:cover;display:block;animation:sl-zoom 18s ease-in-out infinite alternate}.sl-campus-banner:before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,#132a479c 100%);z-index:1}.sl-campus-banner-caption{position:absolute;left:7%;bottom:9%;z-index:2;color:white;display:grid;gap:12px}.sl-campus-banner-caption span{font-size:11px;letter-spacing:2px;font-weight:700}.sl-campus-banner-caption strong{font:800 clamp(27px,4vw,54px) 'Manrope','DM Sans',sans-serif;letter-spacing:-.055em}.gallery-source-note{font-size:12px;line-height:1.75;color:#6f7f94;margin-top:24px;max-width:920px}.v4-photo-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.v4-photo-card{border:1px solid #e5eaf3;text-align:left;padding:0;display:flex;flex-direction:column;width:100%;min-width:0;background:#fff;cursor:pointer;appearance:none;overflow:hidden;position:relative;box-shadow:0 5px 18px #1e3d6608;transition:transform .32s ease,box-shadow .32s ease}.v4-photo-card img{height:210px;object-fit:cover;width:100%;display:block}.v4-photo-card:nth-child(11n + 1){grid-column:span 2;grid-row:span 2}.v4-photo-card:nth-child(11n + 1) img{height:460px;min-height:0}.v4-photo-card:nth-child(11n + 1) .v4-photo-caption{margin-top:auto}.v4-photo-card .v4-photo-caption{padding:13px 15px;color:#526b8a;font-size:11px;display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap}.v4-photo-card:hover{transform:translateY(-4px);box-shadow:0 18px 36px #1e3d6621}.v4-photo-card:focus-visible{outline:3px solid #4966bf;outline-offset:4px}.v4-photo-card.missing{min-height:200px}.v4-photo-card.missing:before{content:"Image indisponible";font-size:12px;color:#6c7d94;text-align:center;padding:65px 12px}.v4-photo-filters{margin:15px 0 26px}.v4-photo-filters button{border-color:#dae5f4;color:#3b5b84}.v4-photo-filters button.selected{background:#385cc3;border-color:#385cc3;color:white}.v4-gallery-count{margin:18px 0;color:#71849a}.v4-lightbox{background:#0c1926f2}.v4-lightbox img{box-shadow:0 20px 70px #0008}.section.dossier{border-top:1px solid #e1eaf4}#dossier-detail{scroll-margin-top:100px}
 @media(max-width:900px){.v4-photo-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.v4-photo-card:nth-child(11n + 1){grid-column:auto;grid-row:auto}.v4-photo-card:nth-child(11n + 1) img{height:210px}}
 @media(max-width:640px){.sl-campus-banner{min-height:240px;height:300px}.v4-photo-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.v4-photo-card img,.v4-photo-card:nth-child(11n + 1) img{height:150px}.v4-photo-card .v4-photo-caption{padding:11px;font-size:10px}.v4-photo-card .v4-photo-caption strong{font-size:9px}.courses{grid-template-columns:1fr}.quick-course{min-height:160px}}
+
+/* V7.1 — cadrages photographiques : visages et bâtiments visibles */
+.sl-hero-image{height:69%;width:87%;transform:rotate(0);animation:sl-photo-in .8s ease both;border-radius:18px;background:#e9f0f7}
+.sl-hero-image img{object-fit:cover;object-position:50% 43%;transform:none!important;animation:none!important;filter:none}
+.sl-hero-photo-small{width:36%;aspect-ratio:4/3;left:0;bottom:12%;border-width:5px;transform:none}
+.sl-hero-photo-small img{object-fit:cover;object-position:50% 36%}
+.sl-campus-banner{height:clamp(300px,36vw,450px);min-height:300px}
+.sl-campus-banner img{object-fit:cover;object-position:center 43%;animation:none!important;transform:none!important}
+.v4-page[data-page="ecoles"] .sl-campus-banner img{object-position:center 42%}
+.v4-page[data-page="college"] .sl-campus-banner img{object-position:center 34%}
+.v4-page[data-page="lycees"] .sl-campus-banner img{object-position:center 45%}
+.editorial img{object-fit:cover;object-position:50% 35%;border-radius:16px}
+.v4-photo-card img,.v4-photo-card:nth-child(11n + 1) img{object-fit:cover;object-position:50% 45%;height:225px;min-height:0;transition:transform .45s ease;background:#edf2f7}
+.v4-photo-card:nth-child(11n + 1) img{height:465px}
+.v4-photo-card.photo-portrait img{object-fit:contain;object-position:center;background:#edf2f7}
+.v4-photo-card.photo-wide img{object-fit:cover;object-position:50% 50%}
+.v4-photo-card:hover img{transform:scale(1.025)}
+.v4-photo-card .v4-photo-caption{min-height:52px;align-items:center}
+.v4-lightbox img{max-height:80vh;max-width:92vw;width:auto;height:auto;object-fit:contain}
+@media(max-width:900px){.v4-photo-card:nth-child(11n + 1) img{height:225px}}
+@media(max-width:640px){.sl-hero-image{height:83%;width:85%}.sl-hero-image img{object-position:center 42%}.sl-hero-photo-small{width:38%;bottom:8%}.sl-campus-banner{height:260px;min-height:260px}.v4-photo-card img,.v4-photo-card:nth-child(11n + 1) img{height:175px}.v4-photo-card .v4-photo-caption{min-height:57px}}
 </style></head><body><header><a class="brand" href="#accueil"><span class="monogram">S</span><span>saint-louis.<br><small class="muted" style="font-size:11px;font-weight:500">CARCASSONNE</small></span></a><nav class="v4nav" id="v4nav" aria-label="Navigation principale"><button data-tab="accueil" class="active">Accueil</button><button data-tab="ecoles">Écoles</button><button data-tab="college">Collège</button><button data-tab="lycees">Lycées</button><button data-tab="formations">Classes & formations</button><button data-tab="vie">Vie scolaire</button><button data-tab="galerie">Galerie</button><button data-tab="pratique">Infos pratiques</button></nav><button class="v4-menu-toggle" id="v4-toggle" aria-expanded="false" aria-controls="v4nav">☰ Menu</button><a class="btn" href="#contact">Nous contacter ↗</a></header>
 <div class="nova-progress" id="nova-progress"></div><div class="nova-cursor" id="nova-cursor"></div><div class="sl-page-transition" id="sl-page-transition" aria-hidden="true"><div class="sl-transition-inner"><div class="sl-transition-mark">S.</div><div class="sl-transition-title">SAINT-LOUIS</div><div class="sl-transition-sub">DÉCOUVRIR · APPRENDRE · GRANDIR</div><div class="sl-transition-bar"><span></span></div></div></div><main id="v4-main"><div class="v4-page active" data-page="accueil"><section class="hero sl-hero" id="accueil">
   <div class="sl-floating-word sl-floating-word-one" aria-hidden="true">ÉDUCATION</div>
@@ -167,6 +188,16 @@ quickSearch.addEventListener('input',renderQuick);renderQuick();
     const show=items.filter(i=>selected==='Tout'||i.cat===selected);
     count.textContent=show.length+' image'+(show.length>1?'s':'')+' · sélection tirée des publications Saint-Louis';
     grid.innerHTML=show.map((i,n)=>'<button class="v4-photo-card" type="button" data-i="'+items.indexOf(i)+'" aria-label="Afficher '+i.title+'"><img loading="lazy" decoding="async" src="'+i.url+'" alt="'+i.title+'" onerror="this.closest(\'.v4-photo-card\').classList.add(\'missing\');this.remove()"><div class="v4-photo-caption"><span>'+i.title+'</span><strong>'+i.cat+'</strong></div></button>').join('');
+    // Adapter automatiquement le cadrage au format de la vraie photo.
+    grid.querySelectorAll('.v4-photo-card img').forEach(img=>{
+      const fit=()=>{
+        const ratio=img.naturalWidth / Math.max(1,img.naturalHeight);
+        img.closest('.v4-photo-card')?.classList.toggle('photo-portrait',ratio<0.9);
+        img.closest('.v4-photo-card')?.classList.toggle('photo-wide',ratio>1.7);
+      };
+      if(img.complete&&img.naturalWidth)fit();
+      else img.addEventListener('load',fit,{once:true});
+    });
     grid.querySelectorAll('.v4-photo-card').forEach(card=>{
       const open=()=>{lightboxOpener=card;let x=items[+card.dataset.i];document.getElementById('v4-big-photo').src=x.url;document.getElementById('v4-big-photo').alt=x.title;document.getElementById('v4-big-caption').textContent=x.title+' — '+x.cat;lightbox.classList.add('open');document.body.style.overflow='hidden';document.getElementById('v4-lightbox-close').focus()};
       card.addEventListener('click',open);
