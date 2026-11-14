@@ -13,7 +13,7 @@ var extraFilms=(window.VANTA_EXTENDED_FILMS||[]).filter(function(f){
 if(!f.archiveId||usedArchiveIds.has(f.archiveId))return false;
 usedArchiveIds.add(f.archiveId);return true;
 });
-films=films.concat(extraFilms);
+films=films.concat(extraFilms,window.VANTA_RECENT_OFFICIAL||[]);
 /* Group identical films, preserving alternate Archive sources to try if the primary is gone. */
 function filmKey(f){return String(f.title||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]/g,"")+"|"+String(f.year||"");}
 var filmGroups=new Map();
@@ -37,6 +37,7 @@ function ranked(list){return list.slice().sort(function(a,b){
  return br-ar||(a.title||"").localeCompare(b.title||"","fr");
 });}
 var ratedFilms=ranked(films.filter(function(f){return typeof f.rating==="number";}));
+var officialRecent=films.filter(function(f){return f.isOfficialRecent;}).sort(function(a,b){return b.year-a.year;});
 var catalogueSort="rated";
 var catalogueLimit=60;
 function getFilm(id){return films.find(function(f){return f.id===id;});}
@@ -166,7 +167,7 @@ function hero(){
 return '<section class="hero" id="hero"><div class="hero-bg vanta-hero-abstract"></div><div class="hero-tint"></div>'+
 '<div class="hero-inner hero-content-anim"><div class="hero-eyebrow">VANTA / CINÉMA À REGARDER</div>'+
 '<div class="hero-overline">'+films.length+' VIDÉOS INTÉGRÉES</div>'+
-'<h1 class="hero-title smaller">VOS FILMS. VOTRE CINÉMA.</h1>'+
+'<h1 class="hero-title smaller">LE CINÉMA À DÉCOUVRIR.</h1>'+
 '<div class="hero-meta"><span>'+films.length+' FILMS ET COURTS MÉTRAGES</span><span class="dot"></span><span>EN LECTURE</span></div>'+
 '<p class="hero-desc">Films et créations indépendantes avec lecteurs intégrés. Certaines vidéos externes peuvent être indisponibles selon le pays ou les droits.</p>'+
 '<div class="hero-actions"><button class="btn-primary" data-nav="movies">'+icon("play")+' Découvrir les films</button>'+
@@ -175,7 +176,7 @@ return '<section class="hero" id="hero"><div class="hero-bg vanta-hero-abstract"
 }
 function card(f){
 var watch=!!(f.youtubeId||f.archiveId||f.embedId),hasFav=favs.indexOf(f.id)!==-1;
-var label="LECTURE INTÉGRÉE";
+var label=f.isOfficialRecent?"SUR "+(f.credit.indexOf("ARTE")>=0?"ARTE":"YOUTUBE"):"LECTURE INTÉGRÉE";
 var cover=f.youtubeId?'<img src="'+text(f.posterUrl)+'" loading="lazy" alt="" onerror="this.style.opacity=0">':
 f.posterFallback?'<img class="vanta-real-poster" src="'+text(f.posterUrl)+'" data-poster-fallback="'+text(f.posterFallback)+'" loading="lazy" alt="Affiche de '+text(f.title)+'">':
 '<img class="vanta-poster-img" data-movie="'+text(f.title)+'" data-year="'+text(f.year)+'" data-fallback="'+text(f.posterUrl||"")+'" loading="lazy" alt="Affiche de '+text(f.title)+'" style="opacity:0">';
@@ -218,6 +219,7 @@ var out="";
 if(view==="home"){
 out=hero()+'<div class="kicker-strip"><span>VANTA <strong> / '+films.length+' VIDÉOS INTÉGRÉES</strong></span><span class="kicker-right">SOURCES DES CRÉATEURS</span></div>'+
 (Object.keys(progress).length?rail("À revoir","REPRENDRE VOS DÉCOUVERTES",Object.keys(progress).sort(function(a,b){return progress[b]-progress[a];}).map(getFilm).filter(Boolean),true):"")+
+rail("Films récents : sources officielles","01 / ACCÈS GRATUIT CHEZ LES DIFFUSEURS",officialRecent,true)+
 rail("Les mieux notés sur VANTA","02 / NOTES IMDb VÉRIFIÉES",ratedFilms,true)+
 rail("Notre Top 10 cinéma","02 / LES INCONTOURNABLES",ratedFilms.slice(0,10),true)+
 rail("Classiques à découvrir","03 / NOUVEAUX FILMS",extraFilms.slice(0,16),true)+
@@ -230,7 +232,9 @@ rail("Science-fiction","05 / VOYAGE DANS LE FUTUR",films.filter(function(f){retu
 rail("Animation et fantastique","06 / IMAGINAIRE",films.filter(function(f){return f.tags.indexOf("Animation")!==-1||f.tags.indexOf("Fantastique")!==-1;}),true)+
 rail("Drame et romance","07 / HISTOIRES ET ÉMOTIONS",films.filter(function(f){return f.genre==="Drame"||f.genre==="Romance";}),true)+
 rail("Action et courts métrages","08 / ÉNERGIE",films.filter(function(f){return f.genre==="Action";}),true);
-}else if(view==="discover"||view==="movies"){
+}else if(view==="discover"){
+out='<div style="padding-top:90px"></div><div class="catalogue-top"><p class="eyebrow">VANTA / CINÉMA RÉCENT</p><h1 class="catalogue-title">Films des années 2020.</h1><p class="catalogue-intro">Des films gratuits référencés auprès de leurs diffuseurs officiels. Le film se lance chez le diffuseur ; certains titres peuvent être limités selon le pays.</p></div>'+catalogueGrid(officialRecent);
+}else if(view==="movies"){
 out='<div style="padding-top:90px"></div>'+catalogueBanner("Films à regarder","Chaque titre a un lecteur intégré. Les classiques sont diffusés depuis Internet Archive : la disponibilité et les droits des versions peuvent varier selon le pays.")+catalogueGrid(filtered());
 }else if(view==="list"){
 var items=films.filter(function(f){return favs.indexOf(f.id)!==-1;});
@@ -270,7 +274,7 @@ var f=getFilm(id);if(!f)return;
 var added=favs.indexOf(id)!==-1,watch=!!(f.youtubeId||f.archiveId||f.embedId);
 
 var action=watch?'<button class="btn-primary" data-watch="'+f.id+'">'+icon("play")+' Regarder dans VANTA</button>':
-'<a class="btn-primary" href="'+where+'" target="_blank" rel="noopener noreferrer">'+icon("external")+' Où regarder légalement</a>';
+(f.watchUrl?'<a class="btn-primary" href="'+text(f.watchUrl)+'" target="_blank" rel="noopener noreferrer">'+icon("external")+' Regarder sur '+(f.credit.indexOf("ARTE")>=0?"ARTE":"YouTube")+'</a>':'<span>Vidéo non disponible</span>');
 modal('<div class="modal-bg" style="'+(f.posterUrl?'background-image:url(&quot;'+text(f.posterUrl)+'&quot;)':'background-image:linear-gradient(120deg,#222,#070707)')+'"></div>'+
 '<button class="modal-close" data-close="detail" aria-label="Fermer">'+icon("close")+'</button>'+
 '<div class="modal-body"><p class="eyebrow">VANTA / '+(watch?"VIDÉO INTÉGRÉE":"FICHE CINÉMA")+'</p><h2>'+text(f.title)+'</h2>'+
