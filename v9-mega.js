@@ -338,6 +338,49 @@ function editorialStoriesV28(){
  const quick=main.querySelector('.mc28-quick-links');
  (quick||hero).after(section);
 }
+
+function practicalToolsV28(){
+ const search=$('catalogSearch');
+ if(search){
+  const clear=create('button','mc28-clear-search','Effacer la recherche');
+  clear.type='button';clear.hidden=!search.value;
+  clear.addEventListener('click',()=>{
+   search.value='';search.dispatchEvent(new Event('input',{bubbles:true}));
+   search.focus();
+  });
+  search.addEventListener('input',()=>clear.hidden=!search.value);
+  search.insertAdjacentElement('afterend',clear);
+  document.addEventListener('keydown',e=>{
+   const t=e.target;
+   if(e.key!=='/'||e.ctrlKey||e.altKey||e.metaKey||t?.closest?.('input,textarea,select,[contenteditable]'))return;
+   e.preventDefault();search.focus();
+  });
+  const hint=create('small','mc28-search-hint','Astuce : appuyez sur / pour rechercher');
+  clear.insertAdjacentElement('afterend',hint);
+ }
+ const cakeResult=$('cakeResult'),summary=$('cakeSummary');
+ if(cakeResult&&summary){
+  const buttons=cakeResult.querySelector('.form-buttons');
+  if(buttons){
+   const print=create('button','button secondary mc28-print-summary','Imprimer mon récapitulatif');
+   print.type='button';
+   print.addEventListener('click',()=>{
+    if(cakeResult.hidden)return;
+    document.body.classList.add('mc28-print-cake');
+    window.print();
+    setTimeout(()=>document.body.classList.remove('mc28-print-cake'),900);
+   });
+   buttons.append(print);
+   addEventListener('afterprint',()=>document.body.classList.remove('mc28-print-cake'));
+  }
+  cakeResult.setAttribute('role','status');
+  cakeResult.setAttribute('aria-live','polite');
+ }
+ // Ensure messages are announced once generated, without making a false booking claim.
+ for(const id of ['brunchResult','giftResult','workshopResult']){
+  const el=$(id);if(el){el.setAttribute('role','status');el.setAttribute('aria-live','polite')}
+ }
+}
 // V28: consistent useful interaction across all public pages.
 function siteExperienceV28(){
  const main=$('main');if(!main)return;
@@ -401,7 +444,7 @@ function siteExperienceV28(){
  });
 }
 function init(){
- addCatalogueTools();galleryCount();enrichCake();siteUtilities();scrollSections();premiumInteractions();menuShowcase();boutiqueDepth();siteExperienceV28();editorialStoriesV28()
+ addCatalogueTools();galleryCount();enrichCake();siteUtilities();scrollSections();premiumInteractions();menuShowcase();boutiqueDepth();siteExperienceV28();editorialStoriesV28();practicalToolsV28()
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
