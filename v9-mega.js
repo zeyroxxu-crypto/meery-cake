@@ -132,7 +132,7 @@ function enrichCake(){
  const color=$('cakeColors');if(color){color.setAttribute('autocomplete','off')}
 }
 function scrollSections(){
- // Independent scroll reveals for every page, including mobile and late-loaded cards.
+ // Animate on every new viewport entry, but never hide an element after its first reveal.
  const selector=[
   '.section .section-head','.section .editorial-card','.section .event-card',
   '.section .promo-box','.section .contact-card','.section .review-summary',
@@ -146,36 +146,53 @@ function scrollSections(){
   '.section .menu-shell','.section .promo-row'
  ].join(',');
  if(!('IntersectionObserver' in window))return;
- const seen=new WeakSet();
- function revealOnce(el){
-  if(el.classList.contains('mc10-inview'))return;
-  el.classList.add('mc10-inview');
-  // After entrance, keep a stable visible state even when leaving the viewport.
-  el.addEventListener('transitionend',function finish(e){
-   if(e.target!==el||e.propertyName!=='opacity')return;
-   el.classList.add('mc10-done');
-   el.removeEventListener('transitionend',finish);
-  });
-  setTimeout(()=>el.classList.add('mc10-done'),1250);
+ const seen=new WeakSet(),entered=new WeakSet(),onscreen=new WeakSet();
+ const finish=new WeakMap();
+ function reveal(el){
+  if(!entered.has(el)){
+   entered.add(el);
+   el.classList.add('mc10-inview');
+   const settle=()=>el.classList.add('mc10-done');
+   el.addEventListener('transitionend',function ended(e){
+    if(e.target!==el||e.propertyName!=='opacity')return;
+    settle();el.removeEventListener('transitionend',ended);
+   });
+   setTimeout(settle,1250);
+   return;
+  }
+  // Subsequent visits: gentle repeat without fading content out entirely.
+  if(!el.classList.contains('mc10-done'))return;
+  const old=finish.get(el);if(old)clearTimeout(old);
+  el.classList.remove('mc10-replay-end');
+  el.classList.add('mc10-replay-start');
+  // Commit the start position before transitioning back to the normal state.
+  void el.offsetHeight;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+   el.classList.remove('mc10-replay-start');
+   el.classList.add('mc10-replay-end');
+   finish.set(el,setTimeout(()=>el.classList.remove('mc10-replay-end'),850));
+  }));
  }
- const observer=new IntersectionObserver(entries=>{
+ const io=new IntersectionObserver(entries=>{
   for(const entry of entries){
+   const el=entry.target;
    if(entry.isIntersecting){
-    revealOnce(entry.target);
-    observer.unobserve(entry.target);
+    if(onscreen.has(el))continue;
+    onscreen.add(el);reveal(el);
+   }else{
+    onscreen.delete(el);
    }
   }
- },{threshold:.06,rootMargin:'0px 0px -10% 0px'});
+ },{threshold:.15,rootMargin:'0px 0px -7% 0px'});
  function collect(){
   document.querySelectorAll(selector).forEach((el,i)=>{
    if(seen.has(el))return;
    seen.add(el);
    const rect=el.getBoundingClientRect();
-   const visible=rect.top<window.innerHeight*.86||rect.bottom<=0;
    el.style.setProperty('--mc10-stagger',((i%3)*85)+'ms');
    el.classList.add('mc10-enter');
-   if(visible)revealOnce(el);
-   else observer.observe(el);
+   if(rect.top<innerHeight*.87||rect.bottom<=0){entered.add(el);el.classList.add('mc10-inview','mc10-done')}
+   io.observe(el);
   });
  }
  collect();
