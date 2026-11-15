@@ -189,7 +189,174 @@ header .v4nav .sl-nav-register:hover,header .v4nav .sl-nav-register.active{backg
 .sl-transition-bar span{background:linear-gradient(90deg,#476add,#ed8579,#45bda5)}
 @keyframes sl-brand-pop{0%,90%,100%{transform:rotate(0)}94%{transform:rotate(-8deg)}97%{transform:rotate(7deg)}}
 @media(min-width:781px){header .v4nav button{transition:background .25s,color .25s,transform .3s}header .v4nav button:hover{transform:translateY(-3px)}}
-</style></head><body><header><a class="brand" href="#accueil"><span class="monogram">S</span><span>saint-louis.<br><small class="muted" style="font-size:11px;font-weight:500">CARCASSONNE</small></span></a><nav class="v4nav" id="v4nav" aria-label="Navigation principale"><button data-tab="accueil" class="active">Accueil</button><button data-tab="ecoles">Écoles</button><button data-tab="college">Collège</button><button data-tab="lycees">Lycées</button><button data-tab="formations">Classes & formations</button><button data-tab="vie">Vie scolaire</button><button data-tab="galerie">Galerie</button><button data-tab="pratique">Infos pratiques</button><button data-tab="preinscription" class="sl-nav-register">Se préinscrire ↗</button></nav><button class="v4-menu-toggle" id="v4-toggle" aria-expanded="false" aria-controls="v4nav">☰ Menu</button></header>
+
+/* SAINT-LOUIS MOBILE FIRST V9 — palette classique, menu simplifié */
+/* Palette 3 tons : blanc + bleu nuit + bleu moyen, gris pour les photos réservées */
+:root{--sl-navy:#152b45;--sl-royal:#2856b2;--sl-coral:#2856b2;--sl-mint:#b9d9ef;--sl-yellow:#f0f4f9;--sl-lavender:#e3ebf9}
+body{background:#fff!important;color:#172c47}
+header{background:#ffffffed;border-color:#e0e7ef}
+header .monogram{background:#204e9b;color:white}
+header .v4nav button.active,header .v4nav button:hover{background:#e7effd;color:#214f9f}
+header .v4nav .sl-nav-register{background:#2856b2!important;color:white!important;box-shadow:none}
+header .v4nav .sl-nav-register:hover,header .v4nav .sl-nav-register.active{background:#163c83!important}
+.sl-hero{background:#fff!important}
+.sl-hero-accent{background:none;color:#2e5caa;-webkit-text-fill-color:#2e5caa}
+.sl-blue-dot{background:#2856b2;box-shadow:0 0 0 7px #2856b211}
+.sl-floating-square{background:#e3ecfb;color:#25529e}
+.sl-hero-ring{border-color:#e7eff9}
+.sl-hero-facts span:nth-child(n) b{color:#3159a1}
+.sl-photo-label{border-left-color:#315cac}
+.sl-poster-one{background:#e9f0fb;color:#254778}
+.sl-poster-two{background:#eef3f9;color:#2c4b73}
+.sl-poster-three{background:#dfeaf8;color:#1a4477}
+.sl-poster-one:before,.sl-poster-two:before,.sl-poster-three:before{background:#bcd0eb}
+.sl-poster-one .sl-poster-number,.sl-poster-two .sl-poster-number,.sl-poster-three .sl-poster-number{color:#215099}
+.v4-marquee{background:#1b3762;color:white}
+.section.dark,#vie{background:#f4f7fc!important}
+.paths .path:nth-child(1){background:#e5effd;color:#253f68}
+.paths .path:nth-child(2){background:#eff3f8;color:#263f65}
+.paths .path:nth-child(3){background:#dde9f9;color:#203f74}
+.paths .path:nth-child(4){background:#e8eff8;color:#203d6d}
+.section.dark .school:nth-child(n){border-top:4px solid #315eb1}
+.v4-page-title{background:#eff4fc;border-color:#e1e8f2}
+.v4-schools .v4-school:nth-child(n){background:#f5f8fd;border-color:#e2eaf5}
+.v4-value-grid article:nth-child(n){background:#eaf1fb}
+.filter.active,.dossier-nav button.sel{background:#2856b2!important;border-color:#2856b2!important}
+.quick-course:nth-child(n),.dossier-card:nth-child(n){border-top:3px solid #7295ce}
+#classes,.section.dossier{background:#f8fafd!important}
+#galerie,#parcours,.sl-showcase{background:#fff!important}
+.v4-photo-card:nth-child(n){border-bottom:3px solid #a9bee1}
+.sl-reg-hero{background:#f2f6fc}
+.sl-reg-hero h1 em{color:#2d58a8}
+.sl-reg-level:nth-child(n){background:#eff4fb}
+.sl-reg-steps{background:#f3f7fc!important}
+.sl-reg-steps-grid article:nth-child(n) .sl-reg-step-icon{background:#e3ecf9;color:#2e58aa}
+.sl-reg-help{background:#eaf1fb}
+#pratique{background:#f2f6fc!important}
+.quicklinks a:nth-child(n){background:#e7eef9}
+.footer{background:#1b3558}
+.footer .btn:not(.light){background:#2d61bb}
+.sl-page-transition{background:#f5f8fe}
+.sl-transition-mark{background:#2856b2}
+.sl-transition-bar span{background:#2856b2}
+.sl-grey-photo,.v4-photo-card .sl-grey-photo{background:#d4d6da!important}
+.mobile-nav-scrim,.mobile-bottom-bar{display:none}
+@media(max-width:780px){
+ html{scroll-padding-top:75px}
+ body{padding-bottom:calc(76px + env(safe-area-inset-bottom,0px));overflow-x:hidden}
+ header{height:70px!important;min-height:70px;position:sticky;top:0;z-index:150;padding:9px 18px;display:flex;align-items:center;justify-content:space-between;flex-wrap:nowrap}
+ header .brand{font-size:18px;gap:9px;letter-spacing:-1px}
+ header .monogram{width:38px;height:38px;border-radius:11px;font-size:19px}
+ header .brand .muted{font-size:9px!important}
+ header .v4-menu-toggle{display:inline-flex!important;order:2;align-items:center;justify-content:center;gap:12px;flex:none;background:#eaf0fa!important;color:#203e72;border:1px solid #dee8f7;border-radius:11px;padding:12px 14px;font-size:12px;font-weight:800;letter-spacing:.02em}
+ .mobile-menu-glyph{display:flex;flex-direction:column;gap:5px;width:17px}
+ .mobile-menu-glyph span{width:17px;height:2px;background:#2c4f92;border-radius:1px;transition:transform .3s}
+ header .v4nav{display:none!important;position:fixed;top:80px;left:14px;right:14px;max-height:calc(100dvh - 170px);overflow:auto;overscroll-behavior:contain;box-sizing:border-box;width:auto;z-index:210;order:unset;padding:20px;border-radius:22px;background:#fff;box-shadow:0 24px 75px #122b5066;flex-direction:column;flex-wrap:nowrap;gap:6px;align-items:stretch;animation:mobile-menu-appear .3s ease both}
+ header .v4nav.open{display:flex!important}
+ header .v4nav:before{content:"DÉCOUVRIR SAINT-LOUIS";display:block;font-weight:800;font-size:10px;letter-spacing:1.7px;color:#8395ae;padding:6px 9px 14px}
+ header .v4nav button{display:flex;width:100%;min-height:48px;text-align:left;align-items:center;justify-content:space-between;background:white;color:#203c5f;border-radius:11px;font-size:14px;padding:13px 17px;font-weight:700;white-space:normal}
+ header .v4nav button.active{background:#eaf1fd}
+ header .v4nav button.sl-nav-register{margin-top:7px;justify-content:center;min-height:54px;background:#2856b2!important;color:white!important}
+ .mobile-nav-scrim{display:none;position:fixed;inset:70px 0 0;z-index:145;background:#0d203d88;backdrop-filter:blur(3px)}
+ .mobile-nav-scrim.visible{display:block}
+ .mobile-bottom-bar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));position:fixed;left:0;right:0;bottom:0;z-index:140;height:calc(66px + env(safe-area-inset-bottom,0px));padding:4px 9px calc(4px + env(safe-area-inset-bottom,0px));background:#fff;box-shadow:0 -8px 30px #0c214315;border-top:1px solid #e0e8f4;gap:5px}
+ .mobile-bottom-bar button{font-family:inherit;border:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:3px;border-radius:10px;background:transparent;color:#6d7f99;font-size:10px;font-weight:800;min-width:0;cursor:pointer}
+ .mobile-bottom-bar button.mobile-bottom-active{background:#edf3fe;color:#2856b2}
+ .mobile-nav-symbol{font-family:'Manrope',sans-serif;font-size:25px;font-weight:700;line-height:1}
+ .mobile-more-lines{font-size:21px}
+ .sl-hero{grid-template-columns:1fr;min-height:0!important}
+ .sl-hero-copy{padding:49px 21px 28px}
+ .sl-hero-copy h1{font-size:clamp(39px,10.5vw,64px);line-height:1.06;letter-spacing:-.075em;margin:25px 0 19px}
+ .sl-hero-copy>p{font-size:14px;line-height:1.68;max-width:450px}
+ .sl-eyebrow{font-size:9px;letter-spacing:1px;gap:7px}
+ .sl-label-line{width:17px}
+ .sl-hero-cta{margin-top:22px;gap:12px}
+ .sl-btn-primary{padding:15px 17px;font-size:12px;min-height:49px}
+ .sl-text-link{font-size:12px}
+ .sl-hero-facts{margin-top:32px;padding-top:15px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+ .sl-hero-facts span{font-size:10px}.sl-hero-facts b{font-size:18px}
+ .sl-hero-visual{min-height:0!important;height:255px;padding:0 20px 22px;overflow:hidden}
+ .sl-hero-image{width:72%;height:90%;border-radius:16px;margin:0 auto}
+ .sl-hero-photo-small,.sl-photo-label,.sl-floating-square,.sl-hero-ring{display:none!important}
+ .sl-floating-word,.sl-scroll-hint{display:none!important}
+ .section{padding:56px 20px}
+ .section h2,.dossier-head h2,.sl-section-intro h2{font-size:clamp(30px,8.5vw,47px);letter-spacing:-.055em;line-height:1.12}
+ .section-heading{flex-direction:column;align-items:flex-start;gap:11px}
+ .section-heading .sub,.sl-section-intro>p{font-size:13px;line-height:1.7}
+ .sl-showcase{padding-top:45px!important}
+ .sl-poster-row{display:flex!important;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-left:20px;padding:10px 20px 25px;margin:0 -20px;-webkit-overflow-scrolling:touch;overscroll-behavior-inline:contain;scrollbar-width:thin}
+ .sl-poster,.sl-poster-row .sl-poster:last-child{flex:0 0 min(76vw,310px);width:min(76vw,310px);height:330px;min-width:0;scroll-snap-align:start;grid-column:auto;padding:22px}
+ .sl-poster-bottom b{font-size:33px}
+ .sl-poster-number{font-size:140px}
+ .sl-poster-row .sl-poster.reveal{transform:translateY(20px) scale(.98) rotate(0)}
+ .sl-poster-row .sl-poster.reveal.in{transform:none}
+ .sl-poster-row .sl-poster.reveal.in:hover{transform:none}
+ .paths{grid-template-columns:1fr 1fr;gap:12px}
+ .path{min-height:230px;padding:20px}
+ .path h3{font-size:22px}
+ .path b{font-size:11px}
+ .v4-page-title{padding:56px 21px 49px}
+ .v4-page-title h1{font-size:clamp(37px,9vw,56px);letter-spacing:-.065em}
+ .v4-page-title p{font-size:13px;line-height:1.7}
+ .v4-pills{margin-top:20px}
+ .v4-pills a{font-size:11px;padding:11px 13px}
+ .v4-schools,.v4-value-grid,.v4-contact-grid{grid-template-columns:1fr!important;gap:12px}
+ .v4-school{min-height:0;padding:24px}
+ .v4-school h3{font-size:26px}
+ .sl-campus-banner{height:220px!important;min-height:220px!important}
+ .sl-campus-banner-caption{padding:12px 15px;bottom:12px;left:20px}
+ .sl-campus-banner-caption strong{font-size:24px}
+ .sl-campus-banner-caption span{font-size:8px}
+ .editorial{grid-template-columns:1fr;gap:22px}
+ .editorial>.sl-grey-photo{height:220px}
+ .filters,.dossier-nav,.v4-photo-filters{display:flex;overflow-x:auto;flex-wrap:nowrap;gap:8px;margin:16px -20px;padding:8px 20px;scrollbar-width:none;overscroll-behavior-inline:contain}
+ .filters button,.dossier-nav button,.v4-photo-filters button{white-space:nowrap;flex:none}
+ .courses,.dossier-cards{grid-template-columns:1fr!important;gap:12px}
+ .quick-course{min-height:150px;padding:20px}
+ .quick-course h3{font-size:21px;margin:15px 0 8px}
+ .dossier-card{min-height:175px;padding:21px}
+ .dossier-detail{padding:22px;border-radius:14px}
+ .dossier-detail-grid{grid-template-columns:1fr;gap:12px}
+ .timeline,.quicklinks{grid-template-columns:1fr!important}
+ .v4-photo-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ .v4-photo-card:nth-child(11n+1){grid-column:auto!important;grid-row:auto!important}
+ .v4-photo-card .sl-grey-photo,.v4-photo-card:nth-child(11n+1) .sl-grey-photo{height:145px!important}
+ .v4-photo-card .v4-photo-caption{min-height:62px;padding:10px}
+ .v4-photo-card .v4-photo-caption strong{font-size:9px}
+ .sl-reg-hero-inner{grid-template-columns:1fr;min-height:0}
+ .sl-reg-hero-copy{padding:55px 21px 28px}
+ .sl-reg-hero h1{font-size:clamp(39px,9vw,58px)}
+ .sl-reg-hero-copy>p{font-size:14px}
+ .sl-reg-hero-image{height:220px;min-height:220px;padding:0 20px 15px}
+ .sl-reg-float{display:none}
+ .sl-reg-levels{grid-template-columns:1fr!important;gap:9px}
+ .sl-reg-level{min-height:90px;padding:16px 18px;display:grid;grid-template-columns:38px minmax(0,1fr) 22px;grid-template-rows:auto auto;align-items:center;column-gap:12px}
+ .sl-reg-level>span{grid-row:1/3}.sl-reg-level strong{margin:0;font-size:16px}.sl-reg-level small{grid-column:2;font-size:11px}
+ .sl-reg-level i{grid-column:3;grid-row:1/3;align-self:center}
+ .sl-reg-steps-grid{grid-template-columns:1fr!important;gap:10px}
+ .sl-reg-steps-grid article{min-height:0;padding:19px;display:grid;grid-template-columns:55px 1fr;gap:7px 15px}
+ .sl-reg-step-no{grid-column:1/3}.sl-reg-step-icon{grid-row:2/4;width:55px;height:55px;font-size:25px;margin:2px 0}
+ .sl-reg-steps-grid h3{font-size:20px;margin:0}.sl-reg-steps-grid p{margin:0}
+ .sl-reg-ready{grid-template-columns:1fr;gap:20px}
+ .sl-reg-bottom{padding:55px 21px}
+ .sl-reg-bottom h2{font-size:36px}
+ .sl-reg-destination{padding:17px;align-items:flex-start}
+ .sl-reg-destination h3{font-size:18px}
+ .footer{padding:60px 21px}
+ .footer h2{font-size:37px}
+ .footlinks{display:flex;flex-wrap:wrap;gap:10px}
+ .footlinks .btn{font-size:12px;padding:13px 16px}
+}
+@media(max-width:365px){.sl-hero-copy h1{font-size:35px}.sl-hero-cta{flex-direction:column;align-items:flex-start}.paths{grid-template-columns:1fr}.path{min-height:180px}}
+@keyframes mobile-menu-appear{from{opacity:0;transform:translateY(-15px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:780px){body.mobile-menu-open{overflow:hidden}header .v4nav.open{max-height:calc(100dvh - 168px)}}</style></head><body><header><a class="brand" href="#accueil"><span class="monogram">S</span><span>saint-louis.<br><small class="muted" style="font-size:11px;font-weight:500">CARCASSONNE</small></span></a><nav class="v4nav" id="v4nav" aria-label="Navigation principale"><button data-tab="accueil" class="active">Accueil</button><button data-tab="ecoles">Écoles</button><button data-tab="college">Collège</button><button data-tab="lycees">Lycées</button><button data-tab="formations">Classes & formations</button><button data-tab="vie">Vie scolaire</button><button data-tab="galerie">Galerie</button><button data-tab="pratique">Infos pratiques</button><button data-tab="preinscription" class="sl-nav-register">Se préinscrire ↗</button></nav><button class="v4-menu-toggle" id="v4-toggle" aria-expanded="false" aria-controls="v4nav" aria-label="Ouvrir le menu">Menu <span aria-hidden="true" class="mobile-menu-glyph"><span></span><span></span></span></button></header>
+<div class="mobile-nav-scrim" id="mobile-nav-scrim" aria-hidden="true"></div>
+<nav class="mobile-bottom-bar" aria-label="Navigation rapide mobile">
+  <button type="button" data-mobile-tab="accueil" class="mobile-bottom-active"><span class="mobile-nav-symbol" aria-hidden="true">⌂</span><span>Accueil</span></button>
+  <button type="button" data-mobile-tab="formations"><span class="mobile-nav-symbol" aria-hidden="true">▤</span><span>Formations</span></button>
+  <button type="button" data-mobile-tab="galerie"><span class="mobile-nav-symbol" aria-hidden="true">▦</span><span>Galerie</span></button>
+  <button type="button" id="mobile-more-button" aria-expanded="false" aria-controls="v4nav"><span class="mobile-nav-symbol mobile-more-lines" aria-hidden="true">☰</span><span>Menu</span></button>
+</nav>
 <div class="nova-progress" id="nova-progress"></div><div class="nova-cursor" id="nova-cursor"></div><div class="sl-page-transition" id="sl-page-transition" aria-hidden="true"><div class="sl-transition-inner"><div class="sl-transition-mark">S.</div><div class="sl-transition-title">SAINT-LOUIS</div><div class="sl-transition-sub">DÉCOUVRIR · APPRENDRE · GRANDIR</div><div class="sl-transition-bar"><span></span></div></div></div><main id="v4-main"><div class="v4-page active" data-page="accueil"><section class="hero sl-hero" id="accueil">
   <div class="sl-floating-word sl-floating-word-one" aria-hidden="true">ÉDUCATION</div>
   <div class="sl-floating-word sl-floating-word-two" aria-hidden="true">CARCASSONNE</div>
@@ -344,6 +511,10 @@ quickSearch.addEventListener('input',renderQuick);renderQuick();
 (function(){
   const pages=document.querySelectorAll('.v4-page');
   const nav=document.getElementById('v4nav');const toggle=document.getElementById('v4-toggle');
+  const mobileScrim=document.getElementById('mobile-nav-scrim');const moreButton=document.getElementById('mobile-more-button');
+  const quickButtons=document.querySelectorAll('[data-mobile-tab]');
+  function closeMobileMenu(){nav.classList.remove('open');toggle.setAttribute('aria-expanded','false');toggle.setAttribute('aria-label','Ouvrir le menu');moreButton.setAttribute('aria-expanded','false');mobileScrim.classList.remove('visible');document.body.classList.remove('mobile-menu-open')}
+  function toggleMobileMenu(){const open=!nav.classList.contains('open');closeMobileMenu();if(open){nav.classList.add('open');toggle.setAttribute('aria-expanded','true');toggle.setAttribute('aria-label','Fermer le menu');moreButton.setAttribute('aria-expanded','true');mobileScrim.classList.add('visible');document.body.classList.add('mobile-menu-open')}}
   let tab='accueil';
   let navigationTimer, exitTimer; const transition=document.getElementById('sl-page-transition');
   function go(id,hash=true){
@@ -352,10 +523,11 @@ quickSearch.addEventListener('input',renderQuick);renderQuick();
     if(samePage){if(hash)history.replaceState(null,'','#'+id);return}
     clearTimeout(navigationTimer);clearTimeout(exitTimer);
     tab=id;transition.classList.remove('is-exiting');transition.classList.add('is-visible');
-    nav.classList.remove('open');toggle.setAttribute('aria-expanded','false');
+    closeMobileMenu();
     navigationTimer=setTimeout(()=>{
       pages.forEach((p)=>p.classList.toggle('active',p.dataset.page===id));
       nav.querySelectorAll('[data-tab]').forEach(b=>{b.classList.toggle('active',b.dataset.tab===id);b.setAttribute('aria-current',b.dataset.tab===id?'page':'false')});
+      quickButtons.forEach(b=>{b.classList.toggle('mobile-bottom-active',b.dataset.mobileTab===id);b.setAttribute('aria-current',b.dataset.mobileTab===id?'page':'false')});
       if(hash)history.replaceState(null,'','#'+id);
       window.scrollTo({top:0,behavior:'instant'});observe();
       transition.classList.add('is-exiting');
@@ -363,7 +535,12 @@ quickSearch.addEventListener('input',renderQuick);renderQuick();
     },480);
   }
   nav.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>go(b.dataset.tab)));
-  toggle.onclick=()=>{nav.classList.toggle('open');toggle.setAttribute('aria-expanded',String(nav.classList.contains('open')))};
+  toggle.onclick=toggleMobileMenu;
+  moreButton.onclick=toggleMobileMenu;
+  mobileScrim.onclick=closeMobileMenu;
+  quickButtons.forEach(b=>b.addEventListener('click',()=>go(b.dataset.mobileTab)));
+  window.addEventListener('keydown',e=>{if(e.key==='Escape')closeMobileMenu()});
+  window.addEventListener('resize',()=>{if(window.innerWidth>780)closeMobileMenu()});
   document.querySelectorAll('[data-go]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();go(a.dataset.go)}));
   const oldHash=location.hash.replace('#','');
   if(['accueil','ecoles','college','lycees','formations','vie','galerie','pratique','preinscription'].includes(oldHash))go(oldHash,false);
