@@ -644,6 +644,50 @@ header .v4nav .sl-nav-register:hover{background:#ffd077!important;color:#1d2447!
  .sl-hero:before,.sl-poster:before,.sl-hero-image,.sl-hero-photo-small{animation:none!important}
  .sl-poster:hover,.paths .path:hover{transform:none!important}
 }
+
+/* V12 — Design plus architectural, photographies ponctuelles, végétal discret */
+:root{--natural-green:#316b52;--natural-sage:#e6eee7}
+header .monogram{border-radius:4px!important;box-shadow:4px 4px 0 #dab570}
+header .v4nav button,.v4-menu-toggle,.mobile-bottom-bar button{border-radius:5px!important}
+.sl-hero-image{border-radius:6px!important;transform:rotate(0deg)!important;box-shadow:10px 12px 0 #eab56b,0 12px 40px #0003!important}
+.sl-hero-visual:hover .sl-hero-image{transform:translateY(-4px)!important}
+.sl-hero-photo-small{border-radius:4px!important;box-shadow:8px 8px 0 #60a98f!important}
+.sl-photo-label,.sl-hero-cta .sl-btn-primary,.sl-reg-hero-action,.sl-reg-hero-image>.sl-grey-photo,.sl-reg-destination a{border-radius:5px!important}
+.sl-poster,.sl-poster-one,.sl-poster-two,.sl-poster-three{border-radius:5px!important;box-shadow:0 10px 24px #17274618!important}
+.sl-poster:hover{transform:translateY(-5px)!important;box-shadow:0 18px 30px #1a285223!important}
+.paths .path,.v4-school,.v4-schools .v4-school,.v4-value-grid article,.school,.v4-photo-card,.dossier-card,.quick-course,.quicklinks a,.sl-reg-level,.sl-reg-steps-grid article,.sl-reg-help,.faqdetails,.sl-reg-checklist label{border-radius:6px!important}
+.paths .path{box-shadow:0 5px 16px #10224612!important}
+.paths .path:hover{transform:translateY(-4px)!important}
+.quick-course,.dossier-card,.v4-photo-card,.quicklinks a{box-shadow:0 5px 14px #17274a11!important}
+.quick-course:hover,.dossier-card:hover,.v4-photo-card:hover,.quicklinks a:hover{box-shadow:0 10px 22px #17274a1e!important}
+.sl-reg-hero-image>.sl-grey-photo,.sl-campus-banner-caption,.sl-grey-photo-large{border-radius:5px!important}
+.sl-green-feature{display:grid;grid-template-columns:1fr 1.08fr;align-items:stretch;min-height:475px;background:#e7eee6;color:#203c2e;position:relative;overflow:hidden}
+.sl-green-copy{position:relative;isolation:isolate;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:64px clamp(30px,6.5vw,110px);overflow:hidden}
+.sl-green-kicker{font-size:11px;font-weight:800;letter-spacing:2.2px;color:#41725b;position:relative;z-index:2}
+.sl-green-copy h2{font:800 clamp(39px,4.6vw,75px)/1.03 'Manrope','DM Sans',sans-serif;letter-spacing:-.062em;color:#233e31!important;position:relative;z-index:2;margin:26px 0 22px}
+.sl-green-copy h2 em{font-style:normal;color:#3e7858}
+.sl-green-copy p{font-size:15px;line-height:1.75;color:#536d5b;max-width:400px;position:relative;z-index:2}
+.sl-green-link{display:inline-flex;align-items:center;gap:25px;padding:12px 0;border-bottom:2px solid #316b52;color:#265f44;font-size:13px;font-weight:800;margin-top:28px;position:relative;z-index:2;transition:gap .3s}
+.sl-green-link:hover{gap:34px}
+.sl-botanical{position:absolute;right:-25px;bottom:-95px;width:220px;height:auto;opacity:.22;transform:rotate(-6deg);pointer-events:none;z-index:1}
+.sl-green-photos{position:relative;min-height:450px;display:grid;grid-template-columns:1.12fr .88fr;gap:9px;background:#d9e4de;padding:18px}
+.sl-green-photo{position:relative;margin:0;min-width:0;overflow:hidden;background:#d4d6da}
+.sl-green-photo img{width:100%;height:100%;display:block;object-fit:cover;object-position:center;filter:saturate(.86);transition:transform .7s ease,filter .7s ease}
+.sl-green-photo:hover img{transform:scale(1.035);filter:saturate(1)}
+.sl-green-photo figcaption{position:absolute;bottom:12px;left:12px;background:#fffdf5ed;color:#284b37;padding:9px 12px;font-size:10px;letter-spacing:1.6px;font-weight:900}
+.sl-green-photo-small img{object-position:50% 50%}
+@media(max-width:780px){
+ .sl-green-feature{grid-template-columns:1fr;min-height:0}
+ .sl-green-copy{padding:45px 22px}
+ .sl-green-copy h2{font-size:clamp(38px,10vw,55px);margin:17px 0}
+ .sl-green-copy p{font-size:13px;line-height:1.75}
+ .sl-botanical{width:140px;right:-19px;bottom:-40px;opacity:.16}
+ .sl-green-photos{padding:10px;min-height:265px;height:265px;gap:8px}
+ .sl-green-photo figcaption{padding:7px 9px;font-size:8px;left:8px;bottom:8px;letter-spacing:1px}
+ .sl-poster:hover,.paths .path:hover{transform:none!important}
+ .mobile-bottom-bar button{border-radius:6px!important}
+}
+@media(prefers-reduced-motion:reduce){.sl-green-photo img,.sl-green-link{transition:none!important}}
 </style></head><body><header><a class="brand" href="#accueil"><span class="monogram">S</span><span>saint-louis.<br><small class="muted" style="font-size:11px;font-weight:500">CARCASSONNE</small></span></a><nav class="v4nav" id="v4nav" aria-label="Navigation principale"><button data-tab="accueil" class="active">Accueil</button><button data-tab="ecoles">Écoles</button><button data-tab="college">Collège</button><button data-tab="lycees">Lycées</button><button data-tab="formations">Classes & formations</button><button data-tab="vie">Vie scolaire</button><button data-tab="galerie">Galerie</button><button data-tab="pratique">Infos pratiques</button><button data-tab="preinscription" class="sl-nav-register">Se préinscrire ↗</button></nav><button class="v4-menu-toggle" id="v4-toggle" aria-expanded="false" aria-controls="v4nav" aria-label="Ouvrir le menu">Menu <span aria-hidden="true" class="mobile-menu-glyph"><span></span><span></span></span></button></header>
 <div class="mobile-nav-scrim" id="mobile-nav-scrim" aria-hidden="true"></div>
 <nav class="mobile-bottom-bar" aria-label="Navigation rapide mobile">
@@ -680,7 +724,24 @@ header .v4nav .sl-nav-register:hover{background:#ffd077!important;color:#1d2447!
     <a href="#classes" class="sl-poster sl-poster-two reveal"><span class="sl-poster-top"><span>02 / EXPLORER</span><span class="sl-poster-open">VOIR LES CLASSES →</span></span><div class="sl-poster-art sl-poster-art-two" aria-hidden="true"><span class="sl-poster-number">02</span><span class="sl-poster-rule"></span></div><div class="sl-poster-bottom"><b>GRANDIR.</b><small>Collège & découverte de soi</small></div></a>
     <a href="#classes" class="sl-poster sl-poster-three reveal"><span class="sl-poster-top"><span>03 / OSER</span><span class="sl-poster-open">VOIR LES CLASSES →</span></span><div class="sl-poster-art sl-poster-art-three" aria-hidden="true"><span class="sl-poster-number">03</span><span class="sl-poster-rule"></span></div><div class="sl-poster-bottom"><b>DEVENIR.</b><small>Lycées & formations supérieures</small></div></a>
   </div>
-</section><div class="v4-marquee"><div>ÉCOLES ✳ COLLÈGE ✳ LYCÉE GÉNÉRAL ✳ LYCÉE PROFESSIONNEL ✳ BTS MCO ✳ APPRENTISSAGE ✳ ÉCOLES ✳ COLLÈGE ✳ LYCÉE GÉNÉRAL ✳ LYCÉE PROFESSIONNEL ✳ BTS MCO ✳ APPRENTISSAGE ✳ </div></div><section class="section" id="parcours"><div class="section-heading"><div><span class="eyebrow">01 / Le parcours</span><h2>Un chemin pour<br>chaque ambition.</h2></div><p class="sub">De la première rentrée aux premiers projets professionnels, chaque étape compte.</p></div><div class="paths"><a class="path" href="#classes" onclick="choose('Maternelle')"><span>01 — PREMIERS PAS</span><h3>Maternelle<br>& primaire</h3><b>Petite section → CM2 ↗</b></a><a class="path" href="#classes" onclick="choose('Collège')"><span>02 — GRANDIR</span><h3>Les années<br>collège</h3><b>6e → 3e ↗</b></a><a class="path" href="#classes" onclick="choose('Lycées')"><span>03 — SE RÉVÉLER</span><h3>Les années<br>lycée</h3><b>Général • STMG • Professionnel ↗</b></a><a class="path" href="#classes" onclick="choose('Post-bac')"><span>04 — SE PROJETER</span><h3>Après<br>le bac</h3><b>BTS MCO • Apprentissage ↗</b></a></div></section>
+</section>
+<section class="sl-green-feature" aria-labelledby="sl-green-title">
+ <div class="sl-green-copy">
+  <span class="sl-green-kicker">SAINT-LOUIS · CARCASSONNE</span>
+  <h2 id="sl-green-title">Un cadre pour<br><em>s'épanouir.</em></h2>
+  <p>Des lieux pour découvrir, apprendre et partager. Une vie scolaire qui se construit aussi en dehors de la salle de classe.</p>
+  <a href="#etablissements" class="sl-green-link">Découvrir les établissements <span aria-hidden="true">→</span></a>
+  <svg class="sl-botanical" viewBox="0 0 280 340" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M85 335C84 260 114 192 157 95M117 226C73 217 53 175 63 132C104 145 127 178 117 226ZM143 148C111 121 115 79 140 52C164 84 165 120 143 148ZM92 291C56 298 26 274 15 238C59 232 89 250 92 291ZM173 95C181 61 213 43 249 47C239 86 210 108 173 95Z" stroke="#3E7257" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M116 222L63 134M141 145L139 53M91 289L16 240M175 96L249 48" stroke="#3E7257" stroke-width="1.6" opacity=".65"/>
+  </svg>
+ </div>
+ <div class="sl-green-photos">
+  <figure class="sl-green-photo sl-green-photo-main"><img loading="lazy" decoding="async" src="https://www.saintlouis-carcassonne.eu/php/slider/images/slider_college.jpg" alt="Photographie publiée par Saint-Louis pour présenter le collège"><figcaption>LE COLLÈGE</figcaption></figure>
+  <figure class="sl-green-photo sl-green-photo-small"><img loading="lazy" decoding="async" src="https://www.saintlouis-carcassonne.eu/images/filieres/primaire/saintmichel.jpg" alt="École Saint-Michel, photographie publiée par Saint-Louis"><figcaption>LES ÉCOLES</figcaption></figure>
+ </div>
+</section>
+<div class="v4-marquee"><div>ÉCOLES ✳ COLLÈGE ✳ LYCÉE GÉNÉRAL ✳ LYCÉE PROFESSIONNEL ✳ BTS MCO ✳ APPRENTISSAGE ✳ ÉCOLES ✳ COLLÈGE ✳ LYCÉE GÉNÉRAL ✳ LYCÉE PROFESSIONNEL ✳ BTS MCO ✳ APPRENTISSAGE ✳ </div></div><section class="section" id="parcours"><div class="section-heading"><div><span class="eyebrow">01 / Le parcours</span><h2>Un chemin pour<br>chaque ambition.</h2></div><p class="sub">De la première rentrée aux premiers projets professionnels, chaque étape compte.</p></div><div class="paths"><a class="path" href="#classes" onclick="choose('Maternelle')"><span>01 — PREMIERS PAS</span><h3>Maternelle<br>& primaire</h3><b>Petite section → CM2 ↗</b></a><a class="path" href="#classes" onclick="choose('Collège')"><span>02 — GRANDIR</span><h3>Les années<br>collège</h3><b>6e → 3e ↗</b></a><a class="path" href="#classes" onclick="choose('Lycées')"><span>03 — SE RÉVÉLER</span><h3>Les années<br>lycée</h3><b>Général • STMG • Professionnel ↗</b></a><a class="path" href="#classes" onclick="choose('Post-bac')"><span>04 — SE PROJETER</span><h3>Après<br>le bac</h3><b>BTS MCO • Apprentissage ↗</b></a></div></section>
 <section class="section dark" id="etablissements"><div class="section-heading"><div><span class="eyebrow">02 / Une communauté</span><h2>Plusieurs lieux.<br>Un même esprit.</h2></div><p class="sub">Saint-Louis rassemble plusieurs établissements scolaires et parcours de formation à Carcassonne.</p></div><div class="school-grid"><div class="school"><small>ÉCOLE</small><h3>Jeanne-d’Arc</h3><a href="#classes">Maternelle & élémentaire ↗</a></div><div class="school"><small>ÉCOLE</small><h3>Saint-Michel</h3><a href="#classes">Maternelle & élémentaire ↗</a></div><div class="school"><small>ÉCOLE</small><h3>Immaculée</h3><a href="#classes">Maternelle & élémentaire ↗</a></div><div class="school"><small>COLLÈGE</small><h3>Jeanne-d’Arc</h3><a href="#classes">De la 6e à la 3e ↗</a></div><div class="school"><small>LYCÉE</small><h3>Saint-Stanislas</h3><a href="#classes">Général & technologique ↗</a></div><div class="school"><small>LYCÉE PROFESSIONNEL</small><h3>Saint-François</h3><a href="#classes">Formation professionnelle ↗</a></div></div></section>
 </div><div class="v4-page" data-page="ecoles"><div class="v4-page-title"><span class="eyebrow">Petite section — CM2</span><h1>L'école de<br>tous les possibles.</h1><p>Trois écoles de l'ensemble Saint-Louis : Jeanne-d'Arc, Saint-Michel et Immaculée. Une approche des apprentissages adaptée aux premières années.</p><div class="v4-pills"><a href="#" data-go="formations">Voir tous les niveaux ↗</a><a href="https://www.saintlouis-carcassonne.eu/filiere-ecole-primaire-carcassonne.php" target="_blank">En savoir plus ↗</a></div></div><div class="sl-campus-banner reveal"><div class="sl-grey-photo" role="img" aria-label="Emplacement réservé pour une future photo"></div><div class="sl-campus-banner-caption"><span>SAINT-LOUIS • CARCASSONNE</span><strong>La vie à l’école</strong></div></div><section class="section"><span class="eyebrow">Nos écoles</span><h2>Grandir à son rythme.</h2><div class="v4-schools"><article class="v4-school"><span class="eyebrow">01 — École</span><h3>Jeanne-d'Arc</h3><p>44 rue Victor Hugo, 11000 Carcassonne</p><a href="tel:+33468717880">04 68 71 78 80 ↗</a></article><article class="v4-school"><span class="eyebrow">02 — École</span><h3>Saint-Michel</h3><p>8 place Joseph Poux, 11000 Carcassonne</p><a href="tel:+33468251161">04 68 25 11 61 ↗</a></article><article class="v4-school"><span class="eyebrow">03 — École</span><h3>Immaculée</h3><p>3 rue de la Conférence, 11000 Carcassonne</p><a href="tel:+33468250747">04 68 25 07 47 ↗</a></article><article class="v4-school"><span class="eyebrow">Un parcours complet</span><h3>PS, MS, GS, CP, CE1, CE2, CM1, CM2</h3><p>De la maternelle à la fin de l’école élémentaire, les étapes préparant au collège.</p><a href="#" data-go="formations">Explorer les fiches ↗</a></article></div></section></div>
 <div class="v4-page" data-page="college"><div class="v4-page-title"><span class="eyebrow">Collège Jeanne-d’Arc</span><h1>Découvrir.<br>Explorer. Grandir.</h1><p>De la sixième à la troisième, les années collège construisent la méthode, la curiosité et les projets d’orientation.</p><div class="v4-pills"><a href="#" data-go="formations">Explorer la 6e à la 3e ↗</a><a href="https://www.saintlouis-carcassonne.eu/filiere-college-carcassonne.php" target="_blank">Découvrir le collège ↗</a></div></div><div class="sl-campus-banner reveal"><div class="sl-grey-photo" role="img" aria-label="Emplacement réservé pour une future photo"></div><div class="sl-campus-banner-caption"><span>SAINT-LOUIS • CARCASSONNE</span><strong>Le collège en images</strong></div></div><section class="section"><h2>Les quatre années<br>qui font grandir.</h2><div class="v4-value-grid"><article><b>6e</b><p>Prendre ses repères et acquérir de nouvelles méthodes.</p></article><article><b>5e</b><p>Gagner en autonomie, approfondir les disciplines.</p></article><article><b>4e</b><p>Développer son esprit critique et sa réflexion.</p></article><article><b>3e</b><p>Préparer le brevet et penser à l'orientation.</p></article><article><b>Vie scolaire</b><p>Équipe pédagogique, suivi des élèves, CPE et délégués.</p></article><article><b>Adresse</b><p>44 rue Victor Hugo, 11000 Carcassonne · 04 68 71 78 80.</p></article></div></section></div>
