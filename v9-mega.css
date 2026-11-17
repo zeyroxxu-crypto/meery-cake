@@ -731,8 +731,8 @@ body{background:linear-gradient(140deg,#fff8f0 0%,#fae5e3 48%,#fff1e6 100%) fixe
 }
 /* Blur every pixel of each moving photograph, including foreground pastries. */
 #accueil.hero.mc25-home-premium .mc45-rail .mc45-photo{
-  filter:blur(19px) brightness(.96)!important;
-  -webkit-filter:blur(19px) brightness(.96)!important;
+  filter:blur(8px) brightness(.96)!important;
+  -webkit-filter:blur(8px) brightness(.96)!important;
   object-fit:cover!important;
   object-position:center!important;
 }
@@ -760,8 +760,8 @@ body{background:linear-gradient(140deg,#fff8f0 0%,#fae5e3 48%,#fff1e6 100%) fixe
     min-height:0!important;
   }
   #accueil.hero.mc25-home-premium .mc45-rail .mc45-photo{
-    filter:blur(15px) brightness(.96)!important;
-    -webkit-filter:blur(15px) brightness(.96)!important;
+    filter:blur(6px) brightness(.96)!important;
+    -webkit-filter:blur(6px) brightness(.96)!important;
     object-position:center!important;
   }
   #accueil.hero.mc25-home-premium>.mc33-hero-visual::after{
