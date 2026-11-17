@@ -616,3 +616,9 @@ body{background:linear-gradient(140deg,#fff8f0 0%,#fae5e3 48%,#fff1e6 100%) fixe
 @media(prefers-reduced-motion:reduce){
  .hero.mc25-home-premium .mc33-slideshow.mc35-ready .mc33-slide{transition:none!important}
 }
+
+/* V38: transition is driven by synchronized Web Animations on both images. */
+.hero.mc25-home-premium .mc33-slideshow.mc38-track-ready .mc33-slide{
+ transition:none!important;animation:none!important;backface-visibility:hidden;
+ user-select:none;-webkit-user-drag:none;touch-action:pan-y;
+}
