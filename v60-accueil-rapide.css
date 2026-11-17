@@ -1,0 +1,32 @@
+/* V60 — première impression en quelques secondes.
+   Garde le design V59 et le diaporama existant, rend les accès utiles visibles
+   dès le premier écran et ajuste sa hauteur sans retoucher les photos. */
+#accueil .mc60-quick{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-top:22px}
+#accueil .mc60-quick a{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:9px 13px;background:rgba(255,255,255,.76);border:1px solid #dfbfc7;border-radius:10px;color:#684453;text-decoration:none;font-size:.88rem;font-weight:650;line-height:1.2;transition:background .18s ease,border-color .18s ease}
+#accueil .mc60-quick a:hover{background:#fff;border-color:#b7758c}
+#accueil .mc60-quick a:focus-visible{outline:3px solid #a95d77;outline-offset:3px}
+#accueil .mc60-visit{margin-top:18px!important;display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:.8rem;line-height:1.5;color:#624d54}
+#accueil .mc60-visit a{color:#75475d;text-underline-offset:4px;font-weight:650}
+#accueil .mc60-proof{display:inline-flex;gap:6px;align-items:center;max-width:100%;margin-top:14px;font-size:.77rem;line-height:1.4;color:#765860;text-decoration:underline;text-decoration-color:rgba(118,88,96,.3);text-underline-offset:3px}
+#accueil .mc60-proof:hover{color:#563747}
+#accueil .mc60-disclaimer{margin-top:15px!important;font-size:10px!important;line-height:1.45!important;color:#8a777a!important}
+@media(min-width:901px){
+ #accueil.hero.mc25-home-premium{min-height:clamp(580px,calc(100svh - 190px),680px)!important}
+ #accueil.hero.mc25-home-premium>.hero-content{
+   min-height:0!important;padding:46px clamp(30px,4.8vw,85px)!important;
+ }
+ #accueil.hero.mc25-home-premium>.mc33-hero-visual{min-height:0!important}
+}
+@media(max-width:900px){
+ #accueil.hero.mc25-home-premium>.hero-content{padding:38px 24px 33px!important}
+ #accueil.hero.mc25-home-premium>.mc33-hero-visual{height:clamp(260px,53vw,410px)!important;min-height:260px!important}
+ #accueil .mc60-quick{gap:8px;margin-top:16px}
+ #accueil .mc60-quick a{font-size:.85rem}
+}
+@media(max-width:420px){
+ #accueil.hero.mc25-home-premium>.hero-content{padding:26px 20px 27px!important}
+ #accueil .mc60-quick a{font-size:.83rem;min-height:38px;padding:8px 10px}
+ #accueil .hero-actions{gap:10px!important}
+ #accueil .mc60-visit{margin-top:14px!important}
+}
+@media(prefers-reduced-motion:reduce){#accueil .mc60-quick a{transition:none}}
