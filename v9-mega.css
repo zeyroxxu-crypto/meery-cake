@@ -643,3 +643,23 @@ body{background:linear-gradient(140deg,#fff8f0 0%,#fae5e3 48%,#fff1e6 100%) fixe
 }
 @media(max-width:600px){#accueil .mc41-frame{object-position:center}}
 @media(prefers-reduced-motion:reduce){#accueil .mc41-track.mc41-moving{transition:none!important}}
+
+
+/* V45 - isolated horizontal slide, four photos + seamless edge clones. */
+#accueil .mc33-slideshow.mc45-slider{position:absolute;inset:0;overflow:hidden;isolation:isolate;touch-action:pan-y}
+#accueil .mc45-rail{
+ position:absolute;top:0;left:0;height:100%;width:600%;display:flex;
+ flex-direction:row;flex-wrap:nowrap;align-items:stretch;
+ transform:translate3d(-16.6666666667%,0,0);
+ will-change:transform;transition:none!important;animation:none!important;
+ backface-visibility:hidden;contain:layout style paint;
+}
+#accueil .mc45-photo{
+ display:block!important;position:relative!important;inset:auto!important;
+ box-sizing:border-box;min-width:0;min-height:0;width:16.6666666667%!important;
+ max-width:16.6666666667%!important;flex:0 0 16.6666666667%!important;
+ height:100%!important;object-fit:cover!important;object-position:center!important;
+ opacity:1!important;visibility:visible!important;filter:none!important;
+ transform:none!important;transition:none!important;animation:none!important;
+ backface-visibility:hidden;
+}
