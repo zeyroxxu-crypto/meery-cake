@@ -881,3 +881,21 @@ body{background:linear-gradient(140deg,#fff8f0 0%,#fae5e3 48%,#fff1e6 100%) fixe
     mask-image:linear-gradient(to right, transparent 0px, #000 65px, #000 100%)!important;
   }
 }
+
+/* V55 — Replace broken adjacent-image rail with two full-screen photo layers.
+   A subtle horizontal motion blends whole frames. No vertical seam can form. */
+#accueil.hero.mc25-home-premium .mc33-slideshow.mc55-slider{
+  position:absolute!important;inset:0!important;overflow:hidden!important;
+  isolation:isolate!important;touch-action:pan-y;
+}
+#accueil.hero.mc25-home-premium .mc33-slideshow.mc55-slider .mc55-photo{
+  display:block!important;position:absolute!important;
+  inset:-4px!important;width:calc(100% + 8px)!important;
+  height:calc(100% + 8px)!important;min-width:0!important;max-width:none!important;
+  object-fit:cover!important;object-position:center!important;
+  border:0!important;outline:0!important;box-shadow:none!important;
+  filter:none!important;-webkit-filter:none!important;
+  -webkit-mask-image:none!important;mask-image:none!important;
+  transition:none!important;animation:none!important;
+  pointer-events:none;backface-visibility:hidden;
+}
