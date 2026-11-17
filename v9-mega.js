@@ -31,9 +31,9 @@ function renderHomeCollections(){
  head.append(copy,create('p','','Parcourez les univers Meery Cake : une pause sucrée, un brunch à envisager ou votre prochain gâteau sur mesure. Les disponibilités sont à confirmer directement avec le salon.'));
  const grid=create('div','mc9-collection-grid');
  const entries=[
-  {href:'carte.html?category=desserts#catalogue',src:'assets/local/patisseries.webp',label:'Les douceurs',title:'Pâtisseries',desc:'Cupcakes et créations gourmandes à découvrir dans notre carte.',cta:'Découvrir la carte ↗'},
-  {href:'brunch.html',src:'assets/local/brunch.webp',label:'À partager',title:'Brunch & moments',desc:'Préparez votre demande et vérifiez les prochaines possibilités.',cta:'En savoir plus ↗'},
-  {href:'gateaux.html',src:'assets/local/gateaux.webp',label:'Votre création',title:'Gâteaux sur mesure',desc:'Choisissez forme, couleurs et décors dans le configurateur.',cta:'Imaginer mon gâteau ↗'}
+  {href:'carte.html?category=desserts#catalogue',src:'https://cdt11.media.tourinsoft.eu/upload/MEERY-CAKE-1.jpg',label:'Les douceurs',title:'Pâtisseries',desc:'Cupcakes et créations gourmandes à découvrir dans notre carte.',cta:'Découvrir la carte ↗'},
+  {href:'brunch.html',src:'https://cdt11.media.tourinsoft.eu/upload/MEERY-CAKE-2.jpg',label:'À partager',title:'Brunch & moments',desc:'Préparez votre demande et vérifiez les prochaines possibilités.',cta:'En savoir plus ↗'},
+  {href:'gateaux.html',src:'https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770',label:'Votre création',title:'Gâteaux sur mesure',desc:'Choisissez forme, couleurs et décors dans le configurateur.',cta:'Imaginer mon gâteau ↗'}
  ];
  for(const item of entries){
   const a=create('a','mc9-collection-card');a.href=item.href;
@@ -312,17 +312,17 @@ function editorialStoriesV28(){
   'brunch.html':{
    eyebrow:'L’ART DE PRENDRE LE TEMPS',heading:'Une pause qui se savoure.',copy:'Un cadre chaleureux et des idées gourmandes pour partager un moment. Demandez au salon les formules et les jours de brunch actuellement proposés.',
    href:'#brunchBooking',cta:'Préparer ma demande',
-   images:[['assets/local/brunch.webp','Illustration de brunch (IA)'],['assets/local/brunch.webp','Illustration gourmande (IA)']]
+   images:[['https://cdt11.media.tourinsoft.eu/upload/MEERY-CAKE-2.jpg','Illustration de brunch (IA)'],['https://cdt11.media.tourinsoft.eu/upload/MEERY-CAKE-2.jpg','Illustration gourmande (IA)']]
   },
   'gateaux.html':{
    eyebrow:'VOTRE CRÉATION, VOTRE HISTOIRE',heading:'Les beaux moments méritent leur douceur.',copy:'Une occasion, des couleurs, une idée : préparez les détails de votre gâteau et transmettez votre demande. La réalisation et le devis sont à confirmer.',
    href:'#designer',cta:'Créer ma demande',
-   images:[['assets/local/gateaux.webp','Illustration de gâteau (IA)'],['assets/local/cupcakes.webp','Illustration de cupcakes (IA)']]
+   images:[['https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770','Illustration de gâteau (IA)'],['https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770','Illustration de cupcakes (IA)']]
   },
   'ateliers.html':{
    eyebrow:'DES IDÉES À CRÉER ENSEMBLE',heading:'Le plaisir de faire soi-même.',copy:'Décoration, couleurs et créativité : découvrez des idées d’ateliers et demandez au salon les prochaines possibilités. Aucun créneau n’est annoncé sans confirmation.',
    href:'#atelier-demande',cta:'Se renseigner',
-   images:[['assets/local/cupcakes.webp','Illustration de cupcakes (IA)'],['assets/local/gateaux.webp','Illustration de pâtisserie (IA)']]
+   images:[['https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770','Illustration de cupcakes (IA)'],['https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770','Illustration de pâtisserie (IA)']]
   }
  };
  const x=config[path],main=$('main');if(!x||!main||main.querySelector('.mc28-story'))return;
@@ -333,7 +333,7 @@ function editorialStoriesV28(){
  const tag=create('span','eyebrow',x.eyebrow),heading=create('h2','',x.heading),p=create('p','',x.copy),link=create('a','button secondary',x.cta+' →');
  link.href=x.href;copy.append(tag,heading,p,link);
  x.images.forEach(([src,alt],i)=>{const fig=create('figure',i?'mc28-story-photo mc28-story-photo-small':'mc28-story-photo');const img=create('img');img.src=src;img.alt=alt;img.loading='lazy';img.decoding='async';fig.append(img);photos.append(fig)});
- const note=create('small','mc28-story-credit','Images générées par IA pour cette maquette, présentées à titre illustratif.');
+ const note=create('small','mc28-story-credit','Photographies réelles de Meery Cake, issues de fiches publiques ; autorisation de republication à confirmer.');
  photos.append(note);wrap.append(copy,photos);section.append(wrap);
  const quick=main.querySelector('.mc28-quick-links');
  (quick||hero).after(section);
