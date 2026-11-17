@@ -30,3 +30,17 @@
  #accueil .mc60-visit{margin-top:14px!important}
 }
 @media(prefers-reduced-motion:reduce){#accueil .mc60-quick a{transition:none}}
+
+/* V61 — restore compact original proportions, remove oversize home hero. */
+@media(min-width:901px){
+ #accueil.hero.mc25-home-premium{min-height:570px!important;max-height:650px!important}
+ #accueil.hero.mc25-home-premium>.hero-content{
+   min-height:570px!important;padding:34px clamp(28px,4vw,70px)!important;
+ }
+ #accueil.hero.mc25-home-premium>.mc33-hero-visual{min-height:570px!important}
+}
+@media(max-width:900px){
+ #accueil.hero.mc25-home-premium>.mc33-hero-visual{
+   height:clamp(250px,47vw,360px)!important;min-height:250px!important;
+ }
+}
