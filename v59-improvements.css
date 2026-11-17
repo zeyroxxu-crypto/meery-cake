@@ -1,0 +1,46 @@
+
+/* V59 — useful enhancements preserving the current Meery Cake visual identity. */
+.mc59-note{border:1px solid #e6cbd1;background:#fff9f5;border-radius:12px;padding:15px 18px;color:#5f4852;font-size:.92rem;line-height:1.55;margin:18px 0}
+.mc59-note strong{color:#64394c}
+.mc59-photo-bar{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:18px 0 25px}
+.mc59-photo-bar figure{min-width:0;margin:0;overflow:hidden;border-radius:12px;background:#f3e5df}
+.mc59-photo-bar img{width:100%;height:170px;display:block;object-fit:cover}
+.mc59-photo-bar figcaption{padding:8px 12px;font-size:.79rem;color:#705a62}
+.mc59-catalog-meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.mc59-catalog-meta span{background:#fbf2ec;border:1px solid #ebd8d1;padding:5px 9px;border-radius:7px;font-size:.76rem;color:#775561}
+.mc59-catalog-meta .mc59-unknown{background:#fff8ea;border-color:#efd9b2}
+.mc59-cake-preview{margin:20px 0 24px;padding:20px;border-radius:16px;border:1px solid #e4cbd0;background:linear-gradient(130deg,#fff9f6,#f5e5e7)}
+.mc59-preview-layout{display:grid;grid-template-columns:minmax(165px,42%) minmax(0,1fr);align-items:center;gap:22px}
+.mc59-cake-art{height:205px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.mc59-cake-plate{position:absolute;bottom:27px;width:84%;height:24px;border-radius:50%;background:#e4d8d1;box-shadow:0 6px 0 #c8b5b7}
+.mc59-cake-body{position:absolute;bottom:45px;width:61%;height:91px;border-radius:18px 18px 14px 14px;background:var(--mc59-icing,#dba8b5);border-bottom:8px solid rgba(99,44,55,.22);box-shadow:inset 0 -16px 0 rgba(255,255,255,.16),0 9px 13px rgba(95,60,65,.13)}
+.mc59-cake-body[data-shape="Carré"]{border-radius:7px}
+.mc59-cake-body[data-shape="À étages"]::before{content:"";position:absolute;bottom:83px;left:16%;right:16%;height:52px;background:var(--mc59-icing,#dba8b5);border-radius:12px 12px 2px 2px;border-bottom:6px solid rgba(99,44,55,.2)}
+.mc59-cake-top{position:absolute;left:14%;right:14%;top:-7px;height:14px;border-radius:50%;background:#fff9f4;opacity:.85}
+.mc59-cake-label{font-weight:700;color:#523643;font-size:1.03rem}
+.mc59-preview-details{font-size:.88rem;line-height:1.6;color:#775966}
+.mc59-preview-details p{margin:7px 0}
+.mc59-preview-details small{display:block;margin-top:9px;color:#876b74}
+.mc59-gallery-help{font-size:.85rem;color:#735b64;margin:12px 0}
+.mc59-gallery-actions{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 18px}
+.mc59-gallery-actions a{display:inline-flex;padding:8px 12px;border:1px solid #dfc1c9;border-radius:8px;color:#68384c;text-decoration:none;font-size:.87rem}
+.mc59-practical{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:20px 0}
+.mc59-practical a,.mc59-practical div{display:block;background:#fff9f6;border:1px solid #ebd6d8;border-radius:12px;padding:18px;text-decoration:none;color:#633b50}
+.mc59-practical strong{display:block;margin-bottom:6px}
+.mc59-practical span{font-size:.85rem;line-height:1.5;color:#79606a}
+.mc59-product-photo-note{font-size:.79rem;color:#805f68;margin-top:8px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #bb6d87!important;outline-offset:3px}
+@media(max-width:720px){
+ .mc59-photo-bar{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .mc59-photo-bar figure:last-child{grid-column:1/-1}
+ .mc59-photo-bar img{height:150px}
+ .mc59-practical{grid-template-columns:1fr}
+ .mc59-preview-layout{grid-template-columns:1fr;gap:10px}
+ .mc59-cake-art{height:180px}
+ .catalog-toolbar{flex-wrap:wrap}
+ .catalog-toolbar input[type="search"]{min-width:0;width:100%}
+ .gallery-filters{display:flex;gap:8px;overflow-x:auto;max-width:100%;scrollbar-width:thin;padding-bottom:8px}
+ .gallery-filters .filter{flex-shrink:0}
+ .mc59-note{padding:13px}
+}
+@media(prefers-reduced-motion:reduce){.mc59-cake-body{transition:none!important}}
