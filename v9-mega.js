@@ -322,7 +322,7 @@ function editorialStoriesV28(){
   'ateliers.html':{
    eyebrow:'DES IDÉES À CRÉER ENSEMBLE',heading:'Le plaisir de faire soi-même.',copy:'Décoration, couleurs et créativité : découvrez des idées d’ateliers et demandez au salon les prochaines possibilités. Aucun créneau n’est annoncé sans confirmation.',
    href:'#atelier-demande',cta:'Se renseigner',
-   images:[['https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770','Photographie de cupcakes chez Meery Cake'],['https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770','Illustration de pâtisserie (IA)']]
+   images:[['https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770','Photographie de cupcakes chez Meery Cake'],['https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770','Photographie de pâtisserie chez Meery Cake']]
   }
  };
  const x=config[path],main=$('main');if(!x||!main||main.querySelector('.mc28-story'))return;
