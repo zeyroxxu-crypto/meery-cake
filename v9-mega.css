@@ -595,11 +595,11 @@ body{background:linear-gradient(140deg,#fff8f0 0%,#fae5e3 48%,#fff1e6 100%) fixe
 }
 .hero.mc25-home-premium .mc33-slideshow.mc35-ready .mc33-slide.mc35-enter.is-active{
   transform:translate3d(0,0,0);
-  transition:transform .65s cubic-bezier(.22,.61,.36,1)!important;
+  transition:transform 2s cubic-bezier(.45,0,.20,1)!important;
 }
 .hero.mc25-home-premium .mc33-slideshow.mc35-ready .mc33-slide.mc35-exit{
   visibility:visible!important;transform:translate3d(var(--mc35-to,-100%),0,0);
-  transition:transform .65s cubic-bezier(.22,.61,.36,1)!important;z-index:1;
+  transition:transform 2s cubic-bezier(.45,0,.20,1)!important;z-index:1;
 }
 .mc35-controls{position:absolute;inset:50% 14px auto;display:flex;justify-content:space-between;
  transform:translateY(-50%);z-index:5;pointer-events:none}
