@@ -11,7 +11,7 @@ if(header)header.innerHTML=`
 <a href="index.html#accueil" data-t="home">Accueil</a>
 <a href="carte.html" data-t="menu">La carte</a>
 <details class="nav-discover" id="discoverNav"><summary data-t="explore">Découvrir</summary><div class="nav-sub">
-<a href="index.html#salon" data-t="about">Le salon</a>
+<a href="galerie.html" data-t="about">Le salon</a>
 <a href="galerie.html" data-t="gallery">Galerie</a>
 <a href="gateaux.html" data-t="cakes">Gâteaux sur mesure</a>
 <a href="brunch.html" data-t="brunch">Réserver un brunch</a>
