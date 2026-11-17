@@ -444,110 +444,108 @@ function siteExperienceV28(){
  });
 }
 function homeHeroSlideshowV33(){
- const slider=document.querySelector('#accueil .mc33-slideshow');
- if(!slider||slider.dataset.mc41Ready)return;
- const photos=[...slider.querySelectorAll('img.mc33-slide')].slice(0,4).map(img=>({src:img.getAttribute('src'),alt:img.getAttribute('alt')||'Photographie Meery Cake'}));
- if(photos.length<2)return;
- slider.dataset.mc41Ready='true';
- slider.classList.add('mc41-slider');
- slider.setAttribute('aria-roledescription','carrousel');
- slider.setAttribute('aria-label','Diaporama de quatre photos de Meery Cake');
- slider.tabIndex=0;
- const reduced=matchMedia('(prefers-reduced-motion: reduce)');
- // A single 200%-wide strip makes both complete photographs slide together.
- const track=document.createElement('div');
- track.className='mc41-track';
- const frameA=document.createElement('img'),frameB=document.createElement('img');
- for(const f of [frameA,frameB]){
-  f.className='mc41-frame';
-  f.decoding='async';f.draggable=false;
- }
- track.append(frameA,frameB);
- slider.replaceChildren(track);
- const setFrame=(frame,index)=>{
-  const photo=photos[(index+photos.length)%photos.length];
-  if(frame.getAttribute('src')!==photo.src)frame.src=photo.src;
-  frame.alt=photo.alt;
- };
- let active=0,busy=false,timer=null,drag=null,cleanupTimer=null;
- setFrame(frameA,0);setFrame(frameB,1);
- for(const photo of photos){const preload=new Image();preload.src=photo.src}
- const controls=document.createElement('div');controls.className='mc35-controls';
+ const viewport=document.querySelector('#accueil .mc33-slideshow');
+ if(!viewport||viewport.dataset.mc45Ready)return;
+ const images=[...viewport.querySelectorAll('img.mc33-slide')].slice(0,4)
+  .map(el=>({src:el.getAttribute('src'),alt:el.getAttribute('alt')||'Photo du salon Meery Cake'}));
+ if(images.length!==4)return;
+ viewport.dataset.mc45Ready='true';
+ viewport.classList.add('mc45-slider');
+ viewport.setAttribute('aria-roledescription','carrousel');
+ viewport.setAttribute('aria-label','Carrousel de quatre photographies');
+ viewport.tabIndex=0;
+ const DURATION=2000,INTERVAL=6000;
+ // Physically slide six cells (last, four real images, first): clones only
+ // provide seamless looping; there are always exactly four unique pictures.
+ const sequence=[images[3],...images,images[0]];
+ const rail=document.createElement('div');
+ rail.className='mc45-rail';
+ sequence.forEach(({src,alt},i)=>{
+  const picture=document.createElement('img');
+  picture.className='mc45-photo';picture.src=src;picture.alt=(i===0||i===5)?'':alt;
+  picture.setAttribute('aria-hidden',String(i===0||i===5));
+  picture.decoding='async';picture.draggable=false;
+  if(i>2)picture.loading='lazy';
+  rail.append(picture);
+ });
+ viewport.replaceChildren(rail);
+ const controls=document.createElement('div');
+ controls.className='mc35-controls';
  const prev=document.createElement('button'),next=document.createElement('button');
- for(const b of [prev,next])b.type='button';
- prev.textContent='‹';prev.setAttribute('aria-label','Photo précédente');
- next.textContent='›';next.setAttribute('aria-label','Photo suivante');
+ prev.type=next.type='button';prev.textContent='‹';next.textContent='›';
+ prev.setAttribute('aria-label','Photo précédente');
+ next.setAttribute('aria-label','Photo suivante');
  controls.append(prev,next);
- const indicators=document.createElement('div');indicators.className='mc35-dots';
- const dots=photos.map((photo,i)=>{
-  const b=document.createElement('button');b.type='button';
-  b.setAttribute('aria-label','Afficher la photo '+(i+1));
-  b.addEventListener('click',()=>{slideTo(i,i<active?-1:1);resetTimer()});
-  indicators.append(b);return b;
+ const dotsBar=document.createElement('div');dotsBar.className='mc35-dots';
+ const dots=images.map((_,i)=>{
+  const dot=document.createElement('button');dot.type='button';
+  dot.setAttribute('aria-label','Afficher la photo '+(i+1));
+  dotsBar.append(dot);return dot;
  });
- slider.parentElement.append(controls,indicators);
- const sync=()=>dots.forEach((dot,i)=>dot.setAttribute('aria-current',String(i===active)));
- function slideTo(target,direction=1){
-  if(busy)return;
-  const index=(target+photos.length)%photos.length;
-  if(index===active)return;
-  if(reduced.matches){
-   active=index;
-   track.classList.remove('mc41-moving');
-   track.style.transform='translate3d(0,0,0)';
-   setFrame(frameA,active);setFrame(frameB,active+1);sync();return;
-  }
-  busy=true;
-  const backward=direction<0;
-  track.classList.remove('mc41-moving');
-  if(backward){
-   setFrame(frameA,index);setFrame(frameB,active);
-   track.style.transform='translate3d(-50%,0,0)';
-  }else{
-   setFrame(frameA,active);setFrame(frameB,index);
-   track.style.transform='translate3d(0,0,0)';
-  }
-  // Force the starting position before transitioning; no opacity or crossfade.
-  void track.offsetWidth;
-  let finished=false;
-  const finish=()=>{
-   if(finished)return;
-   finished=true;clearTimeout(cleanupTimer);
-   track.removeEventListener('transitionend',onTransition);
-   track.classList.remove('mc41-moving');
-   track.style.transform='translate3d(0,0,0)';
-   active=index;
-   setFrame(frameA,active);setFrame(frameB,active+1);
-   sync();busy=false;
-  };
-  const onTransition=e=>{if(e.target===track&&e.propertyName==='transform')finish()};
-  track.addEventListener('transitionend',onTransition);
-  track.classList.add('mc41-moving');
-  track.style.transform=backward?'translate3d(0,0,0)':'translate3d(-50%,0,0)';
-  cleanupTimer=setTimeout(finish,2200);
+ viewport.parentElement.append(controls,dotsBar);
+ // Percentages are relative to the complete six-frame rail, not the viewport.
+ const position=slot=>'translate3d(-'+(slot*100/6)+'%,0,0)';
+ let slot=1,animating=false,clock=null,drag=null,motion=null;
+ rail.style.transform=position(slot);
+ const activeIndex=()=>((slot-1)%4+4)%4;
+ const update=()=>dots.forEach((dot,i)=>dot.setAttribute('aria-current',String(i===activeIndex())));
+ function move(direction){
+  if(animating)return;
+  animating=true;
+  const start=slot,end=slot+direction;
+  // Animate positions explicitly so no inherited opacity rules or browser CSS
+  // transitions can turn the slide into a crossfade or instant replacement.
+  motion=rail.animate(
+   [{transform:position(start)},{transform:position(end)}],
+   {duration:DURATION,easing:'linear',fill:'forwards'}
+  );
+  slot=end;
+  update();
+  motion.finished.then(()=>{
+   // At the invisible seam, jump to the exact matching clone position.
+   if(slot===5)slot=1;
+   else if(slot===0)slot=4;
+   rail.style.transform=position(slot);
+   motion.cancel();motion=null;animating=false;
+   update();
+  }).catch(()=>{animating=false;motion=null;rail.style.transform=position(slot);update()});
  }
- function resetTimer(){
-  clearInterval(timer);
-  timer=setInterval(()=>{if(!document.hidden)slideTo(active+1,1)},6000);
+ function jumpTo(index){
+  if(animating||index===activeIndex())return;
+  const current=activeIndex();
+  const distance=(index-current+4)%4;
+  if(distance===1)move(1);
+  else if(distance===3)move(-1);
+  else {
+   // Direct selection across multiple cells still slides one complete frame at
+   // a time; sequential navigation remains a natural horizontal motion.
+   const direction=index>current?1:-1;
+   move(direction);
+  }
  }
- prev.addEventListener('click',()=>{slideTo(active-1,-1);resetTimer()});
- next.addEventListener('click',()=>{slideTo(active+1,1);resetTimer()});
- slider.addEventListener('keydown',e=>{
+ function restart(){
+  clearInterval(clock);
+  clock=setInterval(()=>{if(!document.hidden&&!animating)move(1)},INTERVAL);
+ }
+ prev.addEventListener('click',()=>{move(-1);restart()});
+ next.addEventListener('click',()=>{move(1);restart()});
+ dots.forEach((d,i)=>d.addEventListener('click',()=>{jumpTo(i);restart()}));
+ viewport.addEventListener('keydown',e=>{
   if(e.key==='ArrowLeft'||e.key==='ArrowRight'){
-   e.preventDefault();slideTo(active+(e.key==='ArrowLeft'?-1:1),e.key==='ArrowLeft'?-1:1);resetTimer();
+   e.preventDefault();move(e.key==='ArrowLeft'?-1:1);restart();
   }
  });
- slider.addEventListener('pointerdown',e=>{if(e.isPrimary)drag={x:e.clientX,y:e.clientY}},{passive:true});
- slider.addEventListener('pointerup',e=>{
+ viewport.addEventListener('pointerdown',e=>{
+  if(e.isPrimary)drag={x:e.clientX,y:e.clientY};
+ },{passive:true});
+ viewport.addEventListener('pointerup',e=>{
   if(!drag)return;
   const dx=e.clientX-drag.x,dy=e.clientY-drag.y;drag=null;
-  if(Math.abs(dx)>=55&&Math.abs(dx)>Math.abs(dy)){
-   slideTo(active+(dx<0?1:-1),dx<0?1:-1);resetTimer();
-  }
+  if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)){move(dx<0?1:-1);restart()}
  },{passive:true});
- slider.addEventListener('pointercancel',()=>{drag=null});
- sync();resetTimer();
- window.addEventListener('pagehide',()=>{clearInterval(timer);clearTimeout(cleanupTimer)},{once:true});
+ viewport.addEventListener('pointercancel',()=>{drag=null});
+ update();restart();
+ window.addEventListener('pagehide',()=>{clearInterval(clock);motion?.cancel()},{once:true});
 }
 function init(){
  renderHomeCollections();addCatalogueTools();galleryCount();enrichCake();siteUtilities();scrollSections();premiumInteractions();menuShowcase();boutiqueDepth();siteExperienceV28();editorialStoriesV28();practicalToolsV28();homeHeroSlideshowV33()
