@@ -5,7 +5,7 @@
 const $=id=>document.getElementById(id);
 const create=(tag,cls,text)=>{const n=document.createElement(tag);if(cls)n.className=cls;if(text!==undefined)n.textContent=text;return n};
 const motion=()=>true;
-const dataFile='v3-data.json';
+const dataFile='v3-data.json?v=v33-local-media-20261117';
 function progressBar(){
  const meter=create('div','mc9-progress');meter.setAttribute('aria-hidden','true');document.body.append(meter);
  let queued=false;
