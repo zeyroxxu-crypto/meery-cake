@@ -129,7 +129,7 @@ initCatalog(){
 initGallery(){
  const grid=this.byId('galleryGrid');if(!grid)return;let filter='all';
  const render=()=>{grid.replaceChildren();const ps=(this.data.photos||[]).filter(p=>p.displayInGallery!==false&&(filter==='all'||p.category===filter));
- for(const p of ps){const b=this.el('button',{cls:'gallery-tile',type:'button'}),img=this.el('img');img.src=p.src;img.alt=p.title+' (illustration générée par IA)';img.loading='lazy';img.decoding='async';const caption=this.el('span',{text:p.title});b.append(img,caption);b.addEventListener('click',()=>open(p));grid.append(b)}
+ for(const p of ps){const b=this.el('button',{cls:'gallery-tile',type:'button'}),img=this.el('img');img.src=p.src;img.alt=p.title+' (photographie d’archive)';img.loading='lazy';img.decoding='async';const caption=this.el('span',{text:p.title});b.append(img,caption);b.addEventListener('click',()=>open(p));grid.append(b)}
  };
  const dialog=this.byId('lightbox'),image=this.byId('lightboxImage'),caption=this.byId('lightboxCaption');
  const open=p=>{image.src=p.src;image.alt=p.title;caption.textContent=p.title+' · '+p.source+' · image illustrative non contractuelle';dialog.classList.add('open');this.byId('lightboxClose').focus()};
@@ -187,11 +187,11 @@ initGifts(){
  if(!this.byId('giftGrid'))return;
  const gifts=[
   {title:'Carte cadeau',text:'Offrir une expérience gourmande. Montants et modalités à confirmer directement auprès du salon.',tag:'Sur demande',kind:'gift'},
-  {title:'Coffret de douceurs',text:'Un assortiment gourmand à discuter selon les créations disponibles.',tag:'À confirmer',kind:'photo',src:'assets/local/patisseries.webp',imageAlt:'Vitrine de pâtisseries Meery Cake, illustration générée par IA'},
-  {title:'Gâteau pour événement',text:'Une création personnalisée pour célébrer un anniversaire ou une fête.',tag:'Personnalisé',kind:'photo',src:'assets/local/gateaux.webp',imageAlt:'Pâtisserie présentée dans des archives Meery Cake'},
-  {title:'Brunch à partager',text:'Une pause gourmande à partager. Jours et disponibilités sur confirmation.',tag:'Information',kind:'photo',src:'assets/local/brunch.webp',imageAlt:'Brunch chez Meery Cake, illustration générée par IA'},
-  {title:'Atelier cupcakes',text:'Une expérience créative à envisager, selon les prochaines dates du salon.',tag:'Selon calendrier',kind:'photo',src:'assets/local/cupcakes.webp',imageAlt:'Décorations de cupcakes, illustration générée par IA'},
-  {title:'Commande à emporter',text:'Préparer une sélection de douceurs avant de contacter le salon. Aucun paiement en ligne.',tag:'Projet',kind:'photo',src:'assets/local/brunch.webp',imageAlt:'Pâtisseries et boissons Meery Cake, illustration générée par IA'}
+  {title:'Coffret de douceurs',text:'Un assortiment gourmand à discuter selon les créations disponibles.',tag:'À confirmer',kind:'photo',src:'https://cdt11.media.tourinsoft.eu/upload/MEERY-CAKE-1.jpg',imageAlt:'Vitrine de pâtisseries Meery Cake, photographie d’archive'},
+  {title:'Gâteau pour événement',text:'Une création personnalisée pour célébrer un anniversaire ou une fête.',tag:'Personnalisé',kind:'photo',src:'https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770',imageAlt:'Pâtisserie présentée dans des archives Meery Cake'},
+  {title:'Brunch à partager',text:'Une pause gourmande à partager. Jours et disponibilités sur confirmation.',tag:'Information',kind:'photo',src:'https://cdt11.media.tourinsoft.eu/upload/MEERY-CAKE-2.jpg',imageAlt:'Brunch chez Meery Cake, photographie d’archive'},
+  {title:'Atelier cupcakes',text:'Une expérience créative à envisager, selon les prochaines dates du salon.',tag:'Selon calendrier',kind:'photo',src:'https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770',imageAlt:'Décorations de cupcakes, photographie d’archive'},
+  {title:'Commande à emporter',text:'Préparer une sélection de douceurs avant de contacter le salon. Aucun paiement en ligne.',tag:'Projet',kind:'photo',src:'https://cdt11.media.tourinsoft.eu/upload/MEERY-CAKE-2.jpg',imageAlt:'Pâtisseries et boissons Meery Cake, photographie d’archive'}
  ];
  const grid=this.byId('giftGrid');
  grid.classList.add('mc27-gift-grid');
