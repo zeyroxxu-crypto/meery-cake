@@ -467,7 +467,14 @@ function homeHeroSlideshowV33(){
   el.style.zIndex=String(i+1);
  });
  viewport.replaceChildren(...layers);
- images.forEach(image=>{const preload=new Image();preload.src=image.src});
+ // Prioritize the visible first photo; warm the other three after initial paint.
+ const warm=()=>{
+  const start=()=>images.slice(1).forEach(image=>{const preload=new Image();preload.decoding='async';preload.src=image.src});
+  if('requestIdleCallback' in window)requestIdleCallback(start,{timeout:1400});
+  else setTimeout(start,350);
+ };
+ if(document.readyState==='complete')warm();
+ else window.addEventListener('load',warm,{once:true});
  const controls=document.createElement('div');controls.className='mc35-controls';
  const prev=document.createElement('button'),next=document.createElement('button');
  prev.type=next.type='button';
