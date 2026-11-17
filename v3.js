@@ -132,7 +132,7 @@ initGallery(){
  for(const p of ps){const b=this.el('button',{cls:'gallery-tile',type:'button'}),img=this.el('img');img.src=p.src;img.alt=p.title+' (photographie d’archive)';img.loading='lazy';img.decoding='async';const caption=this.el('span',{text:p.title});b.append(img,caption);b.addEventListener('click',()=>open(p));grid.append(b)}
  };
  const dialog=this.byId('lightbox'),image=this.byId('lightboxImage'),caption=this.byId('lightboxCaption');
- const open=p=>{image.src=p.src;image.alt=p.title;caption.textContent=p.title+' · '+p.source+' · image illustrative non contractuelle';dialog.classList.add('open');this.byId('lightboxClose').focus()};
+ const open=p=>{image.src=p.src;image.alt=p.title;caption.textContent=p.title+' · '+p.source+' · photo réelle, publiée par la source indiquée';dialog.classList.add('open');this.byId('lightboxClose').focus()};
  const close=()=>{dialog.classList.remove('open');image.removeAttribute('src')};
  this.byId('lightboxClose').addEventListener('click',close);dialog.addEventListener('click',e=>{if(e.target===dialog)close()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&dialog.classList.contains('open'))close()});
  this.byId('galleryFilters').querySelectorAll('[data-filter]').forEach(b=>b.addEventListener('click',()=>{filter=b.dataset.filter;this.byId('galleryFilters').querySelectorAll('button').forEach(x=>{const active=x===b;x.classList.toggle('active',active);x.setAttribute('aria-pressed',String(active))});render()}));render()
@@ -209,7 +209,7 @@ initGifts(){
    media.append(img);
    const zoom=this.el('button',{cls:'mc27-photo-zoom',type:'button',text:'Agrandir la photo'});
    zoom.dataset.photoIndex=String(index);
-   zoom.setAttribute('aria-label','Agrandir la photo illustrative de '+g.title);
+   zoom.setAttribute('aria-label','Agrandir la photo réelle de '+g.title);
    media.append(zoom);
   }
   media.append(this.el('span',{cls:'mc27-gift-index',text:String(index+1).padStart(2,'0')+' / 06'}));
@@ -229,7 +229,7 @@ initGifts(){
  const large=this.el('img');large.alt='';
  const legend=this.el('p',{cls:'mc27-viewer-caption'});
  let current=0;
- const show=i=>{current=(i+photos.length)%photos.length;large.src=photos[current].src;large.alt=photos[current].imageAlt;legend.textContent=photos[current].title+' · Illustration générée par IA illustrative, produits et droits à confirmer'};
+ const show=i=>{current=(i+photos.length)%photos.length;large.src=photos[current].src;large.alt=photos[current].imageAlt;legend.textContent=photos[current].title+' · Photographie réelle de Meery Cake · auteur et droit de republication à confirmer'};
  viewer.append(closer,previous,large,next,legend);
  this.byId('main')?.append(viewer);
  const closeViewer=()=>{if(viewer.open)viewer.close()};
