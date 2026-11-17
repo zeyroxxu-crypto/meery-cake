@@ -815,3 +815,12 @@ body{background:linear-gradient(140deg,#fff8f0 0%,#fae5e3 48%,#fff1e6 100%) fixe
     backdrop-filter:blur(4px) brightness(.96)!important;
   }
 }
+
+/* V52: no blur anywhere in the homepage hero, mobile or desktop. */
+#accueil.hero.mc25-home-premium .mc45-rail .mc45-photo,
+#accueil.hero.mc25-home-premium .mc33-slideshow img{
+ filter:none!important;-webkit-filter:none!important;
+}
+#accueil.hero.mc25-home-premium>.mc33-hero-visual::after{
+ backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+}
