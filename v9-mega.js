@@ -32,16 +32,16 @@ function renderHomeCollections(){
  const grid=create('div','mc9-collection-grid');
  const entries=[
   {href:'carte.html?category=desserts#catalogue',src:'images/vitrine-meery.webp',label:'Les douceurs',title:'Pâtisseries',desc:'Cupcakes et créations gourmandes à découvrir dans notre carte.',cta:'Découvrir la carte ↗'},
-  {href:'brunch.html',src:'images/ambiance-gateau-cafe.webp',label:'À partager',title:'Brunch & moments',desc:'Préparez votre demande et vérifiez les prochaines possibilités.',cta:'En savoir plus ↗'},
-  {href:'gateaux.html',src:'images/ambiance-cupcakes-rose.webp',label:'Votre création',title:'Gâteaux sur mesure',desc:'Choisissez forme, couleurs et décors dans le configurateur.',cta:'Imaginer mon gâteau ↗'}
+  {href:'brunch.html',src:'images/brunch.jpg',label:'À partager',title:'Brunch & moments',desc:'Préparez votre demande et vérifiez les prochaines possibilités.',cta:'En savoir plus ↗'},
+  {href:'gateaux.html',src:'images/cupcakes.jpg',label:'Votre création',title:'Gâteaux sur mesure',desc:'Choisissez forme, couleurs et décors dans le configurateur.',cta:'Imaginer mon gâteau ↗'}
  ];
  for(const item of entries){
   const a=create('a','mc9-collection-card');a.href=item.href;
-  const image=create('img');image.src=item.src;image.loading='lazy';image.decoding='async';image.alt='Photographie d’inspiration pour l’univers gourmand, non prise chez Meery Cake';
+  const image=create('img');image.src=item.src;image.loading='lazy';image.decoding='async';image.alt='Photographie réelle de Meery Cake';
   const label=create('span','',item.label),content=create('div');
   content.append(create('h3','',item.title),create('p','',item.desc),create('small','',item.cta));a.append(image,label,content);grid.append(a)
  }
- const caption=create('p','mc9-collection-caption','Photos d’inspiration réelles et réutilisables, sans lien avec les produits exacts de Meery Cake.');
+ const caption=create('p','mc9-collection-caption','Photographies réelles d’archives de Meery Cake ; les propositions peuvent évoluer.');
  shell.append(head,grid,caption);section.append(shell);
  anchor.before(section);
  const stats=create('div','mc9-stats-strip');
