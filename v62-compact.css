@@ -1,0 +1,78 @@
+/* V62 — compact visual scale across Meery Cake (keep legible mobile text). */
+:root{--mc62-compact-width:1140px}
+#main>.section{padding-top:54px!important;padding-bottom:54px!important;min-height:0!important}
+#main .container{max-width:var(--mc62-compact-width)}
+#main .section-head{margin-bottom:26px}
+#main .section-head.center{margin-bottom:30px}
+#main .section-head h2,#catalogue .section-head h2{font-size:clamp(30px,3.2vw,44px)!important;line-height:1.15!important;margin:8px 0 12px!important}
+#main .section-head p{font-size:13px;line-height:1.65}
+#main .editorial-grid{gap:16px}
+#main .editorial-card{border-radius:13px}
+#main .editorial-card .photo{height:200px!important}
+#main .editorial-card .copy{padding:17px!important}
+#main .editorial-card h3{font-size:clamp(21px,2vw,25px)!important;margin:6px 0 8px}
+#main .editorial-card p{font-size:12px;line-height:1.6}
+#main .mc9-home-collections{padding-top:52px!important;padding-bottom:50px!important}
+#main .mc9-collection-grid{gap:16px}
+#main .mc9-collection-card{min-height:300px!important;max-height:340px}
+#main .mc9-collection-head h2{font-size:clamp(30px,3.1vw,44px)!important}
+#main .mc9-collection-head{margin-bottom:20px!important}
+#main .v8-editorial-section{padding-top:54px!important;padding-bottom:54px!important}
+#main .v8-editorial-copy h2{font-size:clamp(32px,3.5vw,47px)!important}
+#main .v8-photo-composition{max-height:410px!important}
+#main .award-ribbon{padding-top:25px!important;padding-bottom:25px!important}
+#main .award-ribbon h2{font-size:clamp(22px,2.3vw,30px)!important}
+#main .promo-box,#main .event-card,#main .contact-card{padding:22px!important}
+#main .promo-box h3,#main .event-card h3{font-size:clamp(21px,2.1vw,27px)!important}
+#main .catalog-grid{gap:13px}
+#main .catalog-card{padding:17px!important}
+#main .catalog-card .name{font-size:19px!important}
+#main .gallery-grid{gap:12px}
+#main .gallery-tile{aspect-ratio:4/5!important;border-radius:12px!important}
+#main .page-hero{padding-top:50px!important;padding-bottom:50px!important}
+#main .mc25-hero-layout{min-height:410px!important;gap:28px!important}
+#main .mc25-hero-copy h1{font-size:clamp(42px,5.5vw,67px)!important}
+#main .mc25-hero-copy{padding:16px 0 24px!important}
+#main .mc25-hero-visual{max-height:430px!important}
+#main .mc59-photo-bar img{height:145px}
+#main .mc59-cake-art{height:178px}
+#main .mc59-cake-preview{padding:16px}
+#main .panel{padding:clamp(17px,2.5vw,27px)!important}
+#main .button{min-height:44px!important;padding:10px 17px!important;font-size:12px!important}
+#accueil.hero.mc25-home-premium{min-height:510px!important;max-height:565px!important}
+#accueil.hero.mc25-home-premium>.hero-content{min-height:510px!important;padding:28px clamp(24px,3.7vw,60px)!important}
+#accueil.hero.mc25-home-premium>.mc33-hero-visual{min-height:510px!important}
+#accueil.hero.mc25-home-premium .hero-content h1{font-size:clamp(46px,4.8vw,76px)!important;line-height:1.04!important}
+#accueil.hero.mc25-home-premium .hero-content>p:not(.mc60-visit):not(.mc60-disclaimer){font-size:13px!important;line-height:1.55!important}
+#accueil .hero-actions{gap:9px!important;margin-top:15px!important}
+#accueil .mc60-quick{margin-top:13px!important;gap:7px!important}
+#accueil .mc60-quick a{font-size:12px!important;padding:7px 10px!important;min-height:38px!important}
+#accueil .mc60-visit{margin-top:12px!important}
+#accueil .mc60-proof{margin-top:9px!important}
+#accueil .mc60-disclaimer{margin-top:10px!important}
+@media(max-width:900px){
+ #accueil.hero.mc25-home-premium{min-height:0!important;max-height:none!important}
+ #accueil.hero.mc25-home-premium>.hero-content{min-height:0!important;padding:28px 22px!important}
+ #accueil.hero.mc25-home-premium>.mc33-hero-visual{min-height:240px!important;height:clamp(240px,42vw,320px)!important}
+ #accueil.hero.mc25-home-premium .hero-content h1{font-size:clamp(40px,7.3vw,62px)!important}
+ #main .mc25-hero-layout{min-height:0!important}
+ #main .mc25-hero-visual{max-height:none!important}
+}
+@media(max-width:600px){
+ #main>.section{padding-top:38px!important;padding-bottom:38px!important}
+ #main .container{padding-left:18px;padding-right:18px}
+ #main .section-head h2,#catalogue .section-head h2{font-size:clamp(28px,8vw,36px)!important}
+ #main .editorial-card .photo{height:190px!important}
+ #main .editorial-card .copy{padding:15px!important}
+ #main .mc9-collection-card{min-height:240px!important;max-height:none}
+ #main .mc25-hero-copy h1{font-size:clamp(39px,10vw,53px)!important}
+ #main .page-hero{padding-top:32px!important;padding-bottom:34px!important}
+ #main .gallery-grid{gap:9px}
+ #main .gallery-tile{aspect-ratio:3/4!important}
+ #main .catalog-card{padding:15px!important}
+ #main .mc59-photo-bar img{height:132px}
+ #accueil.hero.mc25-home-premium>.hero-content{padding:24px 20px!important}
+ #accueil.hero.mc25-home-premium .hero-content h1{font-size:clamp(38px,10vw,52px)!important}
+ #accueil.hero.mc25-home-premium>.mc33-hero-visual{min-height:220px!important;height:260px!important}
+ #accueil .hero-actions .button{min-height:44px!important}
+}
