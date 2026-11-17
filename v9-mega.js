@@ -453,7 +453,7 @@ function homeHeroSlideshowV33(){
  let active=Math.max(0,slides.findIndex(img=>img.classList.contains('is-active')));
  let busy=false,fromX=null;
  const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
- const duration=650;
+ const duration=2000;
  slides.forEach((img,i)=>{
   img.classList.remove('is-active','mc35-enter','mc35-exit');
   img.classList.toggle('is-active',i===active);
