@@ -446,18 +446,85 @@ function siteExperienceV28(){
 function homeHeroSlideshowV33(){
  const slider=document.querySelector('#accueil .mc33-slideshow');
  if(!slider)return;
- const slides=[...slider.querySelectorAll('.mc33-slide')];if(slides.length<2)return;
- let active=0;
- const reveal=(next)=>{
-  slides[active].classList.remove('is-active');
-  slides[active].setAttribute('aria-hidden','true');
-  active=next;
-  slides[active].classList.add('is-active');
-  slides[active].setAttribute('aria-hidden','false');
- };
- // Exactly one new image every 6 seconds. Do not progress while this tab is hidden.
- let timer=window.setInterval(()=>{if(!document.hidden)reveal((active+1)%slides.length)},6000);
- window.addEventListener('pagehide',()=>window.clearInterval(timer),{once:true});
+ const slides=[...slider.querySelectorAll('.mc33-slide')];
+ if(slides.length<2)return;
+ slider.classList.add('mc35-ready');
+ slider.setAttribute('aria-roledescription','carrousel');
+ let active=Math.max(0,slides.findIndex(img=>img.classList.contains('is-active')));
+ let busy=false,fromX=null;
+ const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+ const duration=650;
+ slides.forEach((img,i)=>{
+  img.classList.remove('is-active','mc35-enter','mc35-exit');
+  img.classList.toggle('is-active',i===active);
+  img.setAttribute('aria-hidden',String(i!==active));
+ });
+ const buttons=document.createElement('div');
+ buttons.className='mc35-controls';
+ const prev=document.createElement('button'),next=document.createElement('button');
+ prev.type=next.type='button';
+ prev.textContent='‹';next.textContent='›';
+ prev.setAttribute('aria-label','Photo précédente');
+ next.setAttribute('aria-label','Photo suivante');
+ buttons.append(prev,next);
+ slider.parentElement.append(buttons);
+ const dots=document.createElement('div');dots.className='mc35-dots';
+ slides.forEach((_,i)=>{
+  const dot=document.createElement('button');
+  dot.type='button';dot.setAttribute('aria-label','Afficher la photo '+(i+1));
+  dot.addEventListener('click',()=>move(i));
+  dots.append(dot);
+ });
+ slider.parentElement.append(dots);
+ const sync=()=>[...dots.children].forEach((dot,i)=>dot.setAttribute('aria-current',String(i===active)));
+ sync();
+ let interval;
+ function move(to){
+  if(busy||to===active)return;
+  const dest=(to+slides.length)%slides.length;
+  const direction=to<active?-1:1;
+  if(reduced.matches){
+   slides[active].classList.remove('is-active');
+   slides[active].setAttribute('aria-hidden','true');
+   active=dest;slides[active].classList.add('is-active');
+   slides[active].setAttribute('aria-hidden','false');sync();return;
+  }
+  busy=true;
+  const outgoing=slides[active],incoming=slides[dest];
+  incoming.classList.add('mc35-enter');
+  incoming.style.setProperty('--mc35-from',direction>0?'100%':'-100%');
+  outgoing.style.setProperty('--mc35-to',direction>0?'-100%':'100%');
+  incoming.setAttribute('aria-hidden','false');
+  void incoming.offsetWidth;
+  outgoing.classList.add('mc35-exit');
+  incoming.classList.add('is-active');
+  const previous=active;active=dest;sync();
+  window.setTimeout(()=>{
+   outgoing.classList.remove('is-active','mc35-exit');
+   outgoing.style.removeProperty('--mc35-to');
+   outgoing.setAttribute('aria-hidden','true');
+   incoming.classList.remove('mc35-enter');
+   incoming.style.removeProperty('--mc35-from');
+   busy=false;
+  },duration+40);
+ }
+ function schedule(){
+  window.clearInterval(interval);
+  interval=window.setInterval(()=>{
+   if(!document.hidden&&!busy)move((active+1)%slides.length);
+  },6000);
+ }
+ prev.addEventListener('click',()=>{move((active-1+slides.length)%slides.length);schedule()});
+ next.addEventListener('click',()=>{move((active+1)%slides.length);schedule()});
+ slider.addEventListener('pointerdown',e=>{if(e.isPrimary)fromX=e.clientX},{passive:true});
+ slider.addEventListener('pointerup',e=>{
+  if(fromX===null)return;
+  const dx=e.clientX-fromX;fromX=null;
+  if(Math.abs(dx)>55){move((active+(dx<0?1:-1)+slides.length)%slides.length);schedule()}
+ },{passive:true});
+ slider.addEventListener('pointercancel',()=>{fromX=null});
+ schedule();
+ window.addEventListener('pagehide',()=>window.clearInterval(interval),{once:true});
 }
 function init(){
  addCatalogueTools();galleryCount();enrichCake();siteUtilities();scrollSections();premiumInteractions();menuShowcase();boutiqueDepth();siteExperienceV28();editorialStoriesV28();practicalToolsV28();homeHeroSlideshowV33()
