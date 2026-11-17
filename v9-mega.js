@@ -448,83 +448,91 @@ function homeHeroSlideshowV33(){
  if(!slider)return;
  const slides=[...slider.querySelectorAll('.mc33-slide')];
  if(slides.length<2)return;
- slider.classList.add('mc35-ready');
+ if(slider.dataset.mcSlideReady)return;
+ slider.dataset.mcSlideReady='true';
+ slider.classList.add('mc35-ready','mc38-track-ready');
  slider.setAttribute('aria-roledescription','carrousel');
- let active=Math.max(0,slides.findIndex(img=>img.classList.contains('is-active')));
- let busy=false,fromX=null;
- const reduced=window.matchMedia('(prefers-reduced-motion: reduce)');
+ // Always slide complete image panels horizontally together, never crossfade.
  const duration=2000;
- slides.forEach((img,i)=>{
-  img.classList.remove('is-active','mc35-enter','mc35-exit');
-  img.classList.toggle('is-active',i===active);
-  img.setAttribute('aria-hidden',String(i!==active));
+ const easing='cubic-bezier(.42,0,.2,1)';
+ const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+ let active=Math.max(0,slides.findIndex(img=>img.classList.contains('is-active')));
+ let animating=false,dragStart=null,timer=null;
+ slides.forEach((slide,i)=>{
+  slide.classList.toggle('is-active',i===active);
+  slide.setAttribute('aria-hidden',String(i!==active));
+  slide.style.transform=i===active?'translate3d(0,0,0)':'translate3d(100%,0,0)';
+  slide.style.opacity='1';
  });
- const buttons=document.createElement('div');
- buttons.className='mc35-controls';
- const prev=document.createElement('button'),next=document.createElement('button');
- prev.type=next.type='button';
- prev.textContent='‹';next.textContent='›';
- prev.setAttribute('aria-label','Photo précédente');
+ const controls=document.createElement('div');
+ controls.className='mc35-controls';
+ const previous=document.createElement('button'),next=document.createElement('button');
+ previous.type=next.type='button';
+ previous.textContent='‹';next.textContent='›';
+ previous.setAttribute('aria-label','Photo précédente');
  next.setAttribute('aria-label','Photo suivante');
- buttons.append(prev,next);
- slider.parentElement.append(buttons);
- const dots=document.createElement('div');dots.className='mc35-dots';
+ controls.append(previous,next);slider.parentElement.append(controls);
+ const indicators=document.createElement('div');indicators.className='mc35-dots';
  slides.forEach((_,i)=>{
-  const dot=document.createElement('button');
-  dot.type='button';dot.setAttribute('aria-label','Afficher la photo '+(i+1));
-  dot.addEventListener('click',()=>move(i));
-  dots.append(dot);
+  const button=document.createElement('button');
+  button.type='button';button.setAttribute('aria-label','Afficher la photo '+(i+1));
+  button.addEventListener('click',()=>{slideTo(i,i<active?-1:1);restart()});
+  indicators.append(button);
  });
- slider.parentElement.append(dots);
- const sync=()=>[...dots.children].forEach((dot,i)=>dot.setAttribute('aria-current',String(i===active)));
- sync();
- let interval;
- function move(to){
-  if(busy||to===active)return;
-  const dest=(to+slides.length)%slides.length;
-  const direction=to<active?-1:1;
-  if(reduced.matches){
-   slides[active].classList.remove('is-active');
-   slides[active].setAttribute('aria-hidden','true');
-   active=dest;slides[active].classList.add('is-active');
-   slides[active].setAttribute('aria-hidden','false');sync();return;
+ slider.parentElement.append(indicators);
+ function update(){
+  [...indicators.children].forEach((dot,i)=>dot.setAttribute('aria-current',String(i===active)));
+ }
+ function slideTo(target,direction=1){
+  const index=(target+slides.length)%slides.length;
+  if(animating||index===active)return;
+  const outgoing=slides[active],incoming=slides[index],from=direction<0?'-100%':'100%',to=direction<0?'100%':'-100%';
+  if(reduced.matches||typeof incoming.animate!=='function'){
+   outgoing.classList.remove('is-active');outgoing.setAttribute('aria-hidden','true');
+   incoming.classList.add('is-active');incoming.setAttribute('aria-hidden','false');
+   outgoing.style.transform='translate3d(100%,0,0)';
+   incoming.style.transform='translate3d(0,0,0)';
+   active=index;update();return;
   }
-  busy=true;
-  const outgoing=slides[active],incoming=slides[dest];
-  incoming.classList.add('mc35-enter');
-  incoming.style.setProperty('--mc35-from',direction>0?'100%':'-100%');
-  outgoing.style.setProperty('--mc35-to',direction>0?'-100%':'100%');
+  animating=true;
+  // Both frames begin at the same moment; movement is visible for the full 2 seconds.
+  incoming.style.visibility='visible';
+  incoming.style.transform='translate3d('+from+',0,0)';
   incoming.setAttribute('aria-hidden','false');
-  void incoming.offsetWidth;
-  outgoing.classList.add('mc35-exit');
   incoming.classList.add('is-active');
-  const previous=active;active=dest;sync();
-  window.setTimeout(()=>{
-   outgoing.classList.remove('is-active','mc35-exit');
-   outgoing.style.removeProperty('--mc35-to');
+  outgoing.style.transform='translate3d(0,0,0)';
+  const opts={duration,easing,fill:'forwards'};
+  const oldMotion=outgoing.animate([
+   {transform:'translate3d(0,0,0)'},{transform:'translate3d('+to+',0,0)'}
+  ],opts);
+  const newMotion=incoming.animate([
+   {transform:'translate3d('+from+',0,0)'},{transform:'translate3d(0,0,0)'}
+  ],opts);
+  active=index;update();
+  Promise.allSettled([oldMotion.finished,newMotion.finished]).then(()=>{
+   outgoing.classList.remove('is-active');
    outgoing.setAttribute('aria-hidden','true');
-   incoming.classList.remove('mc35-enter');
-   incoming.style.removeProperty('--mc35-from');
-   busy=false;
-  },duration+40);
+   outgoing.style.transform='translate3d(100%,0,0)';
+   incoming.style.transform='translate3d(0,0,0)';
+   oldMotion.cancel();newMotion.cancel();
+   animating=false;
+  });
  }
- function schedule(){
-  window.clearInterval(interval);
-  interval=window.setInterval(()=>{
-   if(!document.hidden&&!busy)move((active+1)%slides.length);
-  },6000);
+ function restart(){
+  clearInterval(timer);
+  timer=setInterval(()=>{if(!document.hidden&&!animating)slideTo(active+1,1)},6000);
  }
- prev.addEventListener('click',()=>{move((active-1+slides.length)%slides.length);schedule()});
- next.addEventListener('click',()=>{move((active+1)%slides.length);schedule()});
- slider.addEventListener('pointerdown',e=>{if(e.isPrimary)fromX=e.clientX},{passive:true});
- slider.addEventListener('pointerup',e=>{
-  if(fromX===null)return;
-  const dx=e.clientX-fromX;fromX=null;
-  if(Math.abs(dx)>55){move((active+(dx<0?1:-1)+slides.length)%slides.length);schedule()}
+ previous.addEventListener('click',()=>{slideTo(active-1,-1);restart()});
+ next.addEventListener('click',()=>{slideTo(active+1,1);restart()});
+ slider.addEventListener('pointerdown',event=>{if(event.isPrimary)dragStart={x:event.clientX,y:event.clientY}},{passive:true});
+ slider.addEventListener('pointerup',event=>{
+  if(!dragStart)return;
+  const dx=event.clientX-dragStart.x,dy=event.clientY-dragStart.y;dragStart=null;
+  if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)){slideTo(active+(dx<0?1:-1),dx<0?1:-1);restart()}
  },{passive:true});
- slider.addEventListener('pointercancel',()=>{fromX=null});
- schedule();
- window.addEventListener('pagehide',()=>window.clearInterval(interval),{once:true});
+ slider.addEventListener('pointercancel',()=>{dragStart=null});
+ update();restart();
+ addEventListener('pagehide',()=>clearInterval(timer),{once:true});
 }
 function init(){
  addCatalogueTools();galleryCount();enrichCake();siteUtilities();scrollSections();premiumInteractions();menuShowcase();boutiqueDepth();siteExperienceV28();editorialStoriesV28();practicalToolsV28();homeHeroSlideshowV33()
