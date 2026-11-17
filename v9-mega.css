@@ -622,3 +622,24 @@ body{background:linear-gradient(140deg,#fff8f0 0%,#fae5e3 48%,#fff1e6 100%) fixe
  transition:none!important;animation:none!important;backface-visibility:hidden;
  user-select:none;-webkit-user-drag:none;touch-action:pan-y;
 }
+
+
+/* V41: true horizontal slide strip. Unlike the old image layers, both panels
+   belong to the SAME track and move together for exactly two seconds. */
+#accueil .mc33-slideshow.mc41-slider{overflow:hidden;isolation:isolate;touch-action:pan-y;}
+#accueil .mc41-track{
+ position:absolute;inset:0 auto 0 0;width:200%;height:100%;
+ display:flex;transform:translate3d(0,0,0);will-change:transform;backface-visibility:hidden;
+ transition:none!important;
+}
+#accueil .mc41-track.mc41-moving{
+ transition:transform 2000ms cubic-bezier(.45,0,.22,1)!important;
+}
+#accueil .mc41-frame{
+ display:block;flex:0 0 50%;width:50%;height:100%;min-width:0;max-width:50%;
+ object-fit:cover;object-position:center;filter:none!important;
+ opacity:1!important;visibility:visible!important;transform:none!important;
+ user-select:none;-webkit-user-drag:none;backface-visibility:hidden;
+}
+@media(max-width:600px){#accueil .mc41-frame{object-position:center}}
+@media(prefers-reduced-motion:reduce){#accueil .mc41-track.mc41-moving{transition:none!important}}
