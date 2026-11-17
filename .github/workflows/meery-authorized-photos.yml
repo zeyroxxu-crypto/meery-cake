@@ -1,0 +1,62 @@
+name: Import authorized Meery Cake customer photos
+on:
+  push:
+    paths:
+      - '.github/workflows/meery-authorized-photos.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - name: Download original visitor photographs and validate
+        run: |
+          python -m pip -q install requests pillow
+          python - <<'PY'
+          from pathlib import Path
+          import requests, io, hashlib, time
+          from PIL import Image, ImageOps, ImageStat
+          ids=["27/a1/f3/67/caption.jpg","30/4a/e4/b3/caption.jpg","28/d0/2a/9f/caption.jpg","34/24/a9/3e/caption.jpg","32/eb/d3/e4/caption.jpg","32/92/a7/f9/caption.jpg","30/89/67/02/caption.jpg","32/97/c8/ee/caption.jpg","33/4f/56/a9/caption.jpg","07/e5/10/65/photo3jpg.jpg","27/a1/f3/69/caption.jpg","27/a1/f3/6a/caption.jpg","0e/5b/ea/dd/meery-cakes.jpg","05/34/46/9d/3-gourmandes-au-meery.jpg","07/e5/10/62/photo0jpg.jpg","14/20/40/27/screenshot-20180814-002251.jpg","0a/cd/67/84/20160319-155225-largejpg.jpg","0e/bb/cb/3f/on-ne-sait-plus-ou-donner.jpg","1a/20/bf/bc/photo0jpg.jpg","28/73/ae/3e/caption.jpg"]
+          target=Path('images/meery-visiteurs');target.mkdir(parents=True,exist_ok=True)
+          session=requests.Session();session.headers.update({'User-Agent':'Mozilla/5.0 (compatible; MeeryCakePhotoImporter/1.0)','Referer':'https://www.tripadvisor.fr/'})
+          hashes=set();count=0
+          for index,ident in enumerate(ids,1):
+              urls=[
+                'https://media-cdn.tripadvisor.com/media/photo-o/'+ident,
+                'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/'+ident+'?w=1400&h=-1&s=1',
+                'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/'+ident+'?w=1000&h=-1&s=1',
+              ]
+              image=None
+              for url in urls:
+                  try:
+                      response=session.get(url,timeout=20)
+                      if response.status_code!=200 or len(response.content)<8000:continue
+                      image=Image.open(io.BytesIO(response.content))
+                      image=ImageOps.exif_transpose(image).convert('RGB')
+                      if min(image.size)<240: image=None;continue
+                      break
+                  except Exception as exc: print('Alternate source failed',index,str(exc)[:90])
+              if image is None:
+                  print('FAILED missing or tiny photograph',index,ident)
+                  continue
+              image.thumbnail((1600,1600),Image.Resampling.LANCZOS)
+              key=hashlib.sha256(image.resize((30,30)).tobytes()).hexdigest()
+              if key in hashes: print('SKIP identical image',index);continue
+              hashes.add(key)
+              output=target/f'visiteur-{index:02d}.webp'
+              image.save(output,'WEBP',quality=84,method=5)
+              print('SAVED',output,image.size,output.stat().st_size)
+              count+=1
+          print('TOTAL IMPORTED',count)
+          if count<15:raise RuntimeError('Insufficient valid photos to publish')
+          PY
+      - name: Commit self-hosted photographs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add images/meery-visiteurs/
+          git diff --cached --quiet || (git commit -m "Import authorized genuine Meery Cake customer photos" && git push)
