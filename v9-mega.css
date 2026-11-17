@@ -663,3 +663,17 @@ body{background:linear-gradient(140deg,#fff8f0 0%,#fae5e3 48%,#fff1e6 100%) fixe
  transform:none!important;transition:none!important;animation:none!important;
  backface-visibility:hidden;
 }
+
+/* V47: blur the ENTIRE carousel photograph, never the headline or buttons. */
+#accueil .mc45-rail .mc45-photo{
+  filter:blur(10px) brightness(.88)!important;
+  -webkit-filter:blur(10px) brightness(.88)!important;
+  object-fit:cover!important;
+  object-position:center!important;
+}
+@media(max-width:640px){
+  #accueil .mc45-rail .mc45-photo{
+    filter:blur(7px) brightness(.88)!important;
+    -webkit-filter:blur(7px) brightness(.88)!important;
+  }
+}
