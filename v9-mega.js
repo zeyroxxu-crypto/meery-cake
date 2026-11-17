@@ -454,7 +454,7 @@ function homeHeroSlideshowV33(){
  viewport.setAttribute('aria-roledescription','carrousel');
  viewport.setAttribute('aria-label','Carrousel de quatre photographies');
  viewport.tabIndex=0;
- const DURATION=2000,INTERVAL=6000;
+ const DURATION=1000,INTERVAL=6000;
  // Physically slide six cells (last, four real images, first): clones only
  // provide seamless looping; there are always exactly four unique pictures.
  const sequence=[images[3],...images,images[0]];
