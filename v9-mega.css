@@ -824,3 +824,30 @@ body{background:linear-gradient(140deg,#fff8f0 0%,#fae5e3 48%,#fff1e6 100%) fixe
 #accueil.hero.mc25-home-premium>.mc33-hero-visual::after{
  backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
 }
+
+
+/* V53: hide fractional-pixel vertical seams between moving slides. */
+#accueil.hero.mc25-home-premium .mc45-rail{
+  gap:0!important;
+  overflow:visible!important;
+  backface-visibility:hidden!important;
+}
+#accueil.hero.mc25-home-premium .mc45-rail .mc45-photo{
+  width:calc(100% / 6 + 8px)!important;
+  max-width:none!important;
+  flex:0 0 calc(100% / 6 + 8px)!important;
+  margin-right:-8px!important;
+  height:100%!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  backface-visibility:hidden!important;
+  transform:translateZ(0)!important;
+  filter:none!important;
+  -webkit-filter:none!important;
+}
+#accueil.hero.mc25-home-premium>.mc33-hero-visual{
+  overflow:hidden!important;
+}
