@@ -31,9 +31,9 @@ function renderHomeCollections(){
  head.append(copy,create('p','','Parcourez les univers Meery Cake : une pause sucrée, un brunch à envisager ou votre prochain gâteau sur mesure. Les disponibilités sont à confirmer directement avec le salon.'));
  const grid=create('div','mc9-collection-grid');
  const entries=[
-  {href:'carte.html?category=desserts#catalogue',src:'https://cdt11.media.tourinsoft.eu/upload/MEERY-CAKE-1.jpg',label:'Les douceurs',title:'Pâtisseries',desc:'Cupcakes et créations gourmandes à découvrir dans notre carte.',cta:'Découvrir la carte ↗'},
-  {href:'brunch.html',src:'https://cdt11.media.tourinsoft.eu/upload/MEERY-CAKE-2.jpg',label:'À partager',title:'Brunch & moments',desc:'Préparez votre demande et vérifiez les prochaines possibilités.',cta:'En savoir plus ↗'},
-  {href:'gateaux.html',src:'https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770',label:'Votre création',title:'Gâteaux sur mesure',desc:'Choisissez forme, couleurs et décors dans le configurateur.',cta:'Imaginer mon gâteau ↗'}
+  {href:'carte.html?category=desserts#catalogue',src:'images/patisseries.jpg',label:'Les douceurs',title:'Pâtisseries',desc:'Cupcakes et créations gourmandes à découvrir dans notre carte.',cta:'Découvrir la carte ↗'},
+  {href:'brunch.html',src:'images/brunch.jpg',label:'À partager',title:'Brunch & moments',desc:'Préparez votre demande et vérifiez les prochaines possibilités.',cta:'En savoir plus ↗'},
+  {href:'gateaux.html',src:'images/cupcakes.jpg',label:'Votre création',title:'Gâteaux sur mesure',desc:'Choisissez forme, couleurs et décors dans le configurateur.',cta:'Imaginer mon gâteau ↗'}
  ];
  for(const item of entries){
   const a=create('a','mc9-collection-card');a.href=item.href;
@@ -312,17 +312,17 @@ function editorialStoriesV28(){
   'brunch.html':{
    eyebrow:'L’ART DE PRENDRE LE TEMPS',heading:'Une pause qui se savoure.',copy:'Un cadre chaleureux et des idées gourmandes pour partager un moment. Demandez au salon les formules et les jours de brunch actuellement proposés.',
    href:'#brunchBooking',cta:'Préparer ma demande',
-   images:[['https://cdt11.media.tourinsoft.eu/upload/MEERY-CAKE-2.jpg','Photographie de brunch chez Meery Cake'],['https://cdt11.media.tourinsoft.eu/upload/MEERY-CAKE-2.jpg','Photographie de pâtisseries chez Meery Cake']]
+   images:[['images/brunch.jpg','Photographie de brunch chez Meery Cake'],['images/brunch.jpg','Photographie de pâtisseries chez Meery Cake']]
   },
   'gateaux.html':{
    eyebrow:'VOTRE CRÉATION, VOTRE HISTOIRE',heading:'Les beaux moments méritent leur douceur.',copy:'Une occasion, des couleurs, une idée : préparez les détails de votre gâteau et transmettez votre demande. La réalisation et le devis sont à confirmer.',
    href:'#designer',cta:'Créer ma demande',
-   images:[['https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770','Photographie de gâteau chez Meery Cake'],['https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770','Photographie de cupcakes chez Meery Cake']]
+   images:[['images/cupcakes.jpg','Photographie de gâteau chez Meery Cake'],['images/cupcakes.jpg','Photographie de cupcakes chez Meery Cake']]
   },
   'ateliers.html':{
    eyebrow:'DES IDÉES À CRÉER ENSEMBLE',heading:'Le plaisir de faire soi-même.',copy:'Décoration, couleurs et créativité : découvrez des idées d’ateliers et demandez au salon les prochaines possibilités. Aucun créneau n’est annoncé sans confirmation.',
    href:'#atelier-demande',cta:'Se renseigner',
-   images:[['https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770','Photographie de cupcakes chez Meery Cake'],['https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770','Photographie de pâtisserie chez Meery Cake']]
+   images:[['images/cupcakes.jpg','Photographie de cupcakes chez Meery Cake'],['images/cupcakes.jpg','Photographie de pâtisserie chez Meery Cake']]
   }
  };
  const x=config[path],main=$('main');if(!x||!main||main.querySelector('.mc28-story'))return;

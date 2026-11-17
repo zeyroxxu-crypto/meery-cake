@@ -495,143 +495,43 @@
   "photos": [
     {
       "id": 1,
-      "src": "https://cdt11.media.tourinsoft.eu/upload/MEERY-CAKE-1.jpg",
+      "src": "images/patisseries.jpg",
       "title": "Vitrine de pâtisseries de Meery Cake",
       "category": "patisserie",
-      "source": "Office de tourisme de Carcassonne",
+      "source": "Photographie d’archive — droits à confirmer",
       "verifiedRights": false,
       "oldLocationPossible": true,
       "displayInGallery": true
     },
     {
       "id": 2,
-      "src": "https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770",
+      "src": "images/cupcakes.jpg",
       "title": "Cupcakes présentés chez Meery Cake",
       "category": "cupcakes",
-      "source": "Office de tourisme de Carcassonne",
+      "source": "Photographie d’archive — droits à confirmer",
       "verifiedRights": false,
       "oldLocationPossible": true,
       "displayInGallery": true
     },
     {
       "id": 3,
-      "src": "https://cdt11.media.tourinsoft.eu/upload/MEERY-CAKE-2.jpg",
+      "src": "images/brunch.jpg",
       "title": "Brunch chez Meery Cake",
       "category": "brunch",
-      "source": "Office de tourisme de Carcassonne",
+      "source": "Photographie d’archive — droits à confirmer",
       "verifiedRights": false,
       "oldLocationPossible": true,
       "displayInGallery": true
     },
     {
       "id": 4,
-      "src": "https://www.grand-carcassonne-tourisme.fr/app/uploads/2024/01/meery-cake-5.webp",
+      "src": "images/salon.webp",
       "title": "Salon de thé Meery Cake",
       "category": "salon",
-      "source": "Grand Carcassonne Tourisme",
+      "source": "Photographie d’archive — droits à confirmer",
       "verifiedRights": false,
       "oldLocationPossible": true,
       "displayInGallery": true
-    },
-    {
-      "id": 5,
-      "src": "https://img02.restaurantguru.com/cf51-Cafe-Meery-Cake-interior-1.jpg",
-      "title": "Intérieur de Meery Cake",
-      "category": "salon",
-      "source": "Photographie publiée sur Restaurant Guru",
-      "verifiedRights": false,
-      "oldLocationPossible": true,
-      "displayInGallery": false
-    },
-    {
-      "id": 6,
-      "src": "https://cdt11.media.tourinsoft.eu/upload/MEERY-CAKE-1.jpg",
-      "title": "Créations gourmandes de Meery Cake",
-      "category": "patisserie",
-      "source": "Office de tourisme de Carcassonne",
-      "verifiedRights": false,
-      "oldLocationPossible": true,
-      "displayInGallery": true
-    },
-    {
-      "id": 7,
-      "src": "https://www.grand-carcassonne-tourisme.fr/app/uploads/2024/01/meery-cake-5.webp",
-      "title": "Ambiance du salon Meery Cake",
-      "category": "salon",
-      "source": "Grand Carcassonne Tourisme",
-      "verifiedRights": false,
-      "oldLocationPossible": true,
-      "displayInGallery": true
-    },
-    {
-      "id": 8,
-      "src": "https://img05.restaurantguru.com/r7a0-Meery-Cake-food-2023-05-1.jpg",
-      "title": "Gâteaux et cookies Meery Cake",
-      "category": "patisserie",
-      "source": "Photographie publiée sur Restaurant Guru",
-      "verifiedRights": false,
-      "oldLocationPossible": true,
-      "displayInGallery": true
-    },
-    {
-      "id": 9,
-      "src": "https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770",
-      "title": "Cupcakes et décorations",
-      "category": "cupcakes",
-      "source": "Office de tourisme de Carcassonne",
-      "verifiedRights": false,
-      "oldLocationPossible": true,
-      "displayInGallery": true
-    },
-    {
-      "id": 10,
-      "src": "https://img05.restaurantguru.com/r503-Meery-Cake-meals-2023-11.jpg",
-      "title": "Desserts Meery Cake",
-      "category": "patisserie",
-      "source": "Photographie publiée sur Restaurant Guru",
-      "verifiedRights": false,
-      "oldLocationPossible": true,
-      "displayInGallery": false
-    },
-    {
-      "id": 11,
-      "src": "https://cdt11.media.tourinsoft.eu/upload/MEERY-CAKE-2.jpg",
-      "title": "Brunch et gourmandises",
-      "category": "brunch",
-      "source": "Office de tourisme de Carcassonne",
-      "verifiedRights": false,
-      "oldLocationPossible": true,
-      "displayInGallery": false
-    },
-    {
-      "id": 12,
-      "src": "https://img02.restaurantguru.com/c111-Cafe-Meery-Cake-meals.jpg",
-      "title": "Pause gourmande Meery Cake",
-      "category": "brunch",
-      "source": "Photographie publiée sur Restaurant Guru",
-      "verifiedRights": false,
-      "oldLocationPossible": true,
-      "displayInGallery": false
-    },
-    {
-      "id": 13,
-      "src": "https://img05.restaurantguru.com/r759-Meery-Cake-dishes-2022-10.jpg",
-      "title": "Part de gâteau Meery Cake",
-      "category": "patisserie",
-      "source": "Photographie publiée sur Restaurant Guru",
-      "verifiedRights": false,
-      "oldLocationPossible": true,
-      "displayInGallery": false
-    },
-    {
-      "id": 14,
-      "src": "https://www.grand-carcassonne-tourisme.fr/app/uploads/2024/01/meery-cake-5.webp",
-      "title": "Décoration de Meery Cake",
-      "category": "salon",
-      "source": "Grand Carcassonne Tourisme",
-      "verifiedRights": false,
-      "oldLocationPossible": true,
-      "displayInGallery": false
     }
   ],
   "contact": {
