@@ -677,3 +677,95 @@ body{background:linear-gradient(140deg,#fff8f0 0%,#fae5e3 48%,#fff1e6 100%) fixe
     -webkit-filter:blur(7px) brightness(.88)!important;
   }
 }
+
+
+/* V48 — One continuous full-width, full-height photographic hero.
+   Keeps original Meery Cake images & headings, moves the slideshow behind text. */
+#accueil.hero.mc25-home-premium{
+  position:relative!important;
+  display:flex!important;
+  align-items:center!important;
+  width:100%!important;
+  min-height:max(680px,calc(100svh - 76px))!important;
+  overflow:hidden!important;
+  isolation:isolate!important;
+  background:#e9d0ca!important;
+}
+#accueil.hero.mc25-home-premium>.mc33-hero-visual{
+  position:absolute!important;
+  inset:0!important;
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  min-height:0!important;
+  max-height:none!important;
+  z-index:0!important;
+  border:0!important;
+  border-radius:0!important;
+  overflow:hidden!important;
+  order:0!important;
+}
+#accueil.hero.mc25-home-premium>.mc33-hero-visual::before{
+  background:none!important;
+}
+#accueil.hero.mc25-home-premium>.mc33-hero-visual::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:2!important;
+  background:rgba(255,247,242,.58)!important;
+  pointer-events:none;
+}
+#accueil.hero.mc25-home-premium>.hero-content{
+  position:relative!important;
+  z-index:3!important;
+  flex:0 1 900px!important;
+  width:100%!important;
+  max-width:900px!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:clamp(72px,9vw,135px) clamp(28px,7vw,130px)!important;
+  background:transparent!important;
+  isolation:isolate!important;
+  order:0!important;
+}
+/* Blur every pixel of each moving photograph, including foreground pastries. */
+#accueil.hero.mc25-home-premium .mc45-rail .mc45-photo{
+  filter:blur(19px) brightness(.96)!important;
+  -webkit-filter:blur(19px) brightness(.96)!important;
+  object-fit:cover!important;
+  object-position:center!important;
+}
+#accueil.hero.mc25-home-premium .mc35-controls{
+  left:clamp(12px,2vw,32px)!important;
+  right:clamp(12px,2vw,32px)!important;
+}
+#accueil.hero.mc25-home-premium .mc35-dots{
+  bottom:24px!important;
+}
+@media (max-width:700px){
+  #accueil.hero.mc25-home-premium{
+    min-height:max(650px,calc(100svh - 64px))!important;
+    align-items:center!important;
+  }
+  #accueil.hero.mc25-home-premium>.hero-content{
+    flex:1 1 auto!important;
+    width:100%!important;
+    max-width:none!important;
+    padding:100px 26px 92px!important;
+  }
+  #accueil.hero.mc25-home-premium>.mc33-hero-visual{
+    inset:0!important;
+    height:100%!important;
+    min-height:0!important;
+  }
+  #accueil.hero.mc25-home-premium .mc45-rail .mc45-photo{
+    filter:blur(15px) brightness(.96)!important;
+    -webkit-filter:blur(15px) brightness(.96)!important;
+    object-position:center!important;
+  }
+  #accueil.hero.mc25-home-premium>.mc33-hero-visual::after{
+    background:rgba(255,247,242,.65)!important;
+  }
+  #accueil.hero.mc25-home-premium .mc35-controls{top:auto!important;bottom:55px!important;transform:none!important;}
+}
