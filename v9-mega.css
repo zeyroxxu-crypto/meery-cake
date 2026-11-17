@@ -851,3 +851,33 @@ body{background:linear-gradient(140deg,#fff8f0 0%,#fae5e3 48%,#fff1e6 100%) fixe
 #accueil.hero.mc25-home-premium>.mc33-hero-visual{
   overflow:hidden!important;
 }
+
+/* V54: transition between different photos has a feathered blended edge,
+   not a hard vertical dividing line. Each previous slide extends below
+   the first 150px of the next photo, whose left edge fades in gradually.
+   All photographs stay sharp (no blur). */
+#accueil.hero.mc25-home-premium .mc45-rail{
+  gap:0!important;
+  overflow:visible!important;
+}
+#accueil.hero.mc25-home-premium .mc45-rail .mc45-photo{
+  width:calc(100% / 6 + 150px)!important;
+  max-width:none!important;
+  flex:0 0 calc(100% / 6 + 150px)!important;
+  margin-right:-150px!important;
+  transform:none!important;
+  filter:none!important;
+  -webkit-filter:none!important;
+  -webkit-mask-image:linear-gradient(to right, transparent 0px, #000 150px, #000 100%)!important;
+  mask-image:linear-gradient(to right, transparent 0px, #000 150px, #000 100%)!important;
+  border:0!important;
+}
+@media(max-width:700px){
+  #accueil.hero.mc25-home-premium .mc45-rail .mc45-photo{
+    width:calc(100% / 6 + 65px)!important;
+    flex-basis:calc(100% / 6 + 65px)!important;
+    margin-right:-65px!important;
+    -webkit-mask-image:linear-gradient(to right, transparent 0px, #000 65px, #000 100%)!important;
+    mask-image:linear-gradient(to right, transparent 0px, #000 65px, #000 100%)!important;
+  }
+}
