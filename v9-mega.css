@@ -779,3 +779,39 @@ body{background:linear-gradient(140deg,#fff8f0 0%,#fae5e3 48%,#fff1e6 100%) fixe
   outline:0!important;
   box-shadow:none!important;
 }
+
+
+/* V51 — one static blur layer across the whole moving photographic strip.
+   Blur is applied AFTER compositing every adjacent photo, rather than
+   independently on each image. Prevents ugly blur seams, quality flicker
+   during motion and the transparent line at the bottom. */
+#accueil.hero.mc25-home-premium .mc45-rail{
+  top:-8px!important;
+  height:calc(100% + 16px)!important;
+  overflow:visible!important;
+  contain:none!important;
+}
+#accueil.hero.mc25-home-premium .mc45-rail .mc45-photo{
+  filter:none!important;
+  -webkit-filter:none!important;
+  transform:none!important;
+  width:calc(100% / 6 + 2px)!important;
+  max-width:none!important;
+  flex:0 0 calc(100% / 6 + 2px)!important;
+  margin-right:-2px!important;
+  height:100%!important;
+  border:none!important;
+  box-shadow:none!important;
+  backface-visibility:visible!important;
+}
+#accueil.hero.mc25-home-premium>.mc33-hero-visual::after{
+  -webkit-backdrop-filter:blur(5px) brightness(.96)!important;
+  backdrop-filter:blur(5px) brightness(.96)!important;
+  inset:0!important;
+}
+@media(max-width:700px){
+  #accueil.hero.mc25-home-premium>.mc33-hero-visual::after{
+    -webkit-backdrop-filter:blur(4px) brightness(.96)!important;
+    backdrop-filter:blur(4px) brightness(.96)!important;
+  }
+}
