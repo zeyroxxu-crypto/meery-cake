@@ -37,11 +37,11 @@ function renderHomeCollections(){
  ];
  for(const item of entries){
   const a=create('a','mc9-collection-card');a.href=item.href;
-  const image=create('img');image.src=item.src;image.loading='lazy';image.decoding='async';image.alt='Illustration originale générée pour la maquette Meery Cake';
+  const image=create('img');image.src=item.src;image.loading='lazy';image.decoding='async';image.alt='Photographie réelle de Meery Cake, source publique';
   const label=create('span','',item.label),content=create('div');
   content.append(create('h3','',item.title),create('p','',item.desc),create('small','',item.cta));a.append(image,label,content);grid.append(a)
  }
- const caption=create('p','mc9-collection-caption','Illustrations originales générées pour la maquette : elles ne représentent pas nécessairement les produits réels.');
+ const caption=create('p','mc9-collection-caption','Photographies réelles de Meery Cake, avec attribution ; droit de republication à confirmer.');
  shell.append(head,grid,caption);section.append(shell);
  anchor.before(section);
  const stats=create('div','mc9-stats-strip');
@@ -113,7 +113,7 @@ function addCatalogueTools(){
 function galleryCount(){
  const grid=$('galleryGrid'),filters=$('galleryFilters');if(!grid||!filters||$('mc9GalleryCount'))return;
  const count=create('div','mc9-gallery-counter','');count.id='mc9GalleryCount';grid.before(count);
- const update=()=>{const n=grid.querySelectorAll('.gallery-tile').length;count.textContent=n+' photographie'+(n>1?'s':'')+' présentée'+(n>1?'s':'')+' · illustrations non contractuelles'};
+ const update=()=>{const n=grid.querySelectorAll('.gallery-tile').length;count.textContent=n+' photographie'+(n>1?'s':'')+' présentée'+(n>1?'s':'')+' · photos réelles'};
  const observer=new MutationObserver(update);observer.observe(grid,{childList:true});
  filters.addEventListener('click',()=>requestAnimationFrame(update));update();
 }
@@ -312,17 +312,17 @@ function editorialStoriesV28(){
   'brunch.html':{
    eyebrow:'L’ART DE PRENDRE LE TEMPS',heading:'Une pause qui se savoure.',copy:'Un cadre chaleureux et des idées gourmandes pour partager un moment. Demandez au salon les formules et les jours de brunch actuellement proposés.',
    href:'#brunchBooking',cta:'Préparer ma demande',
-   images:[['https://cdt11.media.tourinsoft.eu/upload/MEERY-CAKE-2.jpg','Illustration de brunch (IA)'],['https://cdt11.media.tourinsoft.eu/upload/MEERY-CAKE-2.jpg','Illustration gourmande (IA)']]
+   images:[['https://cdt11.media.tourinsoft.eu/upload/MEERY-CAKE-2.jpg','Photographie de brunch chez Meery Cake'],['https://cdt11.media.tourinsoft.eu/upload/MEERY-CAKE-2.jpg','Photographie de pâtisseries chez Meery Cake']]
   },
   'gateaux.html':{
    eyebrow:'VOTRE CRÉATION, VOTRE HISTOIRE',heading:'Les beaux moments méritent leur douceur.',copy:'Une occasion, des couleurs, une idée : préparez les détails de votre gâteau et transmettez votre demande. La réalisation et le devis sont à confirmer.',
    href:'#designer',cta:'Créer ma demande',
-   images:[['https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770','Illustration de gâteau (IA)'],['https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770','Illustration de cupcakes (IA)']]
+   images:[['https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770','Photographie de gâteau chez Meery Cake'],['https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770','Photographie de cupcakes chez Meery Cake']]
   },
   'ateliers.html':{
    eyebrow:'DES IDÉES À CRÉER ENSEMBLE',heading:'Le plaisir de faire soi-même.',copy:'Décoration, couleurs et créativité : découvrez des idées d’ateliers et demandez au salon les prochaines possibilités. Aucun créneau n’est annoncé sans confirmation.',
    href:'#atelier-demande',cta:'Se renseigner',
-   images:[['https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770','Illustration de cupcakes (IA)'],['https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770','Illustration de pâtisserie (IA)']]
+   images:[['https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770','Photographie de cupcakes chez Meery Cake'],['https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770','Illustration de pâtisserie (IA)']]
   }
  };
  const x=config[path],main=$('main');if(!x||!main||main.querySelector('.mc28-story'))return;
