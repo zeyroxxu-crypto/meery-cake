@@ -578,3 +578,41 @@ body{background:linear-gradient(140deg,#fff8f0 0%,#fae5e3 48%,#fff1e6 100%) fixe
 @media(prefers-reduced-motion:reduce){
  .hero.mc25-home-premium .mc33-slideshow .mc33-slide{transition:none!important}
 }
+
+
+/* V35 — true horizontal image swipe, not a crossfade. */
+.hero.mc25-home-premium .mc33-hero-visual{position:relative}
+.hero.mc25-home-premium .mc33-slideshow.mc35-ready .mc33-slide{
+  opacity:1;visibility:hidden;transform:translate3d(100%,0,0);
+  transition:none;will-change:transform;filter:none;
+}
+.hero.mc25-home-premium .mc33-slideshow.mc35-ready .mc33-slide.is-active{
+  visibility:visible;transform:translate3d(0,0,0);z-index:1;
+}
+.hero.mc25-home-premium .mc33-slideshow.mc35-ready .mc33-slide.mc35-enter{
+  visibility:visible!important;transform:translate3d(var(--mc35-from,100%),0,0);
+  z-index:2;
+}
+.hero.mc25-home-premium .mc33-slideshow.mc35-ready .mc33-slide.mc35-enter.is-active{
+  transform:translate3d(0,0,0);
+  transition:transform .65s cubic-bezier(.22,.61,.36,1)!important;
+}
+.hero.mc25-home-premium .mc33-slideshow.mc35-ready .mc33-slide.mc35-exit{
+  visibility:visible!important;transform:translate3d(var(--mc35-to,-100%),0,0);
+  transition:transform .65s cubic-bezier(.22,.61,.36,1)!important;z-index:1;
+}
+.mc35-controls{position:absolute;inset:50% 14px auto;display:flex;justify-content:space-between;
+ transform:translateY(-50%);z-index:5;pointer-events:none}
+.mc35-controls button{pointer-events:auto;border:1px solid #ffffff90;background:#fffdf8cc;
+ color:#6b3b50;width:40px;height:40px;border-radius:50%;font-size:29px;line-height:1;
+ cursor:pointer;backdrop-filter:blur(5px);transition:background .2s,transform .2s}
+.mc35-controls button:hover{background:white;transform:scale(1.07)}
+.mc35-controls button:focus-visible,.mc35-dots button:focus-visible{outline:3px solid #69344d;outline-offset:3px}
+.mc35-dots{position:absolute;bottom:18px;left:50%;transform:translateX(-50%);
+ display:flex;gap:9px;z-index:5}
+.mc35-dots button{border:1px solid #fff;background:#ffffff88;border-radius:50%;
+ width:9px;height:9px;padding:0;cursor:pointer;transition:background .2s,width .2s}
+.mc35-dots button[aria-current="true"]{background:#fff;width:23px;border-radius:20px}
+@media(prefers-reduced-motion:reduce){
+ .hero.mc25-home-premium .mc33-slideshow.mc35-ready .mc33-slide{transition:none!important}
+}
