@@ -31,7 +31,7 @@ function renderHomeCollections(){
  head.append(copy,create('p','','Parcourez les univers Meery Cake : une pause sucrée, un brunch à envisager ou votre prochain gâteau sur mesure. Les disponibilités sont à confirmer directement avec le salon.'));
  const grid=create('div','mc9-collection-grid');
  const entries=[
-  {href:'carte.html?category=desserts#catalogue',src:'images/ambiance-gateau-fleurs.webp',label:'Les douceurs',title:'Pâtisseries',desc:'Cupcakes et créations gourmandes à découvrir dans notre carte.',cta:'Découvrir la carte ↗'},
+  {href:'carte.html?category=desserts#catalogue',src:'images/vitrine-meery.webp',label:'Les douceurs',title:'Pâtisseries',desc:'Cupcakes et créations gourmandes à découvrir dans notre carte.',cta:'Découvrir la carte ↗'},
   {href:'brunch.html',src:'images/ambiance-gateau-cafe.webp',label:'À partager',title:'Brunch & moments',desc:'Préparez votre demande et vérifiez les prochaines possibilités.',cta:'En savoir plus ↗'},
   {href:'gateaux.html',src:'images/ambiance-cupcakes-rose.webp',label:'Votre création',title:'Gâteaux sur mesure',desc:'Choisissez forme, couleurs et décors dans le configurateur.',cta:'Imaginer mon gâteau ↗'}
  ];
