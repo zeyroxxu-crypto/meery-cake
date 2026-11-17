@@ -445,94 +445,82 @@ function siteExperienceV28(){
 }
 function homeHeroSlideshowV33(){
  const viewport=document.querySelector('#accueil .mc33-slideshow');
- if(!viewport||viewport.dataset.mc45Ready)return;
+ if(!viewport||viewport.dataset.mc55Ready)return;
  const images=[...viewport.querySelectorAll('img.mc33-slide')].slice(0,4)
-  .map(el=>({src:el.getAttribute('src'),alt:el.getAttribute('alt')||'Photo du salon Meery Cake'}));
+  .map(el=>({src:el.getAttribute('src'),alt:el.getAttribute('alt')||'Photographie Meery Cake'}));
  if(images.length!==4)return;
- viewport.dataset.mc45Ready='true';
- viewport.classList.add('mc45-slider');
+ viewport.dataset.mc55Ready='true';
+ viewport.classList.add('mc55-slider');
  viewport.setAttribute('aria-roledescription','carrousel');
- viewport.setAttribute('aria-label','Carrousel de quatre photographies');
+ viewport.setAttribute('aria-label','Diaporama de quatre photographies');
  viewport.tabIndex=0;
  const DURATION=1000,INTERVAL=6000;
- // Physically slide six cells (last, four real images, first): clones only
- // provide seamless looping; there are always exactly four unique pictures.
- const sequence=[images[3],...images,images[0]];
- const rail=document.createElement('div');
- rail.className='mc45-rail';
- sequence.forEach(({src,alt},i)=>{
-  const picture=document.createElement('img');
-  picture.className='mc45-photo';picture.src=src;picture.alt=(i===0||i===5)?'':alt;
-  picture.setAttribute('aria-hidden',String(i===0||i===5));
-  picture.decoding='async';picture.draggable=false;
-  if(i>2)picture.loading='lazy';
-  rail.append(picture);
+ // One complete photograph fills the viewport at any given instant.
+ // Blending complete images (instead of joining horizontal half-images) means
+ // there can never be a vertical dividing line during the transition.
+ const layers=[document.createElement('img'),document.createElement('img')];
+ layers.forEach((el,i)=>{
+  el.className='mc55-photo';el.decoding='async';el.draggable=false;
+  el.alt=i===0?images[0].alt:'';
+  el.src=images[0].src;
+  el.style.opacity=i===0?'1':'0';
+  el.style.zIndex=String(i+1);
  });
- viewport.replaceChildren(rail);
- const controls=document.createElement('div');
- controls.className='mc35-controls';
+ viewport.replaceChildren(...layers);
+ images.forEach(image=>{const preload=new Image();preload.src=image.src});
+ const controls=document.createElement('div');controls.className='mc35-controls';
  const prev=document.createElement('button'),next=document.createElement('button');
- prev.type=next.type='button';prev.textContent='‹';next.textContent='›';
+ prev.type=next.type='button';
+ prev.textContent='‹';next.textContent='›';
  prev.setAttribute('aria-label','Photo précédente');
  next.setAttribute('aria-label','Photo suivante');
  controls.append(prev,next);
- const dotsBar=document.createElement('div');dotsBar.className='mc35-dots';
+ const indicator=document.createElement('div');indicator.className='mc35-dots';
  const dots=images.map((_,i)=>{
-  const dot=document.createElement('button');dot.type='button';
-  dot.setAttribute('aria-label','Afficher la photo '+(i+1));
-  dotsBar.append(dot);return dot;
+  const button=document.createElement('button');
+  button.type='button';button.setAttribute('aria-label','Afficher la photo '+(i+1));
+  indicator.append(button);return button;
  });
- viewport.parentElement.append(controls,dotsBar);
- // Percentages are relative to the complete six-frame rail, not the viewport.
- const position=slot=>'translate3d(-'+(slot*100/6)+'%,0,0)';
- let slot=1,animating=false,clock=null,drag=null,motion=null;
- rail.style.transform=position(slot);
- const activeIndex=()=>((slot-1)%4+4)%4;
- const update=()=>dots.forEach((dot,i)=>dot.setAttribute('aria-current',String(i===activeIndex())));
- function move(direction){
-  if(animating)return;
-  animating=true;
-  const start=slot,end=slot+direction;
-  // Animate positions explicitly so no inherited opacity rules or browser CSS
-  // transitions can turn the slide into a crossfade or instant replacement.
-  motion=rail.animate(
-   [{transform:position(start)},{transform:position(end)}],
-   {duration:DURATION,easing:'linear',fill:'forwards'}
-  );
-  slot=end;
-  update();
-  motion.finished.then(()=>{
-   // At the invisible seam, jump to the exact matching clone position.
-   if(slot===5)slot=1;
-   else if(slot===0)slot=4;
-   rail.style.transform=position(slot);
-   motion.cancel();motion=null;animating=false;
-   update();
-  }).catch(()=>{animating=false;motion=null;rail.style.transform=position(slot);update()});
+ viewport.parentElement.append(controls,indicator);
+ let active=0,foreground=0,busy=false,interval=null,drag=null;
+ const sync=()=>dots.forEach((button,i)=>button.setAttribute('aria-current',String(i===active)));
+ function transition(target,direction=1){
+  target=(target+images.length)%images.length;
+  if(busy||target===active)return;
+  const visible=layers[foreground],incoming=layers[1-foreground];
+  busy=true;
+  incoming.src=images[target].src;
+  incoming.alt=images[target].alt;
+  incoming.style.opacity='0';
+  incoming.style.transform='translate3d(0,0,0) scale(1.015)';
+  incoming.style.zIndex='3';
+  visible.style.zIndex='2';
+  const offset=(direction<0?-1:1)*2.2;
+  const fade=incoming.animate([
+   {opacity:0,transform:'translate3d('+offset+'%,0,0) scale(1.025)'},
+   {opacity:1,transform:'translate3d(0,0,0) scale(1.015)'}
+  ],{duration:DURATION,easing:'ease-in-out',fill:'forwards'});
+  fade.finished.then(()=>{
+   incoming.style.opacity='1';incoming.style.transform='translate3d(0,0,0) scale(1.015)';
+   incoming.style.zIndex='2';
+   visible.style.opacity='0';visible.style.zIndex='1';
+   fade.cancel();
+   foreground=1-foreground;busy=false;
+  }).catch(()=>{incoming.style.opacity='1';visible.style.opacity='0';foreground=1-foreground;busy=false});
+  active=target;sync();
  }
- function jumpTo(index){
-  if(animating||index===activeIndex())return;
-  const current=activeIndex();
-  const distance=(index-current+4)%4;
-  if(distance===1)move(1);
-  else if(distance===3)move(-1);
-  else {
-   // Direct selection across multiple cells still slides one complete frame at
-   // a time; sequential navigation remains a natural horizontal motion.
-   const direction=index>current?1:-1;
-   move(direction);
-  }
+ function reset(){
+  clearInterval(interval);
+  interval=setInterval(()=>{if(!document.hidden)transition(active+1,1)},INTERVAL);
  }
- function restart(){
-  clearInterval(clock);
-  clock=setInterval(()=>{if(!document.hidden&&!animating)move(1)},INTERVAL);
- }
- prev.addEventListener('click',()=>{move(-1);restart()});
- next.addEventListener('click',()=>{move(1);restart()});
- dots.forEach((d,i)=>d.addEventListener('click',()=>{jumpTo(i);restart()}));
+ prev.addEventListener('click',()=>{transition(active-1,-1);reset()});
+ next.addEventListener('click',()=>{transition(active+1,1);reset()});
+ dots.forEach((button,i)=>button.addEventListener('click',()=>{
+  transition(i,i<active?-1:1);reset();
+ }));
  viewport.addEventListener('keydown',e=>{
   if(e.key==='ArrowLeft'||e.key==='ArrowRight'){
-   e.preventDefault();move(e.key==='ArrowLeft'?-1:1);restart();
+   e.preventDefault();transition(active+(e.key==='ArrowLeft'?-1:1),e.key==='ArrowLeft'?-1:1);reset();
   }
  });
  viewport.addEventListener('pointerdown',e=>{
@@ -541,11 +529,11 @@ function homeHeroSlideshowV33(){
  viewport.addEventListener('pointerup',e=>{
   if(!drag)return;
   const dx=e.clientX-drag.x,dy=e.clientY-drag.y;drag=null;
-  if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)){move(dx<0?1:-1);restart()}
+  if(Math.abs(dx)>55&&Math.abs(dx)>Math.abs(dy)){transition(active+(dx<0?1:-1),dx<0?1:-1);reset()}
  },{passive:true});
  viewport.addEventListener('pointercancel',()=>{drag=null});
- update();restart();
- window.addEventListener('pagehide',()=>{clearInterval(clock);motion?.cancel()},{once:true});
+ sync();reset();
+ window.addEventListener('pagehide',()=>clearInterval(interval),{once:true});
 }
 function init(){
  renderHomeCollections();addCatalogueTools();galleryCount();enrichCake();siteUtilities();scrollSections();premiumInteractions();menuShowcase();boutiqueDepth();siteExperienceV28();editorialStoriesV28();practicalToolsV28();homeHeroSlideshowV33()
