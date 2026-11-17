@@ -731,8 +731,8 @@ body{background:linear-gradient(140deg,#fff8f0 0%,#fae5e3 48%,#fff1e6 100%) fixe
 }
 /* Blur every pixel of each moving photograph, including foreground pastries. */
 #accueil.hero.mc25-home-premium .mc45-rail .mc45-photo{
-  filter:blur(8px) brightness(.96)!important;
-  -webkit-filter:blur(8px) brightness(.96)!important;
+  filter:blur(5px) brightness(.96)!important;
+  -webkit-filter:blur(5px) brightness(.96)!important;
   object-fit:cover!important;
   object-position:center!important;
 }
@@ -760,12 +760,22 @@ body{background:linear-gradient(140deg,#fff8f0 0%,#fae5e3 48%,#fff1e6 100%) fixe
     min-height:0!important;
   }
   #accueil.hero.mc25-home-premium .mc45-rail .mc45-photo{
-    filter:blur(6px) brightness(.96)!important;
-    -webkit-filter:blur(6px) brightness(.96)!important;
+    filter:blur(4px) brightness(.96)!important;
+    -webkit-filter:blur(4px) brightness(.96)!important;
     object-position:center!important;
   }
   #accueil.hero.mc25-home-premium>.mc33-hero-visual::after{
     background:rgba(255,247,242,.65)!important;
   }
   #accueil.hero.mc25-home-premium .mc35-controls{top:auto!important;bottom:55px!important;transform:none!important;}
+}
+
+/* V50 — prevent a visible hairline seam between adjacent sliding photos.
+   Give each image a small overscan so blurred edges overlap while moving. */
+#accueil.hero.mc25-home-premium .mc45-rail .mc45-photo{
+  transform:scale(1.025)!important;
+  transform-origin:center center!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
 }
