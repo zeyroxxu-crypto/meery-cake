@@ -31,17 +31,17 @@ function renderHomeCollections(){
  head.append(copy,create('p','','Parcourez les univers Meery Cake : une pause sucrée, un brunch à envisager ou votre prochain gâteau sur mesure. Les disponibilités sont à confirmer directement avec le salon.'));
  const grid=create('div','mc9-collection-grid');
  const entries=[
-  {href:'carte.html?category=desserts#catalogue',src:'https://cdt11.media.tourinsoft.eu/upload/MEERY-CAKE-1.jpg',label:'Les douceurs',title:'Pâtisseries',desc:'Cupcakes et créations gourmandes à découvrir dans notre carte.',cta:'Découvrir la carte ↗'},
-  {href:'brunch.html',src:'https://cdt11.media.tourinsoft.eu/upload/MEERY-CAKE-2.jpg',label:'À partager',title:'Brunch & moments',desc:'Préparez votre demande et vérifiez les prochaines possibilités.',cta:'En savoir plus ↗'},
-  {href:'gateaux.html',src:'https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770',label:'Votre création',title:'Gâteaux sur mesure',desc:'Choisissez forme, couleurs et décors dans le configurateur.',cta:'Imaginer mon gâteau ↗'}
+  {href:'carte.html?category=desserts#catalogue',src:'assets/local/patisseries.webp',label:'Les douceurs',title:'Pâtisseries',desc:'Cupcakes et créations gourmandes à découvrir dans notre carte.',cta:'Découvrir la carte ↗'},
+  {href:'brunch.html',src:'assets/local/brunch.webp',label:'À partager',title:'Brunch & moments',desc:'Préparez votre demande et vérifiez les prochaines possibilités.',cta:'En savoir plus ↗'},
+  {href:'gateaux.html',src:'assets/local/gateaux.webp',label:'Votre création',title:'Gâteaux sur mesure',desc:'Choisissez forme, couleurs et décors dans le configurateur.',cta:'Imaginer mon gâteau ↗'}
  ];
  for(const item of entries){
   const a=create('a','mc9-collection-card');a.href=item.href;
-  const image=create('img');image.src=item.src;image.loading='lazy';image.decoding='async';image.alt='Photographie d’archive Meery Cake, ambiance non contractuelle';
+  const image=create('img');image.src=item.src;image.loading='lazy';image.decoding='async';image.alt='Illustration originale générée pour la maquette Meery Cake';
   const label=create('span','',item.label),content=create('div');
   content.append(create('h3','',item.title),create('p','',item.desc),create('small','',item.cta));a.append(image,label,content);grid.append(a)
  }
- const caption=create('p','mc9-collection-caption','Photographies d’archives : certaines peuvent dater d’un ancien local. Leur droit d’utilisation et leur actualité sont à confirmer avant une publication commerciale.');
+ const caption=create('p','mc9-collection-caption','Illustrations originales générées pour la maquette : elles ne représentent pas nécessairement les produits réels.');
  shell.append(head,grid,caption);section.append(shell);
  anchor.before(section);
  const stats=create('div','mc9-stats-strip');
@@ -113,7 +113,7 @@ function addCatalogueTools(){
 function galleryCount(){
  const grid=$('galleryGrid'),filters=$('galleryFilters');if(!grid||!filters||$('mc9GalleryCount'))return;
  const count=create('div','mc9-gallery-counter','');count.id='mc9GalleryCount';grid.before(count);
- const update=()=>{const n=grid.querySelectorAll('.gallery-tile').length;count.textContent=n+' photographie'+(n>1?'s':'')+' présentée'+(n>1?'s':'')+' · archives et sources publiques'};
+ const update=()=>{const n=grid.querySelectorAll('.gallery-tile').length;count.textContent=n+' photographie'+(n>1?'s':'')+' présentée'+(n>1?'s':'')+' · illustrations non contractuelles'};
  const observer=new MutationObserver(update);observer.observe(grid,{childList:true});
  filters.addEventListener('click',()=>requestAnimationFrame(update));update();
 }
@@ -312,17 +312,17 @@ function editorialStoriesV28(){
   'brunch.html':{
    eyebrow:'L’ART DE PRENDRE LE TEMPS',heading:'Une pause qui se savoure.',copy:'Un cadre chaleureux et des idées gourmandes pour partager un moment. Demandez au salon les formules et les jours de brunch actuellement proposés.',
    href:'#brunchBooking',cta:'Préparer ma demande',
-   images:[['https://cdt11.media.tourinsoft.eu/upload/MEERY-CAKE-2.jpg','Brunch gourmand en photo d’archive'],['https://cdn.iris-etourism.io/uploads/grand_carcassonne_v3/2e7/meery-cake-2.webp','Pâtisseries et boissons présentées en archive']]
+   images:[['assets/local/brunch.webp','Illustration de brunch (IA)'],['assets/local/brunch.webp','Illustration gourmande (IA)']]
   },
   'gateaux.html':{
    eyebrow:'VOTRE CRÉATION, VOTRE HISTOIRE',heading:'Les beaux moments méritent leur douceur.',copy:'Une occasion, des couleurs, une idée : préparez les détails de votre gâteau et transmettez votre demande. La réalisation et le devis sont à confirmer.',
    href:'#designer',cta:'Créer ma demande',
-   images:[['https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770','Gâteau photographié dans les archives du salon'],['https://cdt34.media.tourinsoft.eu/upload/MEERY-CAKE.jpg?width=770','Cupcakes décorés en photo d’archive']]
+   images:[['assets/local/gateaux.webp','Illustration de gâteau (IA)'],['assets/local/cupcakes.webp','Illustration de cupcakes (IA)']]
   },
   'ateliers.html':{
    eyebrow:'DES IDÉES À CRÉER ENSEMBLE',heading:'Le plaisir de faire soi-même.',copy:'Décoration, couleurs et créativité : découvrez des idées d’ateliers et demandez au salon les prochaines possibilités. Aucun créneau n’est annoncé sans confirmation.',
    href:'#atelier-demande',cta:'Se renseigner',
-   images:[['https://cdt34.media.tourinsoft.eu/upload/MEERY-CAKE.jpg?width=770','Décorations de cupcakes présentées en archive'],['https://crtlr.media.tourinsoft.eu/upload/meery-cake-4.jpg?width=770','Pâtisserie photographiée en archive']]
+   images:[['assets/local/cupcakes.webp','Illustration de cupcakes (IA)'],['assets/local/gateaux.webp','Illustration de pâtisserie (IA)']]
   }
  };
  const x=config[path],main=$('main');if(!x||!main||main.querySelector('.mc28-story'))return;
@@ -333,7 +333,7 @@ function editorialStoriesV28(){
  const tag=create('span','eyebrow',x.eyebrow),heading=create('h2','',x.heading),p=create('p','',x.copy),link=create('a','button secondary',x.cta+' →');
  link.href=x.href;copy.append(tag,heading,p,link);
  x.images.forEach(([src,alt],i)=>{const fig=create('figure',i?'mc28-story-photo mc28-story-photo-small':'mc28-story-photo');const img=create('img');img.src=src;img.alt=alt;img.loading='lazy';img.decoding='async';fig.append(img);photos.append(fig)});
- const note=create('small','mc28-story-credit','Photographies d’archives ; leur actualité et leurs droits doivent être confirmés avec les auteurs.');
+ const note=create('small','mc28-story-credit','Images générées par IA pour cette maquette, présentées à titre illustratif.');
  photos.append(note);wrap.append(copy,photos);section.append(wrap);
  const quick=main.querySelector('.mc28-quick-links');
  (quick||hero).after(section);
@@ -394,7 +394,7 @@ function siteExperienceV28(){
   'ateliers.html':[['atelier-demande','Se renseigner']],
   'boutique.html':[['idees','Voir les cadeaux'],['giftForm','Préparer une demande']],
   'informations.html':[],
-  'index.html':[['decouvrir','Découvrir'],['galerie','Galerie'],['contact','Contact']]
+  'index.html':[]
  };
  const items=(definitions[path]||[]).filter(([id])=>!!$(id));
  const hero=main.querySelector('.mc25-editorial-hero,.mc19-menu-hero,.hero');
@@ -443,8 +443,24 @@ function siteExperienceV28(){
   if(!img.hasAttribute('decoding'))img.decoding='async';
  });
 }
+function homeHeroSlideshowV33(){
+ const slider=document.querySelector('#accueil .mc33-slideshow');
+ if(!slider)return;
+ const slides=[...slider.querySelectorAll('.mc33-slide')];if(slides.length<2)return;
+ let active=0;
+ const reveal=(next)=>{
+  slides[active].classList.remove('is-active');
+  slides[active].setAttribute('aria-hidden','true');
+  active=next;
+  slides[active].classList.add('is-active');
+  slides[active].setAttribute('aria-hidden','false');
+ };
+ // Exactly one new image every 6 seconds. Do not progress while this tab is hidden.
+ let timer=window.setInterval(()=>{if(!document.hidden)reveal((active+1)%slides.length)},6000);
+ window.addEventListener('pagehide',()=>window.clearInterval(timer),{once:true});
+}
 function init(){
- addCatalogueTools();galleryCount();enrichCake();siteUtilities();scrollSections();premiumInteractions();menuShowcase();boutiqueDepth();siteExperienceV28();editorialStoriesV28();practicalToolsV28()
+ addCatalogueTools();galleryCount();enrichCake();siteUtilities();scrollSections();premiumInteractions();menuShowcase();boutiqueDepth();siteExperienceV28();editorialStoriesV28();practicalToolsV28();homeHeroSlideshowV33()
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
