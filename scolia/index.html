@@ -83,6 +83,45 @@ button{transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s,backgrou
 @keyframes ambientShift{from{transform:translate(-100px,-60px) scale(.75)}to{transform:translate(10px,90px) scale(1.2)}}
 @media(max-width:660px){.v-side:hover,.v-side:focus-within,.v-side.pinned{width:190px;flex-basis:190px}.v-motion-indicator{bottom:9px;right:9px;padding:7px 10px}}
 @media(prefers-reduced-motion:reduce){.v-page,.v-banner,.v-stat,.v-lesson,.v-table tbody tr,.v-reveal.visible,.v-topright .v-avatar{animation:none!important;transition:none!important;transform:none!important;filter:none!important}.v-reveal{opacity:1!important;transform:none!important;filter:none!important}.v-motion-indicator{display:none!important}}
+
+/* Scolia 7.0 animations and polished interactive controls */
+.v-quick-actions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:18px 0 22px;animation:actionArrival 1s cubic-bezier(.16,1,.3,1) both}
+.v-quick-actions .v-btn{padding:14px 19px;background:linear-gradient(115deg,#3468e6,#6c61dc,#2c9bc3);background-size:200% 200%;animation:gradient 7s ease infinite;box-shadow:0 12px 27px #416de135}
+.v-quick-actions .v-btn:hover{transform:translateY(-6px) scale(1.04)}
+.v-action-buttons{display:flex;gap:7px;flex-wrap:wrap}
+.v-quiz{border:1px solid #dfebf7;background:linear-gradient(125deg,#fff,#f6f9ff);border-radius:12px;padding:18px;margin-top:15px;animation:quizIntro 1s cubic-bezier(.16,1,.3,1) both;box-shadow:0 5px 19px #254e8710}
+.v-quiz p{line-height:1.65;font-size:13px}
+.v-quiz-option{display:block;background:white;border:1px solid #dde6f4;border-radius:9px;padding:13px 15px;margin:9px 0;cursor:pointer;transition:transform .5s cubic-bezier(.16,1,.3,1),background .4s,border-color .4s,box-shadow .4s}
+.v-quiz-option:hover{transform:translateX(12px);background:#edf4ff;border-color:#9fbbf4;box-shadow:0 8px 16px #194f8c13}
+.v-quiz-option:has(input:checked){background:#e9eeff;border-color:#6189f0;color:#3158be;font-weight:800}
+.v-quiz-option input{accent-color:#5475e8;margin-right:7px}
+.v-result{font-weight:800;border-radius:8px;padding:12px;background:#edf2ff;color:#3756a5;animation:quizIntro .8s both}
+.v-result.right{background:#e4f9ee;color:#16815d}
+.v-result.wrong{background:#fff3e5;color:#a66b1a}
+.v-notecell{transition:transform .5s cubic-bezier(.16,1,.3,1),box-shadow .4s}
+.v-notecell:hover{transform:translateY(-5px);box-shadow:0 10px 20px #1b438a16}
+.v-notecell input:focus{border-color:#5278e8;box-shadow:0 0 0 4px #5d87ff20}
+.v-login-art .v-brandmark{animation:brandBloom 2.4s cubic-bezier(.16,1,.3,1) both,brandFloat 6s 2.4s ease-in-out infinite alternate}
+.v-login-box .v-demo{animation:actionArrival 1.2s .25s both}
+.v-login-box .v-credential{animation:actionArrival 1.2s .5s both}
+.v-overlay{background:linear-gradient(140deg,#071d4b,#284fa7 54%,#117f93);background-size:250% 250%;animation:gradient 10s ease-in-out infinite}
+.v-overlay-inner{animation:brandBloom 1.6s cubic-bezier(.16,1,.3,1) both}
+.v-overlay-icon{animation:pulse 1.9s ease-in-out infinite,brandGlow 3s ease-in-out infinite}
+.v-overlay.hide{transform:scale(1.045);filter:blur(14px);transition:opacity 1.3s,visibility 1.3s,transform 1.3s,filter 1.3s}
+.v-login-box{animation:loginSweep 1.5s cubic-bezier(.16,1,.3,1) both}
+.v-shell{animation:portalOpen 1.55s cubic-bezier(.16,1,.3,1) both}
+.v-top{animation:topSlide 1.2s .3s cubic-bezier(.16,1,.3,1) both}
+.v-side-head{animation:topSlide 1.2s .1s cubic-bezier(.16,1,.3,1) both}
+.v-content .v-page{animation:pageIn 1.25s .25s cubic-bezier(.16,1,.3,1) both!important}
+@keyframes actionArrival{from{opacity:0;transform:translateY(34px) scale(.94);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+@keyframes quizIntro{from{opacity:0;transform:translateX(-50px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes brandBloom{from{opacity:0;transform:translateY(65px) scale(.5) rotate(-28deg);filter:blur(16px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes brandFloat{to{transform:translateY(-9px) rotate(4deg)}}
+@keyframes brandGlow{50%{box-shadow:0 0 65px #8fcfff7b}}
+@keyframes loginSweep{from{opacity:0;transform:translateX(100px) scale(.95);filter:blur(12px)}to{opacity:1;transform:none;filter:none}}
+@keyframes portalOpen{from{opacity:0;transform:scale(.96);filter:blur(12px)}to{opacity:1;transform:scale(1);filter:blur(0)}}
+@keyframes topSlide{from{opacity:0;transform:translateY(-50px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.v-quick-actions,.v-quiz,.v-login-art .v-brandmark,.v-login-box,.v-login-box .v-demo,.v-login-box .v-credential,.v-overlay,.v-overlay-inner,.v-shell,.v-top,.v-side-head{animation:none!important;transform:none!important;filter:none!important}}
 </style></head><body><div id="scolia-v5"></div><script>
 (()=>{
 "use strict";
@@ -205,7 +244,7 @@ panelHtml+=card('<h3>Questionnaires de '+esc(classNames[cls])+'</h3>'+(list.leng
 }).join(""):empty("Aucun QCM","Le premier questionnaire apparaîtra ici.")));
 return panelHtml;
 }
-function settings(){return header("Paramètres","Couleurs, identité et préférences de votre espace.")+card('<div class="v-row"><div><h3>'+esc(active.name)+'</h3><p class="v-muted">'+(active.role==="student"?"Élève · "+esc(classNames[active.classId]):active.role==="teacher"?"Professeur · "+esc(active.subject):"Direction")+'</p></div><div class="v-avatar">'+esc(active.name.split(" ").map(s=>s[0]).join("").slice(0,2))+'</div></div>')+'<div style="height:14px"></div>'+card('<h3>Personnalisation</h3><p class="v-muted">Couleur du menu</p><div style="display:flex;gap:9px;margin:15px 0">'+["#102c60","#4a3a9c","#087f87","#116c58","#953e76","#a35b2e"].map(c=>'<button data-color="'+c+'" aria-label="Changer la couleur" style="height:30px;width:30px;border:2px solid '+(db.theme===c?"#000":"transparent")+';background:'+c+';border-radius:50%"></button>').join("")+'</div><form id="settings-form">'+field("Nom affiché de l'établissement","school","text",'maxlength="80" value="'+esc(db.school)+'"')+'<button class="v-btn" style="margin-top:12px">Enregistrer</button></form>')+'<div style="height:14px"></div>'+card('<h3>Session</h3><p class="v-muted">Scolia est une démonstration locale : les comptes n’ont pas de sécurité réelle et les données ne sont pas synchronisées entre ordinateurs.</p><button class="v-btn v-outline" data-logout="1">Déconnexion</button>'+(active.role==="admin"?' <button class="v-btn v-outline" data-reset="1">Réinitialiser les données</button>':"")+"</div>");
+function settings(){return header("Paramètres","Couleurs, identité et préférences de votre espace.")+card('<div class="v-row"><div><h3>'+esc(active.name)+'</h3><p class="v-muted">'+(active.role==="student"?"Élève · "+esc(classNames[active.classId]):active.role==="teacher"?"Professeur · "+esc(active.subject):"Direction")+'</p></div><div class="v-avatar">'+esc(active.name.split(" ").map(s=>s[0]).join("").slice(0,2))+'</div></div>')+'<div style="height:14px"></div>'+card('<h3>Personnalisation</h3><p class="v-muted">Couleur du menu</p><div style="display:flex;gap:9px;margin:15px 0">'+["#102c60","#4a3a9c","#087f87","#116c58","#953e76","#a35b2e","#e05b37","#e6a63e","#1f9dc9","#d84874","#6b67e8","#16a7a0","#2f535c","#4f7e45","#c176cc","#202020"].map(c=>'<button data-color="'+c+'" aria-label="Changer la couleur" style="height:30px;width:30px;border:2px solid '+(db.theme===c?"#000":"transparent")+';background:'+c+';border-radius:50%"></button>').join("")+'</div><label class="v-lbl" style="max-width:250px">Toutes les couleurs :<input id="v-custom-color" type="color" class="v-field" value="#102c60"></label><form id="settings-form">'+field("Nom affiché de l'établissement","school","text",'maxlength="80" value="'+esc(db.school)+'"')+'<button class="v-btn" style="margin-top:12px">Enregistrer</button></form>')+'<div style="height:14px"></div>'+card('<h3>Session</h3><p class="v-muted">Scolia est une démonstration locale : les comptes n’ont pas de sécurité réelle et les données ne sont pas synchronisées entre ordinateurs.</p><button class="v-btn v-outline" data-logout="1">Déconnexion</button>'+(active.role==="admin"?' <button class="v-btn v-outline" data-reset="1">Réinitialiser les données</button>':"")+"</div>");
 }
 const pages={"Accueil":dashboard,"Notes":notes,"Classes":classes,"Emploi du temps":timetable,"Cahier de textes":homework,"Vie scolaire":life,"Messagerie":messages,"Actualités":news,"Documents":resources,"QCM":quizzes,"Gestion des notes":gradeManager,"Gestion des cours":coursesManager,"Gestion des devoirs":homeworkManager,"Gestion des comptes":accounts,"Paramètres":settings};
 function intro(){if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;const o=document.createElement("div");o.className="v-overlay";o.innerHTML='<div class="v-overlay-inner"><div class="v-overlay-icon">S</div><div style="font-size:38px;font-weight:900;letter-spacing:-1px">scolia</div><p style="font-size:12px;letter-spacing:2px;color:#deeeff">VOTRE ESPACE SCOLAIRE</p><div class="v-loader"><span></span></div></div>';document.body.appendChild(o);setTimeout(()=>o.classList.add("hide"),1750);setTimeout(()=>o.remove(),2700)}
@@ -231,7 +270,44 @@ mount.querySelectorAll("[data-check]").forEach(b=>b.onchange=()=>{db.checked[cur
 mount.querySelectorAll("[data-read]").forEach(b=>b.onclick=()=>{let m=db.messages.find(x=>x.id===b.dataset.read&&x.to===active.id);if(m){m.read=true;change("Message lu.")}});
 mount.querySelectorAll("[data-resource]").forEach(b=>b.onclick=()=>{let r=db.resources.find(x=>x.id===b.dataset.resource);if(r&&r.url.startsWith("https://"))window.open(r.url,"_blank","noopener,noreferrer")});
 mount.querySelectorAll("[data-export]").forEach(b=>b.onclick=()=>csvDownload(b.dataset.export));
+
+mount.querySelectorAll("[data-delete-lesson]").forEach(b=>b.onclick=()=>{
+ const lesson=db.lessons.find(l=>l.id===b.dataset.deleteLesson);
+ if(!lesson||active.role==="student")return;
+ db.lessons=db.lessons.filter(l=>l.id!==lesson.id);
+ change("Cours supprimé de l'emploi du temps.");
+});
+mount.querySelectorAll("[data-edit-lesson]").forEach(b=>b.onclick=()=>{
+ const lesson=db.lessons.find(l=>l.id===b.dataset.editLesson);if(!lesson||active.role==="student")return;
+ const start=prompt("Nouvelle heure de début (HH:MM)",lesson.start);if(start===null)return;
+ const end=prompt("Nouvelle heure de fin (HH:MM)",lesson.end);if(end===null)return;
+ const room=prompt("Nouvelle salle",lesson.room);if(room===null)return;
+ if(!/^([01]\d|2[0-3]):[0-5]\d$/.test(start)||!/^([01]\d|2[0-3]):[0-5]\d$/.test(end)||start>=end){change("Horaires invalides, utilisez HH:MM.");return}
+ if(db.lessons.some(l=>l.id!==lesson.id&&l.classId===lesson.classId&&l.day===lesson.day&&start<l.end&&end>l.start)){change("Ce créneau chevauche un autre cours.");return}
+ lesson.start=start;lesson.end=end;lesson.room=room.trim()||lesson.room;change("Cours modifié.");
+});
+mount.querySelectorAll("[data-delete-quiz]").forEach(b=>b.onclick=()=>{
+ if(active.role==="student")return;
+ const id=b.dataset.deleteQuiz;db.quizzes=db.quizzes.filter(q=>q.id!==id);
+ Object.keys(db.quizAnswers).filter(k=>k.endsWith(":"+id)).forEach(k=>delete db.quizAnswers[k]);
+ change("QCM supprimé.");
+});
+mount.querySelectorAll("[data-quiz]").forEach(f=>f.onsubmit=e=>{
+ e.preventDefault();if(active.role!=="student")return;
+ const chosen=f.elements.answer.value;
+ if(chosen===""){change("Choisissez une réponse.");return}
+ db.quizAnswers[active.id+":"+f.dataset.quiz]=Number(chosen);
+ change("Votre réponse a été enregistrée.");
+});
+form("quiz-form",f=>{
+ if(active.role==="student")return;
+ const cls=currentClass(),subject=active.role==="teacher"?active.subject:f.subject.value;
+ db.quizzes.push({id:key(),classId:cls,subject,title:f.title.value,question:f.question.value,options:[f.a.value,f.b.value,f.c.value,f.d.value],correct:Number(f.correct.value)});
+ change("Nouveau QCM publié pour "+classNames[cls]+".");
+});
+
 mount.querySelectorAll("[data-color]").forEach(b=>b.onclick=()=>{db.theme=b.dataset.color;change("Couleur modifiée.")});
+const colorCustom=mount.querySelector("#v-custom-color");if(colorCustom){colorCustom.value=/^#[0-9a-fA-F]{6}$/.test(db.theme)?db.theme:"#102c60";colorCustom.oninput=()=>{db.theme=colorCustom.value;document.documentElement.style.setProperty("--nav",db.theme)};colorCustom.onchange=()=>change("Couleur personnalisée enregistrée.");}
 let rst=mount.querySelector("[data-reset]");if(rst)rst.onclick=()=>{db=base();change("Données de démonstration réinitialisées.")};
 form("class-grades-form",f=>{const max=Number(f.max.value),coeff=Number(f.coeff.value),subject=active.role==="teacher"?active.subject:f.subject.value;if(!Number.isFinite(max)||max<=0||!Number.isFinite(coeff)||coeff<=0){change("Barème ou coefficient invalide.");return}const cls=students.filter(s=>s.classId===selectedClass);let rows=[],bad=false;for(const s of cls){let raw=f["grade_"+s.id].value.trim();if(!raw)continue;let v=Number(raw);if(!Number.isFinite(v)||v<0||v>max){bad=true;break}rows.push({id:key(),student:s.id,subject,title:f.title.value,value:v,max,coeff,date:new Date().toISOString().slice(0,10)})}if(bad){change("Une note est supérieure au barème ou invalide.");return}if(!rows.length){change("Renseignez au moins une note.");return}db.grades.push(...rows);change(rows.length+" notes publiées dans "+classNames[selectedClass]+".")});
 form("lesson-form",f=>{const day=days.indexOf(f.day.value),start=f.start.value,end=f.end.value,subject=active.role==="teacher"?active.subject:f.subject.value;if(!start||!end||start>=end){change("Horaires incorrects.");return}if(db.lessons.some(l=>l.classId===selectedClass&&l.day===day&&start<l.end&&end>l.start)){change("Conflit : un autre cours est déjà prévu pour cette classe.");return}db.lessons.push({id:key(),classId:selectedClass,subject,day,start,end,room:f.room.value});change("Cours ajouté à "+classNames[selectedClass]+".")});
