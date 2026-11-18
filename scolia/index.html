@@ -14,6 +14,75 @@ button{transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s,backgrou
 @media(max-width:950px){.v-columns{grid-template-columns:1fr}.v-stats{grid-template-columns:repeat(2,minmax(0,1fr))}.v-notegrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:660px){.v-login{grid-template-columns:1fr}.v-login-art{padding:23px;min-height:150px}.v-promo{display:none}.v-login-formside{padding:25px 18px}.v-side{width:54px;flex-basis:54px}.v-side:hover,.v-side:focus-within,.v-side.pinned{width:185px;flex-basis:185px}.v-side nav{padding:7px 3px}.v-side nav button{padding:10px;gap:15px}.v-side-head{padding:7px}.v-top{padding:0 12px}.v-content{padding:18px 11px}.v-formgrid{grid-template-columns:1fr}.v-notegrid{grid-template-columns:repeat(2,minmax(0,1fr))}.v-week{gap:3px}.v-lesson{font-size:9px;padding:6px 3px}.v-lesson b{font-size:9px}.v-banner{padding:22px}.v-banner h1{font-size:25px}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}.v-reveal{opacity:1;transform:none}.v-overlay{display:none!important}}
+
+/* Motion 6 - slow, perceptible transitions across the whole portal */
+:root{--motion-slow:1100ms;--motion-ease:cubic-bezier(.16,1,.3,1)}
+.v-login-art{animation:gradient 14s ease-in-out infinite!important}
+.v-promo{animation:hero 1.6s var(--motion-ease) both}
+.v-login-box{animation:hero 1.7s .25s var(--motion-ease) both}
+.v-rolebar button{transition:transform .6s var(--motion-ease),background .6s,border-color .6s,box-shadow .6s!important}
+.v-rolebar button:hover{transform:translateY(-6px) scale(1.035);box-shadow:0 12px 27px #24429d20}
+.v-side{transition:width .9s var(--motion-ease),flex-basis .9s var(--motion-ease),box-shadow .9s!important}
+.v-side:hover,.v-side:focus-within,.v-side.pinned{width:250px;flex-basis:250px}
+.v-side-label{transition:opacity .75s ease,transform 1.05s var(--motion-ease)!important}
+.v-side nav button{transition:transform .65s var(--motion-ease),background .65s,color .65s,box-shadow .65s!important}
+.v-side nav button:hover{transform:translateX(9px) scale(1.02)}
+.v-side nav button .v-nav-icon{transition:transform .75s var(--motion-ease),stroke .5s}
+.v-side nav button:hover .v-nav-icon{transform:rotate(-11deg) scale(1.22)}
+.v-page{animation:pageIn 1.25s var(--motion-ease) both!important;will-change:transform,opacity}
+.v-page.out{animation:pageOut .66s cubic-bezier(.55,0,.8,.22) both!important}
+.v-content{position:relative;overflow:clip}
+.v-content:before{content:'';position:absolute;z-index:0;right:-80px;top:-85px;width:250px;height:250px;border-radius:50%;background:radial-gradient(circle,#b7dbff55,transparent 72%);animation:float 7s ease-in-out infinite alternate;pointer-events:none}
+.v-page>.v-card,.v-page>.v-columns,.v-page>.v-stats{position:relative}
+.v-banner{animation:gradient 13s ease-in-out infinite, bannerArrive 1.65s var(--motion-ease) both!important}
+.v-banner h1{animation:slideFromLeft 1.5s .18s var(--motion-ease) both}
+.v-banner p{animation:slideFromLeft 1.65s .35s var(--motion-ease) both}
+.v-stat{animation:statArrive 1.3s var(--motion-ease) both!important;transition:transform .7s var(--motion-ease),box-shadow .7s!important}
+.v-stats .v-stat:nth-child(1){animation-delay:.13s!important}
+.v-stats .v-stat:nth-child(2){animation-delay:.27s!important}
+.v-stats .v-stat:nth-child(3){animation-delay:.41s!important}
+.v-stats .v-stat:nth-child(4){animation-delay:.55s!important}
+.v-card{transition:transform .85s var(--motion-ease),box-shadow .7s,border-color .7s!important}
+.v-card:hover{transform:translateY(-9px) scale(1.012)!important;box-shadow:0 24px 46px #15366b22!important}
+.v-reveal{opacity:0!important;transform:translateY(52px) scale(.955)!important;filter:blur(5px);will-change:opacity,transform,filter}
+.v-reveal.visible{opacity:1!important;transform:translateY(0) scale(1)!important;filter:blur(0);transition:opacity 1.35s var(--motion-ease),transform 1.35s var(--motion-ease),filter 1.2s ease!important}
+.v-lesson{animation:lessonCascade 1.25s var(--motion-ease) both!important}
+.v-lesson:nth-child(2){animation-delay:.16s!important}.v-lesson:nth-child(3){animation-delay:.32s!important}.v-lesson:nth-child(4){animation-delay:.48s!important}
+.v-subject{transition:transform .75s var(--motion-ease),background .7s,border-color .7s,box-shadow .7s!important}
+.v-subject.open{animation:subjectExpand .85s var(--motion-ease) both}
+.v-progress>span{animation:grow 2.15s .4s var(--motion-ease) both!important}
+.v-btn{transition:transform .6s var(--motion-ease),filter .55s,box-shadow .65s!important}
+.v-btn:hover{transform:translateY(-5px) scale(1.035)}
+.v-table tbody tr{animation:tableSlide 1s var(--motion-ease) both}
+.v-table tbody tr:nth-child(2n){animation-delay:.06s}
+.v-table tbody tr:nth-child(3n){animation-delay:.12s}
+.v-item{transition:background .6s,transform .6s var(--motion-ease),padding-left .6s}
+.v-item:hover{transform:translateX(7px);padding-left:10px;background:#f4f8ff;border-radius:8px}
+.v-topright .v-avatar{animation:avatarFloat 5.5s ease-in-out infinite}
+.v-topright .v-avatar:hover{animation:avatarRotate .9s var(--motion-ease) both}
+.v-login-art:before{content:'';position:absolute;inset:-80%;pointer-events:none;background:conic-gradient(from 0deg,transparent 0%,#fff2 12%,transparent 22%,#fff2 43%,transparent 52%);animation:spinBackdrop 24s linear infinite;opacity:.28}
+.v-login-art>*{z-index:1}
+.v-credential{display:grid;grid-template-columns:1fr auto;gap:9px;align-items:center;background:linear-gradient(120deg,#eaf1ff,#eaf9ff);padding:11px 12px;border-radius:10px;margin-top:10px;border:1px solid #d4e4ff}
+.v-credential code{font-size:13px;font-weight:800;letter-spacing:.2px;color:#224bb1}
+.v-credential button{background:#416be0;color:#fff;border:0;padding:9px 11px;border-radius:7px;font-size:11px;font-weight:780}
+.v-motion-indicator{position:fixed;bottom:18px;right:18px;z-index:20;pointer-events:none;border-radius:100px;background:linear-gradient(120deg,#193e83e8,#456de1e8);color:#fff;font-size:10px;letter-spacing:.5px;padding:9px 13px;box-shadow:0 10px 22px #112c602e;animation:indicatorIn 1.8s .5s both}
+.v-motion-indicator:before{content:'';display:inline-block;width:7px;height:7px;background:#67ffd2;border-radius:50%;margin-right:7px;animation:pulse 1.9s infinite}
+.v-ambient-glow{position:fixed;z-index:0;pointer-events:none;width:360px;height:360px;top:35%;right:-120px;border-radius:50%;background:radial-gradient(circle,#95c8ff33,#bdadff14 44%,transparent 73%);animation:ambientShift 12s ease-in-out infinite alternate}
+@keyframes pageIn{0%{opacity:0;transform:translate3d(95px,36px,0) scale(.96);filter:blur(12px)}65%{opacity:1;filter:blur(1px)}100%{opacity:1;transform:none;filter:blur(0)}}
+@keyframes pageOut{to{opacity:0;transform:translate3d(-130px,-12px,0) scale(.97);filter:blur(12px)}}
+@keyframes bannerArrive{from{opacity:0;transform:translateX(110px) scale(.94);filter:blur(14px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes slideFromLeft{from{opacity:0;transform:translateX(-75px)}to{opacity:1;transform:none}}
+@keyframes statArrive{from{opacity:0;transform:translateY(75px) rotate(-2deg) scale(.88);filter:blur(8px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes lessonCascade{from{opacity:0;transform:translateX(-45px) scale(.86)}to{opacity:1;transform:none}}
+@keyframes subjectExpand{from{opacity:.5;transform:translateX(-18px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes tableSlide{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes avatarFloat{50%{transform:translateY(-5px)}}
+@keyframes avatarRotate{to{transform:rotate(12deg) scale(1.15)}}
+@keyframes spinBackdrop{to{transform:rotate(360deg)}}
+@keyframes indicatorIn{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:none}}
+@keyframes ambientShift{from{transform:translate(-100px,-60px) scale(.75)}to{transform:translate(10px,90px) scale(1.2)}}
+@media(max-width:660px){.v-side:hover,.v-side:focus-within,.v-side.pinned{width:190px;flex-basis:190px}.v-motion-indicator{bottom:9px;right:9px;padding:7px 10px}}
+@media(prefers-reduced-motion:reduce){.v-page,.v-banner,.v-stat,.v-lesson,.v-table tbody tr,.v-reveal.visible,.v-topright .v-avatar{animation:none!important;transition:none!important;transform:none!important;filter:none!important}.v-reveal{opacity:1!important;transform:none!important;filter:none!important}.v-motion-indicator{display:none!important}}
 </style></head><body><div id="scolia-v5"></div><script>
 (()=>{
 "use strict";
@@ -80,6 +149,14 @@ document.title="Connexion — Scolia";
 const people=roleUsers();
 mount.innerHTML='<div class="v-login"><section class="v-login-art"><div class="v-brand"><span class="v-brandmark">S</span>Scolia <small>PORTAIL SCOLAIRE</small></div><div class="v-promo"><div style="font-size:10px;letter-spacing:2px;font-weight:800;color:#c2eaff">L’ÉCOLE, AUTREMENT</div><h1>Un espace.<br>Toutes les classes.<br>Toutes les possibilités.</h1><p>Une interface pensée pour les élèves et les enseignants, avec des animations fluides et une organisation claire.</p></div><span style="font-size:11px;opacity:.8;position:relative">Scolia · Démonstration interactive</span></section><section class="v-login-formside"><div class="v-login-box"><span class="v-eyebrow">BIENVENUE SUR SCOLIA</span><h2>Connectez-vous.</h2><p class="v-muted">Choisissez votre profil de démonstration.</p><div class="v-rolebar">'+[['student',"Élève"],['teacher',"Professeur"],['admin',"Direction"]].map(([r,label])=>'<button data-role="'+r+'" class="'+(r===loginRole?"on":"")+'">'+label+"</button>").join("")+'</div><form id="v-login-form">'+select("Identifiant","id",people.map(p=>[p.id,p.id+" · "+p.name]))+field("Mot de passe","password","password",'autocomplete="off"')+'<div class="v-error" id="v-error"></div><button class="v-btn" style="width:100%;padding:14px">Se connecter</button></form><div class="v-demo"><b>Comptes de test</b><br>Élève 001 : <b>el-001</b> / <b>'+students[0].password+'</b><br>Professeur de maths : <b>prof-01</b> / <b>'+teachers[0].password+'</b><br>Direction : <b>direction</b> / <b>DirectionDemo!26</b><div class="v-micro" style="margin-top:7px">Tous les autres comptes fictifs sont consultables dans l’espace Direction.</div></div><p class="v-muted" style="margin-top:15px">Ne saisissez pas de vrais identifiants scolaires.</p></div></section></div>';
 mount.querySelectorAll("[data-role]").forEach(b=>b.onclick=()=>{loginRole=b.dataset.role;login()});
+const selector=mount.querySelector('#v-login-form select[name="id"]');
+const loginForm=mount.querySelector("#v-login-form");
+const box=mount.querySelector(".v-demo");
+if(box){box.insertAdjacentHTML("afterend",'<div class="v-credential" id="v-password-help"><div><div class="v-micro">Mot de passe du compte sélectionné</div><code id="v-password-code"></code></div><button type="button" id="v-fill-password">Remplir</button></div>');}
+function syncCredential(){let p=people.find(x=>x.id===selector.value);const code=mount.querySelector("#v-password-code");if(code)code.textContent=p?p.password:"—";}
+if(selector)selector.onchange=syncCredential;
+const fill=mount.querySelector("#v-fill-password");if(fill)fill.onclick=()=>{let p=people.find(x=>x.id===selector.value);if(p){loginForm.elements.password.value=p.password;loginForm.elements.password.focus()}};
+syncCredential();
 mount.querySelector("#v-login-form").onsubmit=e=>{e.preventDefault();const f=e.currentTarget,p=people.find(x=>x.id===f.elements.id.value);if(!p||p.password!==f.elements.password.value){mount.querySelector("#v-error").textContent="Identifiant ou mot de passe incorrect.";return}active={...p,role:loginRole};selectedClass=loginRole==="student"?p.classId:0;selectedStudent=loginRole==="student"?p.id:students[0].id;page="Accueil";notice="";render()};
 }
 function classFilter(){return active.role==="student"?"":'<div class="v-selectrow"><b style="font-size:12px">Classe :</b><select class="v-field" id="v-class-picker">'+classOptions().map(([v,label])=>'<option value="'+v+'" '+(Number(v)===selectedClass?"selected":"")+'>'+esc(label)+"</option>").join("")+"</select></div>"}
@@ -115,7 +192,7 @@ function settings(){return header("Paramètres","Couleurs, identité et préfér
 const pages={"Accueil":dashboard,"Notes":notes,"Classes":classes,"Emploi du temps":timetable,"Cahier de textes":homework,"Vie scolaire":life,"Messagerie":messages,"Actualités":news,"Documents":resources,"QCM":quizzes,"Gestion des notes":gradeManager,"Gestion des cours":coursesManager,"Gestion des devoirs":homeworkManager,"Gestion des comptes":accounts,"Paramètres":settings};
 function intro(){if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;const o=document.createElement("div");o.className="v-overlay";o.innerHTML='<div class="v-overlay-inner"><div class="v-overlay-icon">S</div><div style="font-size:38px;font-weight:900;letter-spacing:-1px">scolia</div><p style="font-size:12px;letter-spacing:2px;color:#deeeff">VOTRE ESPACE SCOLAIRE</p><div class="v-loader"><span></span></div></div>';document.body.appendChild(o);setTimeout(()=>o.classList.add("hide"),1750);setTimeout(()=>o.remove(),2700)}
 function attachReveal(){const els=mount.querySelectorAll(".v-reveal");if(matchMedia("(prefers-reduced-motion: reduce)").matches){els.forEach(x=>x.classList.add("visible"));return}if(!("IntersectionObserver" in window)){els.forEach(x=>x.classList.add("visible"));return}const obs=new IntersectionObserver(items=>items.forEach(x=>{if(x.isIntersecting){x.target.classList.add("visible");obs.unobserve(x.target)}}),{threshold:.06,rootMargin:"0px 0px 70px 0px"});els.forEach((el,i)=>{el.style.transitionDelay=(i%4)*.1+"s";obs.observe(el)})}
-function go(p){if(!pages[p]||!can(p)||p===page||isLeaving)return;isLeaving=true;let el=mount.querySelector(".v-page");if(el&&!matchMedia("(prefers-reduced-motion: reduce)").matches){el.classList.add("out");setTimeout(()=>{page=p;notice="";render();window.scrollTo({top:0,behavior:"smooth"});isLeaving=false},350)}else{page=p;notice="";render();isLeaving=false}}
+function go(p){if(!pages[p]||!can(p)||p===page||isLeaving)return;isLeaving=true;let el=mount.querySelector(".v-page");if(el&&!matchMedia("(prefers-reduced-motion: reduce)").matches){el.classList.add("out");setTimeout(()=>{page=p;notice="";render();window.scrollTo({top:0,behavior:"smooth"});isLeaving=false},680)}else{page=p;notice="";render();isLeaving=false}}
 function csvDownload(kind){const dataRows=kind==="students"?students.map(s=>[s.id,s.name,classNames[s.classId],s.password]):teachers.map(t=>[t.id,t.name,t.subject,t.password]);const all=[["Identifiant","Profil","Classe ou matière","Mot de passe de démonstration"],...dataRows];const csv="\ufeff"+all.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(";")).join("\r\n");const blob=new Blob([csv],{type:"text/csv;charset=utf-8"}),url=URL.createObjectURL(blob),a=document.createElement("a");a.href=url;a.download="scolia-"+kind+"-demo.csv";document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)}
 function form(id,callback){let f=mount.querySelector("#"+id);if(f)f.onsubmit=e=>{e.preventDefault();callback(f.elements)}}
 function render(){
@@ -124,6 +201,7 @@ try{
 let tabs=["Accueil","Notes","Classes","Emploi du temps","Cahier de textes","Vie scolaire","Messagerie","Actualités","Documents","QCM","Gestion des notes","Gestion des cours","Gestion des devoirs","Gestion des comptes","Paramètres"].filter(can);
 mount.innerHTML='<div class="v-shell"><aside class="v-side"><div class="v-side-head"><span class="v-brandmark">S</span><span class="v-side-label" style="font-size:20px;font-weight:850">scolia</span></div><nav>'+tabs.map(t=>'<button data-page="'+t+'" class="'+(t===page?"on":"")+'" title="'+t+'">'+ico(t)+'<span class="v-side-label">'+t+"</span></button>").join("")+'</nav><div class="v-side-foot"><button data-logout="1">'+ico("Déconnexion")+'<span class="v-side-label">Déconnexion</span></button></div></aside><div class="v-work"><header class="v-top"><div><span class="v-eyebrow">SCOLIA · '+(active.role==="student"?"ESPACE ÉLÈVE":active.role==="teacher"?"ESPACE PROFESSEUR":"DIRECTION")+'</span><br><b>'+esc(db.school)+'</b></div><div class="v-topright"><span class="v-badge">DÉMONSTRATION</span><button class="v-btn v-outline" data-page="Paramètres">⚙</button><span class="v-avatar">'+esc(active.name.split(" ").map(x=>x[0]).join("").slice(0,2))+'</span></div></header><main class="v-content"><div class="v-page">'+(notice?'<div class="v-toast">'+esc(notice)+"</div>":"")+(pages[page]||dashboard)()+'</div></main></div></div>';
 attachReveal();
+if(!mount.querySelector(".v-motion-indicator")){const live=document.createElement("div");live.className="v-motion-indicator";live.textContent="Animations actives";mount.querySelector(".v-work")?.appendChild(live);}
 mount.querySelectorAll("[data-page]").forEach(b=>b.onclick=()=>go(b.dataset.page));
 mount.querySelectorAll("[data-logout]").forEach(b=>b.onclick=()=>{active=null;login()});
 const cls=mount.querySelector("#v-class-picker");if(cls)cls.onchange=()=>{selectedClass=Number(cls.value);selectedStudent=studentOptions()[0][0];expandedSubject=null;render()};
