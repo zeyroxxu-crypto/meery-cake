@@ -166,6 +166,49 @@ button{transition:transform .3s cubic-bezier(.16,1,.3,1),box-shadow .3s,backgrou
 @keyframes sc-barload{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 @keyframes sc-overlay-clear{0%{opacity:1;visibility:visible}85%{opacity:1;visibility:visible}100%{opacity:0;visibility:hidden}}
 @media(prefers-reduced-motion:reduce){.sc-cinema,.sc-cinema *{animation:none!important;transition:none!important}.sc-cinema-out{opacity:0!important;visibility:hidden!important}}
+
+/* Scolia Studio 100 - interactive taskwork */
+.studio-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0 17px;animation:actionArrival 1.15s ease both}
+.studio-tabs button{border:1px solid #dde7f7;background:white;color:#3b5279;padding:12px 17px;font-size:12px;font-weight:800;border-radius:10px;transition:transform .65s cubic-bezier(.16,1,.3,1),background .5s,border-color .5s,box-shadow .5s}
+.studio-tabs button.on{background:linear-gradient(105deg,#446bde,#7062dd);color:white;border-color:transparent;box-shadow:0 12px 26px #4e67d636}
+.studio-tabs button:hover{transform:translateY(-5px) scale(1.03)}
+.studio-filters{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(150px,1fr) minmax(130px,.7fr);gap:11px;margin:16px 0 20px}
+.studio-filters .v-field{margin:0;min-height:42px}
+.studio-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
+.studio-idea{position:relative;overflow:hidden;border:1px solid #e1e7f2;border-top:3px solid var(--studio-tone,#5267e6);padding:15px 14px 17px;display:flex;flex-direction:column;gap:9px;background:linear-gradient(155deg,#fff,color-mix(in srgb,var(--studio-tone,#5267e6) 8%,white));border-radius:12px;box-shadow:0 5px 20px #17356b0a;min-height:168px;animation:studioAppear .88s cubic-bezier(.16,1,.3,1) both;transition:transform .7s cubic-bezier(.16,1,.3,1),box-shadow .7s,border-color .6s}
+.studio-idea:nth-child(4n+2){animation-delay:.07s}.studio-idea:nth-child(4n+3){animation-delay:.14s}.studio-idea:nth-child(4n){animation-delay:.21s}
+.studio-idea:hover{transform:translateY(-9px) scale(1.015);box-shadow:0 21px 35px #18386f1a;border-color:#b9cdf2}
+.studio-idea:after{content:'';position:absolute;right:-34px;top:-50px;width:100px;height:100px;border-radius:50%;border:16px solid color-mix(in srgb,var(--studio-tone,#5267e6) 18%,transparent);pointer-events:none}
+.studio-idea-top{display:flex;justify-content:space-between;align-items:center}
+.studio-idea-number{font-size:10px;font-weight:900;letter-spacing:1.2px;color:var(--studio-tone,#5267e6)}
+.studio-idea h4{font-size:13px;line-height:1.4;font-weight:850;letter-spacing:-.2px;margin:0;flex:1;position:relative}
+.studio-idea .v-btn{font-size:10px;padding:10px 11px;width:100%;position:relative}
+.studio-star{border:0;background:transparent;color:#9ca8c2;font-size:25px;line-height:1;padding:0 4px}
+.studio-star.on{color:#ebb24f;animation:studioStar .65s both}
+.studio-task{display:flex;justify-content:space-between;align-items:center;gap:13px;padding:15px 0;border-bottom:1px solid #e6edf7;animation:studioAppear .7s both}
+.studio-task:last-child{border:0}
+.studio-task label{display:flex;gap:11px;align-items:center;font-size:13px;font-weight:750;cursor:pointer;flex-wrap:wrap;min-width:0}
+.studio-task input{accent-color:#6075e4;width:17px;height:17px}
+.studio-task small{display:block;color:#7d8aa0;font-weight:500;width:100%;padding-left:29px}
+.studio-done{text-decoration:line-through;color:#8997ad}
+.studio-note{border:1px solid #dce6f4;border-radius:11px;padding:17px;margin:13px 0;background:linear-gradient(120deg,#fff,#f8faff);animation:studioAppear .9s both}
+.studio-note p{font-size:12px;line-height:1.9;white-space:normal;overflow-wrap:anywhere}
+.studio-timer{text-align:center;padding:25px;font-size:clamp(40px,7vw,75px);font-weight:900;color:#4b68c6;letter-spacing:-2px;font-variant-numeric:tabular-nums;animation:studioTimerPulse 2.8s ease-in-out infinite}
+.studio-orbit{height:170px;width:170px;border-radius:50%;border:10px solid #e8ecfd;border-top-color:#7c73dc;border-right-color:#3daac3;margin:15px auto;animation:studioSpin 15s linear infinite;box-shadow:0 15px 35px #1c458012}
+@keyframes studioAppear{from{opacity:0;transform:translateY(38px) scale(.94);filter:blur(5px)}to{opacity:1;transform:none;filter:none}}
+@keyframes studioStar{from{transform:rotate(-50deg) scale(.3)}to{transform:rotate(0) scale(1)}}
+@keyframes studioTimerPulse{50%{transform:scale(1.055);text-shadow:0 14px 30px #5a7be329}}
+@keyframes studioSpin{to{transform:rotate(360deg)}}
+.sc-cinema .sc-track{height:5px;width:min(320px,68vw)}
+.sc-cinema .sc-track span{animation-duration:4.1s}
+.sc-cinema.sc-login-scene .sc-cinema-logo,.sc-cinema.sc-logout-scene .sc-cinema-logo{animation-duration:3s}
+.sc-cinema.sc-login-scene .sc-ring,.sc-cinema.sc-logout-scene .sc-ring{animation-duration:3.5s,9s}
+.sc-cinema.sc-login-scene .sc-cinema-inner,.sc-cinema.sc-logout-scene .sc-cinema-inner{animation-duration:2.3s}
+.sc-cinema.sc-login-scene h2,.sc-cinema.sc-logout-scene h2{animation-duration:2.5s}
+@media(max-width:1100px){.studio-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:780px){.studio-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.studio-filters{grid-template-columns:1fr 1fr}.studio-filters input{grid-column:1/-1}}
+@media(max-width:440px){.studio-grid{grid-template-columns:1fr}.studio-filters{grid-template-columns:1fr}.studio-filters input{grid-column:auto}.studio-task{align-items:flex-start}.studio-task .v-btn{flex:0 0 auto}.studio-tabs button{padding:9px 10px;font-size:11px}}
+@media(prefers-reduced-motion:reduce){.studio-tabs,.studio-idea,.studio-task,.studio-note,.studio-timer,.studio-orbit{animation:none!important;transition:none!important;transform:none!important}}
 </style></head><body><div id="scolia-v5"></div><script>
 (()=>{
 "use strict";
